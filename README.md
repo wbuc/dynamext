@@ -1,4 +1,4 @@
-# dd-next
+# Dynamext
 
 ## Project setup
 ```
