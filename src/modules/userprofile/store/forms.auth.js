@@ -1,13 +1,14 @@
 
 import config from '@/config/app'
-import httpClient from '@/plugins/httpClient'
+import httpFormAuth from 'axios'
 
-//"accounts:signUp?key=AIzaSyC0VzYpjH9C85MpbrosplXLAdz1nMhjuxU",
+httpFormAuth.defaults.baseURL = "https://identitytoolkit.googleapis.com/v1/"
+
 const actions = {
     signUp(context, userData) {
 
         context.commit('API_LOADING');
-        httpClient.post(
+        httpFormAuth.post(
             `accounts:signUp?key=${config.appKey}`,
             {
                 email: userData.email,
@@ -32,7 +33,7 @@ const actions = {
         context.commit('API_LOADING');
 
         setTimeout(() => {
-            httpClient.post(
+            httpFormAuth.post(
                 `accounts:signInWithPassword?key=${config.appKey}`,
                 {
                     email: userData.email,
@@ -41,10 +42,12 @@ const actions = {
                 }
             )
                 .then(response => {
+                    console.log('success')
                     context.dispatch('loginSuccess', response);
 
                 })
                 .catch(error => {
+                    console.log('erros')
                     context.commit('API_ERROR', error);
                 });
         }, 1500);

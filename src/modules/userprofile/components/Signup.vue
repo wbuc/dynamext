@@ -47,7 +47,7 @@
                     <v-spacer></v-spacer>
                     <v-btn @click="gotoLogin" text color="grey" width="100">Sign In</v-btn>
 
-                    <v-btn :loading="isLoading" type="submit" color="success" width="100">
+                    <v-btn :loading="api.loading" type="submit" color="success" width="100">
                          <span>Sign Up</span>
                     </v-btn>
                </v-card-actions>
@@ -75,7 +75,7 @@ export default {
           };
      },
      computed: {
-          ...mapGetters(["isLoading"])
+          ...mapGetters(["api"])
      },
      methods: {
           gotoLogin() {

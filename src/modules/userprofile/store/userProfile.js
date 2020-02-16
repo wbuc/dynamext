@@ -2,6 +2,7 @@
 import router from '@/router/router'
 import httpClient from '@/plugins/httpClient'
 
+
 const state = {
     idToken: null,
     userId: null,
