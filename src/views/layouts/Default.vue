@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Navbar from "../components/layout/Navbar";
+import Navbar from "@/components/layout/Navbar";
 
-import TransitionPage from "../components/shared/Transition";
+import TransitionPage from "@/components/shared/Transition";
 
 export default {
      name: "DefaultLayout",

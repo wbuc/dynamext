@@ -70,7 +70,7 @@
                          </v-list-item>
                     </v-list>
                </v-menu>
-               <v-btn text color="grey">
+               <v-btn @click="logout" text color="grey">
                     <span>Sign Out</span>
                     <v-icon right>exit_to_app</v-icon>
                </v-btn>
@@ -79,7 +79,8 @@
 </template>
 
 <script>
-import linkConfig from "../../Data/LinkConfig.js";
+import linkConfig from "@/config/navigationLinks";
+import { mapGetters } from "vuex";
 
 export default {
      name: "Navbar",
@@ -91,9 +92,15 @@ export default {
                drawerLinks: linkConfig.drawer
           };
      },
+     computed: {
+          ...mapGetters(["isAuthenticated", "isLoading"])
+     },
      methods: {
           setTheme() {
                this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+          },
+          logout() {
+               this.$store.dispatch("logout");
           }
      }
 };

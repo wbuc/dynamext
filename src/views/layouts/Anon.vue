@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TransitionPage from "../components/shared/Transition";
+import TransitionPage from "@/components/shared/Transition";
 export default {
      components: { TransitionPage }
 };

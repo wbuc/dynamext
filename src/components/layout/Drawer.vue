@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import linkConfig from "../../Data/LinkConfig.js";
+import linkConfig from "@/config/navigationLinks";
 
 export default {
      props: { drawer: { required: true, default: true } },
