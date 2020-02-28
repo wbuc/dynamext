@@ -10,6 +10,7 @@ Vue.use(VueRouter)
 // check if user is logged in.
 function routeGaurd(to, from, next) {
   if (store.state.userProfile.idToken) {
+    console.log('from: ', from, ' to: ', to);
     next();
   }
   else {
@@ -25,6 +26,9 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    meta: {
+      layout: 'default'
+    },
     component: Home,
     beforeEnter: routeGaurd
   },
@@ -74,11 +78,16 @@ const routes = [
   },
   {
     path: '*',
-    redirect:
-    {
-      name: 'Login'
+    meta: {
+      layout: 'anon',
+      validRoute: false
     },
-    beforeEnter: routeGaurd
+    beforeEnter: routeGaurd,
+    // redirect:
+    // {
+    //   name: 'Login'
+    // },
+
   },
 
 ]

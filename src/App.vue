@@ -8,7 +8,7 @@
 </template>
 
 <script>
-const DEFAULT_LAYOUT = "default";
+const DEFAULT_LAYOUT = "anon";
 export default {
      name: "App",
      computed: {
@@ -17,8 +17,11 @@ export default {
           }
      },
      created() {
-          // app start - try sign user in.
-          this.$store.dispatch("tryAutoLogin");
+          // component created, no access to DOM - fetch data here.
+          this.$store.dispatch("tryAutoLogin"); // try sign user in
+     },
+     mounted() {
+          // component created, access to DOM - do DOM stuff here !
      }
 };
 </script>
