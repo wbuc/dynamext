@@ -21,13 +21,20 @@
                          type="password"
                          v-model="formData.password"
                     ></v-text-field>
+                    <v-select
+                         :items="colours"
+                         v-model="formData.colour"
+                         prepend-icon="color_lens"
+                         label="Favourite Colour"
+                    ></v-select>
                     <v-menu offset-y transition="scroll-x-transition">
                          <template v-slot:activator="{ on }">
                               <v-btn text color="accent" dark v-on="on">
                                    <span>
                                         <v-icon left>expand_more</v-icon>
-                                        <span v-if="!formData.colour">Favourite Colour</span>
-                                        <span v-else-if="formData.colour">{{ formData.colour.text }}</span>
+                                        <span>Colour</span>
+                                        <!-- <span v-if="formData.colour">{{ formData.colour.text }}</span>
+                                        <span v-else-if="!formData.colour">Favourite Colour</span>-->
                                    </span>
                               </v-btn>
                          </template>

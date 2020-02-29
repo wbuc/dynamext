@@ -1,7 +1,8 @@
 
 import router from '@/router/router'
-import httpClient from '@/plugins/httpClient'
+import httpClient from '@/modules/userprofile/api/httpClient'
 
+import userProfileApi from '@/modules/userprofile/api/userProfile.api'
 
 const state = {
     idToken: null,
@@ -155,6 +156,14 @@ const actions = {
             context.dispatch('logout');
         }, expirationTime * 1000);
     },
+    testAPI(context) {
+
+        userProfileApi.testUserAPI(context).then((data) => {
+            console.log(data)
+        }, err => {
+            console.log(err);
+        })
+    }
 }
 
 export default { state, getters, mutations, actions }

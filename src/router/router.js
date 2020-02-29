@@ -62,7 +62,8 @@ const routes = [
     path: '/login',
     name: 'Login',
     meta: {
-      layout: 'anon'
+      layout: 'anon',
+      transitionName: 'slide'
     },
     component: () => import('../views/Login.vue'),
 
@@ -80,7 +81,6 @@ const routes = [
     path: '*',
     meta: {
       layout: 'anon',
-      validRoute: false
     },
     beforeEnter: routeGaurd,
     // redirect:
