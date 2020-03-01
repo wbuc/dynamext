@@ -26,6 +26,7 @@ const routes = [
     path: '/',
     name: 'Home',
     meta: {
+      title: 'Dynamext | Home',
       layout: 'default'
     },
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
@@ -35,6 +36,7 @@ const routes = [
     path: '/design',
     name: 'Design',
     meta: {
+      title: 'Dynamext | Design',
       layout: 'default'
     },
     component: lazyLoad('DesignElements'),
@@ -44,6 +46,7 @@ const routes = [
     path: '/about',
     name: 'About',
     meta: {
+      title: 'Dynamext | About',
       layout: 'default'
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
@@ -52,6 +55,7 @@ const routes = [
     path: '/comingsoon',
     name: 'ComingSoon',
     meta: {
+      title: 'Dynamext | Coming Soon',
       layout: 'default'
     },
     component: () => import(/* webpackChunkName: "comingSoon" */ '../views/ComingSoon.vue'),
@@ -61,6 +65,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     meta: {
+      title: 'Dynamext | Login',
       layout: 'anon',
       transitionName: 'slide'
     },
@@ -70,6 +75,7 @@ const routes = [
     path: '/register',
     name: 'Register',
     meta: {
+      title: 'Dynamext | Register',
       layout: 'anon',
       transitionName: 'slide'
     },
@@ -95,6 +101,16 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+
+router.beforeEach((to, from, next) => {
+  if (to.meta) {
+    if (to.meta.title) {
+      document.title = to.meta.title
+    }
+  }
+  next();
 })
 
 export default router
