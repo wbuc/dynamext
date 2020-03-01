@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 import store from '@/store/index'
 
@@ -29,7 +28,7 @@ const routes = [
     meta: {
       layout: 'default'
     },
-    component: Home,
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
     beforeEnter: routeGaurd
   },
   {
@@ -47,7 +46,7 @@ const routes = [
     meta: {
       layout: 'default'
     },
-    component: () => import('../views/About.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     beforeEnter: routeGaurd
   }, {
     path: '/comingsoon',
@@ -55,7 +54,7 @@ const routes = [
     meta: {
       layout: 'default'
     },
-    component: () => import('../views/ComingSoon.vue'),
+    component: () => import(/* webpackChunkName: "comingSoon" */ '../views/ComingSoon.vue'),
     beforeEnter: routeGaurd
   },
   {
@@ -65,7 +64,7 @@ const routes = [
       layout: 'anon',
       transitionName: 'slide'
     },
-    component: () => import('../views/Login.vue'),
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
 
   }, {
     path: '/register',
@@ -74,7 +73,7 @@ const routes = [
       layout: 'anon',
       transitionName: 'slide'
     },
-    component: () => import('../views/Signup.vue'),
+    component: () => import(/* webpackChunkName: "register" */ '../views/Signup.vue'),
 
   },
   {
