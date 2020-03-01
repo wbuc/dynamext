@@ -33,23 +33,42 @@ const actions = {
         context.commit('API_LOADING');
 
         setTimeout(() => {
-            httpFormAuth.post(
-                `accounts:signInWithPassword?key=${config.appKey}`,
-                {
-                    email: userData.email,
-                    password: userData.password,
-                    returnSecureToken: true
-                }
-            )
-                .then(response => {
-                    console.log('success')
-                    context.dispatch('loginSuccess', response);
+            // dev purposes
+            const localDev = true;
 
-                })
-                .catch(error => {
-                    console.log('erros')
-                    context.commit('API_ERROR', error);
-                });
+            if (!localDev) {
+                // web connection
+                httpFormAuth.post(
+                    `accounts:signInWithPassword?key=${config.appKey}`,
+                    {
+                        email: userData.email,
+                        password: userData.password,
+                        returnSecureToken: true
+                    }
+                )
+                    .then(response => {
+                        console.log('success')
+                        console.log(response)
+                        context.dispatch('loginSuccess', response);
+
+                    })
+                    .catch(error => {
+                        console.log('erros')
+                        context.commit('API_ERROR', error);
+                    });
+            }
+            else {
+                // offline mode - force successfull login.
+                const response = {
+                    data: {
+                        idToken: "eyJhbGciOiJSU",
+                        localId: "JzQbkF0pbgXOgECjkGYAXSeoX2",
+                        expiresIn: 3600
+
+                    }
+                }
+                context.dispatch('loginSuccess', response)
+            }
         }, 1500);
 
     },

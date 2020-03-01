@@ -59,7 +59,7 @@
                               :key="index"
                               router
                               :to="link.route"
-                              active-class="secondary--text"
+                              active-class="red"
                          >
                               <v-list-item-action>
                                    <v-icon>{{link.icon}}</v-icon>
