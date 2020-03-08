@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 import store from '@/store/index'
 
+import adminRoutes from '@/modules/admin/router/admin.router'
+
 Vue.use(VueRouter)
 
 
@@ -22,6 +24,7 @@ function lazyLoad(view) {
 }
 
 const routes = [
+  ...adminRoutes,
   {
     path: '/',
     name: 'Home',
@@ -61,6 +64,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "comingSoon" */ '../views/ComingSoon.vue'),
     beforeEnter: routeGaurd
   },
+  // {
+  //   path: '/admin',
+  //   name: 'Admin',
+  //   meta: {
+  //     title: 'Dynamext | Administration',
+  //     layout: 'default'
+  //   },
+  //   component: () => import(/* webpackChunkName: "admin" */ '../views/Admin.vue'),
+  //   beforeEnter: routeGaurd
+  // },
   {
     path: '/login',
     name: 'Login',

@@ -34,8 +34,8 @@ const drawer = [
     },
     {
         icon: "settings",
-        text: "Settings",
-        route: "/comingsoon"
+        text: "Administration",
+        route: "/admin"
     }];
 
 

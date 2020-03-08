@@ -1,4 +1,4 @@
-
+//import authApi from '@/modules/userprofile/api/forms.auth.api'
 import config from '@/config/app'
 import httpFormAuth from 'axios'
 
@@ -8,12 +8,21 @@ const actions = {
     signUp(context, userData) {
 
         context.commit('API_LOADING');
+
+        // new implementation - still to test
+        // authApi.registerUser(userData.email, userData.password)
+        //     .then(response => {
+        //        context.dispatch('signUpSuccess', { response, userData });
+        //     }, error => {
+        //      console.log(error);
+        //      context.commit('API_ERROR', error);
+        //      })
         httpFormAuth.post(
             `accounts:signUp?key=${config.appKey}`,
             {
                 email: userData.email,
                 password: userData.password,
-                colour: userData.colour,
+                //colour: userData.colour,
                 returnSecureToken: true
             }
         )
@@ -38,6 +47,16 @@ const actions = {
 
             if (!localDev) {
                 // web connection
+
+                // new implementation - still to test
+                // authApi.loginUser(userData.email, userData.password)
+                //     .then(response => {
+                //         context.dispatch('loginSuccess', response);
+                //     }, error => {
+                //      console.log(error);
+                //      context.commit('API_ERROR', error);
+                //      })
+
                 httpFormAuth.post(
                     `accounts:signInWithPassword?key=${config.appKey}`,
                     {

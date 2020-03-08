@@ -42,6 +42,7 @@
                          </v-card-actions>
                     </v-card>
                </v-col>
+               <v-col></v-col>
           </v-row>
      </v-container>
 </template>
@@ -49,6 +50,11 @@
 <script>
 export default {
      name: "Home",
-     components: {}
+     components: {},
+     methods: {
+          sayHello() {
+               console.log("Hello!");
+          }
+     }
 };
 </script>

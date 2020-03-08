@@ -1,13 +1,14 @@
 <template>
      <v-app>
           <component :is="layout">
+               <!-- transition here over router-view -->
                <router-view></router-view>
           </component>
      </v-app>
 </template>
 
 <script>
-const DEFAULT_LAYOUT = "placeholder";
+const DEFAULT_LAYOUT = "anon";
 export default {
      name: "App",
      computed: {
