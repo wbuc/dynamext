@@ -1,15 +1,6 @@
-// import store from '@/store/index'
-import routeHelper from '@/modules/shared/helpers/route.helper'
 
-// function routeGaurd(to, from, next) {
-//     if (store.state.userProfile.idToken) {
-//         console.log('from: ', from, ' to: ', to);
-//         next();
-//     }
-//     else {
-//         next('/login');
-//     }
-// }
+import routeHelper from '@/modules/shared/helpers/router.helper'
+
 
 export default [
     {
@@ -21,16 +12,16 @@ export default [
         },
         component: () => import(/* webpackChunkName: "admin" */ '@/views/Admin.vue'),
         beforeEnter: routeHelper.routeGaurd,
-        children: [
-            {
-                path: 'accounts',
-                name: 'Accounts',
-                meta: {
-                    title: 'Dynamext | Accounts',
-                    layout: 'default'
-                },
-                component: () => import(/* webpackChunkName: "accounts" */ '@/modules/admin/components/Accounts.vue'),
-            },
-        ],
-    }
+    },
+    {
+        path: '/admin/accounts',
+        name: 'Accounts',
+        meta: {
+            title: 'Dynamext | Accounts',
+            layout: 'default',
+            transitionName: 'fade'
+        },
+        component: () => import(/* webpackChunkName: "accounts" */ '@/modules/admin/components/Accounts.Dashboard.vue'),
+        beforeEnter: routeHelper.routeGaurd,
+    },
 ]

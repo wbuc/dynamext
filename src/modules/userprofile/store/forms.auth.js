@@ -43,19 +43,10 @@ const actions = {
 
         setTimeout(() => {
             // dev purposes
-            const localDev = true;
+            const localDev = false;
 
             if (!localDev) {
                 // web connection
-
-                // new implementation - still to test
-                // authApi.loginUser(userData.email, userData.password)
-                //     .then(response => {
-                //         context.dispatch('loginSuccess', response);
-                //     }, error => {
-                //      console.log(error);
-                //      context.commit('API_ERROR', error);
-                //      })
 
                 httpFormAuth.post(
                     `accounts:signInWithPassword?key=${config.appKey}`,
@@ -89,9 +80,7 @@ const actions = {
                 context.dispatch('loginSuccess', response)
             }
         }, 1500);
-
     },
-
 }
 
 export default { actions }

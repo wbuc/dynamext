@@ -5,20 +5,13 @@
                     <page-header>Administration</page-header>
                </v-col>
           </v-row>
-          <v-row wrap>
-               <v-col cols="12" sm="6" md="4" lg="3" v-for="(tile, index) in tiles" :key="index">
-                    <dashboard-tile :title="tile.title" :primaryAction="tile.action">
-                         <template v-slot:description>{{tile.description}}</template>
-                    </dashboard-tile>
-               </v-col>
-          </v-row>
+          <admin-dashboard></admin-dashboard>
      </v-container>
 </template>
 <script>
-import DashboardTile from "@/components/cards/Card-Basic-1";
-
+import AdminDashboard from "@/modules/admin/components/Admin.Dashboard";
 export default {
-     components: { DashboardTile },
+     components: { AdminDashboard },
      data() {
           return {
                tiles: [

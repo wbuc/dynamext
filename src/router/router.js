@@ -64,16 +64,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "comingSoon" */ '../views/ComingSoon.vue'),
     beforeEnter: routeGaurd
   },
-  // {
-  //   path: '/admin',
-  //   name: 'Admin',
-  //   meta: {
-  //     title: 'Dynamext | Administration',
-  //     layout: 'default'
-  //   },
-  //   component: () => import(/* webpackChunkName: "admin" */ '../views/Admin.vue'),
-  //   beforeEnter: routeGaurd
-  // },
   {
     path: '/login',
     name: 'Login',
