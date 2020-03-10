@@ -1,7 +1,4 @@
-
 import router from '@/router/router'
-import httpClient from '@/modules/userprofile/api/httpClient'
-
 import userProfileApi from '@/modules/userprofile/api/userProfile.api'
 
 const state = {
@@ -54,26 +51,64 @@ const actions = {
         if (!state.idToken) {
             return;
         }
-        //attache the token to access the resource.
-        httpClient.post('/users.json' + '?auth=' + state.idToken, userData)
-            .then(response => console.log(response));
+        userProfileApi.saveUser(state, userData)
+            .then(data => {
+                console.log('New User Saved ', data)
+            },
+                error => {
+                    console.log(error)
+                })
     },
     getUser({ commit, state }) {
         if (!state.idToken) {
             return;
         }
-        httpClient.get("/users.json" + '?auth=' + state.idToken)
-            .then(res => {
-                const data = res.data;
+
+        userProfileApi.getUser(state).then(data => {
+            const res = data.data;
+            const users = [];
+            console.log(data)
+            for (let key in res) {
+                const user = res[key];
+                user.id = key;
+                users.push(user);
+            }
+            console.log('get user done ', res);
+            commit('SAVE_USER', users[0]);
+        },
+            error => {
+                console.log(error)
+            });
+    },
+    getUsers({ context, state }) {
+
+        context.commit('API_LOADING');
+
+        if (!state.idToken) {
+            return;
+        }
+
+        return new Promise((resolve, reject) => {
+            userProfileApi.getUsers(state).then(data => {
+                const res = data.data;
                 const users = [];
-                for (let key in data) {
-                    const user = data[key];
+                console.log(data)
+                for (let key in res) {
+                    const user = res[key];
                     user.id = key;
                     users.push(user);
                 }
-                commit('SAVE_USER', users[0]);
-            })
-            .catch(error => console.log(error));
+                console.log('get users done ', users);
+                context.commit('API_COMPLETE');
+                resolve(users);
+            },
+                error => {
+                    console.log(error)
+                    context.commit('API_ERROR');
+                    reject(error);
+                });
+        })
+
     },
     signUpSuccess(context, { response, userData }) {
         console.log(userData)
@@ -155,14 +190,6 @@ const actions = {
         setTimeout(() => {
             context.dispatch('logout');
         }, expirationTime * 1000);
-    },
-    testAPI(context) {
-
-        userProfileApi.testUserAPI(context).then((data) => {
-            console.log(data)
-        }, err => {
-            console.log(err);
-        })
     }
 }
 

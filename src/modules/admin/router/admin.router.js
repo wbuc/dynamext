@@ -1,6 +1,17 @@
 
 import routeHelper from '@/modules/shared/helpers/router.helper'
 
+// const adminHome = resolve => {
+//     require.ensure(['@/views/Admin.vue'], () => {
+//         resolve(require('@/views/Admin.vue'));
+//     });
+// }
+// const accountsHome = resolve => {
+//     require.ensure(['@/modules/admin/components/Accounts.Dashboard.vue'], () => {
+//         resolve(require('@/modules/admin/components/Accounts.Dashboard.vue'));
+//     });
+// }
+
 
 export default [
     {
@@ -10,7 +21,7 @@ export default [
             title: 'Dynamext | Administration',
             layout: 'default'
         },
-        component: () => import(/* webpackChunkName: "admin" */ '@/views/Admin.vue'),
+        component: () => import(/* webpackChunkName: "admin" */'@/views/Admin.vue'),
         beforeEnter: routeHelper.routeGaurd,
     },
     {
@@ -21,7 +32,7 @@ export default [
             layout: 'default',
             transitionName: 'fade'
         },
-        component: () => import(/* webpackChunkName: "accounts" */ '@/modules/admin/components/Accounts.Dashboard.vue'),
+        component: () => import(/* webpackChunkName: "accounts" */'@/modules/admin/components/Accounts.Dashboard.vue'),
         beforeEnter: routeHelper.routeGaurd,
     },
 ]

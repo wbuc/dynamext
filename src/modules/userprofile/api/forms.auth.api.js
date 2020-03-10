@@ -25,12 +25,12 @@ const registerUser = (email, password) => {
             password: password,
             returnSecureToken: true
         }).then(response => {
+            console.log('register complete:', response)
             resolve(response)
         }).catch(error => reject(error));
 
     })
 
 };
-
 
 export default { loginUser, registerUser }

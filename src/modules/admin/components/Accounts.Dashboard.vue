@@ -18,7 +18,7 @@
           </v-row>
           <v-row>
                <v-col>
-                    <account-list :accounts="accounts"></account-list>
+                    <account-list :accounts="accounts" :headers="accountHeaders"></account-list>
                </v-col>
           </v-row>
      </v-container>
@@ -43,6 +43,10 @@ export default {
                          disabled: true,
                          link: true
                     }
+               ],
+               accountHeaders: [
+                    { text: "Email", value: "email" },
+                    { text: "Favourite Colour", value: "colour" }
                ],
                accounts: [
                     {

@@ -1,69 +1,36 @@
-//import authApi from '@/modules/userprofile/api/forms.auth.api'
-import config from '@/config/app'
-import httpFormAuth from 'axios'
-
-httpFormAuth.defaults.baseURL = "https://identitytoolkit.googleapis.com/v1/"
+import authApi from '@/modules/userprofile/api/forms.auth.api'
 
 const actions = {
     signUp(context, userData) {
 
         context.commit('API_LOADING');
 
-        // new implementation - still to test
-        // authApi.registerUser(userData.email, userData.password)
-        //     .then(response => {
-        //        context.dispatch('signUpSuccess', { response, userData });
-        //     }, error => {
-        //      console.log(error);
-        //      context.commit('API_ERROR', error);
-        //      })
-        httpFormAuth.post(
-            `accounts:signUp?key=${config.appKey}`,
-            {
-                email: userData.email,
-                password: userData.password,
-                //colour: userData.colour,
-                returnSecureToken: true
-            }
-        )
+        authApi.registerUser(userData.email, userData.password)
             .then(response => {
+                console.log('new register done ', response)
                 context.dispatch('signUpSuccess', { response, userData });
-
-            })
-            .catch(error => {
+            }, error => {
+                console.log(error);
                 context.commit('API_ERROR', error);
-
             });
-
 
     },
     login(context, userData) {
 
         context.commit('API_LOADING');
-
+        // use timeout to show loaders.
         setTimeout(() => {
             // dev purposes
             const localDev = false;
 
             if (!localDev) {
                 // web connection
-
-                httpFormAuth.post(
-                    `accounts:signInWithPassword?key=${config.appKey}`,
-                    {
-                        email: userData.email,
-                        password: userData.password,
-                        returnSecureToken: true
-                    }
-                )
+                authApi.loginUser(userData.email, userData.password)
                     .then(response => {
-                        console.log('success')
-                        console.log(response)
+                        console.log('new login done ', response)
                         context.dispatch('loginSuccess', response);
-
-                    })
-                    .catch(error => {
-                        console.log('erros')
+                    }, error => {
+                        console.log(error);
                         context.commit('API_ERROR', error);
                     });
             }
