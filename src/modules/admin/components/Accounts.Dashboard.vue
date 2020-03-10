@@ -46,7 +46,8 @@ export default {
                ],
                userHeaders: [
                     { text: "Email", value: "email" },
-                    { text: "Favourite Colour", value: "colour" }
+                    { text: "Favourite Colour", value: "colour" },
+                    { text: "Actions", value: "action", sortable: false }
                ],
 
                users: []

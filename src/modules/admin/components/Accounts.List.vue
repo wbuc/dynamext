@@ -24,6 +24,11 @@
                     </template>
                </v-edit-dialog>
           </template>
+
+          <template v-slot:item.action="{ item }">
+               <v-icon small class="mr-2 secondary--text" @click="editItem(item)">mdi-pencil</v-icon>
+               <v-icon class="error--text" small @click="deleteItem(item)">mdi-delete</v-icon>
+          </template>
      </v-data-table>
 </template>
 
@@ -34,7 +39,7 @@ export default {
      props: ["headers", "accounts"],
      data() {
           return {
-               singleSelect: true,
+               singleSelect: false,
                selected: [],
                max25chars: v => v.length <= 25 || "Input too long!",
                loading: true
@@ -49,7 +54,13 @@ export default {
                console.log("closed");
           },
           open() {},
-          cancel() {}
+          cancel() {},
+          deleteItem(item) {
+               console.log("deleted for ", item);
+          },
+          editItem(item) {
+               console.log("edit for ", item);
+          }
      },
      mounted() {
           setTimeout(() => {
