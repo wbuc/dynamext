@@ -29,7 +29,6 @@
                          <!-- <v-icon small left>check</v-icon> -->
                          <span>Sign In</span>
                     </v-btn>
-                    <v-btn class="red" @click="testAPI">Test Async Call</v-btn>
                </v-card-actions>
           </v-form>
      </v-card>
@@ -60,9 +59,6 @@ export default {
                };
 
                this.$store.dispatch("login", formData);
-          },
-          testAPI() {
-               this.$store.dispatch("testAPI");
           }
      }
 };

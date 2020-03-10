@@ -4,10 +4,10 @@
           :headers="headers"
           :items="accounts"
           :single-select="singleSelect"
-          item-key="email"
+          item-key="id"
           show-select
           class="elevation-3"
-          :loading="loading"
+          :loading="api.loading"
           loading-text="Loading... Please wait"
      >
           <template v-slot:item.email="props">
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
      props: ["headers", "accounts"],
      data() {
@@ -37,6 +39,9 @@ export default {
                max25chars: v => v.length <= 25 || "Input too long!",
                loading: true
           };
+     },
+     computed: {
+          ...mapGetters(["api"])
      },
      methods: {
           save() {},

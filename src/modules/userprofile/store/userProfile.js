@@ -80,9 +80,9 @@ const actions = {
                 console.log(error)
             });
     },
-    getUsers({ context, state }) {
-
-        context.commit('API_LOADING');
+    getUsers({ commit, state }) {
+        console.log(state)
+        commit('API_LOADING');
 
         if (!state.idToken) {
             return;
@@ -96,15 +96,21 @@ const actions = {
                 for (let key in res) {
                     const user = res[key];
                     user.id = key;
+                    if (res[key].colour) user.colour = res[key].colour.value
                     users.push(user);
                 }
-                console.log('get users done ', users);
-                context.commit('API_COMPLETE');
-                resolve(users);
+
+                //mimic some loading in the background.
+                setTimeout(() => {
+                    console.log('get users done ', users);
+                    commit('API_COMPLETE');
+                    resolve(users)
+                }, 2000);
+
             },
                 error => {
                     console.log(error)
-                    context.commit('API_ERROR');
+                    commit('API_ERROR');
                     reject(error);
                 });
         })

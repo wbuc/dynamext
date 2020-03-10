@@ -18,7 +18,7 @@
           </v-row>
           <v-row>
                <v-col>
-                    <account-list :accounts="accounts" :headers="accountHeaders"></account-list>
+                    <account-list :accounts="users" :headers="userHeaders"></account-list>
                </v-col>
           </v-row>
      </v-container>
@@ -44,27 +44,23 @@ export default {
                          link: true
                     }
                ],
-               accountHeaders: [
+               userHeaders: [
                     { text: "Email", value: "email" },
                     { text: "Favourite Colour", value: "colour" }
                ],
-               accounts: [
-                    {
-                         email: "wessel@wessel.com",
-                         colour: { text: "Jade Green", value: "Green" }
-                    },
-                    {
-                         email: "Karli@keewave.com",
-                         colour: { text: "ii", value: "ii" }
-                    },
-                    {
-                         email: "someone@thedoor.com",
-                         colour: { text: "kk", value: "kk" }
-                    }
-               ]
+
+               users: []
           };
      },
-     methods: {}
+     methods: {},
+     // before access to the DOM elements.
+     created() {},
+     // when access to the DOM elements
+     mounted() {
+          this.$store.dispatch("getUsers").then(data => {
+               this.users = data;
+          });
+     }
 };
 </script>
 
