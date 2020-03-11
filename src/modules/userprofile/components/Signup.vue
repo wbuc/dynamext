@@ -21,12 +21,7 @@
                          type="password"
                          v-model="formData.password"
                     ></v-text-field>
-                    <!-- <v-select
-                         :items="colours"
-                         v-model="formData.colour"
-                         prepend-icon="color_lens"
-                         label="Favourite Colour"
-                    ></v-select>-->
+
                     <v-btn id="button-colour" text color="accent" dark>
                          <span>
                               <v-icon left>expand_more</v-icon>

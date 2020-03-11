@@ -27,7 +27,16 @@
 
           <template v-slot:item.action="{ item }">
                <v-icon small class="mr-2 secondary--text" @click="editItem(item)">mdi-pencil</v-icon>
-               <v-icon class="error--text" small @click="deleteItem(item)">mdi-delete</v-icon>
+               <v-icon small class="error--text" @click="deleteItem(item)">mdi-delete</v-icon>
+               <v-menu offset-y transition="slide-y-transition">
+                    <template v-slot:activator="{ on }">
+                         <v-btn icon text color="secondary" dark v-on="on">
+                              <v-icon>more_vert</v-icon>
+                              <span></span>
+                         </v-btn>
+                    </template>
+                    <v-list></v-list>
+               </v-menu>
           </template>
      </v-data-table>
 </template>
@@ -42,7 +51,14 @@ export default {
                singleSelect: false,
                selected: [],
                max25chars: v => v.length <= 25 || "Input too long!",
-               loading: true
+               loading: true,
+               itemActions: [
+                    {
+                         title: "Edit",
+                         icon: "mdi-pencil",
+                         action: item => console.log("editing ", item)
+                    }
+               ]
           };
      },
      computed: {
@@ -50,9 +66,7 @@ export default {
      },
      methods: {
           save() {},
-          close() {
-               console.log("closed");
-          },
+          close() {},
           open() {},
           cancel() {},
           deleteItem(item) {
@@ -62,11 +76,7 @@ export default {
                console.log("edit for ", item);
           }
      },
-     mounted() {
-          setTimeout(() => {
-               this.loading = false;
-          }, 4000);
-     }
+     mounted() {}
 };
 </script>
 

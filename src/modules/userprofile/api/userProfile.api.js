@@ -47,4 +47,4 @@ const testUserAPI = (context) => {
 
 
 
-export default { saveUser, getUsers, getUser, testUserAPI }
+export default { saveUser, getUser, getUsers, testUserAPI }
