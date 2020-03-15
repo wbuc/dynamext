@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Signup from "../modules/userprofile/components/Signup";
+import Signup from "@/modules/userprofile/components/Signup";
 
 export default {
      name: "Signup-view",

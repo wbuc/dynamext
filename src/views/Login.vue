@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Login from "../modules/userprofile/components/Login";
+import Login from "@/modules/userprofile/components/Login";
 export default {
      name: "Login-view",
      components: { Login }
