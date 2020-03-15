@@ -15,16 +15,15 @@
                <template v-slot:top>
                     <v-toolbar flat>
                          <v-toolbar-title></v-toolbar-title>
-
-                         <v-btn text color="blue">
+                         <v-btn text color="blue" large class>
                               <v-icon left>mdi-magnify</v-icon>
                               <span>Action 1</span>
                          </v-btn>
-                         <v-btn text color="blue">
+                         <v-btn text large color="blue">
                               <v-icon left>table_chart</v-icon>
                               <span>Action 2</span>
                          </v-btn>
-                         <v-btn text color="blue">
+                         <v-btn text large color="blue">
                               <v-icon left>mdi-heart</v-icon>
                               <span>Action 3</span>
                          </v-btn>
@@ -61,13 +60,14 @@
                     </v-edit-dialog>
                </template>
                <template v-slot:item.action="{ item }">
-                    <!-- <v-icon small class="mr-2 secondary--text" @click="editItem(item)">mdi-pencil</v-icon>
-                    <v-icon small class="error--text" @click="deleteItem(item)">mdi-delete</v-icon>-->
+                    <!-- 
+                         <v-icon small class="mr-2 secondary--text" @click="editItem(item)">mdi-pencil</v-icon>
+                         <v-icon small class="error--text" @click="deleteItem(item)">mdi-delete</v-icon>
+                    -->
                     <v-menu offset-y transition="slide-y-transition">
                          <template v-slot:activator="{ on }">
-                              <v-btn icon text dark color="accent" v-on="on">
+                              <v-btn icon text dark color="blue" v-on="on">
                                    <v-icon>more_vert</v-icon>
-
                                    <span></span>
                               </v-btn>
                          </template>

@@ -1,27 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import store from '@/store/index'
-
+import routerHelper from '@/helpers/router.helper'
 import adminRoutes from '@/modules/admin/router/admin.router'
 
 Vue.use(VueRouter)
 
 
 // check if user is logged in.
-function routeGaurd(to, from, next) {
-  if (store.state.userProfile.idToken) {
-    console.log('from: ', from, ' to: ', to);
-    next();
-  }
-  else {
-    next('/login');
-  }
-}
-// lazy load components.
-function lazyLoad(view) {
-  return () => import(`@/views/${view}.vue`)
-}
+// function routeGaurd(to, from, next) {
+//   if (store.state.userProfile.idToken) {
+//     console.log('from: ', from, ' to: ', to);
+//     console.log('idToken: ', store.state.userProfile.idToken)
+//     next();
+//   }
+//   else {
+//     next('/login');
+//   }
+// }
+// lazy load components - temp
+// function lazyLoad(view) {
+//   return () => import(`@/views/${view}.vue`)
+// }
 
 const routes = [
   ...adminRoutes,
@@ -32,8 +32,8 @@ const routes = [
       title: 'Dynamext | Home',
       layout: 'default'
     },
-    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
-    beforeEnter: routeGaurd
+    component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+    beforeEnter: routerHelper.routeGaurd
   },
   {
     path: '/design',
@@ -42,8 +42,8 @@ const routes = [
       title: 'Dynamext | Design',
       layout: 'default'
     },
-    component: lazyLoad('DesignElements'),
-    beforeEnter: routeGaurd
+    component: import(/* webpackChunkName: "design" */ '@/views/DesignElements.vue'),
+    beforeEnter: routerHelper.routeGaurd
   },
   {
     path: '/about',
@@ -52,8 +52,8 @@ const routes = [
       title: 'Dynamext | About',
       layout: 'default'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    beforeEnter: routeGaurd
+    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+    beforeEnter: routerHelper.routeGaurd
   }, {
     path: '/comingsoon',
     name: 'ComingSoon',
@@ -61,8 +61,8 @@ const routes = [
       title: 'Dynamext | Coming Soon',
       layout: 'default'
     },
-    component: () => import(/* webpackChunkName: "comingSoon" */ '../views/ComingSoon.vue'),
-    beforeEnter: routeGaurd
+    component: () => import(/* webpackChunkName: "comingSoon" */ '@/views/ComingSoon.vue'),
+    beforeEnter: routerHelper.routeGaurd
   },
   {
     path: '/login',
@@ -72,7 +72,7 @@ const routes = [
       layout: 'anon',
       transitionName: 'slide'
     },
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
 
   }, {
     path: '/register',
@@ -82,7 +82,7 @@ const routes = [
       layout: 'anon',
       transitionName: 'slide'
     },
-    component: () => import(/* webpackChunkName: "register" */ '../views/Signup.vue'),
+    component: () => import(/* webpackChunkName: "register" */ '@/views/Signup.vue'),
 
   },
   {
@@ -90,7 +90,7 @@ const routes = [
     meta: {
       layout: 'anon',
     },
-    beforeEnter: routeGaurd,
+    beforeEnter: routerHelper.routeGaurd,
     // redirect:
     // {
     //   name: 'Login'

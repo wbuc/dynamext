@@ -1,5 +1,5 @@
 
-import routeHelper from '@/modules/shared/helpers/router.helper'
+import routeHelper from '@/helpers/router.helper'
 
 // const adminHome = resolve => {
 //     require.ensure(['@/views/Admin.vue'], () => {
@@ -32,7 +32,7 @@ export default [
             layout: 'default',
             transitionName: 'fade'
         },
-        component: () => import(/* webpackChunkName: "accounts" */'@/modules/admin/components/Accounts.Dashboard.vue'),
+        component: () => import(/* webpackChunkName: "admin" */'@/modules/admin/components/Accounts.Dashboard.vue'),
         beforeEnter: routeHelper.routeGaurd,
     },
 ]
