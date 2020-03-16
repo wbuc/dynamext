@@ -42,7 +42,7 @@
                     <span>ext</span>
                </v-toolbar-title>
                <v-spacer></v-spacer>
-               <v-btn @click="setTheme" icon color="accent">
+               <v-btn @click="setTheme" icon color="orange darken-4">
                     <v-icon>wb_sunny</v-icon>
                </v-btn>
 

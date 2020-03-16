@@ -24,8 +24,8 @@
                </v-card-text>
                <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="gotoSignup" text color="grey" width="100">Sign Up</v-btn>
-                    <v-btn type="submit" :loading="api.loading" color="success" width="100">
+                    <v-btn @click="gotoSignup" text color="grey" width="100" large>Sign Up</v-btn>
+                    <v-btn type="submit" :loading="api.loading" color="success" width="100" large>
                          <!-- <v-icon small left>check</v-icon> -->
                          <span>Sign In</span>
                     </v-btn>

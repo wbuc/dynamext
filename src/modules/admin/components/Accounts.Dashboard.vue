@@ -3,17 +3,7 @@
           <v-row>
                <v-col>
                     <page-header>Accounts</page-header>
-                    <v-breadcrumbs :items="breadcrumbs">
-                         <v-breadcrumbs-item
-                              slot="item"
-                              slot-scope="{ item }"
-                              :to="item.to"
-                              exact
-                         >{{item.text}}</v-breadcrumbs-item>
-                         <template v-slot:divider>
-                              <v-icon>mdi-chevron-right</v-icon>
-                         </template>
-                    </v-breadcrumbs>
+                    <x-breadcrumb :links="breadcrumbs"></x-breadcrumb>
                </v-col>
           </v-row>
           <v-row>
@@ -45,13 +35,14 @@ export default {
                     }
                ],
                userHeaders: [
-                    { text: "Email", value: "email" },
-                    { text: "Favourite Colour", value: "colour" },
+                    { text: "Email", value: "email", width: "40%" },
+                    { text: "Favourite Colour", value: "colour", width: "40%" },
                     {
                          text: "",
                          value: "action",
                          sortable: false,
-                         align: "end"
+                         align: "end",
+                         width: "20%"
                     }
                ],
 

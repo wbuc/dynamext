@@ -19,7 +19,7 @@ export default [
             title: 'Dynamext | Design',
             layout: 'default'
         },
-        component: import(/* webpackChunkName: "dashboard" */ '@/views/DesignElements.vue'),
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/DesignElements.vue'),
         beforeEnter: routerHelper.routeGaurd
     },
     {

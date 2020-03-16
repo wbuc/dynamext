@@ -44,9 +44,9 @@
                </v-card-text>
                <v-card-actions class="px-4 pb-4">
                     <v-spacer></v-spacer>
-                    <v-btn @click="gotoLogin" text color="grey" width="100">Sign In</v-btn>
+                    <v-btn @click="gotoLogin" text color="grey" width="100" large>Sign In</v-btn>
 
-                    <v-btn :loading="api.loading" type="submit" color="success" width="100">
+                    <v-btn :loading="api.loading" type="submit" color="success" width="100" large>
                          <span>Sign Up</span>
                     </v-btn>
                </v-card-actions>

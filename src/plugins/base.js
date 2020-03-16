@@ -11,11 +11,10 @@ import Placeholder from '@/views/layouts/Placeholder.vue'
 
 /* Headers */
 import PageHeader from '@/components/ui/PageHeader.vue'
+import Breadcrumbs from '@/components/ui/Breadcrumb.vue'
 
 /* CRADS */
 import BasicCard1 from '@/components/cards/Card-Basic-1'
-
-
 
 
 Vue.component('default-layout', Default);
@@ -24,5 +23,5 @@ Vue.component('anon-layout', Anon);
 Vue.component('placeholder-layout', Placeholder);
 Vue.component('page-header', PageHeader);
 
-
+Vue.component('x-breadcrumb', Breadcrumbs)
 Vue.component('x-basic-card', BasicCard1)

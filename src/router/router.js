@@ -12,8 +12,6 @@ const routes = [
   ...dashboardRoutes,
   ...adminRoutes,
   ...userProfileRoutes,
-
-
 ]
 
 const router = new VueRouter({

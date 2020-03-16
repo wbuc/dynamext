@@ -164,14 +164,14 @@ const actions = {
     tryAutoLogin(context) {
         const token = localStorage.getItem('token');
         if (!token) {
-            //router.replace({ name: 'Login' });
-            return
+            router.replace({ name: 'Login' });
+            //return
         }
         const expirationDate = localStorage.getItem('expirationDate');
         const now = new Date();
         if (now >= expirationDate) {
-            //router.replace({ name: 'Login' });
-            return
+            router.replace({ name: 'Login' });
+            //return
         }
         const userId = localStorage.getItem('userId');
         context.commit('AUTH_USER', {
