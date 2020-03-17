@@ -35,17 +35,21 @@ export default {
                     }
                ],
                userHeaders: [
+                    { text: "Id", value: "id", width: "20%" },
                     { text: "Email", value: "email", width: "40%" },
-                    { text: "Favourite Colour", value: "colour", width: "40%" },
+                    {
+                         text: "Favourite Colour",
+                         value: "colour",
+                         width: "25%"
+                    },
                     {
                          text: "",
                          value: "action",
                          sortable: false,
                          align: "end",
-                         width: "20%"
+                         width: "15%"
                     }
                ],
-
                users: []
           };
      },
@@ -55,6 +59,9 @@ export default {
      // when access to the DOM elements
      mounted() {
           this.$store.dispatch("getUsers").then(data => {
+               data.forEach(item => {
+                    item.editingEmail = false;
+               });
                this.users = data;
           });
      }

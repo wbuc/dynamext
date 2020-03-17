@@ -105,7 +105,7 @@ const actions = {
                     console.log('get users done ', users);
                     commit('API_COMPLETE');
                     resolve(users)
-                }, 2000);
+                }, 1000);
 
             },
                 error => {

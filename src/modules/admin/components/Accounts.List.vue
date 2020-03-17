@@ -5,7 +5,6 @@
                :headers="headers"
                :items="accounts"
                :single-select="singleSelect"
-               fixed-header="true"
                item-key="id"
                show-select
                class="elevation-3"
@@ -57,7 +56,28 @@
                     />
                     <v-divider></v-divider>
                </template>
-               <template v-slot:item.email="props">
+               <template v-slot:item.email="{ item }">
+                    <div
+                         @click="cellEditStart('email', item)"
+                         v-if="!item.editingEmail"
+                         class="editable"
+                    >{{ item.email }}</div>
+                    <div v-if="item.editingEmail">
+                         <v-text-field
+                              v-model="item.email"
+                              outlined
+                              single-line
+                              hide-details
+                              dense
+                              counter
+                              v-on:keyup.enter="cellEditDone('email', item)"
+                              v-on:keyup.esc="cellEditCancel('email', item)"
+                              @blur="cellEditDone('email', item)"
+                              ref="email"
+                         ></v-text-field>
+                    </div>
+               </template>
+               <!-- <template v-slot:item.email="props">
                     <v-edit-dialog
                          :return-value.sync="props.item.email"
                          @save="save"
@@ -65,7 +85,8 @@
                          @open="open"
                          @close="close"
                     >
-                         {{ props.item.email }}
+                         <div>{{ props.item.email }}</div>
+
                          <template v-slot:input>
                               <v-text-field
                                    v-model="props.item.email"
@@ -75,7 +96,7 @@
                               ></v-text-field>
                          </template>
                     </v-edit-dialog>
-               </template>
+               </template>-->
                <template v-slot:item.action="{ item }">
                     <!-- 
                          <v-icon small class="mr-2 secondary--text" @click="editItem(item)">mdi-pencil</v-icon>
@@ -122,6 +143,7 @@ export default {
                singleSelect: false,
                selected: [],
                max25chars: v => v.length <= 25 || "Input too long!",
+               editItemOriginal: {},
                loading: true,
                search: "",
                defaultPageSize: 50,
@@ -150,14 +172,51 @@ export default {
           }
      },
      methods: {
-          save() {},
-          close() {},
-          open() {},
-          cancel() {}
+          save(item) {
+               console.log(item, " saved!");
+          },
+
+          cellEditStart(field, item) {
+               // store the original value
+               this.editItemOriginal[field] = item[field];
+
+               this.accounts.forEach(account => {
+                    if (account.id === item.id) {
+                         account.editingEmail = true;
+                    }
+               });
+               this.$nextTick(() => {
+                    this.$refs[field].focus();
+               });
+          },
+          cellEditDone(field, item) {
+               //this func can be used to either save items on done, or build a list of items that can be saved manually.
+               console.log(field);
+               console.log(item[field]);
+               item.editingEmail = false;
+          },
+          cellEditCancel(field, item) {
+               this.accounts.forEach(account => {
+                    if (account.id == item.id) {
+                         account[field] = this.editItemOriginal[field];
+                    }
+               });
+               item.editingEmail = false;
+          }
+     },
+     beforeCreated() {
+          // Read more on Reactivity: https://vuejs.org/v2/guide/reactivity.html
+          // props need to be added to object before comoponent is created else Vue does not know about it.
+          // this.accounts.forEach((account, index) => {
+          //      this.$set(account, "editingId", false);
+          // });
      },
      mounted() {}
 };
 </script>
 
-<style>
+<style >
+table .editable {
+     cursor: pointer;
+}
 </style>
