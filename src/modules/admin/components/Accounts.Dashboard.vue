@@ -8,17 +8,22 @@
           </v-row>
           <v-row>
                <v-col>
-                    <account-list :accounts="users" :headers="userHeaders"></account-list>
+                    <x-data-table
+                         :data="userData"
+                         :headers="userHeaders"
+                         :dataItemActions="itemActions"
+                         @inlineEditDone="saveDataItem"
+                    ></x-data-table>
                </v-col>
           </v-row>
      </v-container>
 </template>
 
 <script>
-import AccountList from "@/modules/admin/components/Accounts.List";
+import DataTable from "@/components/table/Data-Table";
 
 export default {
-     components: { AccountList },
+     components: { "x-data-table": DataTable },
      data() {
           return {
                breadcrumbs: [
@@ -34,6 +39,7 @@ export default {
                          link: true
                     }
                ],
+               userData: [],
                userHeaders: [
                     { text: "Id", value: "id", width: "20%" },
                     { text: "Email", value: "email", width: "40%" },
@@ -50,19 +56,38 @@ export default {
                          width: "15%"
                     }
                ],
-               users: []
+               itemActions: [
+                    {
+                         title: "Edit",
+                         icon: "mdi-pencil",
+                         color: "secondary--text",
+                         action: item => console.log("editing ", item.email)
+                    },
+                    {
+                         title: "Delete",
+                         icon: "mdi-delete",
+                         color: "error--text",
+                         action: item => console.log("deleting ", item.email)
+                    }
+               ]
           };
      },
-     methods: {},
+     methods: {
+          saveDataItem(item) {
+               console.log("Event emitted: ", item);
+          }
+     },
      // before access to the DOM elements.
      created() {},
      // when access to the DOM elements
      mounted() {
           this.$store.dispatch("getUsers").then(data => {
                data.forEach(item => {
-                    item.editingEmail = false;
+                    item.quickEdit = {
+                         email: false
+                    };
                });
-               this.users = data;
+               this.userData = data;
           });
      }
 };
