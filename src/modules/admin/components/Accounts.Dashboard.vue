@@ -12,7 +12,8 @@
                          :data="userData"
                          :headers="userHeaders"
                          :dataItemActions="itemActions"
-                         @inlineEditDone="saveDataItem"
+                         :quickEditFields="quickEditFields"
+                         @itemEditDone="saveDataItem"
                     ></x-data-table>
                </v-col>
           </v-row>
@@ -69,7 +70,8 @@ export default {
                          color: "error--text",
                          action: item => console.log("deleting ", item.email)
                     }
-               ]
+               ],
+               quickEditFields: [{ name: "email" }]
           };
      },
      methods: {
