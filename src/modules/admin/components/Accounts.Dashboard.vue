@@ -9,6 +9,7 @@
           <v-row>
                <v-col>
                     <x-data-table
+                         :toolbarActions="toolbarActions"
                          :data="userData"
                          :headers="userHeaders"
                          :dataItemActions="itemActions"
@@ -40,6 +41,22 @@ export default {
                          link: true
                     }
                ],
+               toolbarActions: {
+                    showNew: false,
+                    showEdit: false,
+                    showDelete: true,
+                    custom: [
+                         {
+                              text: "Bloop",
+                              icon: "change_history",
+                              color: "pink",
+                              action: items => {
+                                   // List of selected items in the data table.
+                                   console.log(items);
+                              }
+                         }
+                    ]
+               },
                userData: [],
                userHeaders: [
                     { text: "Id", value: "id", width: "20%" },

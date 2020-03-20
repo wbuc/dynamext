@@ -4,7 +4,7 @@
                :data="data"
                :headers="headers"
                :dataItemActions="dataItemActions"
-               @inlineEditDone="saveDataItem"
+               @itemEditDone="saveDataItem"
           ></x-data-table>
      </div>
 </template>

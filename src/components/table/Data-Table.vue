@@ -19,17 +19,41 @@
                <v-toolbar flat>
                     <v-toolbar-title></v-toolbar-title>
                     <v-toolbar-items wrap>
-                         <v-btn text large color="primary">
+                         <v-btn v-if="toolbarActions.showNew" text large color="primary">
                               <v-icon left>add_box</v-icon>
                               <span>New</span>
                          </v-btn>
-                         <v-btn text color="secondary" :disabled="isItemSelected" large class>
+                         <v-btn
+                              v-if="toolbarActions.showEdit"
+                              text
+                              color="secondary"
+                              :disabled="isItemSelected"
+                              large
+                              class
+                         >
                               <v-icon left>linear_scale</v-icon>
                               <span>Edit</span>
                          </v-btn>
-                         <v-btn text large color="error" :disabled="isItemSelected">
+                         <v-btn
+                              v-if="toolbarActions.showDelete"
+                              text
+                              large
+                              color="error"
+                              :disabled="isItemSelected"
+                         >
                               <v-icon left>delete</v-icon>
                               <span>Delete</span>
+                         </v-btn>
+                         <v-btn
+                              v-for="(action, index) in toolbarActions.custom"
+                              :key="index"
+                              text
+                              large
+                              :color="action.color"
+                              @click="customClick(action.action)"
+                         >
+                              <v-icon left>{{action.icon}}</v-icon>
+                              <span>{{action.text}}</span>
                          </v-btn>
                     </v-toolbar-items>
                     <v-spacer></v-spacer>
@@ -109,7 +133,13 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-     props: ["headers", "data", "dataItemActions"],
+     props: [
+          "toolbarActions",
+          "headers",
+          "data",
+          "dataItemActions",
+          "quickEditFields"
+     ],
      data() {
           return {
                singleSelect: false,
@@ -133,7 +163,9 @@ export default {
           save(item) {
                console.log(item, " saved!");
           },
-
+          customClick(func) {
+               func(this.selected);
+          },
           cellEditStart(field, item) {
                // store the original value
                this.editItemOriginal[field] = item[field];
