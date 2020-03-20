@@ -47,9 +47,18 @@ export default {
                     showDelete: true,
                     custom: [
                          {
-                              text: "Bloop",
+                              text: "Summary",
                               icon: "change_history",
-                              color: "pink",
+                              color: "teal accent-3",
+                              action: items => {
+                                   // List of selected items in the data table.
+                                   console.log(items);
+                              }
+                         },
+                         {
+                              text: "Histoy",
+                              icon: "bar_chart",
+                              color: "pink accent-3",
                               action: items => {
                                    // List of selected items in the data table.
                                    console.log(items);
