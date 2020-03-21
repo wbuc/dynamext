@@ -15,32 +15,23 @@
                          :dataItemActions="itemActions"
                          :quickEditFields="quickEditFields"
                          @itemEditDone="saveDataItem"
+                         @newClicked="handleNewClick"
+                         @editClicked="handleEditClick"
+                         @deleteClicked="handleDeleteClick"
                     ></x-data-table>
                </v-col>
           </v-row>
-          <v-dialog v-model="showDialog" max-width="290">
-               <v-card>
-                    <v-card-title class="headline">Use Google's location service?</v-card-title>
-
-                    <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
-
-                    <v-card-actions>
-                         <v-spacer></v-spacer>
-
-                         <v-btn color="green darken-1" text @click="showDialog = false">Disagree</v-btn>
-
-                         <v-btn color="green darken-1" text @click="showDialog = false">Agree</v-btn>
-                    </v-card-actions>
-               </v-card>
-          </v-dialog>
+          <account-detail :showDialog="showDetail" @detailClosed="showDetail =false"></account-detail>
      </v-container>
 </template>
 
 <script>
 import DataTable from "@/components/table/Data-Table";
+import AccountDetail from "./Accounts.Detail";
 
 export default {
-     components: { "x-data-table": DataTable },
+     name: "Accounts.Dashboard",
+     components: { "x-data-table": DataTable, "account-detail": AccountDetail },
      data() {
           return {
                breadcrumbs: [
@@ -57,8 +48,8 @@ export default {
                     }
                ],
                toolbarActions: {
-                    showNew: false,
-                    showEdit: false,
+                    showNew: true,
+                    showEdit: true,
                     showDelete: true,
                     custom: [
                          {
@@ -73,7 +64,7 @@ export default {
                          {
                               text: "Histoy",
                               icon: "bar_chart",
-                              color: "pink accent-3",
+                              color: "pink",
                               action: items => {
                                    this.showDialog = true;
                                    // List of selected items in the data table.
@@ -84,8 +75,16 @@ export default {
                },
                userData: [],
                userHeaders: [
-                    { text: "Id", value: "id", width: "20%" },
-                    { text: "Email", value: "email", width: "40%" },
+                    {
+                         text: "Id",
+                         value: "id",
+                         width: "20%"
+                    },
+                    {
+                         text: "Email",
+                         value: "email",
+                         width: "40%"
+                    },
                     {
                          text: "Favourite Colour",
                          value: "colour",
@@ -113,13 +112,27 @@ export default {
                          action: item => console.log("deleting ", item.email)
                     }
                ],
-               quickEditFields: [{ name: "email" }],
-               showDialog: false
+               quickEditFields: [{ name: "email" }, { name: "colour" }],
+               showDetail: false
           };
      },
      methods: {
+          handleNewClick() {
+               console.log("new emitted!");
+               this.showDetail = true;
+          },
+          handleEditClick(data) {
+               console.log("edit emitted ", data);
+          },
+          handleDeleteClick(data) {
+               // do delete stuff here call api ect.
+               console.log("Delete emitted ", data);
+          },
           saveDataItem(item) {
                console.log("Event emitted: ", item);
+          },
+          closeModal() {
+               this.showModal = false;
           }
      },
      // before access to the DOM elements.
@@ -129,7 +142,8 @@ export default {
           this.$store.dispatch("getUsers").then(data => {
                data.forEach(item => {
                     item.quickEdit = {
-                         email: false
+                         email: false,
+                         colour: false
                     };
                });
                this.userData = data;

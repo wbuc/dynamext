@@ -1,133 +1,148 @@
 <template>
-     <v-data-table
-          v-model="selected"
-          :headers="headers"
-          :items="data"
-          :single-select="singleSelect"
-          item-key="id"
-          show-select
-          class="elevation-3"
-          :search="search"
-          :loading="api.loading"
-          loading-text="Loading... Please wait"
-          :items-per-page="defaultPageSize"
-          :footer-props="{
+     <span>
+          <v-data-table
+               v-model="selected"
+               :headers="headers"
+               :items="data"
+               :single-select="singleSelect"
+               item-key="id"
+               show-select
+               class="elevation-3"
+               :search="search"
+               :loading="api.loading"
+               loading-text="Loading... Please wait"
+               :items-per-page="defaultPageSize"
+               :footer-props="{
                               'items-per-page-options': pageSizes
                               }"
-     >
-          <template v-slot:top="{pagination, options, updateOptions}">
-               <v-toolbar flat>
-                    <v-toolbar-title></v-toolbar-title>
-                    <v-toolbar-items wrap>
-                         <v-btn v-if="toolbarActions.showNew" text large color="primary">
-                              <v-icon left>add_box</v-icon>
-                              <span>New</span>
-                         </v-btn>
-                         <v-btn
-                              v-if="toolbarActions.showEdit"
-                              text
-                              color="secondary"
-                              :disabled="isItemSelected"
-                              large
-                              class
-                         >
-                              <v-icon left>linear_scale</v-icon>
-                              <span>Edit</span>
-                         </v-btn>
-                         <v-btn
-                              v-if="toolbarActions.showDelete"
-                              text
-                              large
-                              color="error"
-                              :disabled="isItemSelected"
-                         >
-                              <v-icon left>delete</v-icon>
-                              <span>Delete</span>
-                         </v-btn>
-                         <v-btn
-                              v-for="(action, index) in toolbarActions.custom"
-                              :key="index"
-                              text
-                              large
-                              :color="action.color"
-                              @click="customClick(action.action)"
-                         >
-                              <v-icon left>{{action.icon}}</v-icon>
-                              <span>{{action.text}}</span>
-                         </v-btn>
-                    </v-toolbar-items>
-                    <v-spacer></v-spacer>
-                    <v-text-field
-                         v-model="search"
-                         append-icon="mdi-magnify"
-                         label="Search"
-                         outlined
-                         single-line
-                         hide-details
-                         dense
-                    ></v-text-field>
-               </v-toolbar>
-
-               <v-data-footer
-                    :pagination="pagination"
-                    :options="options"
-                    :items-per-page-options="pageSizes"
-                    @update:options="updateOptions"
-                    items-per-page-text="$vuetify.dataTable.itemsPerPageText"
-               />
-               <v-divider></v-divider>
-          </template>
-          <template v-slot:item.email="{ item }">
-               <div
-                    @click="cellEditStart('email', item)"
-                    v-if="!item.quickEdit.email"
-                    class="editable"
-               >{{ item.email }}</div>
-               <div v-if="item.quickEdit.email">
-                    <v-text-field
-                         v-model="item.email"
-                         outlined
-                         single-line
-                         hide-details
-                         dense
-                         counter
-                         v-on:keyup.enter="cellEditDone('email', item)"
-                         v-on:keyup.esc="cellEditCancel('email', item)"
-                         @blur="cellEditDone('email', item)"
-                         ref="email"
-                    ></v-text-field>
-               </div>
-          </template>
-
-          <template v-slot:item.action="{ item }">
-               <v-menu offset-y transition="slide-y-transition">
-                    <template v-slot:activator="{ on }">
-                         <v-btn icon text dark color="grey" v-on="on">
-                              <v-icon>more_vert</v-icon>
-                              <span></span>
-                         </v-btn>
-                    </template>
-                    <v-list>
-                         <v-list-item
-                              v-for="(dataItem, index) in dataItemActions"
-                              :key="index"
-                              router
-                              @click="dataItem.action(item)"
-                              active-class="secondary--text"
+          >
+               <template v-slot:top="{pagination, options, updateOptions}">
+                    <v-toolbar flat>
+                         <v-toolbar-title></v-toolbar-title>
+                         <v-toolbar-items wrap>
+                              <v-btn
+                                   v-if="toolbarActions.showNew"
+                                   @click="newClick"
+                                   text
+                                   large
+                                   color="primary"
+                              >
+                                   <v-icon left>add_box</v-icon>
+                                   <span>New</span>
+                              </v-btn>
+                              <v-btn
+                                   v-if="toolbarActions.showEdit"
+                                   @click="editClick"
+                                   text
+                                   color="secondary"
+                                   :disabled="isItemSelected"
+                                   large
+                                   class
+                              >
+                                   <v-icon left>linear_scale</v-icon>
+                                   <span>Edit</span>
+                              </v-btn>
+                              <v-btn
+                                   v-if="toolbarActions.showDelete"
+                                   @click="deleteClick"
+                                   text
+                                   large
+                                   color="error"
+                                   :disabled="isItemSelected"
+                              >
+                                   <v-icon left>delete</v-icon>
+                                   <span>Delete</span>
+                              </v-btn>
+                              <v-btn
+                                   v-for="(action, index) in toolbarActions.custom"
+                                   :key="index"
+                                   text
+                                   large
+                                   :color="action.color"
+                                   @click="customClick(action.action)"
+                              >
+                                   <v-icon left>{{action.icon}}</v-icon>
+                                   <span>{{action.text}}</span>
+                              </v-btn>
+                         </v-toolbar-items>
+                         <v-spacer></v-spacer>
+                         <v-text-field
+                              v-model="search"
+                              append-icon="mdi-magnify"
+                              label="Search"
+                              outlined
+                              single-line
+                              hide-details
                               dense
-                         >
-                              <v-list-item-action>
-                                   <v-icon :class="dataItem.color" small>{{dataItem.icon}}</v-icon>
-                              </v-list-item-action>
-                              <v-list-item-content>
-                                   <v-list-item-title>{{dataItem.title}}</v-list-item-title>
-                              </v-list-item-content>
-                         </v-list-item>
-                    </v-list>
-                    <v-list></v-list>
-               </v-menu>
-          </template>
-     </v-data-table>
+                         ></v-text-field>
+                    </v-toolbar>
+
+                    <v-data-footer
+                         :pagination="pagination"
+                         :options="options"
+                         :items-per-page-options="pageSizes"
+                         @update:options="updateOptions"
+                         items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+                    />
+                    <v-divider></v-divider>
+               </template>
+               <template v-slot:item.email="{ item }">
+                    <div
+                         @click="cellEditStart('email', item)"
+                         v-if="!item.quickEdit.email"
+                         class="editable"
+                    >{{ item.email }}</div>
+                    <div v-if="item.quickEdit.email">
+                         <v-text-field
+                              v-model="item.email"
+                              outlined
+                              single-line
+                              hide-details
+                              dense
+                              counter
+                              v-on:keyup.enter="cellEditDone('email', item)"
+                              v-on:keyup.esc="cellEditCancel('email', item)"
+                              @blur="cellEditDone('email', item)"
+                              ref="email"
+                         ></v-text-field>
+                    </div>
+               </template>
+
+               <template v-slot:item.action="{ item }">
+                    <v-menu offset-y transition="slide-y-transition">
+                         <template v-slot:activator="{ on }">
+                              <v-btn icon text dark color="grey" v-on="on">
+                                   <v-icon>more_vert</v-icon>
+                                   <span></span>
+                              </v-btn>
+                         </template>
+                         <v-list>
+                              <v-list-item
+                                   v-for="(dataItem, index) in dataItemActions"
+                                   :key="index"
+                                   router
+                                   @click="dataItem.action(item)"
+                                   active-class="secondary--text"
+                                   dense
+                              >
+                                   <v-list-item-action>
+                                        <v-icon :class="dataItem.color" small>{{dataItem.icon}}</v-icon>
+                                   </v-list-item-action>
+                                   <v-list-item-content>
+                                        <v-list-item-title>{{dataItem.title}}</v-list-item-title>
+                                   </v-list-item-content>
+                              </v-list-item>
+                         </v-list>
+                         <v-list></v-list>
+                    </v-menu>
+               </template>
+          </v-data-table>
+          <x-confirmation
+               :showDialog="showConfirm"
+               @confirmAction="handleDeleteConfirm"
+               @cancelAction="handleDeleteCancel"
+          ></x-confirmation>
+     </span>
 </template>
 
 <script>
@@ -149,7 +164,8 @@ export default {
                loading: true,
                search: "",
                defaultPageSize: 50,
-               pageSizes: [25, 50, 100]
+               pageSizes: [25, 50, 100],
+               showConfirm: false
           };
      },
      computed: {
@@ -162,6 +178,25 @@ export default {
      methods: {
           save(item) {
                console.log(item, " saved!");
+          },
+          newClick() {
+               this.$emit("newClicked");
+          },
+          editClick() {
+               this.$emit("editClicked", this.selected);
+          },
+          deleteClick() {
+               this.showConfirm = true;
+          },
+          handleDeleteConfirm() {
+               this.showConfirm = false;
+               // when the confirmation goes through
+               // always work in context of selected items - and do what is required
+               this.$emit("deleteClicked", this.selected);
+          },
+          handleDeleteCancel() {
+               this.showConfirm = false;
+               console.log("delete clicked");
           },
           customClick(func) {
                func(this.selected);

@@ -10,11 +10,16 @@ import Anon from '@/views/layouts/Anon.vue'
 import Placeholder from '@/views/layouts/Placeholder.vue'
 
 /* Headers */
-import PageHeader from '@/components/ui/PageHeader.vue'
-import Breadcrumbs from '@/components/ui/Breadcrumb.vue'
+import PageHeader from '@/components/shared/PageHeader.vue'
+import Breadcrumbs from '@/components/shared/Breadcrumb.vue'
 
 /* CRADS */
 import BasicCard1 from '@/components/cards/Card-Basic-1'
+
+/* MODALS */
+import Modal from '@/components/dialog/Modal.vue'
+import Popup from '@/components/dialog/Popup.vue'
+import Confirm from '@/components/dialog/Confirmation.vue'
 
 
 Vue.component('default-layout', Default);
@@ -23,5 +28,8 @@ Vue.component('anon-layout', Anon);
 Vue.component('placeholder-layout', Placeholder);
 Vue.component('page-header', PageHeader);
 
-Vue.component('x-breadcrumb', Breadcrumbs)
-Vue.component('x-basic-card', BasicCard1)
+Vue.component('x-breadcrumb', Breadcrumbs);
+Vue.component('x-basic-card', BasicCard1);
+Vue.component('x-modal', Modal);
+Vue.component('x-popup', Popup);
+Vue.component('x-confirmation', Confirm)
