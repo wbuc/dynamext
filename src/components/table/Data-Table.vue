@@ -193,7 +193,6 @@ export default {
                this.$emit("editClicked", this.selected);
           },
           deleteClick() {
-               console.log("dele");
                this.confirmation.title = "Delete confirmation";
                this.confirmation.text =
                     "Are you sure you want to complete this action?";

@@ -66,7 +66,7 @@ export default {
                               icon: "bar_chart",
                               color: "pink",
                               action: items => {
-                                   this.showDialog = true;
+                                   // this.showDialog = true;
                                    // List of selected items in the data table.
                                    console.log(items);
                               }
@@ -129,7 +129,7 @@ export default {
                console.log("Delete emitted ", data);
 
                //the notification will be driven from the state after the API has been called. Only putting here for testing.
-               this.$store.dispatch("notifySuccess", "Items deleted!");
+               this.$store.dispatch("notifySuccess", "Accounts deleted!");
           },
           saveDataItem(item) {
                console.log("Event emitted: ", item);

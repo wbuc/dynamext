@@ -3,9 +3,9 @@
           <v-layout column align-center>
                <v-flex class="mt-5">
                     <v-avatar size="100">
-                         <img src="/logo-black.png" alt />
+                         <img src="/logo-user1.jpg" alt />
                     </v-avatar>
-                    <p class="grey--text text-center subheading mt-1">John Doe</p>
+                    <p class="grey--text text-center subheading mt-1">Wessel Büchling</p>
                </v-flex>
                <v-flex class="mb-4 mt-2">
                     <!-- <popup @projectSaved="showSnackbar" /> -->

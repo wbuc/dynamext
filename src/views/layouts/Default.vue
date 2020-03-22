@@ -1,7 +1,6 @@
 <template>
      <div>
           <x-notification></x-notification>
-
           <Navbar />
           <v-content>
                <transition-page>
