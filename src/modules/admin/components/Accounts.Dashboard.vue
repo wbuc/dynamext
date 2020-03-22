@@ -127,6 +127,9 @@ export default {
           handleDeleteClick(data) {
                // do delete stuff here call api ect.
                console.log("Delete emitted ", data);
+
+               //the notification will be driven from the state after the API has been called. Only putting here for testing.
+               this.$store.dispatch("notifySuccess", "Items deleted!");
           },
           saveDataItem(item) {
                console.log("Event emitted: ", item);

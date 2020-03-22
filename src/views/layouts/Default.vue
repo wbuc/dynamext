@@ -1,5 +1,7 @@
 <template>
      <div>
+          <x-notification></x-notification>
+
           <Navbar />
           <v-content>
                <transition-page>
@@ -11,7 +13,6 @@
 
 <script>
 import Navbar from "@/components/layout/Navbar";
-
 import TransitionPage from "@/components/shared/Transition";
 
 export default {

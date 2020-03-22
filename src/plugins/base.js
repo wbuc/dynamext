@@ -20,6 +20,7 @@ import BasicCard1 from '@/components/cards/Card-Basic-1'
 import Modal from '@/components/dialog/Modal.vue'
 import Popup from '@/components/dialog/Popup.vue'
 import Confirm from '@/components/dialog/Confirmation.vue'
+import Notification from '@/components/dialog/Notification.vue'
 
 
 Vue.component('default-layout', Default);
@@ -33,3 +34,4 @@ Vue.component('x-basic-card', BasicCard1);
 Vue.component('x-modal', Modal);
 Vue.component('x-popup', Popup);
 Vue.component('x-confirmation', Confirm)
+Vue.component('x-notification', Notification)

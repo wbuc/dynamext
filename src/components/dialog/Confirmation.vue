@@ -7,12 +7,13 @@
           :transition="false"
      >
           <v-card class>
-               <v-card-title
-                    class="x-dialog-header headline grey--text pa-5"
-                    primary-title
-               >Confirmation</v-card-title>
+               <v-card-title class="x-dialog-header headline grey--text pa-5" primary-title>
+                    <slot name="title">Confirmation</slot>
+               </v-card-title>
 
-               <v-card-text class="pa-5">Are you sure?</v-card-text>
+               <v-card-text class="pa-5">
+                    <slot name="text">Are you sure?</slot>
+               </v-card-text>
 
                <v-divider></v-divider>
                <v-card-actions class="pa-3">

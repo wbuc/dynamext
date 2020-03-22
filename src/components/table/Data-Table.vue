@@ -138,10 +138,13 @@
                </template>
           </v-data-table>
           <x-confirmation
-               :showDialog="showConfirm"
+               :showDialog="showDeleteConfirm"
                @confirmAction="handleDeleteConfirm"
                @cancelAction="handleDeleteCancel"
-          ></x-confirmation>
+          >
+               <template v-slot:title>{{confirmation.title}}</template>
+               <template v-slot:text>{{confirmation.text}}</template>
+          </x-confirmation>
      </span>
 </template>
 
@@ -165,7 +168,11 @@ export default {
                search: "",
                defaultPageSize: 50,
                pageSizes: [25, 50, 100],
-               showConfirm: false
+               showDeleteConfirm: false,
+               confirmation: {
+                    title: "",
+                    text: ""
+               }
           };
      },
      computed: {
@@ -186,16 +193,20 @@ export default {
                this.$emit("editClicked", this.selected);
           },
           deleteClick() {
-               this.showConfirm = true;
+               console.log("dele");
+               this.confirmation.title = "Delete confirmation";
+               this.confirmation.text =
+                    "Are you sure you want to complete this action?";
+               this.showDeleteConfirm = true;
           },
           handleDeleteConfirm() {
-               this.showConfirm = false;
+               this.showDeleteConfirm = false;
                // when the confirmation goes through
                // always work in context of selected items - and do what is required
                this.$emit("deleteClicked", this.selected);
           },
           handleDeleteCancel() {
-               this.showConfirm = false;
+               this.showDeleteConfirm = false;
                console.log("delete clicked");
           },
           customClick(func) {
