@@ -58,7 +58,7 @@
                                    :key="index"
                                    text
                                    large
-                                   :color="action.color"
+                                   :color="action.color ? action.color : 'accent'"
                                    @click="customClick(action.action)"
                               >
                                    <v-icon left>{{action.icon}}</v-icon>

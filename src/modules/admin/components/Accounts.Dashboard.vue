@@ -64,10 +64,18 @@ export default {
                          {
                               text: "Histoy",
                               icon: "bar_chart",
-                              color: "pink",
+                              color: "orange",
                               action: items => {
                                    // this.showDialog = true;
                                    // List of selected items in the data table.
+                                   console.log(items);
+                              }
+                         },
+                         {
+                              text: "Disable",
+                              icon: "accessible_forward",
+
+                              action: items => {
                                    console.log(items);
                               }
                          }
