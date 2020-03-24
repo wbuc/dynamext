@@ -196,14 +196,15 @@ const actions = {
     tryAutoLogin(context) {
         const token = localStorage.getItem('token');
         if (!token) {
-            router.replace({ name: 'Login' });
-            //return
+            return
         }
-        const expirationDate = localStorage.getItem('expirationDate');
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
         const now = new Date();
+
+        console.log(now);
+        console.log(expirationDate);
         if (now >= expirationDate) {
-            router.replace({ name: 'Login' });
-            //return
+            return;
         }
         const userId = localStorage.getItem('userId');
         context.commit('AUTH_USER', {
@@ -211,7 +212,6 @@ const actions = {
             localId: userId
         })
         router.replace({ name: 'Home' });
-
     },
     logout({ commit }) {
         commit('LOGOUT_USER');

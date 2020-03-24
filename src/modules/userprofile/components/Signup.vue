@@ -10,6 +10,7 @@
                          name="email"
                          prepend-icon="mail"
                          type="text"
+                         solo-inverted
                          v-model="formData.email"
                     ></v-text-field>
 
@@ -19,6 +20,7 @@
                          name="password"
                          prepend-icon="lock"
                          type="password"
+                         solo-inverted
                          v-model="formData.password"
                     ></v-text-field>
 

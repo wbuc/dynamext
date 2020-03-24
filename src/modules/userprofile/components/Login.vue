@@ -10,6 +10,7 @@
                          name="login"
                          prepend-icon="person"
                          type="text"
+                         solo-inverted
                          v-model="email"
                     ></v-text-field>
 
@@ -19,6 +20,7 @@
                          name="password"
                          prepend-icon="lock"
                          type="password"
+                         solo-inverted
                          v-model="password"
                     ></v-text-field>
                </v-card-text>
