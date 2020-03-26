@@ -4,11 +4,7 @@
                <span class="font-weight-light" style="border-bottom: solid 1px;">Dynam</span>
                <span style="border-bottom: solid 1px;">ext</span>
           </v-toolbar-title>
-          <div
-               v-if="large"
-               class="text-uppercase grey--text display-1 mb-10"
-               style="text-align:center"
-          >
+          <div v-if="large" class="text-uppercase grey--text display-1" style="text-align:center">
                <span class="font-weight-light" style="border-bottom: solid 3px;">Dynam</span>
                <span style="border-bottom: solid 3px;">ext</span>
           </div>

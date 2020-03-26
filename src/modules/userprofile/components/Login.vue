@@ -1,6 +1,6 @@
 <template>
-     <v-card class="login elevation-5 login">
-          <v-card-title class>
+     <v-card flat light class="login" :style="{background:'#FAFAFA'}">
+          <v-card-title class="mb-10">
                <x-logo large></x-logo>
                <!-- <div>
                     <span class="font-weight-light" style="border-bottom: solid 3px;">Dynam</span>
@@ -19,6 +19,7 @@
                          type="text"
                          solo-inverted
                          v-model="email"
+                         flat
                     ></v-text-field>
 
                     <v-text-field
@@ -29,12 +30,13 @@
                          type="password"
                          solo-inverted
                          v-model="password"
+                         flat
                     ></v-text-field>
                </v-card-text>
                <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn @click="gotoSignup" text color="grey" width="100" large>Sign Up</v-btn>
-                    <v-btn type="submit" :loading="api.loading" color="primary" width="100" large>
+                    <v-btn type="submit" :loading="api.loading" color="primary" width="150px" large>
                          <!-- <v-icon small left>check</v-icon> -->
                          <span>Sign In</span>
                     </v-btn>

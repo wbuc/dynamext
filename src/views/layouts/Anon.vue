@@ -23,12 +23,14 @@ export default {
 .anon-layout {
      padding: 0px !important;
 
+     background: #fafafa;
+     /* 
      background: rgb(180, 122, 189);
      background: radial-gradient(
           circle,
           rgba(180, 122, 189, 1) 0%,
           rgba(78, 30, 112, 1) 100%
-     );
+     ); */
 
      /* background: rgb(100, 167, 233);
      background: radial-gradient(
