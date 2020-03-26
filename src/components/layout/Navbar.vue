@@ -36,11 +36,8 @@
           </v-navigation-drawer>
           <!-- TOPBAR -->
           <v-app-bar clipped-left :flat="false" app>
-               <v-app-bar-nav-icon class="grey--text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-               <v-toolbar-title class="text-uppercase grey--text">
-                    <span class="font-weight-light">Dynam</span>
-                    <span>ext</span>
-               </v-toolbar-title>
+               <v-app-bar-nav-icon class="grey--text mr-3" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+               <x-logo></x-logo>
                <v-spacer></v-spacer>
                <v-btn @click="setTheme" icon color="orange darken-4">
                     <v-icon>wb_sunny</v-icon>

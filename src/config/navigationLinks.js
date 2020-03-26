@@ -23,6 +23,11 @@ const drawer = [
     },
     {
         icon: "folder",
+        text: "Fileroom",
+        route: "/fileroom"
+    },
+    {
+        icon: "info",
         text: "About",
         route: "/about"
     },
@@ -31,6 +36,11 @@ const drawer = [
         icon: "color_lens",
         text: "Design Elements",
         route: "/design"
+    },
+    {
+        icon: "mdi-alphabetical",
+        text: "Icons",
+        route: "/icons"
     },
     {
         icon: "settings",

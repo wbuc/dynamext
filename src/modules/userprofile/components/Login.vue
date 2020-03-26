@@ -1,8 +1,15 @@
 <template>
      <v-card class="login elevation-5 login">
-          <v-card-title class="justify-center">
-               <span class="headline font-weight-light">Login form</span>
+          <v-card-title class>
+               <x-logo large></x-logo>
+               <!-- <div>
+                    <span class="font-weight-light" style="border-bottom: solid 3px;">Dynam</span>
+                    <span style="border-bottom: solid 3px;">ext</span>
+               </div>-->
           </v-card-title>
+          <v-card-subtitle class style="text-align:center">
+               <span class="justify-center font-weight-light title">Login form</span>
+          </v-card-subtitle>
           <v-form @submit.prevent="onLogin">
                <v-card-text>
                     <v-text-field
@@ -66,5 +73,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="sass" scoped>
+
 </style>

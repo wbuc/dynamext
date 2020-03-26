@@ -154,7 +154,7 @@ export default {
                data.forEach(item => {
                     item.quickEdit = {
                          email: false,
-                         colour: false
+                         color: false
                     };
                });
                this.userData = data;

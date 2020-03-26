@@ -23,6 +23,16 @@ export default [
         beforeEnter: routerHelper.routeGaurd
     },
     {
+        path: '/icons',
+        name: 'Icons',
+        meta: {
+            title: 'Dynamext | Icons',
+            layout: 'default'
+        },
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Icons.vue'),
+        beforeEnter: routerHelper.routeGaurd
+    },
+    {
         path: '/about',
         name: 'About',
         meta: {

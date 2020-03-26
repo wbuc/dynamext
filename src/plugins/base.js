@@ -22,6 +22,9 @@ import Popup from '@/components/dialog/Popup.vue'
 import Confirm from '@/components/dialog/Confirmation.vue'
 import Notification from '@/components/dialog/Notification.vue'
 
+/* BRAND */
+import Logo from '@/components/brand/Logo.vue'
+
 
 Vue.component('default-layout', Default);
 Vue.component('no-sidebar-layout', NoSidebar);
@@ -35,3 +38,6 @@ Vue.component('x-modal', Modal);
 Vue.component('x-popup', Popup);
 Vue.component('x-confirmation', Confirm)
 Vue.component('x-notification', Notification)
+
+Vue.component('x-logo', Logo)
+

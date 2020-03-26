@@ -1,8 +1,13 @@
 <template>
      <v-card class="signup elevation-5">
-          <v-toolbar class="text-cetner" color flat>
-               <v-toolbar-title class="text-center">Signup form</v-toolbar-title>
-          </v-toolbar>
+          <v-card-title class>
+               <x-logo large></x-logo>
+               <!-- <span class="font-weight-light" style="border-bottom: solid 3px;">Dynam</span>
+               <span style="border-bottom: solid 3px;">ext</span>-->
+          </v-card-title>
+          <v-card-subtitle class style="text-align:center">
+               <span class="justify-center font-weight-light title">Signup form</span>
+          </v-card-subtitle>
           <v-form @submit.prevent="signUp">
                <v-card-text>
                     <v-text-field
