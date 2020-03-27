@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import dashboardRoutes from '@/modules/dashboard/router/dashboard.router'
 import adminRoutes from '@/modules/admin/router/admin.router'
 import userProfileRoutes from '@/modules/userprofile/router/userProfile.router'
+import fileroomRoutes from '@/modules/fileroom/router/fileroom.router'
+
 
 Vue.use(VueRouter)
 
@@ -12,6 +14,7 @@ const routes = [
   ...dashboardRoutes,
   ...adminRoutes,
   ...userProfileRoutes,
+  ...fileroomRoutes
 ]
 
 const router = new VueRouter({

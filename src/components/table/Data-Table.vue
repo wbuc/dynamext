@@ -60,6 +60,7 @@
                                    large
                                    :color="action.color ? action.color : 'accent'"
                                    @click="customClick(action.action)"
+                                   class="hidden-sm-and-down"
                               >
                                    <v-icon left>{{action.icon}}</v-icon>
                                    <span>{{action.text}}</span>

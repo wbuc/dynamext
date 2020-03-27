@@ -38,7 +38,7 @@
                               <span v-else-if="!formData.colour">Favourite Colour</span>
                          </span>
                     </v-btn>
-                    <v-menu offset-y transition="scroll-x-transition" activator="#button-colour">
+                    <v-menu offset-y transition="slide-y-transition" activator="#button-colour">
                          <v-list>
                               <v-list-item
                                    v-for="(colour, index) in colours"

@@ -45,9 +45,8 @@
 
                <v-menu offset-y transition="slide-y-transition">
                     <template v-slot:activator="{ on }">
-                         <v-btn text color="grey" dark v-on="on">
-                              <v-icon left>expand_more</v-icon>
-                              <span>Menu</span>
+                         <v-btn text icon color="grey" dark v-on="on">
+                              <v-icon>settings</v-icon>
                          </v-btn>
                     </template>
                     <v-list>
