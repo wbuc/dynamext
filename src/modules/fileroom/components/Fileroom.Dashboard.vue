@@ -1,5 +1,5 @@
 <template>
-     <v-row no-gutters>
+     <v-row>
           <v-col cols="12" :md="treeviewExpand ? '7':'3'">
                <v-card tile flat style="background-color: #ff000000">
                     <v-tabs v-model="activeTab" color="grey" background-color dark>
@@ -12,7 +12,6 @@
 
                     <v-tabs-items v-model="activeTab" style="background-color: #ff000000">
                          <v-tab-item key="Fileroom" style="background-color: #ff000000">
-                              <!-- toolbox here -->
                               <v-card flat style="background-color: #ff000000">
                                    <v-card-actions>
                                         <v-btn icon>
@@ -47,7 +46,7 @@
                                         activatable
                                         color="grey"
                                         :selectable="treeviewConfig.selectable"
-                                        selected-color="accent"
+                                        selected-color="grey lighten-3"
                                         :transition="treeviewConfig.transition"
                                         dense
                                         :hoverable="treeviewConfig.hoverable"
@@ -110,27 +109,38 @@
                               </v-card>
                          </v-tab-item>
                          <v-tab-item key="Personal">
-                              <v-card flat>
-                                   <v-card-text>And my place!</v-card-text>
-                              </v-card>
+                              <v-card flat>Personal treeview!</v-card>
                          </v-tab-item>
                     </v-tabs-items>
                </v-card>
           </v-col>
           <v-col cols="12" :md="treeviewExpand ? '5':'9'">
-               <v-card class="pa-2" outlined tile>Data table here!</v-card>
+               <div class="x-treeview-table">
+                    <v-data-table
+                         :headers="dt.headers"
+                         :items="dt.desserts"
+                         :items-per-page="5"
+                         item-key="name"
+                         class="elevation-1"
+                         :footer-props="{
+                                             showFirstLastPage: true,
+                                             firstIcon: 'mdi-arrow-collapse-left',
+                                             lastIcon: 'mdi-arrow-collapse-right',
+                                             prevIcon: 'mdi-minus',
+                                             nextIcon: 'mdi-plus'
+                                        }"
+                    ></v-data-table>
+               </div>
           </v-col>
      </v-row>
 </template>
 
 <script>
-//  @mouseover="treeviewConfig.toolbarHover = true"
-//  @mouseout="treeviewConfig.toolbarHover = false"
-//  :class="{'primary--text': treeviewConfig.toolbarHover}"
 import sampleData from "@/config/data";
 
 export default {
      name: "Fileroom.Dashboard",
+
      data() {
           return {
                treeviewConfig: {
@@ -143,6 +153,7 @@ export default {
                },
                treeviewExpand: false,
                activeTab: null,
+               selectedItems: [],
                open: ["public"],
                fileType: {
                     folder: {
@@ -177,7 +188,59 @@ export default {
                          color: "error--text",
                          action: item => console.log("deleting ", item)
                     }
-               ]
+               ],
+               dt: {
+                    headers: [
+                         {
+                              text: "Dessert (100g serving)",
+                              align: "start",
+                              value: "name"
+                         },
+                         { text: "Category", value: "category" }
+                    ],
+                    desserts: [
+                         {
+                              name: "Frozen Yogurt",
+                              category: "Ice cream"
+                         },
+                         {
+                              name: "Ice cream sandwich",
+                              category: "Ice cream"
+                         },
+                         {
+                              name: "Eclair",
+                              category: "Cookie"
+                         },
+                         {
+                              name: "Cupcake",
+                              category: "Pastry"
+                         },
+                         {
+                              name: "Gingerbread",
+                              category: "Cookie"
+                         },
+                         {
+                              name: "Jelly bean",
+                              category: "Candy"
+                         },
+                         {
+                              name: "Lollipop",
+                              category: "Candy"
+                         },
+                         {
+                              name: "Honeycomb",
+                              category: "Toffee"
+                         },
+                         {
+                              name: "Donut",
+                              category: "Pastry"
+                         },
+                         {
+                              name: "KitKat",
+                              category: "Candy"
+                         }
+                    ]
+               }
           };
      },
      methods: {
@@ -186,6 +249,9 @@ export default {
           },
           toggleTreeviewExpand() {
                this.treeviewExpand = !this.treeviewExpand;
+          },
+          addFolder() {
+               console.log(this.selectedItems);
           }
      }
 };
@@ -194,5 +260,10 @@ export default {
 <style>
 .v-treeview-node {
      cursor: pointer;
+}
+.x-treeview-table {
+     position: -webkit-sticky;
+     position: sticky;
+     top: 100px;
 }
 </style>

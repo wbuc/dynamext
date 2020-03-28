@@ -1,5 +1,5 @@
 <template>
-     <v-container class="px-12 my-5">
+     <v-container fluid class="px-12 my-5">
           <v-row>
                <v-col>
                     <page-header>Fileroom</page-header>
