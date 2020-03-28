@@ -15,7 +15,7 @@ import Navbar from "@/components/layout/Navbar";
 import TransitionPage from "@/components/shared/Transition";
 
 export default {
-     name: "DefaultLayout",
+     name: "Layout.Default",
      components: { Navbar, TransitionPage },
      computed: {},
      data() {

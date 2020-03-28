@@ -1,5 +1,5 @@
 <template>
-     <v-row>
+     <v-row wrap>
           <v-col cols="12" sm="6" md="4" lg="3" v-for="(tile, index) in tiles" :key="index">
                <dashboard-tile
                     :title="tile.title"

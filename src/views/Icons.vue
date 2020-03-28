@@ -15,7 +15,7 @@
                                    large
                                    class="mx-0 font-weight-light"
                                    color="accent"
-                                   href="https://material.io/resources/icons/?style=baseline"
+                                   href="https://materialdesignicons.com/cdn/1.0.62/"
                                    target="_blank"
                                    round
                               >
