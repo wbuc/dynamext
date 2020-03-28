@@ -2,8 +2,8 @@
      <v-row no-gutters>
           <v-col cols="12" :md="treeviewExpand ? '7':'3'">
                <v-card tile flat style="background-color: #ff000000">
-                    <v-tabs v-model="activeTab" fixed-tabs background-color dark>
-                         <v-tabs-slider color="red"></v-tabs-slider>
+                    <v-tabs v-model="activeTab" color="grey" background-color dark>
+                         <v-tabs-slider color="accent"></v-tabs-slider>
                          <v-tab key="Fileroom">Fileroom</v-tab>
                          <v-tab key="Personal">
                               <v-icon class="mr-2" small color="yellow darken-3">mdi-star-outline</v-icon>Favourites
@@ -14,8 +14,32 @@
                          <v-tab-item key="Fileroom" style="background-color: #ff000000">
                               <!-- toolbox here -->
                               <v-card flat style="background-color: #ff000000">
+                                   <v-card-actions>
+                                        <v-btn icon>
+                                             <v-icon>mdi-folder-plus</v-icon>
+                                        </v-btn>
+                                        <v-btn icon>
+                                             <v-icon>mdi-refresh</v-icon>
+                                        </v-btn>
+                                        <v-text-field
+                                             v-model="treeviewConfig.search"
+                                             append-icon="mdi-magnify"
+                                             label="Search"
+                                             outlined
+                                             single-line
+                                             hide-details
+                                             dense
+                                        ></v-text-field>
+                                        <v-spacer></v-spacer>
+                                        <v-btn icon @click="toggleTreeviewExpand">
+                                             <v-icon>mdi-arrow-expand</v-icon>
+                                        </v-btn>
+                                   </v-card-actions>
+                              </v-card>
+                              <v-card flat style="background-color: #ff000000">
                                    <v-treeview
                                         v-model="tree"
+                                        :search="treeviewConfig.search"
                                         :open="open"
                                         :items="items"
                                         item-key="name"
@@ -26,16 +50,17 @@
                                         selected-color="accent"
                                         :transition="treeviewConfig.transition"
                                         dense
+                                        :hoverable="treeviewConfig.hoverable"
                                    >
                                         <template v-slot:prepend="{ item, open }">
                                              <v-icon
                                                   v-if="item.type == 'folder'"
-                                                  color="info"
-                                             >{{ open ? 'mdi-folder-open' : 'mdi-folder' }}</v-icon>
+                                                  :color="fileType[item.type].open.color"
+                                             >{{ open ? fileType[item.type].open.name: fileType[item.type].closed.name }}</v-icon>
                                              <v-icon
-                                                  :color="files[item.type].color"
+                                                  :color="fileType[item.type].color"
                                                   v-else
-                                             >{{ files[item.type].name }}</v-icon>
+                                             >{{ fileType[item.type].name }}</v-icon>
                                         </template>
 
                                         <template v-slot:label="{ item }">
@@ -99,6 +124,9 @@
 </template>
 
 <script>
+//  @mouseover="treeviewConfig.toolbarHover = true"
+//  @mouseout="treeviewConfig.toolbarHover = false"
+//  :class="{'primary--text': treeviewConfig.toolbarHover}"
 import sampleData from "@/config/data";
 
 export default {
@@ -106,15 +134,28 @@ export default {
      data() {
           return {
                treeviewConfig: {
+                    search: null,
                     selectable: true,
                     transition: true,
-                    openOnClick: false
+                    openOnClick: false,
+                    hoverable: true,
+                    toolbarHover: false
                },
                treeviewExpand: false,
                activeTab: null,
                open: ["public"],
-               files: {
-                    doc: { name: "mdi-file", color: "orange lighten-1" },
+               fileType: {
+                    folder: {
+                         open: {
+                              name: "mdi-folder-open",
+                              color: "info lighten"
+                         },
+                         closed: { name: "mdi-folder", color: "info" }
+                    },
+                    doc: {
+                         name: "mdi-file-document",
+                         color: "warning lighten-1"
+                    },
                     schedule: {
                          name: "mdi-file-document-outline",
                          color: "danger"
@@ -142,10 +183,16 @@ export default {
      methods: {
           editme(item) {
                console.log(item);
+          },
+          toggleTreeviewExpand() {
+               this.treeviewExpand = !this.treeviewExpand;
           }
      }
 };
 </script>
 
 <style>
+.v-treeview-node {
+     cursor: pointer;
+}
 </style>
