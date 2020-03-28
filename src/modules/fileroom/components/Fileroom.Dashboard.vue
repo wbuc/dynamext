@@ -21,23 +21,26 @@
                                         item-key="name"
                                         :open-on-click="treeviewConfig.openOnClick"
                                         activatable
-                                        color="warning"
+                                        color="grey"
                                         :selectable="treeviewConfig.selectable"
-                                        selected-color="error"
+                                        selected-color="accent"
                                         :transition="treeviewConfig.transition"
                                         dense
                                    >
                                         <template v-slot:prepend="{ item, open }">
                                              <v-icon
-                                                  v-if="!item.file"
+                                                  v-if="item.type == 'folder'"
                                                   color="info"
                                              >{{ open ? 'mdi-folder-open' : 'mdi-folder' }}</v-icon>
-                                             <v-icon v-else>{{ files[item.file] }}</v-icon>
+                                             <v-icon
+                                                  :color="files[item.type].color"
+                                                  v-else
+                                             >{{ files[item.type].name }}</v-icon>
                                         </template>
 
                                         <template v-slot:label="{ item }">
                                              <div class="x-branch">
-                                                  <span>{{item.name}} {{item.hover}}</span>
+                                                  <span class>{{item.name}}</span>
                                              </div>
                                         </template>
                                         <template v-slot:append="{ item }">
@@ -57,7 +60,7 @@
                                                   </template>
                                                   <v-list>
                                                        <v-list-item
-                                                            v-for="(dataItem, index) in treeviewItemActions"
+                                                            v-for="(dataItem, index) in treeviewDocumentActions"
                                                             :key="index"
                                                             router
                                                             @click="dataItem.action(item)"
@@ -96,6 +99,8 @@
 </template>
 
 <script>
+import sampleData from "@/config/data";
+
 export default {
      name: "Fileroom.Dashboard",
      data() {
@@ -103,144 +108,22 @@ export default {
                treeviewConfig: {
                     selectable: true,
                     transition: true,
-                    openOnClick: true
+                    openOnClick: false
                },
-               treeviewExpand: true,
+               treeviewExpand: false,
                activeTab: null,
                open: ["public"],
                files: {
-                    html: "mdi-language-html5",
-                    js: "mdi-nodejs",
-                    json: "mdi-json",
-                    md: "mdi-markdown",
-                    pdf: "mdi-file-pdf",
-                    png: "mdi-file-image",
-                    txt: "mdi-file-document-outline",
-                    doc: "mdi-file",
-                    xls: "mdi-file-excel"
+                    doc: { name: "mdi-file", color: "orange lighten-1" },
+                    schedule: {
+                         name: "mdi-file-document-outline",
+                         color: "danger"
+                    },
+                    finding: { name: "mdi-file-find", color: "success" }
                },
                tree: [],
-               items: [
-                    {
-                         name: "1 Corporate", // IMPORTANT: Change the file prop to type and set it to document and folder.
-                         hover: false,
-                         children: [
-                              {
-                                   name: "1.2 Board Minutes",
-                                   hover: false,
-                                   children: [
-                                        {
-                                             name: "1.2.1 2017 Board Minutes",
-                                             hover: false
-                                        },
-                                        {
-                                             name: "1.2.2 2018 Board Minutes",
-                                             hover: false
-                                        }
-                                   ]
-                              },
-                              {
-                                   name: "1.3 Cert of Incorporation",
-                                   hover: false,
-                                   children: [
-                                        {
-                                             name:
-                                                  " 1.3.1 AUS_Certificate of Registration",
-                                             hover: false,
-                                             file: "doc"
-                                        },
-                                        {
-                                             name:
-                                                  "1.3.2 BR_Gründungsdokument_Sample Brasil",
-                                             hover: false,
-                                             file: "doc"
-                                        },
-                                        {
-                                             name: "1.3.3 CN_FB",
-                                             hover: false,
-                                             file: "doc"
-                                        },
-                                        {
-                                             name: "1.3.4 FR_FB",
-                                             hover: false,
-                                             file: "doc"
-                                        },
-                                        {
-                                             name: "1.3.5 TestG_DE",
-                                             hover: false,
-                                             file: "doc"
-                                        }
-                                   ]
-                              },
-                              { name: "1.5 Intercompany" },
-                              { name: "1.6 Org Charts" },
-                              { name: "1.7 Prior Names" },
-                              { name: "1.8 Articles of Incorporation" }
-                         ]
-                    },
-                    {
-                         name: "node_modules",
-                         hover: false
-                    },
-                    {
-                         name: "public",
-                         hover: false,
-                         children: [
-                              {
-                                   name: "static",
-                                   hover: false,
-                                   children: [
-                                        {
-                                             name: "logo.png",
-                                             hover: false,
-                                             file: "png"
-                                        }
-                                   ]
-                              },
-                              {
-                                   name: "favicon.ico",
-                                   hover: false,
-                                   file: "png"
-                              },
-                              {
-                                   name: "index.html",
-                                   hover: false,
-                                   file: "html"
-                              }
-                         ]
-                    },
-                    {
-                         name: ".gitignore",
-                         hover: false,
-                         file: "txt"
-                    },
-                    {
-                         name: "babel.config.js",
-                         hover: false,
-                         file: "js"
-                    },
-                    {
-                         name: "package.json",
-                         hover: false,
-                         file: "json"
-                    },
-                    {
-                         name: "README.md",
-                         hover: false,
-                         file: "md"
-                    },
-                    {
-                         name: "vue.config.js",
-                         hover: false,
-                         file: "js"
-                    },
-                    {
-                         name: "yarn.lock",
-                         hover: false,
-                         file: "txt"
-                    }
-               ],
-               treeviewItemActions: [
+               items: sampleData.fileroomData,
+               treeviewDocumentActions: [
                     {
                          title: "Edit",
                          icon: "mdi-pencil",
