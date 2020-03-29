@@ -23,7 +23,10 @@ export default {
 .anon-layout {
      padding: 0px !important;
 
-     background: #fafafa;
+     background: #272727;
+     /* Light */
+     /* background: #fafafa; */
+
      /* 
      background: rgb(180, 122, 189);
      background: radial-gradient(

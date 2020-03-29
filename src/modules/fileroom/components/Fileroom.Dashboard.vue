@@ -1,6 +1,6 @@
 <template>
      <v-row>
-          <v-col cols="12" :md="treeviewExpand ? '7':'3'">
+          <v-col cols="12" :md="treeviewExpand ? '7':'4'">
                <v-card tile flat style="background-color: #ff000000">
                     <v-tabs v-model="activeTab" color="grey" background-color dark>
                          <v-tabs-slider color="accent"></v-tabs-slider>
@@ -114,7 +114,7 @@
                     </v-tabs-items>
                </v-card>
           </v-col>
-          <v-col cols="12" :md="treeviewExpand ? '5':'9'">
+          <v-col cols="12" :md="treeviewExpand ? '5':'8'">
                <div class="x-treeview-table">
                     <v-data-table
                          :headers="dt.headers"

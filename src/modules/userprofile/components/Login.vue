@@ -1,5 +1,5 @@
 <template>
-     <v-card flat light class="login" :style="{background:'#FAFAFA'}">
+     <v-card flat dark class="login" :style="{background:'#272727'}">
           <v-card-title class="mb-10">
                <x-logo large></x-logo>
                <!-- <div>

@@ -1,5 +1,5 @@
 <template>
-     <v-card flat light class="signup" :style="{background:'#FAFAFA'}">
+     <v-card flat dark class="signup" :style="{background:'#272727'}">
           <v-card-title class="mb-10">
                <x-logo large></x-logo>
                <!-- <span class="font-weight-light" style="border-bottom: solid 3px;">Dynam</span>

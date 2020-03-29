@@ -7,7 +7,7 @@ export default [
         name: 'Fileroom',
         meta: {
             title: 'Dynamext | Fileroom',
-            layout: 'wide'
+            layout: 'default'
         },
         component: () => import(/* webpackChunkName: "fileroom" */ '@/views/Fileroom.vue'),
         beforeEnter: routerHelper.routeGaurd
