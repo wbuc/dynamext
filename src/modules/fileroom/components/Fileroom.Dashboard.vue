@@ -204,7 +204,7 @@ export default {
                     finding: { name: "mdi-file-find", color: "success" }
                },
                selectedItems: [],
-               items: sampleData.fileroomData2000,
+               items: sampleData.fileroomData5000,
                treeviewDocumentActions: [
                     {
                          title: "Edit",

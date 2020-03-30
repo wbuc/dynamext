@@ -1,8 +1,23 @@
 <template>
      <li>
-          <div :class="{bold: isFolder}" @click="toggle" @dblclick="makeFolder">
+          <div @click="toggle" @dblclick="makeFolder">
+               <span v-if="isFolder">
+                    <span v-if="isOpen">
+                         <v-icon small class="mr-3">mdi-chevron-down</v-icon>
+                         <v-icon>mdi-folder-open</v-icon>
+                    </span>
+
+                    <span v-if="!isOpen">
+                         <v-icon small class="mr-3">mdi-chevron-right</v-icon>
+                         <v-icon>mdi-folder</v-icon>
+                    </span>
+               </span>
+               <span v-if="isDoc">
+                    <span class="ml-7">
+                         <v-icon>mdi-file-document</v-icon>
+                    </span>
+               </span>
                {{ item.name }}
-               <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
           </div>
           <ul v-show="isOpen" v-if="isFolder">
                <tree-item
@@ -29,7 +44,11 @@ export default {
      },
      computed: {
           isFolder: function() {
-               return this.item.children && this.item.children.length;
+               //return this.item.children && this.item.children.length;
+               return this.item.type == "folder";
+          },
+          isDoc: function() {
+               return this.item.type == "doc";
           }
      },
      methods: {
@@ -51,6 +70,10 @@ export default {
 <style>
 .item {
      cursor: pointer;
+     padding: 4px;
+}
+.item:hover {
+     /* opacity: 0.08; */
 }
 .bold {
      font-weight: bold;
@@ -58,6 +81,6 @@ export default {
 ul {
      padding-left: 1em;
      line-height: 1.5em;
-     list-style-type: dot;
+     list-style-type: none;
 }
 </style>

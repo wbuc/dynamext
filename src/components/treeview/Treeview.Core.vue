@@ -6,12 +6,24 @@
 
 <script>
 import treeItem from "./Treeview.Node";
+
+import sampleData from "@/config/data";
+
+function addNodeProps(node) {
+     node.check = false;
+     if (node.children) {
+          node.children.forEach(x => {
+               addNodeProps(x);
+          });
+     }
+}
+
 export default {
      name: "Treeview.Core",
      components: { treeItem },
      data() {
           return {
-               treeData: {
+               treeDataOld: {
                     name: "My Tree",
                     children: [
                          { name: "hello" },
@@ -38,7 +50,8 @@ export default {
                               ]
                          }
                     ]
-               }
+               },
+               treeData: sampleData.fileroomData2000
           };
      },
      methods: {
@@ -50,9 +63,13 @@ export default {
           },
           addItem: function(item) {
                item.children.push({
-                    name: "new stuff"
+                    name: "new stuff",
+                    type: "folder"
                });
           }
+     },
+     created() {
+          addNodeProps(this.treeData);
      }
 };
 </script>
