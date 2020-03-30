@@ -2,33 +2,41 @@
      <v-row>
           <v-col cols="12" :md="treeviewExpand ? '7':'4'">
                <v-card tile flat style="background-color: #ff000000">
-                    <v-tabs v-model="activeTab" color="grey" background-color dark>
-                         <v-tabs-slider color="accent"></v-tabs-slider>
-                         <v-tab key="Fileroom">Fileroom</v-tab>
-                         <v-tab key="Personal">
-                              <v-icon class="mr-2" small color="yellow darken-3">mdi-star-outline</v-icon>Favourites
-                         </v-tab>
-                    </v-tabs>
+                    <v-toolbar class="elevation-2">
+                         <v-tabs v-model="activeTab" color="grey">
+                              <v-tabs-slider color="accent"></v-tabs-slider>
+                              <v-tab key="Fileroom">Fileroom</v-tab>
+                              <v-tab key="Personal">
+                                   <v-icon
+                                        class="mr-2"
+                                        small
+                                        color="yellow darken-3"
+                                   >mdi-star-outline</v-icon>Favourites
+                              </v-tab>
+                         </v-tabs>
+                         <v-text-field
+                              style="width:100%"
+                              v-model="treeviewConfig.search"
+                              append-icon="mdi-magnify"
+                              label="Search"
+                              outlined
+                              single-line
+                              hide-details
+                              dense
+                         ></v-text-field>
+                    </v-toolbar>
 
                     <v-tabs-items v-model="activeTab" style="background-color: #ff000000">
                          <v-tab-item key="Fileroom" style="background-color: #ff000000">
                               <v-card flat style="background-color: #ff000000">
                                    <v-card-actions>
-                                        <v-btn icon>
+                                        <v-btn icon @click="addFolder">
                                              <v-icon>mdi-folder-plus</v-icon>
                                         </v-btn>
                                         <v-btn icon>
                                              <v-icon>mdi-refresh</v-icon>
                                         </v-btn>
-                                        <v-text-field
-                                             v-model="treeviewConfig.search"
-                                             append-icon="mdi-magnify"
-                                             label="Search"
-                                             outlined
-                                             single-line
-                                             hide-details
-                                             dense
-                                        ></v-text-field>
+
                                         <v-spacer></v-spacer>
                                         <v-btn icon @click="toggleTreeviewExpand">
                                              <v-icon>mdi-arrow-expand</v-icon>
@@ -37,16 +45,19 @@
                               </v-card>
                               <v-card flat style="background-color: #ff000000">
                                    <v-treeview
-                                        v-model="tree"
-                                        :search="treeviewConfig.search"
-                                        :open="open"
                                         :items="items"
-                                        item-key="name"
+                                        v-model="selectedNodes"
+                                        :search="treeviewConfig.search"
+                                        :return-object="treeviewConfig.returnObject"
+                                        @update:active="nodeSelected"
+                                        :open="open"
+                                        item-key="id"
                                         :open-on-click="treeviewConfig.openOnClick"
                                         activatable
                                         color="grey"
                                         :selectable="treeviewConfig.selectable"
                                         selected-color="grey lighten-3"
+                                        :selection-type="treeviewConfig.selectionType"
                                         :transition="treeviewConfig.transition"
                                         dense
                                         :hoverable="treeviewConfig.hoverable"
@@ -149,11 +160,13 @@ export default {
                     transition: true,
                     openOnClick: false,
                     hoverable: true,
-                    toolbarHover: false
+                    toolbarHover: false,
+                    returnObject: true,
+                    selectionType: "leaf" //leaf or independent or all(throws error in console.)
                },
                treeviewExpand: false,
                activeTab: null,
-               selectedItems: [],
+               selectedNodes: [],
                open: ["public"],
                fileType: {
                     folder: {
@@ -173,8 +186,8 @@ export default {
                     },
                     finding: { name: "mdi-file-find", color: "success" }
                },
-               tree: [],
-               items: sampleData.fileroomData,
+               selectedItems: [],
+               items: sampleData.fileroomData2000,
                treeviewDocumentActions: [
                     {
                          title: "Edit",
@@ -251,7 +264,10 @@ export default {
                this.treeviewExpand = !this.treeviewExpand;
           },
           addFolder() {
-               console.log(this.selectedItems);
+               console.log(this.selectedNodes);
+          },
+          nodeSelected(node) {
+               console.log(node);
           }
      }
 };
