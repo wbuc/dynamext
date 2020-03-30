@@ -119,8 +119,25 @@
                                    </v-treeview>
                               </v-card>
                          </v-tab-item>
-                         <v-tab-item key="Personal">
-                              <v-card flat>Personal treeview!</v-card>
+                         <v-tab-item key="Personal" style="background-color: #ff000000">
+                              <v-card flat style="background-color: #ff000000">
+                                   <v-card-actions>
+                                        <v-btn icon @click="addFolder">
+                                             <v-icon>mdi-folder-plus</v-icon>
+                                        </v-btn>
+                                        <v-btn icon>
+                                             <v-icon>mdi-refresh</v-icon>
+                                        </v-btn>
+
+                                        <v-spacer></v-spacer>
+                                        <v-btn icon @click="toggleTreeviewExpand">
+                                             <v-icon>mdi-arrow-expand</v-icon>
+                                        </v-btn>
+                                   </v-card-actions>
+                              </v-card>
+                              <v-card flat style="background-color: #ff000000">
+                                   <tree-view></tree-view>
+                              </v-card>
                          </v-tab-item>
                     </v-tabs-items>
                </v-card>
@@ -148,10 +165,10 @@
 
 <script>
 import sampleData from "@/config/data";
-
+import treeView from "@/components/treeview/Treeview.Core";
 export default {
      name: "Fileroom.Dashboard",
-
+     components: { treeView },
      data() {
           return {
                treeviewConfig: {
