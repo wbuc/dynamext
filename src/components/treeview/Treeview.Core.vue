@@ -57,18 +57,18 @@ export default {
      methods: {
           makeFolder: function(item) {
                // Vue.set(item, "children", []);
-
+               item.type = "folder";
                this.$set(item, "children", []);
                this.addItem(item);
           },
           addItem: function(item) {
                item.children.push({
-                    name: "new stuff",
-                    type: "folder"
+                    name: "new stuff"
                });
           }
      },
-     created() {
+     mounted() {
+          //need to retrieve the fileroom definition when the app start and store in the state with updated property.
           addNodeProps(this.treeData);
      }
 };

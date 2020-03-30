@@ -1,12 +1,13 @@
 <template>
      <li>
           <div @click="toggle" @dblclick="makeFolder">
-               <span v-if="isFolder">
+               <span v-if="isParent">
                     <span v-if="isOpen">
                          <v-icon small class="mr-3">mdi-chevron-down</v-icon>
                          <v-icon>mdi-folder-open</v-icon>
                     </span>
-
+               </span>
+               <span v-if="isFolder">
                     <span v-if="!isOpen">
                          <v-icon small class="mr-3">mdi-chevron-right</v-icon>
                          <v-icon>mdi-folder</v-icon>
@@ -43,6 +44,9 @@ export default {
           };
      },
      computed: {
+          isParent: function() {
+               return this.item.children && this.item.children.length;
+          },
           isFolder: function() {
                //return this.item.children && this.item.children.length;
                return this.item.type == "folder";
@@ -59,6 +63,7 @@ export default {
           },
           makeFolder: function() {
                if (!this.isFolder) {
+                    console.log("item added");
                     this.$emit("make-folder", this.item);
                     this.isOpen = true;
                }
