@@ -72,7 +72,6 @@
                                                   v-else
                                              >{{ fileType[item.type].name }}</v-icon>
                                         </template>
-
                                         <template v-slot:label="{ item }">
                                              <div class="x-branch">
                                                   <span class>{{item.name}}</span>
@@ -97,7 +96,6 @@
                                                        <v-list-item
                                                             v-for="(dataItem, index) in treeviewDocumentActions"
                                                             :key="index"
-                                                            router
                                                             @click="dataItem.action(item)"
                                                             active-class="secondary--text"
                                                             dense
@@ -164,11 +162,16 @@
 </template>
 
 <script>
-import sampleData from "@/config/data";
+//const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+import { mapGetters } from "vuex";
 import treeView from "@/components/treeview/Treeview.Core";
 export default {
      name: "Fileroom.Dashboard",
      components: { treeView },
+     computed: {
+          ...mapGetters(["api"])
+     },
      data() {
           return {
                treeviewConfig: {
@@ -204,7 +207,14 @@ export default {
                     finding: { name: "mdi-file-find", color: "success" }
                },
                selectedItems: [],
-               items: sampleData.fileroomData5000,
+               items: [
+                    {
+                         id: 1,
+                         name: "Project Dymond",
+                         type: "folder",
+                         children: []
+                    }
+               ],
                treeviewDocumentActions: [
                     {
                          title: "Edit",
@@ -286,6 +296,13 @@ export default {
           nodeSelected(node) {
                console.log(node);
           }
+     },
+     created() {
+          this.$store.dispatch("getTreeviewDefinition").then(result => {
+               console.log(result.data);
+               this.items[0].children = result.data;
+               console.log(this.items);
+          });
      }
 };
 </script>

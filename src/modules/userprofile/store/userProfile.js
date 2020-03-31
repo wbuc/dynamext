@@ -5,8 +5,6 @@ const state = {
     idToken: null,
     userId: null,
     user: null,
-    api: { loading: false },
-    notification: { show: false, message: null, type: null }
 }
 const getters = {
     user: state => {
@@ -15,15 +13,6 @@ const getters = {
     isAuthenticated: state => {
         return state.idToken !== null ? true : false;
     },
-    isLoading: state => {
-        return state.api.loading;
-    },
-    api: state => {
-        return state.api
-    },
-    notification: state => {
-        return state.notification
-    }
 }
 const mutations = {
     'AUTH_USER'(state, data) {
@@ -37,45 +26,6 @@ const mutations = {
         state.idToken = null;
         state.userId = null;
     },
-    'API_LOADING'(state) {
-        state.api.loading = true
-    },
-    'API_COMPLETE'(state) {
-        state.api.loading = false
-    },
-    'API_ERROR'(state, error) {
-        state.api = { loading: false, error: error }
-    },
-    'NOTIFY_SUCCESS'(state, data) {
-        state.notification.show = true;
-        state.notification.type = 'success'
-        state.notification.message = data ? data : 'Success notification';
-        setTimeout(() => {
-            state.notification = { show: false, type: null, message: null };
-        }, 3000)
-
-    },
-    'NOTIFY_INFO'(state, data) {
-        state.notification.show = true;
-        state.notification.type = 'primary'
-        state.notification.message = data ? data : 'Important notification';
-        setTimeout(() => {
-            state.notification = { show: false, type: null, message: null };
-        }, 8000)
-    },
-    'NOTIFY_ERROR'(state, data) {
-        state.notification.show = true;
-        state.notification.type = 'error'
-        state.notification.message = data ? data : 'Error notification';
-        setTimeout(() => {
-            state.notification = { show: false, type: null, message: null };
-        }, 8000)
-    },
-    'NOTIFY_CLOSE'(state) {
-        state.notification = { show: false, type: null, message: null };
-    }
-
-
 }
 const actions = {
     storeUser({ state }, userData) {
@@ -113,9 +63,8 @@ const actions = {
             });
     },
     getUsers({ commit, state }) {
-        console.log(state)
-        commit('API_LOADING');
 
+        commit('API_LOADING');
         if (!state.idToken) {
             return;
         }
@@ -229,18 +178,6 @@ const actions = {
             context.dispatch('logout');
         }, expirationTime * 1000);
     },
-    notifySuccess({ commit }, data) {
-        commit('NOTIFY_SUCCESS', data)
-    },
-    notifyInfo({ commit }, data) {
-        commit('NOTIFY_INFO', data)
-    },
-    notifyError({ commit }, data) {
-        commit('NOTIFY_ERROR', data)
-    },
-    closeNotify({ commit }) {
-        commit('NOTIFY_CLOSE');
-    }
 }
 
 export default { state, getters, mutations, actions }

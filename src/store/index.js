@@ -3,19 +3,25 @@ import Vuex from 'vuex'
 
 import userProfile from '@/modules/userprofile/store/userProfile'
 import formsAuth from '@/modules/userprofile/store/forms.auth'
+import fileroom from '@/modules/fileroom/store/fileroom'
 
+import * as getters from './common/getters'
+import * as mutations from './common/mutations'
+import * as actions from './common/actions'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    api: { loading: false },
+    notification: { show: false, message: null, type: null }
   },
-  mutations: {
-  },
-  actions: {
-  },
+  getters: getters,
+  mutations: mutations,
+  actions: actions,
   modules: {
     userProfile,
-    formsAuth
+    formsAuth,
+    fileroom
   }
 })
