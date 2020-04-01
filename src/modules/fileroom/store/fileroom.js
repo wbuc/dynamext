@@ -16,7 +16,7 @@ const actions = {
 
         context.commit('API_LOADING');
 
-        //check if loggend in.
+        //check if loggend in. if (!state.idToken) {return}
         if (!context.rootGetters.isAuthenticated) {
             return;
         }

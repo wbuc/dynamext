@@ -1,10 +1,6 @@
 
 
 
-// export const value = (state) => {
-//     return state.value;
-// }
-
 export const isLoading = state => {
     return state.api.loading;
 }
