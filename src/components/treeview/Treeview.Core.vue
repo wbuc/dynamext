@@ -9,6 +9,16 @@ import treeItem from "./Treeview.Node";
 
 import sampleData from "@/config/data";
 
+/*
+
+Need to add custom checkboxes to cater for multi-select. Use a dedicated store for the treeview.
+          https://stackoverflow.com/questions/52218020/how-to-add-checkboxes-and-link-to-a-model-in-vuejs-treeview
+          https://jsfiddle.net/u91mxc58/14/
+
+NOTE: This component design can be used and turned into a news feed component as well with the repetative catering.
+
+*/
+
 function addNodeProps(node) {
      node.check = false;
      if (node.children) {

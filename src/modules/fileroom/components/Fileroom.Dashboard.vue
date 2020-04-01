@@ -33,7 +33,7 @@
                                         <v-btn icon @click="addFolder">
                                              <v-icon>mdi-folder-plus</v-icon>
                                         </v-btn>
-                                        <v-btn icon>
+                                        <v-btn icon @click="refreshTreeview">
                                              <v-icon>mdi-refresh</v-icon>
                                         </v-btn>
 
@@ -49,18 +49,18 @@
                                         v-model="selectedNodes"
                                         :search="treeviewConfig.search"
                                         :return-object="treeviewConfig.returnObject"
-                                        @update:active="nodeSelected"
-                                        :open="open"
-                                        item-key="id"
                                         :open-on-click="treeviewConfig.openOnClick"
-                                        activatable
-                                        color="grey"
                                         :selectable="treeviewConfig.selectable"
-                                        selected-color="grey lighten-3"
                                         :selection-type="treeviewConfig.selectionType"
                                         :transition="treeviewConfig.transition"
-                                        dense
                                         :hoverable="treeviewConfig.hoverable"
+                                        @update:active="getNodeMetadata"
+                                        :open="open"
+                                        item-key="id"
+                                        activatable
+                                        color="grey"
+                                        selected-color="grey lighten-3"
+                                        dense
                                    >
                                         <template v-slot:prepend="{ item, open }">
                                              <v-icon
@@ -141,21 +141,51 @@
                </v-card>
           </v-col>
           <v-col cols="12" :md="treeviewExpand ? '5':'8'">
-               <div class="x-treeview-table">
-                    <v-data-table
-                         :headers="dt.headers"
-                         :items="dt.desserts"
-                         :items-per-page="5"
-                         item-key="name"
-                         class="elevation-1"
-                         :footer-props="{
+               <div class="x-context-panel">
+                    <v-expansion-panels
+                         :accordion="contextPanelConfig.accordion"
+                         :popout="contextPanelConfig.popout"
+                         :inset="contextPanelConfig.inset"
+                         :multiple="contextPanelConfig.multiple"
+                         :focusable="contextPanelConfig.focusable"
+                         :disabled="contextPanelConfig.disabled"
+                         :readonly="contextPanelConfig.readonly"
+                         :flat="contextPanelConfig.flat"
+                         :hover="contextPanelConfig.hover"
+                         :tile="contextPanelConfig.tile"
+                    >
+                         <v-expansion-panel key="documents">
+                              <v-expansion-panel-header color="grey--text">Documents</v-expansion-panel-header>
+                              <v-expansion-panel-content>
+                                   <v-data-table
+                                        :headers="dt.headers"
+                                        :items="dt.desserts"
+                                        :items-per-page="5"
+                                        item-key="name"
+                                        class="elevation-1"
+                                        :footer-props="{
                                              showFirstLastPage: true,
                                              firstIcon: 'mdi-arrow-collapse-left',
                                              lastIcon: 'mdi-arrow-collapse-right',
                                              prevIcon: 'mdi-minus',
                                              nextIcon: 'mdi-plus'
                                         }"
-                    ></v-data-table>
+                                   ></v-data-table>
+                              </v-expansion-panel-content>
+                         </v-expansion-panel>
+                         <v-expansion-panel key="findings">
+                              <v-expansion-panel-header color="grey--text">Findings</v-expansion-panel-header>
+                              <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+                         </v-expansion-panel>
+                         <v-expansion-panel key="schedules">
+                              <v-expansion-panel-header color="grey--text">Schedules</v-expansion-panel-header>
+                              <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+                         </v-expansion-panel>
+                         <v-expansion-panel key="folders">
+                              <v-expansion-panel-header color="grey--text">Folders</v-expansion-panel-header>
+                              <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+                         </v-expansion-panel>
+                    </v-expansion-panels>
                </div>
           </v-col>
      </v-row>
@@ -207,6 +237,7 @@ export default {
                     finding: { name: "mdi-file-find", color: "success" }
                },
                selectedItems: [],
+               selectNodeMetadata: {},
                items: [
                     {
                          id: 1,
@@ -280,29 +311,46 @@ export default {
                               category: "Candy"
                          }
                     ]
+               },
+               contextPanelConfig: {
+                    accordion: false,
+                    popout: false,
+                    inset: false,
+                    multiple: true,
+                    disabled: false,
+                    readonly: false,
+                    focusable: true,
+                    flat: false,
+                    hover: false,
+                    tile: false
                }
           };
      },
      methods: {
-          editme(item) {
-               console.log(item);
-          },
           toggleTreeviewExpand() {
                this.treeviewExpand = !this.treeviewExpand;
           },
           addFolder() {
+               //placeholder, won't impletment this now.
                console.log(this.selectedNodes);
           },
-          nodeSelected(node) {
+          refreshTreeview() {
+               this.$store.dispatch("getTreeviewDefinition").then(result => {
+                    this.items[0].children = result.data;
+               });
+          },
+          getNodeMetadata(node) {
                console.log(node);
+               this.$store
+                    .dispatch("getTreeNodeMetadata", node)
+                    .then(result => {
+                         console.log(result);
+                         this.selectNodeMetadata = result;
+                    });
           }
      },
      created() {
-          this.$store.dispatch("getTreeviewDefinition").then(result => {
-               console.log(result.data);
-               this.items[0].children = result.data;
-               console.log(this.items);
-          });
+          this.refreshTreeview();
      }
 };
 </script>
@@ -311,7 +359,7 @@ export default {
 .v-treeview-node {
      cursor: pointer;
 }
-.x-treeview-table {
+.x-context-panel {
      position: -webkit-sticky;
      position: sticky;
      top: 100px;
