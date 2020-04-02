@@ -18,7 +18,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+     name: "Card.Detail1"
+};
 </script>
 
 <style>

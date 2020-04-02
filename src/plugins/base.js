@@ -16,6 +16,7 @@ import Breadcrumbs from '@/components/shared/Breadcrumb.vue'
 
 /* CRADS */
 import BasicCard1 from '@/components/cards/Card-Basic-1'
+import TimelineCard from '@/components/cards/Card-Timeline'
 
 /* MODALS */
 import Modal from '@/components/dialog/Modal.vue'
@@ -36,6 +37,7 @@ Vue.component('page-header', PageHeader);
 
 Vue.component('x-breadcrumb', Breadcrumbs);
 Vue.component('x-basic-card', BasicCard1);
+Vue.component('x-timeline-card', TimelineCard);
 Vue.component('x-modal', Modal);
 Vue.component('x-popup', Popup);
 Vue.component('x-confirmation', Confirm)

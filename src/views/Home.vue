@@ -7,6 +7,9 @@
           </v-row>
           <v-row>
                <v-col>
+                    <x-timeline-card></x-timeline-card>
+               </v-col>
+               <v-col>
                     <v-card class="mx-auto elevation" max-width="344" outlined>
                          <v-list-item three-line>
                               <v-list-item-content>

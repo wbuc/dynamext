@@ -27,6 +27,7 @@
 
 <script>
 export default {
+     name: "Card.Basic1",
      props: {
           title: String,
           primaryAction: Function

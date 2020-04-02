@@ -27,6 +27,7 @@
 
 <script>
 export default {
+     name: "Card.QuickActions",
      props: {
           title: String,
           primaryAction: Function

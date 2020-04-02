@@ -1,6 +1,18 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 
+
+// Note: Specific config for vuetify error message when using 'all' on the treeview selection type.
+Vue.config.warnHandler = function (msg, vm, trace) {
+    if (msg !== 'Invalid prop: custom validator check failed for prop "selectionType".') {
+        const hasConsole = typeof console !== 'undefined';
+        if (hasConsole && !Vue.config.silent) {
+            console.error(`[Vue warn]: ${msg}${trace}`);
+        }
+    }
+}
+
+
 Vue.use(Vuetify);
 
 export default new Vuetify({
