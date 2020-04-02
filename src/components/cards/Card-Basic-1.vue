@@ -10,8 +10,14 @@
                <v-list-item three-line>
                     <v-list-item-content>
                          <!-- <div class="overline mb-4">OVERLINE 1</div> -->
-                         <v-list-item-title class="headline mb-1">{{ title }}</v-list-item-title>
-                         <v-list-item-subtitle small>
+                         <v-list-item-title
+                              class="title font-weight-light mb-2 headline"
+                              :class="`${hover? 'accent--text':''}`"
+                         >{{ title }}</v-list-item-title>
+                         <v-list-item-subtitle
+                              small
+                              class="subheading font-weight-light grey--text"
+                         >
                               <slot name="description"></slot>
                          </v-list-item-subtitle>
                     </v-list-item-content>
@@ -19,7 +25,12 @@
 
                <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn small @click="primaryAction()" text color="success">Detail</v-btn>
+                    <!-- <v-btn
+                         small
+                         @click="primaryAction()"
+                         text
+                         color="success"
+                    >Detail</v-btn>-->
                </v-card-actions>
           </v-card>
      </v-hover>
