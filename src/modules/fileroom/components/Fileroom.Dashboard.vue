@@ -239,7 +239,7 @@ export default {
                     hoverable: true,
                     toolbarHover: false,
                     returnObject: true,
-                    selectionType: "leaf" //leaf or independent or all(throws error in console.)
+                    selectionType: "all" //leaf or independent or all(throws error in console.)
                },
                treeviewExpand: false,
                activeTab: null,
@@ -258,8 +258,8 @@ export default {
                          color: "warning lighten-1"
                     },
                     schedule: {
-                         name: "mdi-file-document-outline",
-                         color: "danger"
+                         name: "mdi-table-large",
+                         color: "purple lighten-2"
                     },
                     finding: { name: "mdi-file-find", color: "success" }
                },
@@ -373,13 +373,12 @@ export default {
                });
           },
           getNodeMetadata(node) {
-               console.log(node);
-               this.$store
-                    .dispatch("getTreeNodeMetadata", node)
-                    .then(result => {
-                         console.log(result);
-                         this.selectNodeMetadata = result;
-                    });
+               //NOTE: vuetify node always an array.
+               const id = node[0].id;
+               this.$store.dispatch("getTreeNodeMetadata", id).then(result => {
+                    this.selectNodeMetadata = result.data;
+                    console.log(this.selectNodeMetadata);
+               });
           }
      },
      created() {

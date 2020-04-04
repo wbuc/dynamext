@@ -32,14 +32,14 @@ const actions = {
         })
     },
 
-    getTreeNodeMetadata(context, node) {
+    getTreeNodeMetadata(context, id) {
         context.commit('API_LOADING');
         //check if loggend in. Old if (!state.idToken) {return}
         if (!context.rootGetters.isAuthenticated) {
             return;
         }
         return new Promise((resolve, reject) => {
-            treeviewApi.getTreeNodeDetail(node.id).then(data => {
+            treeviewApi.getTreeNodeDetail(id).then(data => {
                 context.commit('API_COMPLETE');
                 resolve(data)
             },
