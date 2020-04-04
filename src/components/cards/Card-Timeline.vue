@@ -40,7 +40,7 @@ export default {
      name: "Card.Timeline",
      data: () => ({
           labels: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm", "9pm"],
-          value: [200, 675, 410, 390, 310, 460, 250, 240],
+          value: [0, 210, 500, 222, 310, 425, 250, 240],
           hover: 3
      }),
      props: {

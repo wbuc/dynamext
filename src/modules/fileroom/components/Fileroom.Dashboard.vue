@@ -6,13 +6,7 @@
                          <v-tabs v-model="activeTab" color="grey">
                               <v-tabs-slider color="accent"></v-tabs-slider>
                               <v-tab key="Fileroom">Fileroom</v-tab>
-                              <v-tab key="Personal">
-                                   <v-icon
-                                        class="mr-2"
-                                        small
-                                        color="yellow darken-3"
-                                   >mdi-star-outline</v-icon>Favourites
-                              </v-tab>
+                              <v-tab key="Personal">Personal</v-tab>
                          </v-tabs>
                          <v-text-field
                               style="width:100%"
@@ -155,7 +149,16 @@
                          :tile="contextPanelConfig.tile"
                     >
                          <v-expansion-panel key="documents">
-                              <v-expansion-panel-header color="grey--text">Documents</v-expansion-panel-header>
+                              <v-expansion-panel-header
+                                   color="title font-weight-light headline grey--text"
+                              >
+                                   <span>
+                                        <v-icon
+                                             class="mr-2"
+                                             color="warning lighten-1"
+                                        >mdi-file-document</v-icon>Documents
+                                   </span>
+                              </v-expansion-panel-header>
                               <v-expansion-panel-content>
                                    <v-data-table
                                         :headers="dt.headers"
@@ -174,15 +177,39 @@
                               </v-expansion-panel-content>
                          </v-expansion-panel>
                          <v-expansion-panel key="findings">
-                              <v-expansion-panel-header color="grey--text">Findings</v-expansion-panel-header>
+                              <v-expansion-panel-header
+                                   color="title font-weight-light headline grey--text"
+                              >
+                                   <span>
+                                        <v-icon
+                                             class="mr-2"
+                                             color="success lighten-1"
+                                        >mdi-information</v-icon>Findings
+                                   </span>
+                              </v-expansion-panel-header>
                               <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
                          </v-expansion-panel>
                          <v-expansion-panel key="schedules">
-                              <v-expansion-panel-header color="grey--text">Schedules</v-expansion-panel-header>
+                              <v-expansion-panel-header
+                                   color="title font-weight-light headline grey--text"
+                              >
+                                   <span>
+                                        <v-icon
+                                             class="mr-2"
+                                             color="purple lighten-2"
+                                        >mdi-table-large</v-icon>Schedules
+                                   </span>
+                              </v-expansion-panel-header>
                               <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
                          </v-expansion-panel>
                          <v-expansion-panel key="folders">
-                              <v-expansion-panel-header color="grey--text">Folders</v-expansion-panel-header>
+                              <v-expansion-panel-header
+                                   color="title font-weight-light headline grey--text"
+                              >
+                                   <span>
+                                        <v-icon class="mr-2" color="info ">mdi-folder</v-icon>Folders
+                                   </span>
+                              </v-expansion-panel-header>
                               <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
                          </v-expansion-panel>
                     </v-expansion-panels>
@@ -258,6 +285,12 @@ export default {
                          icon: "mdi-delete",
                          color: "error--text",
                          action: item => console.log("deleting ", item)
+                    },
+                    {
+                         title: "Set Favourite",
+                         icon: "mdi-star-outline",
+                         color: "yellow--text darken-3",
+                         action: item => console.log("editing ", item)
                     }
                ],
                dt: {
