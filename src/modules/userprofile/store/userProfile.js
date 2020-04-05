@@ -175,6 +175,7 @@ const actions = {
     },
     setAutoLogout(context, expirationTime) {
         setTimeout(() => {
+            console.log('Attempting signout...')
             context.dispatch('logout');
         }, expirationTime * 1000);
     },

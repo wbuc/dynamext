@@ -1,6 +1,6 @@
 <template>
      <v-row>
-          <v-col cols="12" :md="treeviewExpand ? '7':'4'">
+          <v-col cols="12" :md="fullView ? '7':'4'">
                <v-card tile flat style="background-color: #ff000000">
                     <v-toolbar class="elevation-2">
                          <v-tabs v-model="activeTab" color="grey">
@@ -32,7 +32,7 @@
                                         </v-btn>
 
                                         <v-spacer></v-spacer>
-                                        <v-btn icon @click="toggleTreeviewExpand">
+                                        <v-btn icon @click="toggleFullView">
                                              <v-icon>mdi-arrow-expand</v-icon>
                                         </v-btn>
                                    </v-card-actions>
@@ -122,20 +122,21 @@
                                         </v-btn>
 
                                         <v-spacer></v-spacer>
-                                        <v-btn icon @click="toggleTreeviewExpand">
+                                        <v-btn icon @click="toggleFullView">
                                              <v-icon>mdi-arrow-expand</v-icon>
                                         </v-btn>
                                    </v-card-actions>
                               </v-card>
                               <v-card flat style="background-color: #ff000000">
-                                   <tree-view></tree-view>
+                                   <!-- Treeview component here here -->
                               </v-card>
                          </v-tab-item>
                     </v-tabs-items>
                </v-card>
           </v-col>
-          <v-col cols="12" :md="treeviewExpand ? '5':'8'">
+          <v-col cols="12" :md="fullView ? '5':'8'">
                <div class="x-context-panel">
+                    <tree :items="items"></tree>
                     <v-expansion-panels
                          :accordion="contextPanelConfig.accordion"
                          :popout="contextPanelConfig.popout"
@@ -222,10 +223,12 @@
 //const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 import { mapGetters } from "vuex";
-import treeView from "@/components/treeview/Treeview.Core";
+
+import tree from "@/components/treeview/Treeview";
+
 export default {
      name: "Fileroom.Dashboard",
-     components: { treeView },
+     components: { tree },
      computed: {
           ...mapGetters(["api"])
      },
@@ -241,7 +244,7 @@ export default {
                     returnObject: true,
                     selectionType: "all" //leaf or independent or all(throws error in console.)
                },
-               treeviewExpand: false,
+               fullView: false,
                activeTab: null,
                selectedNodes: [],
                open: ["public"],
@@ -249,7 +252,7 @@ export default {
                     folder: {
                          open: {
                               name: "mdi-folder-open",
-                              color: "info lighten"
+                              color: "info"
                          },
                          closed: { name: "mdi-folder", color: "info" }
                     },
@@ -263,7 +266,6 @@ export default {
                     },
                     finding: { name: "mdi-file-find", color: "success" }
                },
-               selectedItems: [],
                selectNodeMetadata: {},
                items: [
                     {
@@ -293,6 +295,13 @@ export default {
                          action: item => console.log("editing ", item)
                     }
                ],
+
+               treeNodeActions: {
+                    folder: [],
+                    document: [],
+                    finding: [],
+                    schedule: []
+               },
                dt: {
                     headers: [
                          {
@@ -356,12 +365,97 @@ export default {
                     flat: false,
                     hover: false,
                     tile: false
+               },
+               newFileType: {
+                    folder: {
+                         open: {
+                              name: "mdi-folder-open",
+                              color: "info"
+                         },
+                         closed: { name: "mdi-folder", color: "info" },
+                         actions: []
+                    },
+                    doc: {
+                         name: "mdi-file-document",
+                         color: "warning lighten-1",
+                         actions: [
+                              {
+                                   title: "Edit",
+                                   icon: "mdi-pencil",
+                                   color: "secondary--text",
+                                   action: item => console.log("editing ", item)
+                              },
+                              {
+                                   title: "Delete",
+                                   icon: "mdi-delete",
+                                   color: "error--text",
+                                   action: item =>
+                                        console.log("deleting ", item)
+                              },
+                              {
+                                   title: "Set Favourite",
+                                   icon: "mdi-star-outline",
+                                   color: "yellow--text darken-3",
+                                   action: item => console.log("editing ", item)
+                              }
+                         ]
+                    },
+                    schedule: {
+                         name: "mdi-table-large",
+                         color: "purple lighten-2",
+                         actions: [
+                              {
+                                   title: "Edit",
+                                   icon: "mdi-pencil",
+                                   color: "secondary--text",
+                                   action: item => console.log("editing ", item)
+                              },
+                              {
+                                   title: "Delete",
+                                   icon: "mdi-delete",
+                                   color: "error--text",
+                                   action: item =>
+                                        console.log("deleting ", item)
+                              },
+                              {
+                                   title: "Set Favourite",
+                                   icon: "mdi-star-outline",
+                                   color: "yellow--text darken-3",
+                                   action: item => console.log("editing ", item)
+                              }
+                         ]
+                    },
+                    finding: {
+                         name: "mdi-file-find",
+                         color: "success",
+                         actions: [
+                              {
+                                   title: "Edit",
+                                   icon: "mdi-pencil",
+                                   color: "secondary--text",
+                                   action: item => console.log("editing ", item)
+                              },
+                              {
+                                   title: "Delete",
+                                   icon: "mdi-delete",
+                                   color: "error--text",
+                                   action: item =>
+                                        console.log("deleting ", item)
+                              },
+                              {
+                                   title: "Set Favourite",
+                                   icon: "mdi-star-outline",
+                                   color: "yellow--text darken-3",
+                                   action: item => console.log("editing ", item)
+                              }
+                         ]
+                    }
                }
           };
      },
      methods: {
-          toggleTreeviewExpand() {
-               this.treeviewExpand = !this.treeviewExpand;
+          toggleFullView() {
+               this.fullView = !this.fullView;
           },
           addFolder() {
                //placeholder, won't impletment this now.
@@ -370,6 +464,12 @@ export default {
           refreshTreeview() {
                this.$store.dispatch("getTreeviewDefinition").then(result => {
                     this.items[0].children = result.data;
+                    //show progress bar when fecthing the inital record for project 1.
+                    this.$store
+                         .dispatch("getTreeNodeMetadata", 1)
+                         .then(result => {
+                              this.selectNodeMetadata = result.data;
+                         });
                });
           },
           getNodeMetadata(node) {
@@ -377,7 +477,6 @@ export default {
                const id = node[0].id;
                this.$store.dispatch("getTreeNodeMetadata", id).then(result => {
                     this.selectNodeMetadata = result.data;
-                    console.log(this.selectNodeMetadata);
                });
           }
      },

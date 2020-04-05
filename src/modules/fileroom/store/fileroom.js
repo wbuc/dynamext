@@ -13,11 +13,13 @@ const mutations = {
 const actions = {
 
     getTreeviewDefinition(context) {
-        context.commit('API_LOADING');
         //check if loggend in. Old if (!state.idToken) {return}
         if (!context.rootGetters.isAuthenticated) {
             return;
         }
+
+        context.commit('API_LOADING');
+
         return new Promise((resolve, reject) => {
             treeviewApi.getTreeviewDefinition().then(data => {
 
@@ -33,11 +35,12 @@ const actions = {
     },
 
     getTreeNodeMetadata(context, id) {
-        context.commit('API_LOADING');
         //check if loggend in. Old if (!state.idToken) {return}
         if (!context.rootGetters.isAuthenticated) {
             return;
         }
+        context.commit('API_LOADING');
+
         return new Promise((resolve, reject) => {
             treeviewApi.getTreeNodeDetail(id).then(data => {
                 context.commit('API_COMPLETE');

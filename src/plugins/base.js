@@ -43,5 +43,6 @@ Vue.component('x-popup', Popup);
 Vue.component('x-confirmation', Confirm)
 Vue.component('x-notification', Notification)
 
+
 Vue.component('x-logo', Logo)
 
