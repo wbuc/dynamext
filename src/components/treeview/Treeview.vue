@@ -2,7 +2,7 @@
      <v-card flat style="background-color: #ff000000">
           <v-treeview
                :items="items"
-               v-model="selectedNodes"
+               v-model="checkedNodes"
                :search="config.search"
                :return-object="config.returnObject"
                :open-on-click="config.openOnClick"
@@ -82,7 +82,7 @@ export default {
                default: () => {
                     return {
                          search: null,
-                         selectable: false, // adds prepend the checkboxes.
+                         selectable: true, // prepend node checkboxes.
                          transition: true,
                          openOnClick: false, // click anywhere on the node to expand.
                          hoverable: true,
@@ -219,20 +219,25 @@ export default {
      },
      data() {
           return {
-               selectedNodes: [] // todo check emitting computed.
+               checkedNodes: []
           };
+     },
+     watch: {
+          // Read more on watch: https://michaelnthiessen.com/how-to-watch-nested-data-vue/
+          checkedNodes: {
+               handler: "checkedNodesChanged"
+          }
      },
      methods: {
           selectNode(node) {
                this.$emit("nodeSelected", node[0]);
           },
-          getNodeMetadata(node) {
-               console.log(node);
+          checkedNodesChanged() {
+               this.$emit("nodesChecked", this.checkedNodes);
           }
      },
-     Created() {
-          console.log(this.nodeTypes);
-     }
+     Created() {},
+     Mounted() {}
 };
 </script>
 

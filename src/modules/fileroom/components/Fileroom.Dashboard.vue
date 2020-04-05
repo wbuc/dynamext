@@ -136,7 +136,11 @@
           </v-col>
           <v-col cols="12" :md="fullView ? '5':'8'">
                <div class="x-context-panel">
-                    <tree :items="items" @nodeSelected="getContextData"></tree>
+                    <tree
+                         :items="items"
+                         @nodeSelected="getContextData"
+                         @nodesChecked="testNodesChanged"
+                    ></tree>
                     <v-expansion-panels
                          :accordion="contextPanelConfig.accordion"
                          :popout="contextPanelConfig.popout"
@@ -454,6 +458,9 @@ export default {
           };
      },
      methods: {
+          testNodesChanged(data) {
+               console.log(data);
+          },
           getContextData(node) {
                console.log("Node emitting caught!", node);
           },
@@ -462,7 +469,7 @@ export default {
           },
           addFolder() {
                //placeholder, won't impletment this now.
-               console.log(this.selectedNodes);
+               console.log(this.wesselNodes);
           },
           refreshTreeview() {
                this.$store.dispatch("getTreeviewDefinition").then(result => {
