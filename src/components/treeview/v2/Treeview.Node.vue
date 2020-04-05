@@ -79,6 +79,7 @@ export default {
 }
 .item:hover {
      /* opacity: 0.08; */
+     font-weight: bold;
 }
 .bold {
      font-weight: bold;

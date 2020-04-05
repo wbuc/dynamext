@@ -211,7 +211,27 @@ export default {
                               id: 1,
                               name: "Root",
                               type: "folder",
-                              children: []
+                              children: [
+                                   {
+                                        id: 2,
+                                        name: "Sample Document",
+                                        type: "doc",
+                                        children: [
+                                             {
+                                                  id: 3,
+                                                  name: "Sample Schedule",
+                                                  type: "schedule",
+                                                  children: []
+                                             },
+                                             {
+                                                  id: 4,
+                                                  name: "Sample Finding",
+                                                  type: "finding",
+                                                  children: []
+                                             }
+                                        ]
+                                   }
+                              ]
                          }
                     ];
                }
