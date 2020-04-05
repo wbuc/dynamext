@@ -19,7 +19,6 @@
                               dense
                          ></v-text-field>
                     </v-toolbar>
-
                     <v-tabs-items
                          v-model="explorerConfig.activeTab"
                          style="background-color: #ff000000"
@@ -87,14 +86,18 @@
                          :tile="contextPanelConfig.tile"
                     >
                          <v-expansion-panel key="documents">
-                              <v-expansion-panel-header
-                                   color="title font-weight-light headline grey--text"
-                              >
+                              <v-expansion-panel-header>
                                    <span>
-                                        <v-icon
-                                             class="mr-2"
-                                             color="warning lighten-1"
-                                        >mdi-file-document</v-icon>Documents
+                                        <span class="headline">
+                                             <v-icon
+                                                  class="mr-2"
+                                                  color="warning lighten-1"
+                                             >mdi-file-document</v-icon>
+                                             {{ fileroomData.currentNodeData.documents.count +' '}}
+                                        </span>
+                                        <span
+                                             class="font-weight-light headline grey--text"
+                                        >documents</span>
                                    </span>
                               </v-expansion-panel-header>
                               <v-expansion-panel-content>
@@ -115,41 +118,51 @@
                               </v-expansion-panel-content>
                          </v-expansion-panel>
                          <v-expansion-panel key="findings">
-                              <v-expansion-panel-header
-                                   color="title font-weight-light headline grey--text"
-                              >
+                              <v-expansion-panel-header>
                                    <span>
-                                        <v-icon
-                                             class="mr-2"
-                                             color="success lighten-1"
-                                        >mdi-information</v-icon>Findings
+                                        <span class="headline">
+                                             <v-icon
+                                                  class="mr-2"
+                                                  color="success lighten-1"
+                                             >mdi-information</v-icon>
+                                             {{ fileroomData.currentNodeData.findings.count +' '}}
+                                        </span>
+                                        <span class="font-weight-light headline grey--text">findings</span>
                                    </span>
                               </v-expansion-panel-header>
                               <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
                          </v-expansion-panel>
                          <v-expansion-panel key="schedules">
-                              <v-expansion-panel-header
-                                   color="title font-weight-light headline grey--text"
-                              >
+                              <v-expansion-panel-header>
                                    <span>
-                                        <v-icon
-                                             class="mr-2"
-                                             color="purple lighten-2"
-                                        >mdi-table-large</v-icon>Schedules
+                                        <span class="headline">
+                                             <v-icon
+                                                  class="mr-2"
+                                                  color="purple lighten-2"
+                                             >mdi-table-large</v-icon>
+                                             {{ fileroomData.currentNodeData.schedules.count +' '}}
+                                        </span>
+                                        <span
+                                             class="font-weight-light headline grey--text"
+                                        >schedules</span>
                                    </span>
                               </v-expansion-panel-header>
                               <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
                          </v-expansion-panel>
-                         <v-expansion-panel key="folders">
+                         <!-- <v-expansion-panel key="folders">
                               <v-expansion-panel-header
                                    color="title font-weight-light headline grey--text"
                               >
                                    <span>
-                                        <v-icon class="mr-2" color="info ">mdi-folder</v-icon>Folders
+                                        <span class="headline">
+                                             <v-icon class="mr-2" color="info">mdi-folder</v-icon>
+                                             {{ fileroomData.currentNodeData.folders.count +' '}}
+                                        </span>
+                                        <span class="font-weight-light headline grey--text">folders</span>
                                    </span>
                               </v-expansion-panel-header>
                               <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
-                         </v-expansion-panel>
+                         </v-expansion-panel>-->
                     </v-expansion-panels>
                </div>
           </v-col>

@@ -250,7 +250,9 @@ export default {
      },
      methods: {
           selectNode(node) {
-               this.$emit("nodeSelected", node[0]);
+               if (node.length) {
+                    this.$emit("nodeSelected", node[0]);
+               }
           },
           checkedNodesChanged() {
                this.$emit("nodesChecked", this.checkedNodes);
