@@ -10,8 +10,7 @@
                :selection-type="config.selectionType"
                :transition="config.transition"
                :hoverable="config.hoverable"
-               @update:active="getNodeMetadata"
-               :open="open"
+               @update:active="selectNode"
                item-key="id"
                activatable
                color="grey"
@@ -83,9 +82,9 @@ export default {
                default: () => {
                     return {
                          search: null,
-                         selectable: false,
+                         selectable: false, // adds prepend the checkboxes.
                          transition: true,
-                         openOnClick: false,
+                         openOnClick: false, // click anywhere on the node to expand.
                          hoverable: true,
                          toolbarHover: false,
                          returnObject: true, // retrieve the json object, or identifier.
@@ -205,7 +204,7 @@ export default {
                }
           },
           items: {
-               Type: Array,
+               Type: Array, // The treeview is dependent on a root element to have where children needs to be pushed in. always have id 1 for simplicity.
                default: () => {
                     return [
                          {
@@ -216,41 +215,17 @@ export default {
                          }
                     ];
                }
-          },
-          treeviewDocumentActions: {
-               Type: Array,
-               default: () => {
-                    return [
-                         {
-                              title: "Edit",
-                              icon: "mdi-pencil",
-                              color: "secondary--text",
-                              action: item => console.log("editing ", item)
-                         },
-                         {
-                              title: "Delete",
-                              icon: "mdi-delete",
-                              color: "error--text",
-                              action: item => console.log("deleting ", item)
-                         },
-                         {
-                              title: "Set Favourite",
-                              icon: "mdi-star-outline",
-                              color: "yellow--text darken-3",
-                              action: item => console.log("editing ", item)
-                         }
-                    ];
-               }
           }
      },
      data() {
           return {
-               open: ["public"],
-               selectedNodes: [],
-               selectNodeMetadata: {}
+               selectedNodes: [] // todo check emitting computed.
           };
      },
      methods: {
+          selectNode(node) {
+               this.$emit("nodeSelected", node[0]);
+          },
           getNodeMetadata(node) {
                console.log(node);
           }

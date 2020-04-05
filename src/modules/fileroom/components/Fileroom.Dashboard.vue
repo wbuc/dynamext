@@ -136,7 +136,7 @@
           </v-col>
           <v-col cols="12" :md="fullView ? '5':'8'">
                <div class="x-context-panel">
-                    <tree :items="items"></tree>
+                    <tree :items="items" @nodeSelected="getContextData"></tree>
                     <v-expansion-panels
                          :accordion="contextPanelConfig.accordion"
                          :popout="contextPanelConfig.popout"
@@ -247,7 +247,7 @@ export default {
                fullView: false,
                activeTab: null,
                selectedNodes: [],
-               open: ["public"],
+               open: ["1"],
                fileType: {
                     folder: {
                          open: {
@@ -454,6 +454,9 @@ export default {
           };
      },
      methods: {
+          getContextData(node) {
+               console.log("Node emitting caught!", node);
+          },
           toggleFullView() {
                this.fullView = !this.fullView;
           },
