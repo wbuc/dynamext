@@ -120,7 +120,7 @@ export default {
                          action: item => console.log("deleting ", item.email)
                     }
                ],
-               quickEditFields: [{ name: "email" }, { name: "colour" }],
+               quickEditFields: [{ name: "email", type: "text" }],
                showDetail: false
           };
      },

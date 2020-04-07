@@ -87,6 +87,56 @@
                     />
                     <v-divider></v-divider>
                </template>
+
+               <!-- <template
+                    v-for="(editField, index) in quickEditFields"
+                    :slot="item.email"
+                    slot-scope="item"
+               >
+                    <div
+                         @click="cellEditStart(editField.name, item)"
+                         v-if="!item.quickEdit[editField.name]"
+                         class="editable"
+                         :key="index"
+                    >{{ item[editField.name] }}</div>
+                    <div v-if="item.quickEdit[editField.name]" :key="index">
+                         <v-text-field
+                              v-model="item[editField.name]"
+                              outlined
+                              single-line
+                              hide-details
+                              dense
+                              counter
+                              v-on:keyup.enter="cellEditDone(editfield.name, item)"
+                              v-on:keyup.esc="cellEditCancel(editField.name, item)"
+                              @blur="cellEditDone(editField.name, item)"
+                              :ref="editField.name"
+                         ></v-text-field>
+                    </div>
+               </template>-->
+               <!-- 
+               <template v-slot:item.email="{ item }">
+                    <div
+                         @click="cellEditStart('email', item)"
+                         v-if="!item.quickEdit.email"
+                         class="editable"
+                    >{{ item[] }}</div>
+                    <div v-if="item.quickEdit.email">
+                         <v-text-field
+                              v-model="item.email"
+                              outlined
+                              single-line
+                              hide-details
+                              dense
+                              counter
+                              v-on:keyup.enter="cellEditDone('email', item)"
+                              v-on:keyup.esc="cellEditCancel('email', item)"
+                              @blur="cellEditDone('email', item)"
+                              ref="email"
+                         ></v-text-field>
+                    </div>
+               </template>-->
+
                <template v-slot:item.email="{ item }">
                     <div
                          @click="cellEditStart('email', item)"
@@ -152,13 +202,104 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-     props: [
-          "toolbarActions",
-          "headers",
-          "data",
-          "dataItemActions",
-          "quickEditFields"
-     ],
+     props: {
+          toolbarActions: {
+               Type: Object,
+               default: () => {
+                    return {
+                         showNew: true,
+                         showEdit: true,
+                         showDelete: true,
+                         custom: [
+                              {
+                                   text: "Summary",
+                                   icon: "change_history",
+                                   color: "teal accent-3",
+                                   action: items => {
+                                        // List of selected items in the data table.
+                                        console.log(items);
+                                   }
+                              },
+                              {
+                                   text: "Histoy",
+                                   icon: "bar_chart",
+                                   color: "orange",
+                                   action: items => {
+                                        // this.showDialog = true;
+                                        // List of selected items in the data table.
+                                        console.log(items);
+                                   }
+                              },
+                              {
+                                   text: "Disable",
+                                   icon: "accessible_forward",
+
+                                   action: items => {
+                                        console.log(items);
+                                   }
+                              }
+                         ]
+                    };
+               }
+          },
+          headers: {
+               Type: Array,
+               default: () => {
+                    return [
+                         {
+                              text: "Id",
+                              value: "id",
+                              width: "20%"
+                         },
+                         {
+                              text: "Email",
+                              value: "email",
+                              width: "40%"
+                         },
+                         {
+                              text: "Favourite Colour",
+                              value: "colour",
+                              width: "25%"
+                         },
+                         {
+                              text: "",
+                              value: "action",
+                              sortable: false,
+                              align: "end",
+                              width: "15%"
+                         }
+                    ];
+               }
+          },
+          data: { Type: Array },
+          dataItemActions: {
+               Type: Array,
+               default: () => {
+                    return [
+                         {
+                              title: "Edit",
+                              icon: "mdi-pencil",
+                              color: "secondary--text",
+                              action: item =>
+                                   console.log("editing ", item.email)
+                         },
+                         {
+                              title: "Delete",
+                              icon: "mdi-delete",
+                              color: "error--text",
+                              action: item =>
+                                   console.log("deleting ", item.email)
+                         }
+                    ];
+               }
+          },
+          quickEditFields: {
+               Type: Array,
+               default: () => {
+                    return [{ name: "email", type: "text" }];
+               }
+          }
+     },
      data() {
           return {
                singleSelect: false,
