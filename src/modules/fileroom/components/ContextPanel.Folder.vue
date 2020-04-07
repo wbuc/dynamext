@@ -1,6 +1,7 @@
 <template>
      <div>
           <v-expansion-panels
+               v-model="contextPanelConfig.expanded"
                :accordion="contextPanelConfig.accordion"
                :popout="contextPanelConfig.popout"
                :inset="contextPanelConfig.inset"
@@ -93,8 +94,8 @@
                     <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
                </v-expansion-panel>
           </v-expansion-panels>
-          <!-- 
-           <v-expansion-panels
+
+          <!-- <v-expansion-panels
                :accordion="contextPanelConfig.accordion"
                :popout="contextPanelConfig.popout"
                :inset="contextPanelConfig.inset"
@@ -191,6 +192,7 @@ export default {
                Type: Object,
                default: () => {
                     return {
+                         expanded: [0],
                          accordion: false,
                          popout: false,
                          inset: false,
