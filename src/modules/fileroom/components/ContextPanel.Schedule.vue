@@ -1,5 +1,5 @@
 <template>
-     <div>Context Schedule 4</div>
+     <div class="headline font-weight-light">Schedules Coming Soon!</div>
 </template>
 
 <script>

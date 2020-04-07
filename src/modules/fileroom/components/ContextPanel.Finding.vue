@@ -1,5 +1,5 @@
 <template>
-     <div>Context Finding 3</div>
+     <div class="headline font-weight-light">Findings Coming Soon!</div>
 </template>
 
 <script>
