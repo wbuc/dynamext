@@ -73,97 +73,9 @@
           </v-col>
           <v-col cols="12" :md="explorerConfig.fullView ? '5':'8'">
                <div class="x-context-panel">
-                    <v-expansion-panels
-                         :accordion="contextPanelConfig.accordion"
-                         :popout="contextPanelConfig.popout"
-                         :inset="contextPanelConfig.inset"
-                         :multiple="contextPanelConfig.multiple"
-                         :focusable="contextPanelConfig.focusable"
-                         :disabled="contextPanelConfig.disabled"
-                         :readonly="contextPanelConfig.readonly"
-                         :flat="contextPanelConfig.flat"
-                         :hover="contextPanelConfig.hover"
-                         :tile="contextPanelConfig.tile"
-                    >
-                         <v-expansion-panel key="documents">
-                              <v-expansion-panel-header>
-                                   <span>
-                                        <span class="headline">
-                                             <v-icon
-                                                  class="mr-2"
-                                                  color="warning lighten-1"
-                                             >mdi-file-document</v-icon>
-                                             {{ fileroomData.currentNodeData.documents.count +' '}}
-                                        </span>
-                                        <span
-                                             class="font-weight-light headline grey--text"
-                                        >documents</span>
-                                   </span>
-                              </v-expansion-panel-header>
-                              <v-expansion-panel-content>
-                                   <v-data-table
-                                        :headers="dt.headers"
-                                        :items="dt.desserts"
-                                        :items-per-page="5"
-                                        item-key="name"
-                                        class="elevation-1"
-                                        :footer-props="{
-                                             showFirstLastPage: true,
-                                             firstIcon: 'mdi-arrow-collapse-left',
-                                             lastIcon: 'mdi-arrow-collapse-right',
-                                             prevIcon: 'mdi-minus',
-                                             nextIcon: 'mdi-plus'
-                                        }"
-                                   ></v-data-table>
-                              </v-expansion-panel-content>
-                         </v-expansion-panel>
-                         <v-expansion-panel key="findings">
-                              <v-expansion-panel-header>
-                                   <span>
-                                        <span class="headline">
-                                             <v-icon
-                                                  class="mr-2"
-                                                  color="success lighten-1"
-                                             >mdi-information</v-icon>
-                                             {{ fileroomData.currentNodeData.findings.count +' '}}
-                                        </span>
-                                        <span class="font-weight-light headline grey--text">findings</span>
-                                   </span>
-                              </v-expansion-panel-header>
-                              <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
-                         </v-expansion-panel>
-                         <v-expansion-panel key="schedules">
-                              <v-expansion-panel-header>
-                                   <span>
-                                        <span class="headline">
-                                             <v-icon
-                                                  class="mr-2"
-                                                  color="purple lighten-2"
-                                             >mdi-table-large</v-icon>
-                                             {{ fileroomData.currentNodeData.schedules.count +' '}}
-                                        </span>
-                                        <span
-                                             class="font-weight-light headline grey--text"
-                                        >schedules</span>
-                                   </span>
-                              </v-expansion-panel-header>
-                              <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
-                         </v-expansion-panel>
-                         <!-- <v-expansion-panel key="folders">
-                              <v-expansion-panel-header
-                                   color="title font-weight-light headline grey--text"
-                              >
-                                   <span>
-                                        <span class="headline">
-                                             <v-icon class="mr-2" color="info">mdi-folder</v-icon>
-                                             {{ fileroomData.currentNodeData.folders.count +' '}}
-                                        </span>
-                                        <span class="font-weight-light headline grey--text">folders</span>
-                                   </span>
-                              </v-expansion-panel-header>
-                              <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
-                         </v-expansion-panel>-->
-                    </v-expansion-panels>
+                    <transition name="fade" mode="out-in">
+                         <component :is="currentContext" :nodeData="fileroomData.currentNodeData"></component>
+                    </transition>
                </div>
           </v-col>
      </v-row>
@@ -176,14 +88,20 @@ import { mapGetters } from "vuex";
 
 import tree from "@/components/treeview/Treeview";
 
+import folder from "@/modules/fileroom/components/ContextPanel.Folder";
+import doc from "@/modules/fileroom/components/ContextPanel.Document";
+import finding from "@/modules/fileroom/components/ContextPanel.Finding";
+import schedule from "@/modules/fileroom/components/ContextPanel.Schedule";
+
 export default {
      name: "Fileroom.Dashboard",
-     components: { tree },
+     components: { tree, folder, doc, finding, schedule },
      computed: {
           ...mapGetters(["api"])
      },
      data() {
           return {
+               tg: true,
                explorerConfig: {
                     fullView: false,
                     activeTab: null
@@ -200,6 +118,7 @@ export default {
                     hover: false,
                     tile: false
                },
+               currentContext: null,
                fileroomData: {
                     items: [
                          {
@@ -209,7 +128,7 @@ export default {
                               children: []
                          }
                     ],
-                    currentNodeData: {},
+                    currentNodeData: null,
                     checkedNodes: []
                },
                fileroomConfig: {
@@ -222,6 +141,7 @@ export default {
                     returnObject: true, // retrieve the json object, or identifier.
                     selectionType: "all" //leaf or independent or all(throws error in console).
                },
+
                dt: {
                     headers: [
                          {
@@ -289,6 +209,7 @@ export default {
                          .dispatch("getTreeNodeMetadata", 1)
                          .then(result => {
                               this.fileroomData.currentNodeData = result.data;
+                              this.currentContext = result.data.type;
                          });
                });
           },
@@ -296,10 +217,28 @@ export default {
                const id = node.id;
                this.$store.dispatch("getTreeNodeMetadata", id).then(result => {
                     this.fileroomData.currentNodeData = result.data;
+                    this.currentContext = result.data.type;
                });
           },
           setFileroomCheckedNodes(data) {
                this.fileroomData.checkedNodes = data;
+          },
+          setContextPanelState(fileType) {
+               if (fileType === "doc") {
+                    Object.keys(this.contextPanelState).forEach(key => {
+                         this.contextPanelState[key] = true;
+                    });
+               }
+               if (fileType === "folder") {
+                    Object.keys(this.contextPanelState).forEach(key => {
+                         this.contextPanelState[key] = true;
+                    });
+               }
+               if (fileType === "finding") {
+                    Object.keys(this.contextPanelState).forEach(key => {
+                         this.contextPanelState[key] = false;
+                    });
+               }
           }
      },
      created() {
