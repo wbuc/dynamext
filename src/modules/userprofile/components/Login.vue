@@ -33,7 +33,7 @@
                          flat
                     ></v-text-field>
                </v-card-text>
-               <v-card-actions>
+               <v-card-actions class="px-4 pb-4">
                     <v-spacer></v-spacer>
                     <v-btn @click="gotoSignup" text color="grey" width="100" large>Sign Up</v-btn>
                     <v-btn type="submit" :loading="api.loading" color="primary" width="150px" large>
@@ -75,6 +75,5 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-
+<style scoped>
 </style>

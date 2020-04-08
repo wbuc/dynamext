@@ -73,9 +73,9 @@
           </v-col>
           <v-col cols="12" :md="explorerConfig.fullView ? '5':'8'">
                <div class="x-context-panel">
-                    <!-- <transition name="fade" mode="out-in"> -->
-                    <component :is="currentContext" :nodeData="fileroomData.currentNodeData"></component>
-                    <!-- </transition> -->
+                    <transition name="fade" mode="out-in">
+                         <component :is="currentContext" :nodeData="fileroomData.currentNodeData"></component>
+                    </transition>
                </div>
           </v-col>
      </v-row>

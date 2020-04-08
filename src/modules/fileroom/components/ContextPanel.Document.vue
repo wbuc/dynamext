@@ -1,5 +1,70 @@
 <template>
      <div>
+          <v-card class="mb-5">
+               <v-toolbar class="elevation-2">
+                    <v-row>
+                         <v-col>
+                              <v-icon class="mr-2" color="warning lighten-1">mdi-file-document</v-icon>1.1.1.1 Very long document name!
+                         </v-col>
+                         <v-spacer></v-spacer>
+                         <v-col class="text-right">
+                              <v-btn class="mr-2 error--text" small outlined color="primary" dark>
+                                   <v-icon left>mdi-home-modern</v-icon>Out of scope
+                              </v-btn>
+                              <v-btn
+                                   id="doc-actions"
+                                   icon
+                                   small
+                                   text
+                                   dark
+                                   color="grey"
+                                   class="x-branch-activator"
+                              >
+                                   <v-icon>more_vert</v-icon>
+                                   <span></span>
+                              </v-btn>
+                              <v-menu
+                                   offset-y
+                                   transition="slide-y-transition"
+                                   activator="#doc-actions"
+                              >
+                                   <v-list>
+                                        <v-list-item
+                                             v-for="(dataItem, index) in documentQuickActions"
+                                             :key="index"
+                                             @click="dataItem.action(index)"
+                                             active-class="secondary--text"
+                                             dense
+                                        >
+                                             <v-list-item-action>
+                                                  <v-icon
+                                                       :class="dataItem.color"
+                                                       small
+                                                  >{{dataItem.icon}}</v-icon>
+                                             </v-list-item-action>
+                                             <v-list-item-content>
+                                                  <v-list-item-title>{{dataItem.title}}</v-list-item-title>
+                                             </v-list-item-content>
+                                        </v-list-item>
+                                   </v-list>
+                                   <v-list></v-list>
+                              </v-menu>
+                         </v-col>
+                    </v-row>
+               </v-toolbar>
+               <v-card-text>
+                    <v-text-field
+                         id="password"
+                         label="Password"
+                         name="password"
+                         prepend-icon="lock"
+                         outlined
+                         dense
+                         flat
+                    ></v-text-field>
+               </v-card-text>
+               <v-card-actions></v-card-actions>
+          </v-card>
           <v-expansion-panels
                :accordion="contextPanelConfig.accordion"
                :popout="contextPanelConfig.popout"
@@ -99,6 +164,7 @@ export default {
                }
           }
      },
+     methods: {},
      data() {
           return {
                fileroomConfig: {
@@ -110,6 +176,24 @@ export default {
                     toolbarHover: false,
                     returnObject: true, // retrieve the json object, or identifier.
                     selectionType: "all" //leaf or independent or all(throws error in console).
+               },
+               documentQuickActions: [
+                    {
+                         title: "Edit",
+                         icon: "mdi-pencil",
+                         color: "secondary--text",
+                         action: index => console.log("editing ", index)
+                    },
+                    {
+                         title: "Out of Scope",
+                         icon: "mdi-stop",
+                         color: "error--text",
+                         action: index => console.log("deleting ", index)
+                    }
+               ],
+               documentAction: {
+                    quick: [],
+                    reviewStatus: []
                }
           };
      }
