@@ -15,7 +15,7 @@
                                    large
                                    class="mx-0 font-weight-light"
                                    color="accent"
-                                   href="https://materialdesignicons.com/cdn/1.0.62/"
+                                   href="https://cdn.materialdesignicons.com/5.0.45/"
                                    target="_blank"
                                    round
                               >

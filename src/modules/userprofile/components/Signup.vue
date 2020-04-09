@@ -100,4 +100,8 @@ export default {
 </script>
 
 <style>
+
+.x-actions {
+     padding-right: 16px !important;
+}
 </style>

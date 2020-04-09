@@ -22,9 +22,14 @@ const drawer = [
         route: "/"
     },
     {
-        icon: "folder",
+        icon: "mdi-file-cabinet",
         text: "Fileroom",
         route: "/fileroom"
+    },
+    {
+        icon: "mdi-file-document",
+        text: "Schedules",
+        route: "/schedules"
     },
     {
         icon: "info",

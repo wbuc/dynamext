@@ -1,7 +1,7 @@
 <template>
      <div>
-          <v-card class="mb-5">
-               <v-toolbar class="elevation-2">
+          <v-card outlined class="mb-5">
+               <v-toolbar class="elevation-0">
                     <v-row>
                          <v-col>
                               <v-icon class="mr-2" color="warning lighten-1">mdi-file-document</v-icon>1.1.1.1 Very long document name!
@@ -157,7 +157,7 @@ export default {
                          disabled: false,
                          readonly: false,
                          focusable: true,
-                         flat: false,
+                         flat: true,
                          hover: false,
                          tile: false
                     };
