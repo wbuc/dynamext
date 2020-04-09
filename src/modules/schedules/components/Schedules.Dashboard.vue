@@ -23,8 +23,12 @@
                                         <v-icon>{{element.icon}}</v-icon>
                                    </v-list-item-action>
                                    <v-list-item-content>
-                                        <v-list-item-title>{{ element.name }}</v-list-item-title>
-                                        <v-list-item-subtitle>This is some control information to help you.</v-list-item-subtitle>
+                                        <v-list-item-title
+                                             class="title font-weight-light"
+                                        >{{ element.name }}</v-list-item-title>
+                                        <v-list-item-subtitle
+                                             class="grey--text text--lighten-1"
+                                        >This is some control information to help you.</v-list-item-subtitle>
                                    </v-list-item-content>
                               </v-list-item>
                          </draggable>
