@@ -4,7 +4,6 @@
                <v-card class="x-toolbox">
                     <v-list width="100%">
                          <v-subheader>Toolbox</v-subheader>
-
                          <draggable
                               class="dragArea list-group"
                               :list="list1"
@@ -18,6 +17,7 @@
                                    :key="element.id"
                                    color="primary"
                                    class="x-control"
+                                   @click.stop="1==1"
                               >
                                    <v-list-item-action>
                                         <v-icon>{{element.icon}}</v-icon>
@@ -119,9 +119,27 @@ export default {
                     }
                ],
                list2: [
-                    { id: 91, name: "Header", icon: "mdi-format-header-1" },
-                    { id: 92, name: "Text", icon: "mdi-format-text" },
-                    { id: 93, name: "Paragraph", icon: "mdi-format-pilcrow" }
+                    {
+                         id: 91,
+                         name: "Header",
+                         icon: "mdi-format-header-1",
+                         edit: false,
+                         config: false
+                    },
+                    {
+                         id: 92,
+                         name: "Text",
+                         icon: "mdi-format-text",
+                         edit: false,
+                         config: false
+                    },
+                    {
+                         id: 93,
+                         name: "Paragraph",
+                         icon: "mdi-format-pilcrow",
+                         edit: false,
+                         config: false
+                    }
                ]
           };
      },
@@ -135,7 +153,9 @@ export default {
                return {
                     id: idGlobal++,
                     name: `Control ${item.name}`,
-                    icon: item.icon
+                    icon: item.icon,
+                    edit: false,
+                    config: false
                };
           }
      },
