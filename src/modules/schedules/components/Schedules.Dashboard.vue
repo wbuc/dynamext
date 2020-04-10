@@ -182,16 +182,17 @@
                                         v-if="!controlSelected"
                                         class="text-center"
                                    >No control selected</span>
+
                                    <v-list
                                         v-else-if="controlSelected"
+                                        no-action
                                         width="100%"
                                         class="x-control-properties"
                                    >
                                         selected
-                                        {{this.selectedControl.name}} !
+                                        {{this.currentControl.name}} !
                                         <v-list-item-group
-                                             no-action
-                                             v-for="(cat, index) in controlTypeProperties[selectedControl.type]"
+                                             v-for="(cat, index) in controlTypeProperties[currentControl.type]"
                                              :key="index"
                                         >
                                              <v-list-item-content>
@@ -204,40 +205,19 @@
                                                        :key="i"
                                                   >
                                                        <v-list-item-content>
-                                                            <v-list-item-title>
-                                                                 {{prop.name}}
-                                                                 <v-text-field
-                                                                      style="width:100%"
-                                                                      label="Search"
-                                                                      outlined
-                                                                      single-line
-                                                                      hide-details
-                                                                      dense
-                                                                 ></v-text-field>
-                                                            </v-list-item-title>
+                                                            <v-list-item-title>{{prop.displayName}}</v-list-item-title>
+                                                            <v-text-field
+                                                                 style="width:100%"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="currentControl.properties[prop.name]"
+                                                            ></v-text-field>
                                                        </v-list-item-content>
                                                   </v-list-item>
                                              </v-list>
                                         </v-list-item-group>
-                                        <!-- <v-list-item 
-                                                  two-line
-                                                  v-for="element in formControls"
-                                                  :key="element.id"
-                                                  color="primary"
-                                                  class="x-control"
-                                             >
-                                                  <v-list-item-action class="x-control-handle">
-                                                       <v-icon
-                                                            class="grey--text text--darken-1"
-                                                       >mdi-drag</v-icon>
-                                                  </v-list-item-action>
-                                                  <v-list-item-action>
-                                                       <v-icon>{{element.icon}}</v-icon>
-                                                  </v-list-item-action>
-                                                  <v-list-item-content>
-                                                       <v-list-item-title>{{ element.name }}</v-list-item-title>
-                                                  </v-list-item-content>
-                                        </v-list-item>-->
                                    </v-list>
                               </v-card>
                          </v-tab-item>
@@ -263,7 +243,7 @@ export default {
      computed: {
           ...mapGetters(["api"]),
           controlSelected() {
-               return this.selectedControl ? true : false;
+               return this.currentControl ? true : false;
           }
      },
      data() {
@@ -289,7 +269,9 @@ export default {
                          description: "Single line input field",
                          icon: "mdi-format-text",
                          properties: {
-                              default: null
+                              default: null,
+                              minLength: 1,
+                              maxLength: 100
                          }
                     },
                     {
@@ -344,16 +326,16 @@ export default {
                                              "Proivde default value for the field."
                                    },
                                    {
-                                        name: "minValue",
-                                        displayName: "Minimum Value",
+                                        name: "minLength",
+                                        displayName: "Minimum Length",
                                         value: "",
                                         type: "text",
                                         placeholder:
                                              "Proivde default value for the field."
                                    },
                                    {
-                                        name: "maxValue",
-                                        displayName: "Maximum Value",
+                                        name: "maxLength",
+                                        displayName: "Maximum Length",
                                         value: "",
                                         type: "text",
                                         placeholder:
@@ -422,7 +404,7 @@ export default {
                          type: "header",
                          properties: {
                               color: "primary",
-                              default: null
+                              size: "headline"
                          },
                          edit: false,
                          config: false
@@ -434,7 +416,9 @@ export default {
                          icon: "mdi-format-text",
                          type: "text",
                          properties: {
-                              default: null
+                              default: null,
+                              minLength: 1,
+                              maxLength: 100
                          },
                          edit: false,
                          config: false
@@ -452,7 +436,7 @@ export default {
                          config: false
                     }
                ],
-               selectedControl: null
+               currentControl: null
           };
      },
      methods: {
@@ -460,7 +444,7 @@ export default {
                this.explorerConfig.fullView = !this.explorerConfig.fullView;
           },
           selectControl(control) {
-               this.selectedControl = control;
+               this.currentControl = control;
                console.log(control);
           },
           log(evt) {
