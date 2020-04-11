@@ -175,30 +175,16 @@
                     >
                          <v-tab-item key="General" style="background-color: #ff000000">
                               <v-card flat style="background-color: #ff000000">
-                                   <span
+                                   <div
                                         v-if="!controlSelected"
-                                        class="text-center"
-                                   >No control selected</span>
+                                        class="text-center grey--text py-10"
+                                   >No control selected</div>
                                    <div v-else-if="controlSelected" class="x-control-properties">
-                                        <!-- <v-list
-                                        v-else-if="controlSelected"
-                                        no-action
-                                        width="100%"
-                                        class="x-control-properties"
-                                   >
-                                        selected
-                                        {{this.currentControl.name}} !-->
-
-                                        <!-- <v-list-item-group
-                                             v-for="(cat, index) in controlTypeProperties[currentControl.type]"
-                                             :key="index"
-                                        >-->
-
                                         <div
                                              v-for="(cat, index) in controlTypeProperties[currentControl.type]"
                                              :key="index"
                                         >
-                                             <div class="px-4 pt-4">{{cat.group}}</div>
+                                             <div class="px-4 pt-4 d-none">{{cat.group}}</div>
 
                                              <v-list flat>
                                                   <v-list-item :ripple="propertiesConfig.ripple">
@@ -247,12 +233,6 @@
                                                   </v-list-item>
                                              </v-list>
                                         </div>
-                                        <!-- <v-list-item-content>
-                                                  <v-list-item-title>{{cat.group}}</v-list-item-title>
-                                        </v-list-item-content>-->
-
-                                        <!-- </v-list-item-group> -->
-                                        <!-- </v-list> -->
                                    </div>
                               </v-card>
                          </v-tab-item>
@@ -320,7 +300,8 @@ export default {
                          description: "Multi line text inut field",
                          icon: "mdi-format-pilcrow",
                          properties: {
-                              default: null
+                              default: null,
+                              rows: 5
                          }
                     },
                     {
@@ -383,7 +364,28 @@ export default {
                               ]
                          }
                     ],
-                    paragraph: [],
+                    paragraph: [
+                         {
+                              group: "Group 1",
+                              properties: [
+                                   {
+                                        name: "default",
+                                        displayName: "Default Value",
+                                        value: "",
+                                        type: "text",
+                                        placeholder:
+                                             "Proivde default value for the field."
+                                   },
+                                   {
+                                        name: "rows",
+                                        displayName: "Rows",
+                                        value: "",
+                                        type: "number",
+                                        placeholder: 5
+                                   }
+                              ]
+                         }
+                    ],
                     header: [
                          {
                               group: "Group 1",
@@ -492,20 +494,30 @@ export default {
           log(evt) {
                window.console.log(evt);
           },
+          cloneObject(object) {
+               let newObj = {};
+               for (let key in object) {
+                    newObj[key] = object[key]; // console.log("prop: ", key, " value: ", object[key]);
+               }
+               return newObj;
+          },
+
           cloneControl(item) {
-               console.log(item);
-               /* item.name and item.id and item.type */
-               return {
+               let newControl = {
                     id: idGlobal++,
-                    name: `Control ${item.name}`,
+                    name: `Untitled ${item.name}`,
                     instruction: null,
                     value: null,
-                    properties: item.properties,
+                    properties: {},
                     icon: item.icon,
                     type: item.type,
                     edit: false,
                     config: false
                };
+               let newProps = this.cloneObject(item.properties);
+               this.$set(newControl, "properties", newProps);
+
+               return newControl;
           }
      },
      created() {}
