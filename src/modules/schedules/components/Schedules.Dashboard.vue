@@ -181,7 +181,7 @@
                                    >No control selected</div>
                                    <div v-else-if="controlSelected" class="x-control-properties">
                                         <div
-                                             v-for="(cat, index) in controlTypeProperties[currentControl.type]"
+                                             v-for="(cat, index) in controlTypeConfig[currentControl.type]"
                                              :key="index"
                                         >
                                              <div class="px-4 pt-4 d-none">{{cat.group}}</div>
@@ -219,9 +219,12 @@
                                                        v-for="(prop, i) in cat.properties"
                                                        :key="i"
                                                   >
-                                                       <v-list-item-content>
+                                                       <v-list-item-content
+                                                            v-if="prop.type === 'text'"
+                                                       >
                                                             <v-list-item-title>{{prop.displayName}}</v-list-item-title>
                                                             <v-text-field
+                                                                 type="text"
                                                                  style="width:100%"
                                                                  outlined
                                                                  single-line
@@ -230,16 +233,117 @@
                                                                  v-model="currentControl.properties[prop.name]"
                                                             ></v-text-field>
                                                        </v-list-item-content>
+                                                       <v-list-item-content
+                                                            v-if="prop.type === 'number'"
+                                                       >
+                                                            <v-list-item-title>{{prop.displayName}}</v-list-item-title>
+                                                            <v-text-field
+                                                                 type="number"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="currentControl.properties[prop.name]"
+                                                            ></v-text-field>
+                                                       </v-list-item-content>
+                                                       <v-list-item-content
+                                                            v-if="prop.type === 'select'"
+                                                       >
+                                                            <v-list-item-title>{{prop.displayName}}</v-list-item-title>
+                                                            <!-- <v-text-field
+                                                                 type="number"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="currentControl.properties[prop.name]"
+                                                            ></v-text-field>-->
+                                                            <v-select
+                                                                 :items="prop.options"
+                                                                 v-model="currentControl.properties[prop.name]"
+                                                                 item-text="displayName"
+                                                                 item-value="name"
+                                                                 dense
+                                                                 outlined
+                                                            ></v-select>
+                                                       </v-list-item-content>
                                                   </v-list-item>
                                              </v-list>
                                         </div>
                                    </div>
                               </v-card>
                          </v-tab-item>
-                         <v-tab-item
-                              key="Advanced"
-                              style="background-color: #ff000000"
-                         >Customise properties for schedule!</v-tab-item>
+                         <v-tab-item key="Advanced" style="background-color: #ff000000">
+                              <v-card flat style="background-color: #ff000000">
+                                   <div
+                                        v-if="!controlSelected"
+                                        class="text-center grey--text py-10"
+                                   >No control selected</div>
+                                   <div v-else-if="controlSelected" class="x-control-properties">
+                                        <div class="px-4">
+                                             <v-checkbox
+                                                  id="fieldValidation"
+                                                  v-model="currentControl.hasValidations"
+                                                  label="Add field validation"
+                                                  @change="addFieldValidation"
+                                             ></v-checkbox>
+                                        </div>
+                                        <div v-if="currentControl.hasValidations">
+                                             <div
+                                                  v-for="(cat, index) in controlTypeConfig[currentControl.type]"
+                                                  :key="index"
+                                             >
+                                                  <v-list-item
+                                                       :ripple="propertiesConfig.ripple"
+                                                       v-for="(validation, i) in cat.validations"
+                                                       :key="i"
+                                                  >
+                                                       <v-list-item-content
+                                                            v-if="validation.type === 'text'"
+                                                       >
+                                                            <v-list-item-title>{{validation.displayName}}</v-list-item-title>
+                                                            <v-text-field
+                                                                 type="text"
+                                                                 style="width:100%"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="currentControl.validations[validation.name]"
+                                                            ></v-text-field>
+                                                       </v-list-item-content>
+                                                       <v-list-item-content
+                                                            v-if="validation.type === 'number'"
+                                                       >
+                                                            <v-list-item-title>{{validation.displayName}}</v-list-item-title>
+                                                            <v-text-field
+                                                                 type="number"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="currentControl.validations[validation.name]"
+                                                            ></v-text-field>
+                                                       </v-list-item-content>
+                                                       <v-list-item-content
+                                                            v-if="validation.type === 'select'"
+                                                       >
+                                                            <v-list-item-title>{{validation.displayName}}</v-list-item-title>
+                                                            <v-select
+                                                                 :items="prop.options"
+                                                                 v-model="currentControl.validations[validation.name]"
+                                                                 item-text="displayName"
+                                                                 item-value="name"
+                                                                 dense
+                                                                 outlined
+                                                            ></v-select>
+                                                       </v-list-item-content>
+                                                  </v-list-item>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </v-card>
+                         </v-tab-item>
                     </v-tabs-items>
                </v-card>
           </v-col>
@@ -291,7 +395,9 @@ export default {
                               default: null,
                               minLength: 1,
                               maxLength: 100
-                         }
+                         },
+                         hasValidations: false,
+                         validations: {}
                     },
                     {
                          id: 2,
@@ -302,7 +408,9 @@ export default {
                          properties: {
                               default: null,
                               rows: 5
-                         }
+                         },
+                         hasValidations: false,
+                         validations: {}
                     },
                     {
                          id: 3,
@@ -313,7 +421,9 @@ export default {
                          properties: {
                               size: "headline",
                               color: "primary"
-                         }
+                         },
+                         hasValidations: false,
+                         validations: {}
                     },
                     {
                          id: 4,
@@ -321,7 +431,9 @@ export default {
                          type: "decimal",
                          description: "Numbers with decimal values",
                          icon: "mdi-decimal",
-                         properties: {}
+                         properties: {},
+                         hasValidations: false,
+                         validations: {}
                     },
                     {
                          id: 5,
@@ -329,10 +441,16 @@ export default {
                          type: "number",
                          description: "Full number values",
                          icon: "mdi-numeric-10",
-                         properties: {}
+                         properties: {
+                              default: 0,
+                              minValue: 1,
+                              maxValue: 1000
+                         },
+                         hasValidations: false,
+                         validations: {}
                     }
                ],
-               controlTypeProperties: {
+               controlTypeConfig: {
                     text: [
                          {
                               group: "Group 1",
@@ -361,6 +479,24 @@ export default {
                                         placeholder:
                                              "Proivde default value for the field."
                                    }
+                              ],
+                              validations: [
+                                   {
+                                        name: "minLength",
+                                        displayName: "Minimum Length",
+                                        value: 0,
+                                        type: "text",
+                                        placeholder:
+                                             "Proivde default value for the field."
+                                   },
+                                   {
+                                        name: "maxLength",
+                                        displayName: "Maximum Length",
+                                        value: 100,
+                                        type: "text",
+                                        placeholder:
+                                             "Proivde default value for the field."
+                                   }
                               ]
                          }
                     ],
@@ -383,6 +519,24 @@ export default {
                                         type: "number",
                                         placeholder: 5
                                    }
+                              ],
+                              validations: [
+                                   {
+                                        name: "minLength",
+                                        displayName: "Minimum Length",
+                                        value: 0,
+                                        type: "text",
+                                        placeholder:
+                                             "Proivde default value for the field."
+                                   },
+                                   {
+                                        name: "maxLength",
+                                        displayName: "Maximum Length",
+                                        value: 5000,
+                                        type: "text",
+                                        placeholder:
+                                             "Proivde default value for the field."
+                                   }
                               ]
                          }
                     ],
@@ -392,29 +546,29 @@ export default {
                               properties: [
                                    {
                                         name: "size",
-                                        displayName: "Header Size",
+                                        displayName: "Size",
                                         value: "",
-                                        type: "option",
+                                        type: "select",
                                         options: [
                                              {
                                                   name: "headline",
-                                                  displayName: "Biggest"
+                                                  displayName: "Large"
                                              },
                                              {
                                                   name: "title",
-                                                  displayName: "Bigger"
+                                                  displayName: "Medium"
                                              },
                                              {
-                                                  name: "subtitle",
-                                                  displayName: "Big"
+                                                  name: "subtitle-1",
+                                                  displayName: "Small"
                                              }
                                         ]
                                    },
                                    {
                                         name: "color",
-                                        displayName: "Header Color",
+                                        displayName: "Color",
                                         value: "",
-                                        type: "option",
+                                        type: "select",
                                         options: [
                                              {
                                                   name: "primary",
@@ -434,7 +588,50 @@ export default {
                          }
                     ],
                     decimal: [],
-                    number: []
+                    number: [
+                         {
+                              group: "Group 1",
+                              properties: [
+                                   {
+                                        name: "default",
+                                        displayName: "Default Value",
+                                        value: "",
+                                        type: "number",
+                                        placeholder: 0
+                                   },
+                                   {
+                                        name: "minValue",
+                                        displayName: "Minimum Value",
+                                        value: "",
+                                        type: "number",
+                                        placeholder: 0
+                                   },
+                                   {
+                                        name: "maxValue",
+                                        displayName: "Maximum Value",
+                                        value: "",
+                                        type: "number",
+                                        placeholder: 1000
+                                   }
+                              ],
+                              validations: [
+                                   {
+                                        name: "minValue",
+                                        displayName: "Minimum Value",
+                                        value: "",
+                                        type: "number",
+                                        placeholder: 0
+                                   },
+                                   {
+                                        name: "maxValue",
+                                        displayName: "Maximum Value",
+                                        value: "",
+                                        type: "number",
+                                        placeholder: 1000
+                                   }
+                              ]
+                         }
+                    ]
                },
                formControls: [
                     {
@@ -446,8 +643,10 @@ export default {
                          type: "header",
                          properties: {
                               color: "primary",
-                              size: "headline"
+                              size: "title"
                          },
+                         hasValidations: false,
+                         validations: {},
                          edit: false,
                          config: false
                     },
@@ -463,6 +662,8 @@ export default {
                               minLength: 1,
                               maxLength: 100
                          },
+                         hasValidations: false,
+                         validations: {},
                          edit: false,
                          config: false
                     },
@@ -476,6 +677,8 @@ export default {
                          properties: {
                               default: null
                          },
+                         hasValidations: false,
+                         validations: {},
                          edit: false,
                          config: false
                     }
@@ -491,9 +694,43 @@ export default {
                this.currentControl = control;
                console.log(control);
           },
+          addFieldValidation() {
+               if (this.currentControl.hasValidations) {
+                    const controlType = this.currentControl.type;
+                    const typeGroups = this.controlTypeConfig[controlType];
+                    let newObj = {};
+                    for (let groupIndex in typeGroups) {
+                         for (let validIndex in typeGroups[groupIndex]
+                              .validations) {
+                              const validation =
+                                   typeGroups[groupIndex].validations[
+                                        validIndex
+                                   ];
+                              console.log(
+                                   "name: ",
+                                   validation.name,
+                                   " value: ",
+                                   validation.value
+                              );
+                              newObj[validation.name] = validation.value;
+                         }
+                    }
+                    // bind the new object to the actual control
+                    this.$set(this.currentControl, "validations", newObj);
+               } else {
+                    this.$set(this.currentControl, "validations", {});
+               }
+
+               //console.log("new valid: ", newObj);
+               // console.log(
+               //      "has validations? ",
+               //      this.currentControl.hasValidations
+               // );
+          },
           log(evt) {
                window.console.log(evt);
           },
+
           cloneObject(object) {
                let newObj = {};
                for (let key in object) {
@@ -509,13 +746,18 @@ export default {
                     instruction: null,
                     value: null,
                     properties: {},
+                    hasValidations: false,
+                    validations: {},
                     icon: item.icon,
                     type: item.type,
                     edit: false,
                     config: false
                };
                let newProps = this.cloneObject(item.properties);
+               let newValids = this.cloneObject(item.validations);
+
                this.$set(newControl, "properties", newProps);
+               this.$set(newControl, "validations", newValids);
 
                return newControl;
           }
