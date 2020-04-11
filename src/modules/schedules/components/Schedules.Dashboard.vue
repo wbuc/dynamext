@@ -20,21 +20,6 @@
                          style="background-color: #ff000000"
                     >
                          <v-tab-item key="Fields" style="background-color: #ff000000">
-                              <!-- <v-card flat style="background-color: #ff000000">
-                                   <v-card-actions>
-                                        <v-btn icon>
-                                             <v-icon>mdi-folder-plus</v-icon>
-                                        </v-btn>
-                                        <v-btn icon>
-                                             <v-icon>mdi-refresh</v-icon>
-                                        </v-btn>
-
-                                        <v-spacer></v-spacer>
-                                        <v-btn icon @click="toggleFullView">
-                                             <v-icon>mdi-arrow-expand</v-icon>
-                                        </v-btn>
-                                   </v-card-actions>
-                              </v-card>-->
                               <v-card flat style="background-color: #ff000000">
                                    <v-list width="100%">
                                         <draggable
@@ -96,6 +81,8 @@
                     <v-card flat style="background-color: #ff000000">
                          <v-card-text>
                               <span class="subtitle-1 font-weight-light">New Schedule Name</span>
+                              <!-- <v-spacer></v-spacer> -->
+                              <!-- <v-btn color="primary" width="120px">Save</v-btn> -->
                          </v-card-text>
                          <v-divider></v-divider>
                     </v-card>
@@ -149,6 +136,16 @@
                                         </draggable>
                                    </v-list>
                               </v-card>
+                              <v-card flat style="background-color: #ff000000">
+                                   <v-divider></v-divider>
+                                   <!-- <v-card-text>
+                                        <span class="subtitle-1 font-weight-light"></span>
+                                   </v-card-text>-->
+                                   <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="primary" width="120px">Save</v-btn>
+                                   </v-card-actions>
+                              </v-card>
                          </v-tab-item>
                          <v-tab-item
                               key="Properties"
@@ -182,22 +179,27 @@
                                         v-if="!controlSelected"
                                         class="text-center"
                                    >No control selected</span>
-
-                                   <v-list
+                                   <div v-else-if="controlSelected" class="x-control-properties">
+                                        <!-- <v-list
                                         v-else-if="controlSelected"
                                         no-action
                                         width="100%"
                                         class="x-control-properties"
                                    >
                                         selected
-                                        {{this.currentControl.name}} !
-                                        <v-list-item-group
+                                        {{this.currentControl.name}} !-->
+
+                                        <!-- <v-list-item-group
+                                             v-for="(cat, index) in controlTypeProperties[currentControl.type]"
+                                             :key="index"
+                                        >-->
+
+                                        <div
                                              v-for="(cat, index) in controlTypeProperties[currentControl.type]"
                                              :key="index"
                                         >
-                                             <v-list-item-content>
-                                                  <v-list-item-title>{{cat.group}}</v-list-item-title>
-                                             </v-list-item-content>
+                                             <div class="px-4 pt-4">{{cat.group}}</div>
+
                                              <v-list flat>
                                                   <v-list-item :ripple="propertiesConfig.ripple">
                                                        <v-list-item-content>
@@ -244,8 +246,14 @@
                                                        </v-list-item-content>
                                                   </v-list-item>
                                              </v-list>
-                                        </v-list-item-group>
-                                   </v-list>
+                                        </div>
+                                        <!-- <v-list-item-content>
+                                                  <v-list-item-title>{{cat.group}}</v-list-item-title>
+                                        </v-list-item-content>-->
+
+                                        <!-- </v-list-item-group> -->
+                                        <!-- </v-list> -->
+                                   </div>
                               </v-card>
                          </v-tab-item>
                          <v-tab-item
