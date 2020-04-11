@@ -198,7 +198,34 @@
                                              <v-list-item-content>
                                                   <v-list-item-title>{{cat.group}}</v-list-item-title>
                                              </v-list-item-content>
-                                             <v-list flat :ripple="propertiesConfig.ripple">
+                                             <v-list flat>
+                                                  <v-list-item :ripple="propertiesConfig.ripple">
+                                                       <v-list-item-content>
+                                                            <v-list-item-title>Title</v-list-item-title>
+                                                            <v-text-field
+                                                                 style="width:100%"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="currentControl.name"
+                                                            ></v-text-field>
+                                                       </v-list-item-content>
+                                                  </v-list-item>
+                                                  <v-list-item :ripple="propertiesConfig.ripple">
+                                                       <v-list-item-content>
+                                                            <v-list-item-title>Instructions</v-list-item-title>
+                                                            <v-text-field
+                                                                 style="width:100%"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="currentControl.instruction"
+                                                            ></v-text-field>
+                                                       </v-list-item-content>
+                                                  </v-list-item>
+                                                  <v-divider></v-divider>
                                                   <v-list-item
                                                        :ripple="propertiesConfig.ripple"
                                                        v-for="(prop, i) in cat.properties"
@@ -232,6 +259,10 @@
 </template>
 
 <script>
+// let newId = ()=>{
+//      return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+// }
+
 import { mapGetters } from "vuex";
 
 import draggable from "vuedraggable";
@@ -399,6 +430,7 @@ export default {
                     {
                          id: 91,
                          name: "Header",
+                         instruction: "",
                          value: null,
                          icon: "mdi-format-header-1",
                          type: "header",
@@ -412,6 +444,7 @@ export default {
                     {
                          id: 92,
                          name: "Text",
+                         instruction: "",
                          value: null,
                          icon: "mdi-format-text",
                          type: "text",
@@ -426,6 +459,7 @@ export default {
                     {
                          id: 93,
                          name: "Paragraph",
+                         instruction: "",
                          value: null,
                          icon: "mdi-format-pilcrow",
                          type: "paragraph",
@@ -456,6 +490,7 @@ export default {
                return {
                     id: idGlobal++,
                     name: `Control ${item.name}`,
+                    instruction: null,
                     value: null,
                     properties: item.properties,
                     icon: item.icon,
