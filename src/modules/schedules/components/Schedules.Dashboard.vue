@@ -92,6 +92,8 @@
                               <v-tab key="Design">Design</v-tab>
                               <v-tab key="Properties">Properties</v-tab>
                          </v-tabs>
+                         <v-spacer></v-spacer>
+                         <v-btn color="primary" width="120px">Save</v-btn>
                     </v-toolbar>
                     <v-tabs-items
                          v-model="designerConfig.activeTab"
@@ -141,7 +143,7 @@
                                    <!-- <v-card-text>
                                         <span class="subtitle-1 font-weight-light"></span>
                                    </v-card-text>-->
-                                   <v-card-actions>
+                                   <v-card-actions class="pr-4">
                                         <v-spacer></v-spacer>
                                         <v-btn color="primary" width="120px">Save</v-btn>
                                    </v-card-actions>
@@ -280,14 +282,17 @@
                                         class="text-center grey--text py-10"
                                    >No control selected</div>
                                    <div v-else-if="controlSelected" class="x-control-properties">
-                                        <div class="px-4">
+                                        <!-- <div>{{currentControl.hasValidations}}</div> -->
+                                        <v-card-text class="px-4 pb-0">
                                              <v-checkbox
+                                                  class="mt-0"
                                                   id="fieldValidation"
                                                   v-model="currentControl.hasValidations"
                                                   label="Add field validation"
                                                   @change="addFieldValidation"
                                              ></v-checkbox>
-                                        </div>
+                                        </v-card-text>
+
                                         <div v-if="currentControl.hasValidations">
                                              <div
                                                   v-for="(cat, index) in controlTypeConfig[currentControl.type]"
@@ -462,22 +467,6 @@ export default {
                                         type: "text",
                                         placeholder:
                                              "Proivde default value for the field."
-                                   },
-                                   {
-                                        name: "minLength",
-                                        displayName: "Minimum Length",
-                                        value: "",
-                                        type: "text",
-                                        placeholder:
-                                             "Proivde default value for the field."
-                                   },
-                                   {
-                                        name: "maxLength",
-                                        displayName: "Maximum Length",
-                                        value: "",
-                                        type: "text",
-                                        placeholder:
-                                             "Proivde default value for the field."
                                    }
                               ],
                               validations: [
@@ -485,17 +474,13 @@ export default {
                                         name: "minLength",
                                         displayName: "Minimum Length",
                                         value: 0,
-                                        type: "text",
-                                        placeholder:
-                                             "Proivde default value for the field."
+                                        type: "text"
                                    },
                                    {
                                         name: "maxLength",
                                         displayName: "Maximum Length",
                                         value: 100,
-                                        type: "text",
-                                        placeholder:
-                                             "Proivde default value for the field."
+                                        type: "text"
                                    }
                               ]
                          }
@@ -525,17 +510,13 @@ export default {
                                         name: "minLength",
                                         displayName: "Minimum Length",
                                         value: 0,
-                                        type: "text",
-                                        placeholder:
-                                             "Proivde default value for the field."
+                                        type: "text"
                                    },
                                    {
                                         name: "maxLength",
                                         displayName: "Maximum Length",
                                         value: 5000,
-                                        type: "text",
-                                        placeholder:
-                                             "Proivde default value for the field."
+                                        type: "text"
                                    }
                               ]
                          }
@@ -598,36 +579,20 @@ export default {
                                         value: "",
                                         type: "number",
                                         placeholder: 0
-                                   },
-                                   {
-                                        name: "minValue",
-                                        displayName: "Minimum Value",
-                                        value: "",
-                                        type: "number",
-                                        placeholder: 0
-                                   },
-                                   {
-                                        name: "maxValue",
-                                        displayName: "Maximum Value",
-                                        value: "",
-                                        type: "number",
-                                        placeholder: 1000
                                    }
                               ],
                               validations: [
                                    {
                                         name: "minValue",
                                         displayName: "Minimum Value",
-                                        value: "",
-                                        type: "number",
-                                        placeholder: 0
+                                        value: 0,
+                                        type: "number"
                                    },
                                    {
                                         name: "maxValue",
                                         displayName: "Maximum Value",
-                                        value: "",
-                                        type: "number",
-                                        placeholder: 1000
+                                        value: 1000,
+                                        type: "number"
                                    }
                               ]
                          }
@@ -675,7 +640,8 @@ export default {
                          icon: "mdi-format-pilcrow",
                          type: "paragraph",
                          properties: {
-                              default: null
+                              default: null,
+                              rows: 5
                          },
                          hasValidations: false,
                          validations: {},
@@ -706,26 +672,15 @@ export default {
                                    typeGroups[groupIndex].validations[
                                         validIndex
                                    ];
-                              console.log(
-                                   "name: ",
-                                   validation.name,
-                                   " value: ",
-                                   validation.value
-                              );
                               newObj[validation.name] = validation.value;
                          }
                     }
-                    // bind the new object to the actual control
+                    // bind the new object to the actual control validations
                     this.$set(this.currentControl, "validations", newObj);
                } else {
+                    // empty the control validations
                     this.$set(this.currentControl, "validations", {});
                }
-
-               //console.log("new valid: ", newObj);
-               // console.log(
-               //      "has validations? ",
-               //      this.currentControl.hasValidations
-               // );
           },
           log(evt) {
                window.console.log(evt);
