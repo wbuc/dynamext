@@ -87,7 +87,7 @@
                          <v-divider></v-divider>
                     </v-card>
                     <v-toolbar class="elevation-2">
-                         <v-tabs v-model="designerConfig.activeTab" color="grey">
+                         <v-tabs v-model="canvasConfig.activeTab" color="grey">
                               <v-tabs-slider color="accent"></v-tabs-slider>
                               <v-tab key="Design">Design</v-tab>
                               <v-tab key="Properties">Properties</v-tab>
@@ -96,7 +96,7 @@
                          <v-btn color="primary" width="120px">Save</v-btn>
                     </v-toolbar>
                     <v-tabs-items
-                         v-model="designerConfig.activeTab"
+                         v-model="canvasConfig.activeTab"
                          style="background-color: #ff000000"
                     >
                          <v-tab-item key="Design" style="background-color: #ff000000">
@@ -117,23 +117,93 @@
                                         >
                                              <v-list-item
                                                   two-line
+                                                  :ripple="canvasConfig.ripple"
                                                   v-for="element in formControls"
                                                   :key="element.id"
                                                   color="primary"
                                                   class="x-control"
                                                   @click="selectControl(element)"
+                                                  @mouseover="formControlHover = element.id"
+                                                  @mouseout="formControlHover = null"
                                              >
-                                                  <v-list-item-action class="x-control-handle">
+                                                  <v-list-item-action class="x-control-handle mr-2">
                                                        <v-icon
+                                                            v-show="formControlHover === element.id"
                                                             class="grey--text text--darken-1"
-                                                       >mdi-drag</v-icon>
-                                                  </v-list-item-action>
-                                                  <v-list-item-action>
-                                                       <v-icon>{{element.icon}}</v-icon>
+                                                       >mdi-drag-vertical</v-icon>
                                                   </v-list-item-action>
                                                   <v-list-item-content>
-                                                       <v-list-item-title>{{ element.name }}</v-list-item-title>
+                                                       <!-- <v-list-item-title>{{ element.name }}</v-list-item-title> -->
+                                                       <div v-if="element.type === 'text'">
+                                                            <v-list-item-title
+                                                                 class="title font-weight-light"
+                                                            >{{element.name}}</v-list-item-title>
+                                                            <v-list-item-subtitle
+                                                                 class="caption text--secondary"
+                                                            >{{element.instruction}}</v-list-item-subtitle>
+                                                            <v-text-field
+                                                                 style="width:100%"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="element.value"
+                                                                 @click.stop
+                                                            ></v-text-field>
+                                                       </div>
+                                                       <div v-if="element.type === 'paragraph'">
+                                                            <v-list-item-title
+                                                                 class="title font-weight-light"
+                                                            >{{element.name}}</v-list-item-title>
+                                                            <v-list-item-subtitle
+                                                                 class="caption text--secondary"
+                                                            >{{element.instruction}}</v-list-item-subtitle>
+                                                       </div>
+                                                       <div v-if="element.type === 'header'">
+                                                            <v-list-item-title
+                                                                 :class="[element.properties.size, element.properties.color]"
+                                                                 class="font-weight-light"
+                                                            >{{element.name}}</v-list-item-title>
+                                                            <v-list-item-subtitle
+                                                                 class="caption text--secondary"
+                                                            >{{element.instruction}}</v-list-item-subtitle>
+                                                            <v-divider
+                                                                 v-if="element.properties.style === 'border'"
+                                                            ></v-divider>
+                                                       </div>
+                                                       <div v-if="element.type === 'number'">
+                                                            <v-list-item-title
+                                                                 class="title font-weight-light"
+                                                            >{{element.name}}</v-list-item-title>
+                                                            <v-list-item-subtitle
+                                                                 class="caption text--secondary"
+                                                            >{{element.instruction}}</v-list-item-subtitle>
+                                                       </div>
+                                                       <div v-if="element.type === 'numeric'">
+                                                            <v-list-item-title
+                                                                 class="title font-weight-light"
+                                                            >{{element.name}}</v-list-item-title>
+                                                            <v-list-item-subtitle
+                                                                 class="caption text--secondary"
+                                                            >{{element.instruction}}</v-list-item-subtitle>
+                                                       </div>
                                                   </v-list-item-content>
+                                                  <v-list-item-action
+                                                       class="x-control-quick-actions"
+                                                  >
+                                                       <div
+                                                            v-show="formControlHover === element.id"
+                                                       >
+                                                            <v-btn
+                                                                 icon
+                                                                 @click.stop="deleteFormControl(element)"
+                                                            >
+                                                                 <v-icon
+                                                                      class="error--text"
+                                                                 >mdi-delete</v-icon>
+                                                            </v-btn>
+                                                       </div>
+                                                  </v-list-item-action>
                                              </v-list-item>
                                         </draggable>
                                    </v-list>
@@ -382,8 +452,9 @@ export default {
                toolboxConfig: {
                     activeTab: null
                },
-               designerConfig: {
-                    avctiveTab: null
+               canvasConfig: {
+                    avctiveTab: null,
+                    ripple: false
                },
                propertiesConfig: {
                     avctiveTab: null,
@@ -424,8 +495,9 @@ export default {
                          description: "Header used for grouping fields",
                          icon: "mdi-format-header-1",
                          properties: {
-                              size: "headline",
-                              color: "primary"
+                              size: "display-1",
+                              color: "",
+                              style: ""
                          },
                          hasValidations: false,
                          validations: {}
@@ -450,6 +522,18 @@ export default {
                               default: 0,
                               minValue: 1,
                               maxValue: 1000
+                         },
+                         hasValidations: false,
+                         validations: {}
+                    },
+                    {
+                         id: 6,
+                         name: "Information",
+                         type: "information",
+                         description: "Text block for specific information",
+                         icon: "mdi-information-variant",
+                         properties: {
+                              default: null
                          },
                          hasValidations: false,
                          validations: {}
@@ -480,6 +564,12 @@ export default {
                                         name: "maxLength",
                                         displayName: "Maximum Length",
                                         value: 100,
+                                        type: "text"
+                                   },
+                                   {
+                                        name: "customExpression",
+                                        displayName: "Custom Expression",
+                                        value: null,
                                         type: "text"
                                    }
                               ]
@@ -517,6 +607,12 @@ export default {
                                         displayName: "Maximum Length",
                                         value: 5000,
                                         type: "text"
+                                   },
+                                   {
+                                        name: "customExpression",
+                                        displayName: "Custom Expression",
+                                        value: null,
+                                        type: "text"
                                    }
                               ]
                          }
@@ -532,15 +628,19 @@ export default {
                                         type: "select",
                                         options: [
                                              {
-                                                  name: "headline",
+                                                  name: "display-3",
+                                                  displayName: "Extra Large"
+                                             },
+                                             {
+                                                  name: "display-2",
                                                   displayName: "Large"
                                              },
                                              {
-                                                  name: "title",
+                                                  name: "display-1",
                                                   displayName: "Medium"
                                              },
                                              {
-                                                  name: "subtitle-1",
+                                                  name: "title",
                                                   displayName: "Small"
                                              }
                                         ]
@@ -552,16 +652,44 @@ export default {
                                         type: "select",
                                         options: [
                                              {
-                                                  name: "primary",
-                                                  displayName: "Jade Green"
+                                                  name: "",
+                                                  displayName: "Default"
                                              },
                                              {
-                                                  name: "secondary",
-                                                  displayName: "Ruby Red"
+                                                  name: "primary--text",
+                                                  displayName: "Primary"
                                              },
                                              {
-                                                  name: "accent",
-                                                  displayName: "Lemon Yellow"
+                                                  name: "secondary--text",
+                                                  displayName: "Secondary"
+                                             },
+                                             {
+                                                  name: "accent--text",
+                                                  displayName: "Accent"
+                                             },
+                                             {
+                                                  name: "warning--text",
+                                                  displayName: "Caution"
+                                             },
+                                             {
+                                                  name: "error--text",
+                                                  displayName: "Important"
+                                             }
+                                        ]
+                                   },
+                                   {
+                                        name: "style",
+                                        displayName: "Style",
+                                        value: "",
+                                        type: "select",
+                                        options: [
+                                             {
+                                                  name: "",
+                                                  displayName: "None"
+                                             },
+                                             {
+                                                  name: "border",
+                                                  displayName: "Border"
                                              }
                                         ]
                                    }
@@ -593,6 +721,27 @@ export default {
                                         displayName: "Maximum Value",
                                         value: 1000,
                                         type: "number"
+                                   },
+                                   {
+                                        name: "customExpression",
+                                        displayName: "Custom Expression",
+                                        value: null,
+                                        type: "text"
+                                   }
+                              ]
+                         }
+                    ],
+                    information: [
+                         {
+                              group: "Group 1",
+                              properties: [
+                                   {
+                                        name: "default",
+                                        displayName: "Default Value",
+                                        value: "",
+                                        type: "text",
+                                        placeholder:
+                                             "Proivde default value for the field."
                                    }
                               ]
                          }
@@ -607,8 +756,9 @@ export default {
                          icon: "mdi-format-header-1",
                          type: "header",
                          properties: {
-                              color: "primary",
-                              size: "title"
+                              color: "primary--text",
+                              size: "display-1",
+                              style: ""
                          },
                          hasValidations: false,
                          validations: {},
@@ -649,7 +799,8 @@ export default {
                          config: false
                     }
                ],
-               currentControl: null
+               currentControl: null,
+               formControlHover: null
           };
      },
      methods: {
@@ -685,7 +836,6 @@ export default {
           log(evt) {
                window.console.log(evt);
           },
-
           cloneObject(object) {
                let newObj = {};
                for (let key in object) {
@@ -693,7 +843,6 @@ export default {
                }
                return newObj;
           },
-
           cloneControl(item) {
                let newControl = {
                     id: idGlobal++,
@@ -715,6 +864,9 @@ export default {
                this.$set(newControl, "validations", newValids);
 
                return newControl;
+          },
+          deleteFormControl(control) {
+               console.log("Control deleted: ", control);
           }
      },
      created() {}
@@ -749,5 +901,8 @@ export default {
 }
 .x-form .x-control-handle {
      cursor: move;
+}
+.x-form .x-control-quick-actions {
+     width: 30px;
 }
 </style>
