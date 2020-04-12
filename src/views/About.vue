@@ -110,6 +110,14 @@
                     </p>
                </v-col>
           </v-row>
+          <v-row>
+               <v-col>
+                    // NOTE: handle to the next element on the DOM being updated.
+                    this.$nextTick(() => {
+                    this.$refs[field].focus();
+                    });
+               </v-col>
+          </v-row>
      </v-container>
 </template>
 <script>

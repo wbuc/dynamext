@@ -148,6 +148,7 @@
                                                                  hide-details
                                                                  dense
                                                                  v-model="element.value"
+                                                                 :placeholder="element.properties.placeholder"
                                                                  @click.stop
                                                             ></v-text-field>
                                                        </div>
@@ -158,6 +159,15 @@
                                                             <v-list-item-subtitle
                                                                  class="caption text--secondary"
                                                             >{{element.instruction}}</v-list-item-subtitle>
+                                                            <v-textarea
+                                                                 v-bind:auto-grow="false"
+                                                                 v-bind:clearable="true"
+                                                                 outlined
+                                                                 :rows="element.properties.rows?element.properties.rows: 1"
+                                                                 :counter="element.validations ? element.validations.maxLength : false"
+                                                                 v-model="element.value"
+                                                                 :placeholder="element.properties.placeholder"
+                                                            ></v-textarea>
                                                        </div>
                                                        <div v-if="element.type === 'header'">
                                                             <v-list-item-title
@@ -469,6 +479,7 @@ export default {
                          icon: "mdi-format-text",
                          properties: {
                               default: null,
+                              placeholder: "Enter a value",
                               minLength: 1,
                               maxLength: 100
                          },
@@ -483,6 +494,7 @@ export default {
                          icon: "mdi-format-pilcrow",
                          properties: {
                               default: null,
+                              placeholder: "Enter a value",
                               rows: 5
                          },
                          hasValidations: false,
@@ -551,6 +563,13 @@ export default {
                                         type: "text",
                                         placeholder:
                                              "Proivde default value for the field."
+                                   },
+                                   {
+                                        name: "placeholder",
+                                        displayName: "Placeholder Value",
+                                        value: "",
+                                        type: "text",
+                                        placeholder: ""
                                    }
                               ],
                               validations: [
@@ -588,9 +607,16 @@ export default {
                                              "Proivde default value for the field."
                                    },
                                    {
+                                        name: "placeholder",
+                                        displayName: "Placeholder Value",
+                                        value: "",
+                                        type: "text",
+                                        placeholder: ""
+                                   },
+                                   {
                                         name: "rows",
                                         displayName: "Rows",
-                                        value: "",
+                                        value: 5,
                                         type: "number",
                                         placeholder: 5
                                    }
@@ -600,13 +626,13 @@ export default {
                                         name: "minLength",
                                         displayName: "Minimum Length",
                                         value: 0,
-                                        type: "text"
+                                        type: "number"
                                    },
                                    {
                                         name: "maxLength",
                                         displayName: "Maximum Length",
                                         value: 5000,
-                                        type: "text"
+                                        type: "number"
                                    },
                                    {
                                         name: "customExpression",
@@ -774,6 +800,7 @@ export default {
                          type: "text",
                          properties: {
                               default: null,
+                              placeholder: "Enter a value",
                               minLength: 1,
                               maxLength: 100
                          },
@@ -785,12 +812,14 @@ export default {
                     {
                          id: 93,
                          name: "Paragraph",
-                         instruction: "",
+                         instruction:
+                              "This is a default paragraph for testing purposes!",
                          value: null,
                          icon: "mdi-format-pilcrow",
                          type: "paragraph",
                          properties: {
                               default: null,
+                              placeholder: "Enter a value",
                               rows: 5
                          },
                          hasValidations: false,
