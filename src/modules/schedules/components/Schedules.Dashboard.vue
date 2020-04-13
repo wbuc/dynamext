@@ -77,7 +77,7 @@
                </v-card>
           </v-col>
           <v-col cols="12" :md="explorerConfig.fullView ? '7':'6'">
-               <v-card class="x-form">
+               <v-card class="x-form-design">
                     <v-card flat style="background-color: #ff000000">
                          <v-card-text>
                               <span class="subtitle-1 font-weight-light">New Schedule Name</span>
@@ -132,7 +132,7 @@
                                                             class="grey--text text--darken-1"
                                                        >mdi-drag-vertical</v-icon>
                                                   </v-list-item-action>
-                                                  <v-list-item-content>
+                                                  <v-list-item-content class="x-control-content">
                                                        <!-- <v-list-item-title>{{ element.name }}</v-list-item-title> -->
                                                        <div v-if="element.type === 'text'">
                                                             <v-list-item-title
@@ -949,14 +949,22 @@ export default {
      /* pointer-events: none; */
      cursor: default !important;
 }
-.x-form .x-control {
+
+.x-form-design .x-control {
      /* border: 1px solid #0000001f; */
      cursor: pointer;
 }
-.x-form .x-control-handle {
+.x-form-design .x-control-handle {
      cursor: move;
 }
-.x-form .x-control-quick-actions {
+.x-form-design .x-control-content {
+     min-height: 74px !important;
+}
+.x-form-design .x-control-quick-actions {
      width: 30px;
+     margin-top: 0px !important;
+     margin-bottom: 0px !important;
+}
+.x-form-design {
 }
 </style>
