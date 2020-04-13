@@ -197,6 +197,14 @@
                                                                  class="caption text--secondary"
                                                             >{{element.instruction}}</v-list-item-subtitle>
                                                        </div>
+                                                       <div v-if="element.type === 'information'">
+                                                            <v-alert
+                                                                 :type="element.properties.type"
+                                                                 :class="[element.properties.size]"
+                                                                 v-bind="element.properties.style"
+                                                                 class="font-weight-light x-control-information"
+                                                            >{{element.instruction}}</v-alert>
+                                                       </div>
                                                   </v-list-item-content>
                                                   <v-list-item-action
                                                        class="x-control-quick-actions"
@@ -560,12 +568,15 @@ export default {
                          id: 6,
                          name: "Information",
                          type: "information",
-                         instruction: null,
+                         instruction:
+                              "Collaboratively administrate empowered markets via plug-and-play networks.",
                          value: null,
                          description: "Text block for specific information",
                          icon: "mdi-information-variant",
                          properties: {
-                              default: null
+                              size: "body-1",
+                              type: "info",
+                              style: {}
                          },
                          hasValidations: false,
                          validations: {}
@@ -782,12 +793,77 @@ export default {
                               group: "Group 1",
                               properties: [
                                    {
-                                        name: "default",
-                                        displayName: "Default Value",
+                                        name: "size",
+                                        displayName: "Size",
                                         value: "",
-                                        type: "text",
-                                        placeholder:
-                                             "Proivde default value for the field."
+                                        type: "select",
+                                        options: [
+                                             {
+                                                  name: "display-1",
+                                                  displayName: "Extra Large"
+                                             },
+                                             {
+                                                  name: "title",
+                                                  displayName: "Large"
+                                             },
+                                             {
+                                                  name: "body-1",
+                                                  displayName: "Medium"
+                                             },
+                                             {
+                                                  name: "caption",
+                                                  displayName: "Small"
+                                             }
+                                        ]
+                                   },
+                                   {
+                                        name: "type",
+                                        displayName: "Type",
+                                        value: "",
+                                        type: "select",
+                                        options: [
+                                             {
+                                                  name: null,
+                                                  displayName: "None",
+                                                  icon: false
+                                             },
+                                             {
+                                                  name: "info",
+                                                  displayName: "Information"
+                                             },
+                                             {
+                                                  name: "warning",
+                                                  displayName: "Caution"
+                                             },
+                                             {
+                                                  name: "error",
+                                                  displayName: "Important"
+                                             }
+                                        ]
+                                   },
+                                   {
+                                        name: "style",
+                                        displayName: "Style",
+                                        value: "",
+                                        type: "select",
+                                        options: [
+                                             {
+                                                  name: {},
+                                                  displayName: "None"
+                                             },
+                                             {
+                                                  name: { outlined: true },
+                                                  displayName: "Outlined"
+                                             },
+                                             {
+                                                  name: { prominent: true },
+                                                  displayName: "Prominent"
+                                             },
+                                             {
+                                                  name: { dense: true },
+                                                  displayName: "Dense"
+                                             }
+                                        ]
                                    }
                               ]
                          }
