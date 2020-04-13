@@ -164,6 +164,7 @@
                                                             <v-textarea
                                                                  v-bind:auto-grow="false"
                                                                  v-bind:clearable="true"
+                                                                 disabled
                                                                  outlined
                                                                  :rows="element.properties.rows?element.properties.rows: 1"
                                                                  :counter="element.validations ? element.validations.maxLength : false"
@@ -196,6 +197,7 @@
                                                                  outlined
                                                                  single-line
                                                                  hide-details
+                                                                 disabled
                                                                  dense
                                                                  v-model="element.value"
                                                                  :placeholder="element.properties.placeholder"
