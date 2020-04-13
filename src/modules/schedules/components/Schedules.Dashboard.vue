@@ -108,145 +108,154 @@
                                    <v-divider></v-divider>
                               </v-card>-->
                               <v-card flat style="background-color: #ff000000">
-                                   <v-list width="100%">
-                                        <draggable
-                                             class="dragArea list-group"
-                                             :list="formControls"
-                                             group="toolbox"
-                                             @change="log"
-                                             handle=".x-control-handle"
-                                        >
-                                             <v-list-item
-                                                  two-line
-                                                  :ripple="canvasConfig.ripple"
-                                                  v-for="(element,index) in formControls"
-                                                  :key="element.id"
-                                                  color="primary"
-                                                  class="x-control"
-                                                  @click="selectControl(element)"
-                                                  @mouseover="formControlHover = element.id"
-                                                  @mouseout="formControlHover = null"
+                                   <v-list width="100%" v-model="currentControl">
+                                        <v-list-item-group v-model="item">
+                                             <draggable
+                                                  class="dragArea list-group"
+                                                  :list="formControls"
+                                                  group="toolbox"
+                                                  @change="log"
+                                                  handle=".x-control-handle"
                                              >
-                                                  <v-list-item-action class="x-control-handle mr-2">
-                                                       <v-icon
-                                                            v-show="formControlHover === element.id"
-                                                            class="grey--text text--darken-1"
-                                                       >mdi-drag-vertical</v-icon>
-                                                  </v-list-item-action>
-                                                  <v-list-item-content class="x-control-content">
-                                                       <!-- <v-list-item-title>{{ element.name }}</v-list-item-title> -->
-                                                       <div v-if="element.type === 'text'">
-                                                            <v-list-item-title
-                                                                 class="title font-weight-light"
-                                                            >{{element.name}}</v-list-item-title>
-                                                            <v-list-item-subtitle
-                                                                 class="caption text--secondary"
-                                                            >{{element.instruction}}</v-list-item-subtitle>
-                                                            <v-text-field
-                                                                 style="width:100%"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 disabled
-                                                                 v-model="element.value"
-                                                                 :placeholder="element.properties.placeholder"
-                                                                 @click.stop
-                                                            ></v-text-field>
-                                                       </div>
-                                                       <div v-if="element.type === 'paragraph'">
-                                                            <v-list-item-title
-                                                                 class="title font-weight-light"
-                                                            >{{element.name}}</v-list-item-title>
-                                                            <v-list-item-subtitle
-                                                                 class="caption text--secondary"
-                                                            >{{element.instruction}}</v-list-item-subtitle>
-                                                            <v-textarea
-                                                                 v-bind:auto-grow="false"
-                                                                 v-bind:clearable="true"
-                                                                 disabled
-                                                                 outlined
-                                                                 :rows="element.properties.rows?element.properties.rows: 1"
-                                                                 :counter="element.validations ? element.validations.maxLength : false"
-                                                                 v-model="element.value"
-                                                                 :placeholder="element.properties.placeholder"
-                                                            ></v-textarea>
-                                                       </div>
-                                                       <div v-if="element.type === 'header'">
-                                                            <v-list-item-title
-                                                                 :class="[element.properties.size, element.properties.color]"
-                                                                 class="font-weight-light"
-                                                            >{{element.name}}</v-list-item-title>
-                                                            <v-list-item-subtitle
-                                                                 class="caption text--secondary"
-                                                            >{{element.instruction}}</v-list-item-subtitle>
-                                                            <v-divider
-                                                                 v-if="element.properties.style === 'border'"
-                                                            ></v-divider>
-                                                       </div>
-                                                       <div v-if="element.type === 'number'">
-                                                            <v-list-item-title
-                                                                 class="title font-weight-light"
-                                                            >{{element.name}}</v-list-item-title>
-                                                            <v-list-item-subtitle
-                                                                 class="caption text--secondary"
-                                                            >{{element.instruction}}</v-list-item-subtitle>
-                                                            <v-text-field
-                                                                 type="number"
-                                                                 style="width:100%"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 disabled
-                                                                 dense
-                                                                 v-model="element.value"
-                                                                 :placeholder="element.properties.placeholder"
-                                                                 @click.stop
-                                                            ></v-text-field>
-                                                       </div>
-                                                       <div v-if="element.type === 'numeric'">
-                                                            <v-list-item-title
-                                                                 class="title font-weight-light"
-                                                            >{{element.name}}</v-list-item-title>
-                                                            <v-list-item-subtitle
-                                                                 class="caption text--secondary"
-                                                            >{{element.instruction}}</v-list-item-subtitle>
-                                                       </div>
-                                                       <div v-if="element.type === 'information'">
-                                                            <v-alert
-                                                                 :type="element.properties.type"
-                                                                 :class="[element.properties.size]"
-                                                                 v-bind="element.properties.style"
-                                                                 class="font-weight-light x-control-information"
-                                                            >{{element.name}}</v-alert>
-                                                       </div>
-                                                  </v-list-item-content>
-                                                  <v-list-item-action
-                                                       class="x-control-quick-actions"
+                                                  <v-list-item
+                                                       two-line
+                                                       :ripple="canvasConfig.ripple"
+                                                       v-for="(element,index) in formControls"
+                                                       :key="element.id"
+                                                       class="x-control"
+                                                       @click="selectControl(element)"
+                                                       @mouseover.native="formControlHover = element.id"
+                                                       @mouseout.native="formControlHover = null"
                                                   >
-                                                       <div
-                                                            v-show="formControlHover === element.id"
+                                                       <v-list-item-action
+                                                            class="x-control-handle mr-2"
                                                        >
-                                                            <v-btn
-                                                                 icon
-                                                                 @click.stop="copyFormControl(element)"
+                                                            <v-icon
+                                                                 v-show="formControlHover === element.id"
+                                                                 class="grey--text text--darken-1"
+                                                            >mdi-drag-vertical</v-icon>
+                                                       </v-list-item-action>
+                                                       <v-list-item-content
+                                                            class="x-control-content"
+                                                       >
+                                                            <!-- <v-list-item-title>{{ element.name }}</v-list-item-title> -->
+                                                            <div v-if="element.type === 'text'">
+                                                                 <v-list-item-title
+                                                                      class="title font-weight-light"
+                                                                 >{{element.name}}</v-list-item-title>
+                                                                 <v-list-item-subtitle
+                                                                      class="caption text--secondary"
+                                                                 >{{element.instruction}}</v-list-item-subtitle>
+                                                                 <v-text-field
+                                                                      style="width:100%"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      dense
+                                                                      disabled
+                                                                      v-model="element.value"
+                                                                      :placeholder="element.properties.placeholder"
+                                                                      @click.stop
+                                                                 ></v-text-field>
+                                                            </div>
+                                                            <div
+                                                                 v-if="element.type === 'paragraph'"
                                                             >
-                                                                 <v-icon
-                                                                      class="success--text text--lighten-1"
-                                                                 >mdi-content-duplicate</v-icon>
-                                                            </v-btn>
-                                                            <v-btn
-                                                                 icon
-                                                                 @click.stop="deleteFormControl(index)"
+                                                                 <v-list-item-title
+                                                                      class="title font-weight-light"
+                                                                 >{{element.name}}</v-list-item-title>
+                                                                 <v-list-item-subtitle
+                                                                      class="caption text--secondary"
+                                                                 >{{element.instruction}}</v-list-item-subtitle>
+                                                                 <v-textarea
+                                                                      v-bind:auto-grow="false"
+                                                                      v-bind:clearable="true"
+                                                                      disabled
+                                                                      outlined
+                                                                      :rows="element.properties.rows?element.properties.rows: 1"
+                                                                      :counter="element.validations ? element.validations.maxLength : false"
+                                                                      v-model="element.value"
+                                                                      :placeholder="element.properties.placeholder"
+                                                                 ></v-textarea>
+                                                            </div>
+                                                            <div v-if="element.type === 'header'">
+                                                                 <v-list-item-title
+                                                                      :class="[element.properties.size, element.properties.color]"
+                                                                      class="font-weight-light"
+                                                                 >{{element.name}}</v-list-item-title>
+                                                                 <v-list-item-subtitle
+                                                                      class="caption text--secondary"
+                                                                 >{{element.instruction}}</v-list-item-subtitle>
+                                                                 <v-divider
+                                                                      v-if="element.properties.style === 'border'"
+                                                                 ></v-divider>
+                                                            </div>
+                                                            <div v-if="element.type === 'number'">
+                                                                 <v-list-item-title
+                                                                      class="title font-weight-light"
+                                                                 >{{element.name}}</v-list-item-title>
+                                                                 <v-list-item-subtitle
+                                                                      class="caption text--secondary"
+                                                                 >{{element.instruction}}</v-list-item-subtitle>
+                                                                 <v-text-field
+                                                                      type="number"
+                                                                      style="width:100%"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      disabled
+                                                                      dense
+                                                                      v-model="element.value"
+                                                                      :placeholder="element.properties.placeholder"
+                                                                      @click.stop
+                                                                 ></v-text-field>
+                                                            </div>
+                                                            <div v-if="element.type === 'numeric'">
+                                                                 <v-list-item-title
+                                                                      class="title font-weight-light"
+                                                                 >{{element.name}}</v-list-item-title>
+                                                                 <v-list-item-subtitle
+                                                                      class="caption text--secondary"
+                                                                 >{{element.instruction}}</v-list-item-subtitle>
+                                                            </div>
+                                                            <div
+                                                                 v-if="element.type === 'information'"
                                                             >
-                                                                 <v-icon
-                                                                      class="error--text"
-                                                                 >mdi-delete</v-icon>
-                                                            </v-btn>
-                                                       </div>
-                                                  </v-list-item-action>
-                                             </v-list-item>
-                                        </draggable>
+                                                                 <v-alert
+                                                                      :type="element.properties.type"
+                                                                      :class="[element.properties.size]"
+                                                                      v-bind="element.properties.style"
+                                                                      class="font-weight-light x-control-information"
+                                                                 >{{element.name}}</v-alert>
+                                                            </div>
+                                                       </v-list-item-content>
+                                                       <v-list-item-action
+                                                            class="x-control-quick-actions"
+                                                       >
+                                                            <div
+                                                                 v-show="formControlHover === element.id"
+                                                            >
+                                                                 <v-btn
+                                                                      icon
+                                                                      @click.stop="copyFormControl(element)"
+                                                                 >
+                                                                      <v-icon
+                                                                           class="success--text text--lighten-1"
+                                                                      >mdi-content-duplicate</v-icon>
+                                                                 </v-btn>
+                                                                 <v-btn
+                                                                      icon
+                                                                      @click.stop="deleteFormControl(index)"
+                                                                 >
+                                                                      <v-icon
+                                                                           class="error--text"
+                                                                      >mdi-delete</v-icon>
+                                                                 </v-btn>
+                                                            </div>
+                                                       </v-list-item-action>
+                                                  </v-list-item>
+                                             </draggable>
+                                        </v-list-item-group>
                                    </v-list>
                               </v-card>
                               <v-card flat style="background-color: #ff000000">
