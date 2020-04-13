@@ -188,6 +188,17 @@
                                                             <v-list-item-subtitle
                                                                  class="caption text--secondary"
                                                             >{{element.instruction}}</v-list-item-subtitle>
+                                                            <v-text-field
+                                                                 type="number"
+                                                                 style="width:100%"
+                                                                 outlined
+                                                                 single-line
+                                                                 hide-details
+                                                                 dense
+                                                                 v-model="element.value"
+                                                                 :placeholder="element.properties.placeholder"
+                                                                 @click.stop
+                                                            ></v-text-field>
                                                        </div>
                                                        <div v-if="element.type === 'numeric'">
                                                             <v-list-item-title
@@ -541,7 +552,7 @@ export default {
                          name: "Decimal",
                          type: "decimal",
                          instruction: null,
-                         value: null,
+                         value: 0.0,
                          description: "Numbers with decimal values",
                          icon: "mdi-decimal",
                          properties: {},
@@ -553,13 +564,12 @@ export default {
                          name: "Number",
                          type: "number",
                          instruction: null,
-                         value: null,
+                         value: 0,
                          description: "Full number values",
                          icon: "mdi-numeric-10",
                          properties: {
                               default: 0,
-                              minValue: 1,
-                              maxValue: 1000
+                              placeholder: "Enter a number"
                          },
                          hasValidations: false,
                          validations: {}
@@ -764,6 +774,12 @@ export default {
                                         value: "",
                                         type: "number",
                                         placeholder: 0
+                                   },
+                                   {
+                                        name: "placeholder",
+                                        displayName: "Placeholder Value",
+                                        value: "",
+                                        type: "text"
                                    }
                               ],
                               validations: [
