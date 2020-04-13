@@ -90,6 +90,7 @@
                          <v-tabs v-model="canvasConfig.activeTab" color="grey">
                               <v-tabs-slider color="accent"></v-tabs-slider>
                               <v-tab key="Design">Design</v-tab>
+                              <v-tab key="Manager">Manager</v-tab>
                               <v-tab key="Settings">Settings</v-tab>
                          </v-tabs>
                          <v-spacer></v-spacer>
@@ -147,6 +148,7 @@
                                                                  single-line
                                                                  hide-details
                                                                  dense
+                                                                 disabled
                                                                  v-model="element.value"
                                                                  :placeholder="element.properties.placeholder"
                                                                  @click.stop
@@ -214,7 +216,7 @@
                                                                  :class="[element.properties.size]"
                                                                  v-bind="element.properties.style"
                                                                  class="font-weight-light x-control-information"
-                                                            >{{element.instruction}}</v-alert>
+                                                            >{{element.name}}</v-alert>
                                                        </div>
                                                   </v-list-item-content>
                                                   <v-list-item-action
@@ -256,6 +258,10 @@
                                    </v-card-actions>
                               </v-card>
                          </v-tab-item>
+                         <v-tab-item
+                              key="Manager"
+                              style="background-color: #ff000000"
+                         >Change settings for form!</v-tab-item>
                          <v-tab-item
                               key="Settings"
                               style="background-color: #ff000000"
@@ -1013,6 +1019,21 @@ export default {
           deleteFormControl(itemIndex) {
                this.formControls.splice(itemIndex, 1);
                //TODO: when delte is clicked, we need to keep track of the items delete and update on the server.
+          },
+          toggleControlLabelEdit(event, control) {
+               //use this link for howTo on list edits.
+               //https://jsfiddle.net/wbuc/mnybh4dq/2/
+
+               this.$set(control, "edit", !control.edit);
+               // Focus input field
+               if (control.edit) {
+                    //    this.$nextTick(() => {
+                    //           this.$refs[field].focus();
+                    //      });
+                    this.$nextTick(() => {
+                         event.$$.input.focus();
+                    });
+               }
           }
      },
      created() {}
