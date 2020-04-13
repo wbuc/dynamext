@@ -90,7 +90,7 @@
                          <v-tabs v-model="canvasConfig.activeTab" color="grey">
                               <v-tabs-slider color="accent"></v-tabs-slider>
                               <v-tab key="Design">Design</v-tab>
-                              <v-tab key="Properties">Properties</v-tab>
+                              <v-tab key="Settings">Settings</v-tab>
                          </v-tabs>
                          <v-spacer></v-spacer>
                          <v-btn color="primary" width="120px">Save</v-btn>
@@ -118,7 +118,7 @@
                                              <v-list-item
                                                   two-line
                                                   :ripple="canvasConfig.ripple"
-                                                  v-for="element in formControls"
+                                                  v-for="(element,index) in formControls"
                                                   :key="element.id"
                                                   color="primary"
                                                   class="x-control"
@@ -206,7 +206,15 @@
                                                        >
                                                             <v-btn
                                                                  icon
-                                                                 @click.stop="deleteFormControl(element)"
+                                                                 @click.stop="copyFormControl(element)"
+                                                            >
+                                                                 <v-icon
+                                                                      class="success--text text--lighten-1"
+                                                                 >mdi-content-duplicate</v-icon>
+                                                            </v-btn>
+                                                            <v-btn
+                                                                 icon
+                                                                 @click.stop="deleteFormControl(index)"
                                                             >
                                                                  <v-icon
                                                                       class="error--text"
@@ -230,9 +238,9 @@
                               </v-card>
                          </v-tab-item>
                          <v-tab-item
-                              key="Properties"
+                              key="Settings"
                               style="background-color: #ff000000"
-                         >Customise properties for schedule!</v-tab-item>
+                         >Change settings for form!</v-tab-item>
                     </v-tabs-items>
                </v-card>
           </v-col>
@@ -475,6 +483,8 @@ export default {
                          id: 1,
                          name: "Text",
                          type: "text",
+                         instruction: null,
+                         value: null,
                          description: "Single line input field",
                          icon: "mdi-format-text",
                          properties: {
@@ -490,6 +500,8 @@ export default {
                          id: 2,
                          name: "Paragraph",
                          type: "paragraph",
+                         instruction: null,
+                         value: null,
                          description: "Multi line text inut field",
                          icon: "mdi-format-pilcrow",
                          properties: {
@@ -504,6 +516,8 @@ export default {
                          id: 3,
                          name: "Header",
                          type: "header",
+                         instruction: null,
+                         value: null,
                          description: "Header used for grouping fields",
                          icon: "mdi-format-header-1",
                          properties: {
@@ -518,6 +532,8 @@ export default {
                          id: 4,
                          name: "Decimal",
                          type: "decimal",
+                         instruction: null,
+                         value: null,
                          description: "Numbers with decimal values",
                          icon: "mdi-decimal",
                          properties: {},
@@ -528,6 +544,8 @@ export default {
                          id: 5,
                          name: "Number",
                          type: "number",
+                         instruction: null,
+                         value: null,
                          description: "Full number values",
                          icon: "mdi-numeric-10",
                          properties: {
@@ -542,6 +560,8 @@ export default {
                          id: 6,
                          name: "Information",
                          type: "information",
+                         instruction: null,
+                         value: null,
                          description: "Text block for specific information",
                          icon: "mdi-information-variant",
                          properties: {
@@ -876,10 +896,10 @@ export default {
                let newControl = {
                     id: idGlobal++,
                     name: `Untitled ${item.name}`,
-                    instruction: null,
-                    value: null,
+                    instruction: item.instruction,
+                    value: item.value,
+                    hasValidations: item.hasValidations,
                     properties: {},
-                    hasValidations: false,
                     validations: {},
                     icon: item.icon,
                     type: item.type,
@@ -894,8 +914,13 @@ export default {
 
                return newControl;
           },
-          deleteFormControl(control) {
-               console.log("Control deleted: ", control);
+          copyFormControl(control) {
+               const copiedControl = this.cloneControl(control);
+               this.formControls.push(copiedControl);
+          },
+          deleteFormControl(itemIndex) {
+               this.formControls.splice(itemIndex, 1);
+               //TODO: when delte is clicked, we need to keep track of the items delete and update on the server.
           }
      },
      created() {}
