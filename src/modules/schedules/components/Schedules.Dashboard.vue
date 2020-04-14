@@ -21,7 +21,7 @@
                     >
                          <v-tab-item key="Fields" style="background-color: #ff000000">
                               <v-card flat style="background-color: #ff000000">
-                                   <v-list width="100%">
+                                   <v-list width="100%" dense>
                                         <draggable
                                              class="dragArea list-group"
                                              :list="toolboxControls"
@@ -108,8 +108,8 @@
                                    <v-divider></v-divider>
                               </v-card>-->
                               <v-card flat style="background-color: #ff000000">
-                                   <v-list width="100%" v-model="currentControl">
-                                        <v-list-item-group v-model="item">
+                                   <v-list width="100%">
+                                        <v-list-item-group>
                                              <draggable
                                                   class="dragArea list-group"
                                                   :list="formControls"
@@ -123,9 +123,9 @@
                                                        v-for="(element,index) in formControls"
                                                        :key="element.id"
                                                        class="x-control"
-                                                       @click="selectControl(element)"
-                                                       @mouseover.native="formControlHover = element.id"
-                                                       @mouseout.native="formControlHover = null"
+                                                       @click="setCurrentControl(element)"
+                                                       @mouseover="formControlHover = element.id"
+                                                       @mouseout="formControlHover = null"
                                                   >
                                                        <v-list-item-action
                                                             class="x-control-handle mr-2"
@@ -227,6 +227,29 @@
                                                                       v-bind="element.properties.style"
                                                                       class="font-weight-light x-control-information"
                                                                  >{{element.name}}</v-alert>
+                                                            </div>
+                                                            <div v-if="element.type === 'yesno'">
+                                                                 <v-list-item-title
+                                                                      class="title font-weight-light"
+                                                                 >{{element.name}}</v-list-item-title>
+                                                                 <v-list-item-subtitle
+                                                                      class="caption text--secondary"
+                                                                 >{{element.instruction}}</v-list-item-subtitle>
+
+                                                                 <v-radio-group
+                                                                      v-bind="{mandatory: false}"
+                                                                      v-model="element.value"
+                                                                      readonly
+                                                                 >
+                                                                      <v-radio
+                                                                           label="Yes"
+                                                                           value="true"
+                                                                      ></v-radio>
+                                                                      <v-radio
+                                                                           label="No"
+                                                                           value="false"
+                                                                      ></v-radio>
+                                                                 </v-radio-group>
                                                             </div>
                                                        </v-list-item-content>
                                                        <v-list-item-action
@@ -376,14 +399,6 @@
                                                             v-if="prop.type === 'select'"
                                                        >
                                                             <v-list-item-title>{{prop.displayName}}</v-list-item-title>
-                                                            <!-- <v-text-field
-                                                                 type="number"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 v-model="currentControl.properties[prop.name]"
-                                                            ></v-text-field>-->
                                                             <v-select
                                                                  :items="prop.options"
                                                                  v-model="currentControl.properties[prop.name]"
@@ -391,6 +406,7 @@
                                                                  item-value="name"
                                                                  dense
                                                                  outlined
+                                                                 v-on="typeof prop.onChange !== 'undefined' ? {change: prop.onChange} : {}"
                                                             ></v-select>
                                                        </v-list-item-content>
                                                   </v-list-item>
@@ -604,6 +620,20 @@ export default {
                               size: "body-1",
                               type: "info",
                               style: {}
+                         },
+                         hasValidations: false,
+                         validations: {}
+                    },
+                    {
+                         id: 7,
+                         name: "Yes/No",
+                         type: "yesno",
+                         instruction: "",
+                         value: null,
+                         description: "True or false value to be set.",
+                         icon: "mdi-order-bool-descending",
+                         properties: {
+                              default: null
                          },
                          hasValidations: false,
                          validations: {}
@@ -900,6 +930,41 @@ export default {
                                    }
                               ]
                          }
+                    ],
+                    yesno: [
+                         {
+                              group: "Group 1",
+                              properties: [
+                                   {
+                                        name: "default",
+                                        displayName: "Default",
+                                        value: null,
+                                        type: "select",
+                                        options: [
+                                             {
+                                                  name: null,
+                                                  displayName: "None"
+                                             },
+                                             {
+                                                  name: "true",
+                                                  displayName: "Yes"
+                                             },
+                                             {
+                                                  name: "false",
+                                                  displayName: "No"
+                                             }
+                                        ],
+                                        onChange: val => {
+                                             // NOTE *** these events can be used on specific properties to execute when needed to perform additional logic.
+                                             // ensure that the property type in the properties panel has been updated to execute this func. this would
+                                             // typically only be used when setting a default value from an option field.
+
+                                             // Set the current contol value to the new default option selected.
+                                             this.currentControl.value = val;
+                                        }
+                                   }
+                              ]
+                         }
                     ]
                },
                formControls: [
@@ -965,7 +1030,7 @@ export default {
           toggleFullView() {
                this.explorerConfig.fullView = !this.explorerConfig.fullView;
           },
-          selectControl(control) {
+          setCurrentControl(control) {
                this.currentControl = control;
                console.log(control);
           },
