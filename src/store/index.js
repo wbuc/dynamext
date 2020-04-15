@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 import userProfile from '@/modules/userprofile/store/userProfile'
 import formsAuth from '@/modules/userprofile/store/forms.auth'
 import fileroom from '@/modules/fileroom/store/fileroom'
+import scheduleDesigner from '@/modules/schedules/store/schedules.designer'
+
 
 import * as getters from './common/getters'
 import * as mutations from './common/mutations'
@@ -22,6 +24,7 @@ export default new Vuex.Store({
   modules: {
     userProfile,
     formsAuth,
-    fileroom
+    fileroom,
+    scheduleDesigner
   }
 })
