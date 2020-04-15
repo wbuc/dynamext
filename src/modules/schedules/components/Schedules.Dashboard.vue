@@ -2,19 +2,19 @@
      <div>
           <v-row no-gutters class="mb-3">
                <div>
-                    <v-btn id="sort-project" small text color="grey" @click="sortBy('name')">
-                         <v-icon left small>folder</v-icon>
-                         <span class="caption text-lowercase">by project name</span>
+                    <v-btn id="sort-schedule" small text color="grey" @click="sortBy('name')">
+                         <v-icon left small>mdi-file-document</v-icon>
+                         <span class="caption text-lowercase">by schedule name</span>
                     </v-btn>
-                    <v-tooltip activator="#sort-project" top>
-                         <span>Sort all items by project name</span>
+                    <v-tooltip activator="#sort-schedule" top>
+                         <span>Sort all items by schedule name</span>
                     </v-tooltip>
-                    <v-btn id="sort-person" small text color="grey" @click="sortBy('owner')">
+                    <v-btn id="sort-owner" small text color="grey" @click="sortBy('owner')">
                          <v-icon left small>person</v-icon>
-                         <span class="caption text-lowercase">by person</span>
+                         <span class="caption text-lowercase">by owner</span>
                     </v-btn>
-                    <v-tooltip activator="#sort-person" top>
-                         <span>Sort all items by person</span>
+                    <v-tooltip activator="#sort-owner" top>
+                         <span>Sort all items by owner</span>
                     </v-tooltip>
                </div>
           </v-row>
@@ -44,7 +44,7 @@
                                    <div>{{schedule.createdDate}}</div>
                               </v-card>
                          </v-col>
-                         <v-col cols="12" sm="4" md="2">
+                         <v-col cols="6" sm="3" md="2">
                               <v-card flat class="pa-3">
                                    <div>
                                         <v-chip
@@ -55,14 +55,44 @@
                                    </div>
                               </v-card>
                          </v-col>
-                         <v-col cols="12" sm="4" md="1">
-                              <v-card flat class="pa-3">
+                         <v-col cols="6" sm="1" md="1" align="center" class="pt-4">
+                              <v-card flat>
                                    <div>
-                                        <v-chip
-                                             :class="`chip ${schedule.status} 
-                                                  ${statusClass(schedule.status)} caption white--text my-2`"
-                                             small
-                                        >{{schedule.status}}</v-chip>
+                                        <v-menu offset-y transition="slide-y-transition">
+                                             <template v-slot:activator="{ schedule, on }">
+                                                  <v-btn
+                                                       icon
+                                                       text
+                                                       dark
+                                                       color="grey"
+                                                       v-on="on"
+                                                       class="mx-auto"
+                                                  >
+                                                       <v-icon>more_vert</v-icon>
+                                                       <span></span>
+                                                  </v-btn>
+                                             </template>
+                                             <v-list>
+                                                  <v-list-item
+                                                       v-for="(action, index) in quickActions"
+                                                       :key="index"
+                                                       @click="action.action(item)"
+                                                       active-class="secondary--text"
+                                                       dense
+                                                  >
+                                                       <v-list-item-action>
+                                                            <v-icon
+                                                                 :class="action.color"
+                                                                 small
+                                                            >{{action.icon}}</v-icon>
+                                                       </v-list-item-action>
+                                                       <v-list-item-content>
+                                                            <v-list-item-title>{{action.title}}</v-list-item-title>
+                                                       </v-list-item-content>
+                                                  </v-list-item>
+                                             </v-list>
+                                             <v-list></v-list>
+                                        </v-menu>
                                    </div>
                               </v-card>
                          </v-col>
@@ -79,7 +109,21 @@ export default {
      name: "Schedules.Dashboard",
      data() {
           return {
-               schedules: []
+               schedules: [],
+               quickActions: [
+                    {
+                         title: "Edit",
+                         icon: "mdi-pencil",
+                         color: "secondary--text",
+                         action: item => console.log("editing ", item)
+                    },
+                    {
+                         title: "Out of Scope",
+                         icon: "mdi-stop",
+                         color: "error--text",
+                         action: item => console.log("deleting ", item)
+                    }
+               ]
           };
      },
      methods: {
