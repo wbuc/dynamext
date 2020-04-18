@@ -39,8 +39,8 @@
                <v-app-bar-nav-icon class="grey--text mr-3" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
                <x-logo></x-logo>
                <v-spacer></v-spacer>
-               <v-btn @click="setTheme" icon color="orange darken-4">
-                    <v-icon>wb_sunny</v-icon>
+               <v-btn @click="setTheme" icon color="yellow darken-4">
+                    <v-icon>mdi-moon-waxing-crescent</v-icon>
                </v-btn>
 
                <v-menu offset-y transition="slide-y-transition">

@@ -4,7 +4,7 @@
                <v-row no-gutters class="mb-3">
                     <v-col cols="12" xs="12" sm="12" md="6">
                          <div class="pa-3">
-                              <v-btn depressed large>
+                              <v-btn text outlined large color>
                                    <v-icon left color="primary">add_box</v-icon>
                                    <span>New Schedule</span>
                               </v-btn>
@@ -83,8 +83,8 @@
                                    <div>{{schedule.createdDate}}</div>
                               </v-card>
                          </v-col>
-                         <v-col cols="6" sm="3" md="2">
-                              <v-card flat class="pa-3">
+                         <v-col cols="6" sm="3" md="2" class="d-flex align-center">
+                              <v-card flat>
                                    <div>
                                         <v-chip
                                              :class="`chip ${schedule.status} 
@@ -95,7 +95,7 @@
                               </v-card>
                          </v-col>
                          <v-col cols="6" sm="1" md="1" class="d-flex align-center justify-center">
-                              <v-card flat class="d-flex justify-center align-center">
+                              <v-card flat>
                                    <div>
                                         <v-menu offset-y transition="slide-y-transition">
                                              <template v-slot:activator="{ schedule, on }">
