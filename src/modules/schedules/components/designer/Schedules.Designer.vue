@@ -1,539 +1,581 @@
 <template>
-     <v-row>
-          <v-col cols="12" :md="explorerConfig.fullView ? '3':'3'">
-               <v-card class="x-toolbox">
-                    <v-card flat style="background-color: #ff000000">
-                         <v-card-text>
-                              <span class="subtitle-1 font-weight-light">Toolbox</span>
-                         </v-card-text>
-                         <v-divider></v-divider>
-                    </v-card>
-                    <v-toolbar class="elevation-2">
-                         <v-tabs v-model="toolboxConfig.activeTab" color="grey">
-                              <v-tabs-slider color="accent"></v-tabs-slider>
-                              <v-tab key="Fields">Fields</v-tab>
-                              <v-tab key="Templates">Templates</v-tab>
-                         </v-tabs>
-                    </v-toolbar>
-                    <v-tabs-items
-                         v-model="toolboxConfig.activeTab"
-                         style="background-color: #ff000000"
-                    >
-                         <v-tab-item key="Fields" style="background-color: #ff000000">
-                              <v-card flat style="background-color: #ff000000">
-                                   <v-list
-                                        width="100%"
-                                        dense
-                                        class="overflow-y-auto"
-                                        max-height="500px"
-                                   >
-                                        <draggable
-                                             class="dragArea list-group"
-                                             :list="toolboxControls"
-                                             :group="{ name: 'toolbox', pull: 'clone', put: false }"
-                                             :clone="cloneControl"
-                                             @change="log"
-                                        >
-                                             <v-list-item
-                                                  two-line
-                                                  v-for="element in toolboxControls"
-                                                  :key="element.id"
-                                                  color="primary"
-                                                  class="x-control"
-                                                  @click.stop="1==1"
-                                             >
-                                                  <v-list-item-action>
-                                                       <v-icon>{{element.icon}}</v-icon>
-                                                  </v-list-item-action>
-                                                  <v-list-item-content>
-                                                       <v-list-item-title
-                                                            class="title font-weight-light"
-                                                       >{{ element.name }}</v-list-item-title>
-                                                       <v-list-item-subtitle
-                                                            class="grey--text text--darken-1"
-                                                       >{{ element.description }}</v-list-item-subtitle>
-                                                  </v-list-item-content>
-                                             </v-list-item>
-                                        </draggable>
-                                   </v-list>
-                              </v-card>
-                         </v-tab-item>
-                         <v-tab-item key="Templates" style="background-color: #ff000000">
-                              <v-card flat style="background-color: #ff000000">
-                                   <v-card-actions>
-                                        <v-btn icon>
-                                             <v-icon>mdi-folder-plus</v-icon>
-                                        </v-btn>
-                                        <v-btn icon>
-                                             <v-icon>mdi-refresh</v-icon>
-                                        </v-btn>
+     <div>
+          <v-card elevation="3" class="mt-2">
+               <v-row no-gutters class="mb-3">
+                    <v-col cols="12" xs="12" sm="12" md="6">
+                         <div class="pa-3">
+                              <v-btn @click="closeDesigner" width="120px" text large color>
+                                   <v-icon left color="error">mdi-arrow-left-bold</v-icon>
+                                   <span>back</span>
+                              </v-btn>
+                         </div>
+                    </v-col>
+                    <v-col cols="12" xs="12" sm="12" md="6" class="hidden-sm-and-down">
+                         <div class="pa-3 text-right">
+                              <v-btn depressed large icon color="grey">
+                                   <v-icon>mdi-repeat</v-icon>
+                              </v-btn>
 
-                                        <v-spacer></v-spacer>
-                                        <v-btn icon @click="toggleFullView">
-                                             <v-icon>mdi-arrow-expand</v-icon>
-                                        </v-btn>
-                                   </v-card-actions>
-                              </v-card>
-                              <v-card flat style="background-color: #ff000000">
-                                   <!-- Content here! -->
-                              </v-card>
-                         </v-tab-item>
-                    </v-tabs-items>
-               </v-card>
-          </v-col>
-          <v-col cols="12" :md="explorerConfig.fullView ? '7':'6'">
-               <v-card class="x-form-design">
-                    <v-card flat style="background-color: #ff000000">
-                         <v-card-text>
-                              <span class="subtitle-1 font-weight-light">New Schedule Name</span>
-                              <!-- <v-spacer></v-spacer> -->
-                              <!-- <v-btn color="primary" width="120px">Save</v-btn> -->
-                         </v-card-text>
-                         <v-divider></v-divider>
-                    </v-card>
-                    <v-toolbar class="elevation-2">
-                         <v-tabs v-model="canvasConfig.activeTab" color="grey">
-                              <v-tabs-slider color="accent"></v-tabs-slider>
-                              <v-tab key="Design">Design</v-tab>
-                              <v-tab key="Manager">Manager</v-tab>
-                              <v-tab key="Settings">Settings</v-tab>
-                         </v-tabs>
-                         <v-spacer></v-spacer>
+                              <v-btn depressed large icon color="grey">
+                                   <v-icon>mdi-flag-variant-outline</v-icon>
+                              </v-btn>
+                         </div>
+                    </v-col>
+               </v-row>
+          </v-card>
 
-                         <v-btn
-                              large
-                              text
-                              outlined
-                              @click="closeDesigner"
-                              width="120px"
-                              class="mr-4"
+          <v-row>
+               <v-col cols="12" :md="explorerConfig.fullView ? '3':'3'">
+                    <v-card class="x-toolbox">
+                         <v-card style="background-color: #ff000000">
+                              <v-card-text>
+                                   <span class="subtitle-1 font-weight-light">Toolbox</span>
+                              </v-card-text>
+                              <v-divider></v-divider>
+                         </v-card>
+                         <v-toolbar class="elevation-2">
+                              <v-tabs v-model="toolboxConfig.activeTab" color="grey">
+                                   <v-tabs-slider color="secondary"></v-tabs-slider>
+                                   <v-tab key="Fields">Fields</v-tab>
+                                   <v-tab key="Templates">Templates</v-tab>
+                              </v-tabs>
+                         </v-toolbar>
+                         <v-tabs-items
+                              v-model="toolboxConfig.activeTab"
+                              style="background-color: #ff000000"
                          >
-                              <v-icon left color="error">mdi-close-thick</v-icon>
-                              <span>Cancel</span>
-                         </v-btn>
-                         <v-btn large text outlined color width="120px">
-                              <v-icon left color="primary">mdi-check-bold</v-icon>
-                              <span>Save</span>
-                         </v-btn>
-                    </v-toolbar>
-                    <v-tabs-items
-                         v-model="canvasConfig.activeTab"
-                         style="background-color: #ff000000"
-                    >
-                         <v-tab-item key="Design" style="background-color: #ff000000">
-                              <!-- <v-card flat style="background-color: #ff000000">
-                                   <v-card-text>
-                                        <span class="headline font-weight-light">New Schedule Name</span>
-                                   </v-card-text>
-                                   <v-divider></v-divider>
-                              </v-card>-->
-                              <v-card flat style="background-color: #ff000000">
-                                   <v-list width="100%">
-                                        <v-list-item-group>
+                              <v-tab-item key="Fields" style="background-color: #ff000000">
+                                   <v-card style="background-color: #ff000000">
+                                        <v-list
+                                             width="100%"
+                                             dense
+                                             class="overflow-y-auto"
+                                             max-height="500px"
+                                        >
                                              <draggable
                                                   class="dragArea list-group"
-                                                  :list="formControls"
-                                                  group="toolbox"
+                                                  :list="toolboxControls"
+                                                  :group="{ name: 'toolbox', pull: 'clone', put: false }"
+                                                  :clone="cloneControl"
                                                   @change="log"
-                                                  handle=".x-control-handle"
                                              >
                                                   <v-list-item
                                                        two-line
-                                                       :ripple="canvasConfig.ripple"
-                                                       v-for="(element,index) in formControls"
+                                                       v-for="element in toolboxControls"
                                                        :key="element.id"
+                                                       color="primary"
                                                        class="x-control"
-                                                       @click="setCurrentControl(element)"
-                                                       @mouseover="formControlHover = element.id"
-                                                       @mouseout="formControlHover = null"
+                                                       @click.stop="1==1"
                                                   >
-                                                       <v-list-item-action
-                                                            class="x-control-handle mr-2"
-                                                       >
-                                                            <v-icon
-                                                                 v-show="formControlHover === element.id"
+                                                       <v-list-item-action>
+                                                            <v-icon>{{element.icon}}</v-icon>
+                                                       </v-list-item-action>
+                                                       <v-list-item-content>
+                                                            <v-list-item-title
+                                                                 class="title font-weight-light"
+                                                            >{{ element.name }}</v-list-item-title>
+                                                            <v-list-item-subtitle
                                                                  class="grey--text text--darken-1"
-                                                            >mdi-drag-vertical</v-icon>
-                                                       </v-list-item-action>
-                                                       <v-list-item-content
-                                                            class="x-control-content"
-                                                       >
-                                                            <!-- <v-list-item-title>{{ element.name }}</v-list-item-title> -->
-                                                            <div v-if="element.type === 'text'">
-                                                                 <v-list-item-title
-                                                                      class="title font-weight-light"
-                                                                 >{{element.name}}</v-list-item-title>
-                                                                 <v-list-item-subtitle
-                                                                      class="caption text--secondary"
-                                                                 >{{element.instruction}}</v-list-item-subtitle>
-                                                                 <v-text-field
-                                                                      style="width:100%"
-                                                                      outlined
-                                                                      single-line
-                                                                      hide-details
-                                                                      dense
-                                                                      disabled
-                                                                      v-model="element.value"
-                                                                      :placeholder="element.properties.placeholder"
-                                                                      @click.stop
-                                                                 ></v-text-field>
-                                                            </div>
-                                                            <div
-                                                                 v-if="element.type === 'paragraph'"
-                                                            >
-                                                                 <v-list-item-title
-                                                                      class="title font-weight-light"
-                                                                 >{{element.name}}</v-list-item-title>
-                                                                 <v-list-item-subtitle
-                                                                      class="caption text--secondary"
-                                                                 >{{element.instruction}}</v-list-item-subtitle>
-                                                                 <v-textarea
-                                                                      v-bind:auto-grow="false"
-                                                                      v-bind:clearable="true"
-                                                                      disabled
-                                                                      outlined
-                                                                      :rows="element.properties.rows?element.properties.rows: 1"
-                                                                      :counter="element.validations ? element.validations.maxLength : false"
-                                                                      v-model="element.value"
-                                                                      :placeholder="element.properties.placeholder"
-                                                                 ></v-textarea>
-                                                            </div>
-                                                            <div v-if="element.type === 'header'">
-                                                                 <v-list-item-title
-                                                                      :class="[element.properties.size, element.properties.color]"
-                                                                      class="font-weight-light"
-                                                                 >{{element.name}}</v-list-item-title>
-                                                                 <v-list-item-subtitle
-                                                                      class="caption text--secondary"
-                                                                 >{{element.instruction}}</v-list-item-subtitle>
-                                                                 <v-divider
-                                                                      v-if="element.properties.style === 'border'"
-                                                                 ></v-divider>
-                                                            </div>
-                                                            <div v-if="element.type === 'number'">
-                                                                 <v-list-item-title
-                                                                      class="title font-weight-light"
-                                                                 >{{element.name}}</v-list-item-title>
-                                                                 <v-list-item-subtitle
-                                                                      class="caption text--secondary"
-                                                                 >{{element.instruction}}</v-list-item-subtitle>
-                                                                 <v-text-field
-                                                                      type="number"
-                                                                      style="width:100%"
-                                                                      outlined
-                                                                      single-line
-                                                                      hide-details
-                                                                      disabled
-                                                                      dense
-                                                                      v-model="element.value"
-                                                                      :placeholder="element.properties.placeholder"
-                                                                      @click.stop
-                                                                 ></v-text-field>
-                                                            </div>
-                                                            <div v-if="element.type === 'numeric'">
-                                                                 <v-list-item-title
-                                                                      class="title font-weight-light"
-                                                                 >{{element.name}}</v-list-item-title>
-                                                                 <v-list-item-subtitle
-                                                                      class="caption text--secondary"
-                                                                 >{{element.instruction}}</v-list-item-subtitle>
-                                                            </div>
-                                                            <div
-                                                                 v-if="element.type === 'information'"
-                                                            >
-                                                                 <v-alert
-                                                                      :type="element.properties.type"
-                                                                      :class="[element.properties.size]"
-                                                                      v-bind="element.properties.style"
-                                                                      class="font-weight-light x-control-information"
-                                                                 >{{element.name}}</v-alert>
-                                                            </div>
-                                                            <div v-if="element.type === 'yesno'">
-                                                                 <v-list-item-title
-                                                                      class="title font-weight-light"
-                                                                 >{{element.name}}</v-list-item-title>
-                                                                 <v-list-item-subtitle
-                                                                      class="caption text--secondary"
-                                                                 >{{element.instruction}}</v-list-item-subtitle>
-
-                                                                 <v-radio-group
-                                                                      v-bind="{mandatory: false}"
-                                                                      v-model="element.value"
-                                                                      readonly
-                                                                 >
-                                                                      <v-radio
-                                                                           label="Yes"
-                                                                           value="true"
-                                                                      ></v-radio>
-                                                                      <v-radio
-                                                                           label="No"
-                                                                           value="false"
-                                                                      ></v-radio>
-                                                                 </v-radio-group>
-                                                            </div>
+                                                            >{{ element.description }}</v-list-item-subtitle>
                                                        </v-list-item-content>
-                                                       <v-list-item-action
-                                                            class="x-control-quick-actions"
-                                                       >
-                                                            <div
-                                                                 v-show="formControlHover === element.id"
-                                                            >
-                                                                 <v-btn
-                                                                      icon
-                                                                      @click.stop="copyFormControl(element)"
-                                                                 >
-                                                                      <v-icon
-                                                                           class="success--text text--lighten-1"
-                                                                      >mdi-content-duplicate</v-icon>
-                                                                 </v-btn>
-                                                                 <v-btn
-                                                                      icon
-                                                                      @click.stop="deleteFormControl(index)"
-                                                                 >
-                                                                      <v-icon
-                                                                           class="error--text"
-                                                                      >mdi-delete</v-icon>
-                                                                 </v-btn>
-                                                            </div>
-                                                       </v-list-item-action>
                                                   </v-list-item>
                                              </draggable>
-                                        </v-list-item-group>
-                                   </v-list>
-                              </v-card>
-                              <v-card flat style="background-color: #ff000000">
-                                   <v-divider></v-divider>
-                                   <!-- <v-card-text>
-                                        <span class="subtitle-1 font-weight-light"></span>
-                                   </v-card-text>-->
-                                   <v-card-actions class="pr-4 mt-2 pb-4">
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                             text
-                                             large
-                                             outlined
-                                             @click="closeDesigner"
-                                             width="120px"
-                                             class="mr-2"
-                                        >
-                                             <v-icon left color="error">mdi-close-thick</v-icon>
-                                             <span>Cancel</span>
-                                        </v-btn>
-                                        <v-btn
-                                             text
-                                             large
-                                             outlined
-                                             color
-                                             @click="closeDesigner"
-                                             width="120px"
-                                        >
-                                             <v-icon left color="primary">mdi-check-bold</v-icon>
-                                             <span>Save</span>
-                                        </v-btn>
-                                   </v-card-actions>
-                              </v-card>
-                         </v-tab-item>
-                         <v-tab-item
-                              key="Manager"
-                              style="background-color: #ff000000"
-                         >Change settings for form!</v-tab-item>
-                         <v-tab-item
-                              key="Settings"
-                              style="background-color: #ff000000"
-                         >Change settings for form!</v-tab-item>
-                    </v-tabs-items>
-               </v-card>
-          </v-col>
-          <v-col cols="12" :md="explorerConfig.fullView ? '2':'3'">
-               <v-card class="x-form">
-                    <v-card flat style="background-color: #ff000000">
-                         <v-card-text>
-                              <span class="subtitle-1 font-weight-light">Properties</span>
-                         </v-card-text>
-                         <v-divider></v-divider>
+                                        </v-list>
+                                   </v-card>
+                              </v-tab-item>
+                              <v-tab-item key="Templates" style="background-color: #ff000000">
+                                   <v-card style="background-color: #ff000000">
+                                        <v-card-actions>
+                                             <v-btn icon>
+                                                  <v-icon>mdi-folder-plus</v-icon>
+                                             </v-btn>
+                                             <v-btn icon>
+                                                  <v-icon>mdi-refresh</v-icon>
+                                             </v-btn>
+
+                                             <v-spacer></v-spacer>
+                                             <v-btn icon @click="toggleFullView">
+                                                  <v-icon>mdi-arrow-expand</v-icon>
+                                             </v-btn>
+                                        </v-card-actions>
+                                   </v-card>
+                                   <v-card style="background-color: #ff000000">
+                                        <!-- Content here! -->
+                                   </v-card>
+                              </v-tab-item>
+                         </v-tabs-items>
                     </v-card>
-                    <v-toolbar class="elevation-2">
-                         <v-tabs v-model="propertiesConfig.activeTab" color="grey">
-                              <v-tabs-slider color="accent"></v-tabs-slider>
-                              <v-tab key="General">General</v-tab>
-                              <v-tab key="Advanced">Advanced</v-tab>
-                         </v-tabs>
-                    </v-toolbar>
-                    <v-tabs-items
-                         v-model="propertiesConfig.activeTab"
-                         style="background-color: #ff000000"
-                    >
-                         <v-tab-item key="General" style="background-color: #ff000000">
-                              <v-card flat style="background-color: #ff000000">
-                                   <div
-                                        v-if="!controlSelected"
-                                        class="text-center grey--text py-10"
-                                   >No control selected</div>
-                                   <div v-else-if="controlSelected" class="x-control-properties">
-                                        <div
-                                             v-for="(cat, index) in controlTypeConfig[currentControl.type]"
-                                             :key="index"
-                                        >
-                                             <div class="px-4 pt-4 d-none">{{cat.group}}</div>
+               </v-col>
+               <v-col cols="12" :md="explorerConfig.fullView ? '7':'6'">
+                    <v-card class="x-form-design">
+                         <v-card flat style="background-color: #ff000000">
+                              <v-card-text>
+                                   <span class="subtitle-1 font-weight-light">New Schedule Name</span>
+                                   <!-- <v-spacer></v-spacer> -->
+                                   <!-- <v-btn color="primary" width="120px">Save</v-btn> -->
+                              </v-card-text>
+                              <v-divider></v-divider>
+                         </v-card>
+                         <v-toolbar class="elevation-2">
+                              <v-tabs v-model="canvasConfig.activeTab" color="grey">
+                                   <v-tabs-slider color="secondary"></v-tabs-slider>
+                                   <v-tab key="Design">Design</v-tab>
+                                   <v-tab key="Manager">Manager</v-tab>
+                                   <v-tab key="Settings">Settings</v-tab>
+                              </v-tabs>
+                              <v-spacer></v-spacer>
 
-                                             <v-list flat>
-                                                  <v-list-item :ripple="propertiesConfig.ripple">
-                                                       <v-list-item-content>
-                                                            <v-list-item-title>Title</v-list-item-title>
-                                                            <v-text-field
-                                                                 style="width:100%"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 v-model="currentControl.name"
-                                                            ></v-text-field>
-                                                       </v-list-item-content>
-                                                  </v-list-item>
-                                                  <v-list-item :ripple="propertiesConfig.ripple">
-                                                       <v-list-item-content>
-                                                            <v-list-item-title>Instructions</v-list-item-title>
-                                                            <v-text-field
-                                                                 style="width:100%"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 v-model="currentControl.instruction"
-                                                            ></v-text-field>
-                                                       </v-list-item-content>
-                                                  </v-list-item>
-                                                  <v-divider></v-divider>
-                                                  <v-list-item
-                                                       :ripple="propertiesConfig.ripple"
-                                                       v-for="(prop, i) in cat.properties"
-                                                       :key="i"
+                              <!-- <v-btn
+                                   large
+                                   text
+                                   outlined
+                                   @click="closeDesigner"
+                                   width="120px"
+                                   class="mr-4"
+                              >
+                                   <v-icon left color="error">mdi-close-thick</v-icon>
+                                   <span>Cancel</span>
+                              </v-btn>
+                              <v-btn large text outlined color width="120px">
+                                   <v-icon left color="primary">mdi-check-bold</v-icon>
+                                   <span>Save</span>
+                              </v-btn>-->
+                         </v-toolbar>
+                         <v-tabs-items
+                              v-model="canvasConfig.activeTab"
+                              style="background-color: #ff000000"
+                         >
+                              <v-tab-item key="Design" style="background-color: #ff000000">
+                                   <v-card flat style="background-color: #ff000000">
+                                        <v-list width="100%">
+                                             <v-list-item-group>
+                                                  <draggable
+                                                       class="dragArea list-group"
+                                                       :list="formControls"
+                                                       group="toolbox"
+                                                       @change="log"
+                                                       handle=".x-control-handle"
                                                   >
-                                                       <v-list-item-content
-                                                            v-if="prop.type === 'text'"
+                                                       <v-list-item
+                                                            two-line
+                                                            :ripple="canvasConfig.ripple"
+                                                            v-for="(element,index) in formControls"
+                                                            :key="element.id"
+                                                            class="x-control"
+                                                            @click="setCurrentControl(element)"
+                                                            @mouseover="formControlHover = element.id"
+                                                            @mouseout="formControlHover = null"
                                                        >
-                                                            <v-list-item-title>{{prop.displayName}}</v-list-item-title>
-                                                            <v-text-field
-                                                                 type="text"
-                                                                 style="width:100%"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 v-model="currentControl.properties[prop.name]"
-                                                            ></v-text-field>
-                                                       </v-list-item-content>
-                                                       <v-list-item-content
-                                                            v-if="prop.type === 'number'"
-                                                       >
-                                                            <v-list-item-title>{{prop.displayName}}</v-list-item-title>
-                                                            <v-text-field
-                                                                 type="number"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 v-model="currentControl.properties[prop.name]"
-                                                            ></v-text-field>
-                                                       </v-list-item-content>
-                                                       <v-list-item-content
-                                                            v-if="prop.type === 'select'"
-                                                       >
-                                                            <v-list-item-title>{{prop.displayName}}</v-list-item-title>
-                                                            <v-select
-                                                                 :items="prop.options"
-                                                                 v-model="currentControl.properties[prop.name]"
-                                                                 item-text="displayName"
-                                                                 item-value="name"
-                                                                 dense
-                                                                 outlined
-                                                                 v-on="typeof prop.onChange !== 'undefined' ? {change: prop.onChange} : {}"
-                                                            ></v-select>
-                                                       </v-list-item-content>
-                                                  </v-list-item>
-                                             </v-list>
-                                        </div>
-                                   </div>
-                              </v-card>
-                         </v-tab-item>
-                         <v-tab-item key="Advanced" style="background-color: #ff000000">
-                              <v-card flat style="background-color: #ff000000">
-                                   <div
-                                        v-if="!controlSelected"
-                                        class="text-center grey--text py-10"
-                                   >No control selected</div>
-                                   <div v-else-if="controlSelected" class="x-control-properties">
-                                        <!-- <div>{{currentControl.hasValidations}}</div> -->
-                                        <v-card-text class="px-4 pb-0">
-                                             <v-checkbox
-                                                  class="mt-0"
-                                                  id="fieldValidation"
-                                                  v-model="currentControl.hasValidations"
-                                                  label="Add field validation"
-                                                  @change="addFieldValidation"
-                                             ></v-checkbox>
-                                        </v-card-text>
+                                                            <v-list-item-action
+                                                                 class="x-control-handle mr-2"
+                                                            >
+                                                                 <v-icon
+                                                                      v-show="formControlHover === element.id"
+                                                                      class="grey--text text--darken-1"
+                                                                 >mdi-drag-vertical</v-icon>
+                                                            </v-list-item-action>
+                                                            <v-list-item-content
+                                                                 class="x-control-content"
+                                                            >
+                                                                 <!-- <v-list-item-title>{{ element.name }}</v-list-item-title> -->
+                                                                 <div
+                                                                      v-if="element.type === 'text'"
+                                                                 >
+                                                                      <v-list-item-title
+                                                                           class="title font-weight-light"
+                                                                      >{{element.name}}</v-list-item-title>
+                                                                      <v-list-item-subtitle
+                                                                           class="caption text--secondary"
+                                                                      >{{element.instruction}}</v-list-item-subtitle>
+                                                                      <v-text-field
+                                                                           style="width:100%"
+                                                                           outlined
+                                                                           single-line
+                                                                           hide-details
+                                                                           dense
+                                                                           disabled
+                                                                           v-model="element.value"
+                                                                           :placeholder="element.properties.placeholder"
+                                                                           @click.stop
+                                                                      ></v-text-field>
+                                                                 </div>
+                                                                 <div
+                                                                      v-if="element.type === 'paragraph'"
+                                                                 >
+                                                                      <v-list-item-title
+                                                                           class="title font-weight-light"
+                                                                      >{{element.name}}</v-list-item-title>
+                                                                      <v-list-item-subtitle
+                                                                           class="caption text--secondary"
+                                                                      >{{element.instruction}}</v-list-item-subtitle>
+                                                                      <v-textarea
+                                                                           v-bind:auto-grow="false"
+                                                                           v-bind:clearable="true"
+                                                                           disabled
+                                                                           outlined
+                                                                           :rows="element.properties.rows?element.properties.rows: 1"
+                                                                           :counter="element.validations ? element.validations.maxLength : false"
+                                                                           v-model="element.value"
+                                                                           :placeholder="element.properties.placeholder"
+                                                                      ></v-textarea>
+                                                                 </div>
+                                                                 <div
+                                                                      v-if="element.type === 'header'"
+                                                                 >
+                                                                      <v-list-item-title
+                                                                           :class="[element.properties.size, element.properties.color]"
+                                                                           class="font-weight-light"
+                                                                      >{{element.name}}</v-list-item-title>
+                                                                      <v-list-item-subtitle
+                                                                           class="caption text--secondary"
+                                                                      >{{element.instruction}}</v-list-item-subtitle>
+                                                                      <v-divider
+                                                                           v-if="element.properties.style === 'border'"
+                                                                      ></v-divider>
+                                                                 </div>
+                                                                 <div
+                                                                      v-if="element.type === 'number'"
+                                                                 >
+                                                                      <v-list-item-title
+                                                                           class="title font-weight-light"
+                                                                      >{{element.name}}</v-list-item-title>
+                                                                      <v-list-item-subtitle
+                                                                           class="caption text--secondary"
+                                                                      >{{element.instruction}}</v-list-item-subtitle>
+                                                                      <v-text-field
+                                                                           type="number"
+                                                                           style="width:100%"
+                                                                           outlined
+                                                                           single-line
+                                                                           hide-details
+                                                                           disabled
+                                                                           dense
+                                                                           v-model="element.value"
+                                                                           :placeholder="element.properties.placeholder"
+                                                                           @click.stop
+                                                                      ></v-text-field>
+                                                                 </div>
+                                                                 <div
+                                                                      v-if="element.type === 'numeric'"
+                                                                 >
+                                                                      <v-list-item-title
+                                                                           class="title font-weight-light"
+                                                                      >{{element.name}}</v-list-item-title>
+                                                                      <v-list-item-subtitle
+                                                                           class="caption text--secondary"
+                                                                      >{{element.instruction}}</v-list-item-subtitle>
+                                                                 </div>
+                                                                 <div
+                                                                      v-if="element.type === 'information'"
+                                                                 >
+                                                                      <v-alert
+                                                                           :type="element.properties.type"
+                                                                           :class="[element.properties.size]"
+                                                                           v-bind="element.properties.style"
+                                                                           class="font-weight-light x-control-information"
+                                                                      >{{element.name}}</v-alert>
+                                                                 </div>
+                                                                 <div
+                                                                      v-if="element.type === 'yesno'"
+                                                                 >
+                                                                      <v-list-item-title
+                                                                           class="title font-weight-light"
+                                                                      >{{element.name}}</v-list-item-title>
+                                                                      <v-list-item-subtitle
+                                                                           class="caption text--secondary"
+                                                                      >{{element.instruction}}</v-list-item-subtitle>
 
-                                        <div v-if="currentControl.hasValidations">
+                                                                      <v-radio-group
+                                                                           v-bind="{mandatory: false}"
+                                                                           v-model="element.value"
+                                                                           readonly
+                                                                      >
+                                                                           <v-radio
+                                                                                label="Yes"
+                                                                                value="true"
+                                                                           ></v-radio>
+                                                                           <v-radio
+                                                                                label="No"
+                                                                                value="false"
+                                                                           ></v-radio>
+                                                                      </v-radio-group>
+                                                                 </div>
+                                                            </v-list-item-content>
+                                                            <v-list-item-action
+                                                                 class="x-control-quick-actions"
+                                                            >
+                                                                 <div
+                                                                      v-show="formControlHover === element.id"
+                                                                 >
+                                                                      <v-btn
+                                                                           icon
+                                                                           @click.stop="copyFormControl(element)"
+                                                                      >
+                                                                           <v-icon
+                                                                                class="success--text text--lighten-1"
+                                                                           >mdi-content-duplicate</v-icon>
+                                                                      </v-btn>
+                                                                      <v-btn
+                                                                           icon
+                                                                           @click.stop="deleteFormControl(index)"
+                                                                      >
+                                                                           <v-icon
+                                                                                class="error--text"
+                                                                           >mdi-delete</v-icon>
+                                                                      </v-btn>
+                                                                 </div>
+                                                            </v-list-item-action>
+                                                       </v-list-item>
+                                                  </draggable>
+                                             </v-list-item-group>
+                                        </v-list>
+                                   </v-card>
+                                   <v-card flat style="background-color: #ff000000">
+                                        <v-divider></v-divider>
+                                        <!-- <v-card-text>
+                                        <span class="subtitle-1 font-weight-light"></span>
+                                        </v-card-text>-->
+                                        <v-card-actions class="pr-4 mt-2 pb-4">
+                                             <v-spacer></v-spacer>
+                                             <v-btn
+                                                  text
+                                                  large
+                                                  outlined
+                                                  @click="closeDesigner"
+                                                  width="120px"
+                                                  class="mr-2"
+                                             >
+                                                  <v-icon left color="error">mdi-close-thick</v-icon>
+                                                  <span>Cancel</span>
+                                             </v-btn>
+                                             <v-btn
+                                                  text
+                                                  large
+                                                  outlined
+                                                  color
+                                                  @click="closeDesigner"
+                                                  width="120px"
+                                             >
+                                                  <v-icon left color="primary">mdi-check-bold</v-icon>
+                                                  <span>Save</span>
+                                             </v-btn>
+                                        </v-card-actions>
+                                   </v-card>
+                              </v-tab-item>
+                              <v-tab-item key="Manager" style="background-color: #ff000000">
+                                   <div
+                                        class="text-center grey--text py-10"
+                                   >Schedule Manager coming soon!</div>
+                              </v-tab-item>
+                              <v-tab-item key="Settings" style="background-color: #ff000000">
+                                   <div
+                                        class="text-center grey--text py-10"
+                                   >Schedule Settings coming soon!</div>
+                              </v-tab-item>
+                         </v-tabs-items>
+                    </v-card>
+               </v-col>
+               <v-col cols="12" :md="explorerConfig.fullView ? '2':'3'">
+                    <v-card class="x-form">
+                         <v-card flat style="background-color: #ff000000">
+                              <v-card-text>
+                                   <span class="subtitle-1 font-weight-light">Properties</span>
+                              </v-card-text>
+                              <v-divider></v-divider>
+                         </v-card>
+                         <v-toolbar class="elevation-2">
+                              <v-tabs v-model="propertiesConfig.activeTab" color="grey">
+                                   <v-tabs-slider color="secondary"></v-tabs-slider>
+                                   <v-tab key="General">General</v-tab>
+                                   <v-tab key="Advanced">Advanced</v-tab>
+                              </v-tabs>
+                         </v-toolbar>
+                         <v-tabs-items
+                              v-model="propertiesConfig.activeTab"
+                              style="background-color: #ff000000"
+                         >
+                              <v-tab-item key="General" style="background-color: #ff000000">
+                                   <v-card flat style="background-color: #ff000000">
+                                        <div
+                                             v-if="!controlSelected"
+                                             class="text-center grey--text py-10"
+                                        >No control selected</div>
+                                        <div
+                                             v-else-if="controlSelected"
+                                             class="x-control-properties"
+                                        >
                                              <div
                                                   v-for="(cat, index) in controlTypeConfig[currentControl.type]"
                                                   :key="index"
                                              >
-                                                  <v-list-item
-                                                       :ripple="propertiesConfig.ripple"
-                                                       v-for="(validation, i) in cat.validations"
-                                                       :key="i"
-                                                  >
-                                                       <v-list-item-content
-                                                            v-if="validation.type === 'text'"
+                                                  <div class="px-4 pt-4 d-none">{{cat.group}}</div>
+
+                                                  <v-list flat>
+                                                       <v-list-item
+                                                            :ripple="propertiesConfig.ripple"
                                                        >
-                                                            <v-list-item-title>{{validation.displayName}}</v-list-item-title>
-                                                            <v-text-field
-                                                                 type="text"
-                                                                 style="width:100%"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 v-model="currentControl.validations[validation.name]"
-                                                            ></v-text-field>
-                                                       </v-list-item-content>
-                                                       <v-list-item-content
-                                                            v-if="validation.type === 'number'"
+                                                            <v-list-item-content>
+                                                                 <v-list-item-title>Title</v-list-item-title>
+                                                                 <v-text-field
+                                                                      style="width:100%"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      dense
+                                                                      v-model="currentControl.name"
+                                                                 ></v-text-field>
+                                                            </v-list-item-content>
+                                                       </v-list-item>
+                                                       <v-list-item
+                                                            :ripple="propertiesConfig.ripple"
                                                        >
-                                                            <v-list-item-title>{{validation.displayName}}</v-list-item-title>
-                                                            <v-text-field
-                                                                 type="number"
-                                                                 outlined
-                                                                 single-line
-                                                                 hide-details
-                                                                 dense
-                                                                 v-model="currentControl.validations[validation.name]"
-                                                            ></v-text-field>
-                                                       </v-list-item-content>
-                                                       <v-list-item-content
-                                                            v-if="validation.type === 'select'"
+                                                            <v-list-item-content>
+                                                                 <v-list-item-title>Instructions</v-list-item-title>
+                                                                 <v-text-field
+                                                                      style="width:100%"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      dense
+                                                                      v-model="currentControl.instruction"
+                                                                 ></v-text-field>
+                                                            </v-list-item-content>
+                                                       </v-list-item>
+                                                       <v-divider></v-divider>
+                                                       <v-list-item
+                                                            :ripple="propertiesConfig.ripple"
+                                                            v-for="(prop, i) in cat.properties"
+                                                            :key="i"
                                                        >
-                                                            <v-list-item-title>{{validation.displayName}}</v-list-item-title>
-                                                            <v-select
-                                                                 :items="prop.options"
-                                                                 v-model="currentControl.validations[validation.name]"
-                                                                 item-text="displayName"
-                                                                 item-value="name"
-                                                                 dense
-                                                                 outlined
-                                                            ></v-select>
-                                                       </v-list-item-content>
-                                                  </v-list-item>
+                                                            <v-list-item-content
+                                                                 v-if="prop.type === 'text'"
+                                                            >
+                                                                 <v-list-item-title>{{prop.displayName}}</v-list-item-title>
+                                                                 <v-text-field
+                                                                      type="text"
+                                                                      style="width:100%"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      dense
+                                                                      v-model="currentControl.properties[prop.name]"
+                                                                 ></v-text-field>
+                                                            </v-list-item-content>
+                                                            <v-list-item-content
+                                                                 v-if="prop.type === 'number'"
+                                                            >
+                                                                 <v-list-item-title>{{prop.displayName}}</v-list-item-title>
+                                                                 <v-text-field
+                                                                      type="number"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      dense
+                                                                      v-model="currentControl.properties[prop.name]"
+                                                                 ></v-text-field>
+                                                            </v-list-item-content>
+                                                            <v-list-item-content
+                                                                 v-if="prop.type === 'select'"
+                                                            >
+                                                                 <v-list-item-title>{{prop.displayName}}</v-list-item-title>
+                                                                 <v-select
+                                                                      :items="prop.options"
+                                                                      v-model="currentControl.properties[prop.name]"
+                                                                      item-text="displayName"
+                                                                      item-value="name"
+                                                                      dense
+                                                                      outlined
+                                                                      v-on="typeof prop.onChange !== 'undefined' ? {change: prop.onChange} : {}"
+                                                                 ></v-select>
+                                                            </v-list-item-content>
+                                                       </v-list-item>
+                                                  </v-list>
                                              </div>
                                         </div>
-                                   </div>
-                              </v-card>
-                         </v-tab-item>
-                    </v-tabs-items>
-               </v-card>
-          </v-col>
-     </v-row>
+                                   </v-card>
+                              </v-tab-item>
+                              <v-tab-item key="Advanced" style="background-color: #ff000000">
+                                   <v-card flat style="background-color: #ff000000">
+                                        <div
+                                             v-if="!controlSelected"
+                                             class="text-center grey--text py-10"
+                                        >No control selected</div>
+                                        <div
+                                             v-else-if="controlSelected"
+                                             class="x-control-properties"
+                                        >
+                                             <!-- <div>{{currentControl.hasValidations}}</div> -->
+                                             <v-card-text class="px-4 pb-0">
+                                                  <v-checkbox
+                                                       class="mt-0"
+                                                       id="fieldValidation"
+                                                       v-model="currentControl.hasValidations"
+                                                       label="Add field validation"
+                                                       @change="addFieldValidation"
+                                                  ></v-checkbox>
+                                             </v-card-text>
+
+                                             <div v-if="currentControl.hasValidations">
+                                                  <div
+                                                       v-for="(cat, index) in controlTypeConfig[currentControl.type]"
+                                                       :key="index"
+                                                  >
+                                                       <v-list-item
+                                                            :ripple="propertiesConfig.ripple"
+                                                            v-for="(validation, i) in cat.validations"
+                                                            :key="i"
+                                                       >
+                                                            <v-list-item-content
+                                                                 v-if="validation.type === 'text'"
+                                                            >
+                                                                 <v-list-item-title>{{validation.displayName}}</v-list-item-title>
+                                                                 <v-text-field
+                                                                      type="text"
+                                                                      style="width:100%"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      dense
+                                                                      v-model="currentControl.validations[validation.name]"
+                                                                 ></v-text-field>
+                                                            </v-list-item-content>
+                                                            <v-list-item-content
+                                                                 v-if="validation.type === 'number'"
+                                                            >
+                                                                 <v-list-item-title>{{validation.displayName}}</v-list-item-title>
+                                                                 <v-text-field
+                                                                      type="number"
+                                                                      outlined
+                                                                      single-line
+                                                                      hide-details
+                                                                      dense
+                                                                      v-model="currentControl.validations[validation.name]"
+                                                                 ></v-text-field>
+                                                            </v-list-item-content>
+                                                            <v-list-item-content
+                                                                 v-if="validation.type === 'select'"
+                                                            >
+                                                                 <v-list-item-title>{{validation.displayName}}</v-list-item-title>
+                                                                 <v-select
+                                                                      :items="prop.options"
+                                                                      v-model="currentControl.validations[validation.name]"
+                                                                      item-text="displayName"
+                                                                      item-value="name"
+                                                                      dense
+                                                                      outlined
+                                                                 ></v-select>
+                                                            </v-list-item-content>
+                                                       </v-list-item>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </v-card>
+                              </v-tab-item>
+                         </v-tabs-items>
+                    </v-card>
+               </v-col>
+          </v-row>
+     </div>
 </template>
 
 <script>
