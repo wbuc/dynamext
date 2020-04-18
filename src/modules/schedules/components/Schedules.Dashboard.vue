@@ -191,12 +191,15 @@ export default {
                this.schedules.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
           },
           openDesigner() {
-               this.$router.replace({ name: "Schedule.Designer" });
-               //  this.$router.replace({ path: "schedules/edit" });
+               this.$store.dispatch("createNewSchedule").then(data => {
+                    console.log("New schedule created: ", data);
+                    this.$router.replace({ name: "Schedule.Designer" });
+               });
           }
      },
      created() {
           this.$store.dispatch("getAllSchedules").then(result => {
+               console.log(result.data);
                this.schedules = result.data;
           });
      }

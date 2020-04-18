@@ -14,9 +14,7 @@ const actions = {
 
     getAllSchedules(context) {
         //check if loggend in.
-        if (!context.rootGetters.isAuthenticated) {
-            return;
-        }
+        if (!context.rootGetters.isAuthenticated) return;
 
         context.commit('API_LOADING');
 

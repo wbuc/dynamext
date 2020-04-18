@@ -29,7 +29,7 @@
                     <v-card class="x-toolbox">
                          <v-card style="background-color: #ff000000">
                               <v-card-text>
-                                   <span class="subtitle-1 font-weight-light">Toolbox</span>
+                                   <span class="title font-weight-light">Toolbox</span>
                               </v-card-text>
                               <v-divider></v-divider>
                          </v-card>
@@ -110,7 +110,28 @@
                     <v-card class="x-form-design">
                          <v-card flat style="background-color: #ff000000">
                               <v-card-text>
-                                   <span class="subtitle-1 font-weight-light">New Schedule Name</span>
+                                   <span
+                                        v-if="!canvasConfig.editName"
+                                        @click="editScheduleName"
+                                        class="title accent--text font-weight-light"
+                                   >{{formData.name}}</span>
+
+                                   <v-text-field
+                                        v-else-if="canvasConfig.editName"
+                                        v-model="formData.name"
+                                        @blur="editScheduleName"
+                                        v-on:keyup.enter="editScheduleName"
+                                        ref="schedulename"
+                                        outlined
+                                        single-line
+                                        hide-details
+                                        dense
+                                   ></v-text-field>
+                                   <br />
+
+                                   <!-- v-on:keyup.enter="cellEditDone('email', item)"
+                              v-on:keyup.esc="cellEditCancel('email', item)"
+                                   @blur="cellEditDone('email', item)"-->
                                    <!-- <v-spacer></v-spacer> -->
                                    <!-- <v-btn color="primary" width="120px">Save</v-btn> -->
                               </v-card-text>
@@ -124,22 +145,6 @@
                                    <v-tab key="Settings">Settings</v-tab>
                               </v-tabs>
                               <v-spacer></v-spacer>
-
-                              <!-- <v-btn
-                                   large
-                                   text
-                                   outlined
-                                   @click="closeDesigner"
-                                   width="120px"
-                                   class="mr-4"
-                              >
-                                   <v-icon left color="error">mdi-close-thick</v-icon>
-                                   <span>Cancel</span>
-                              </v-btn>
-                              <v-btn large text outlined color width="120px">
-                                   <v-icon left color="primary">mdi-check-bold</v-icon>
-                                   <span>Save</span>
-                              </v-btn>-->
                          </v-toolbar>
                          <v-tabs-items
                               v-model="canvasConfig.activeTab"
@@ -379,7 +384,7 @@
                     <v-card class="x-form">
                          <v-card flat style="background-color: #ff000000">
                               <v-card-text>
-                                   <span class="subtitle-1 font-weight-light">Properties</span>
+                                   <span class="title font-weight-light">Properties</span>
                               </v-card-text>
                               <v-divider></v-divider>
                          </v-card>
@@ -592,7 +597,7 @@ export default {
      name: "Schedules.Designer",
      components: { draggable },
      computed: {
-          ...mapGetters(["api"]),
+          ...mapGetters(["api", "schedule"]),
           controlSelected() {
                return this.currentControl ? true : false;
           }
@@ -607,7 +612,8 @@ export default {
                },
                canvasConfig: {
                     avctiveTab: null,
-                    ripple: false
+                    ripple: false,
+                    editName: false
                },
                propertiesConfig: {
                     avctiveTab: null,
@@ -1050,6 +1056,7 @@ export default {
                          }
                     ]
                },
+               formData: null,
                formControls: [
                     {
                          id: 91,
@@ -1196,9 +1203,20 @@ export default {
           },
           closeDesigner() {
                this.$router.push({ name: "Schedule.Root" });
+          },
+
+          editScheduleName() {
+               this.canvasConfig.editName = !this.canvasConfig.editName;
+
+               if (this.canvasConfig.editName)
+                    this.$nextTick(() => {
+                         this.$refs["schedulename"].focus();
+                    });
           }
      },
-     created() {}
+     created() {
+          this.formData = this.schedule;
+     }
 };
 </script>
 
