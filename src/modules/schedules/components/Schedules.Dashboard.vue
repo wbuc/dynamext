@@ -1,5 +1,20 @@
 <template>
      <div>
+          <v-card :elevation="pageElevation">
+               <v-row no-gutters class="mb-3">
+                    <v-col cols="12" xs="12" sm="12" md="6">
+                         <div class="pa-3">
+                              <v-btn>Click Me</v-btn>
+                         </div>
+                    </v-col>
+                    <v-col cols="12" xs="12" sm="12" md="6" class="hidden-sm-and-down">
+                         <div class="pa-3 text-right">
+                              <v-btn>And Me!!</v-btn>
+                         </div>
+                    </v-col>
+               </v-row>
+          </v-card>
+
           <v-row no-gutters class="mb-3">
                <div>
                     <v-btn id="sort-schedule" small text color="grey" @click="sortBy('name')">
@@ -19,7 +34,7 @@
                </div>
           </v-row>
 
-          <v-card elevation="3">
+          <v-card :elevation="pageElevation">
                <div
                     v-for="(schedule,index) in schedules"
                     :key="index"
@@ -108,13 +123,17 @@ export default {
      name: "Schedules.Dashboard",
      data() {
           return {
+               pageElevation: 3,
                schedules: [],
                quickActions: [
                     {
-                         title: "Edit",
-                         icon: "mdi-pencil",
-                         color: "secondary--text",
-                         action: item => console.log("editing ", item)
+                         title: "Open",
+                         icon: "mdi-open-in-new",
+                         color: "primary--text",
+                         action: item => {
+                              // navigate to the form designer route
+                              console.log("open  ", item.id);
+                         }
                     },
                     {
                          title: "Out of Scope",
