@@ -4,39 +4,63 @@
                <v-row no-gutters class="mb-3">
                     <v-col cols="12" xs="12" sm="12" md="6">
                          <div class="pa-3">
-                              <v-btn>Click Me</v-btn>
+                              <v-btn depressed large>
+                                   <v-icon left color="primary">add_box</v-icon>
+                                   <span>New Schedule</span>
+                              </v-btn>
                          </div>
                     </v-col>
                     <v-col cols="12" xs="12" sm="12" md="6" class="hidden-sm-and-down">
                          <div class="pa-3 text-right">
-                              <v-btn>And Me!!</v-btn>
+                              <v-btn depressed large icon color="grey">
+                                   <v-icon>mdi-repeat</v-icon>
+                              </v-btn>
+
+                              <v-btn depressed large icon color="grey">
+                                   <v-icon>mdi-flag-variant-outline</v-icon>
+                              </v-btn>
                          </div>
                     </v-col>
                </v-row>
           </v-card>
 
           <v-row no-gutters class="mb-3">
-               <div>
-                    <v-btn id="sort-schedule" small text color="grey" @click="sortBy('name')">
-                         <v-icon left small>mdi-file-document</v-icon>
-                         <span class="caption text-lowercase">by schedule name</span>
-                    </v-btn>
-                    <v-tooltip activator="#sort-schedule" top>
-                         <span>Sort all items by schedule name</span>
-                    </v-tooltip>
-                    <v-btn id="sort-owner" small text color="grey" @click="sortBy('owner')">
-                         <v-icon left small>person</v-icon>
-                         <span class="caption text-lowercase">by owner</span>
-                    </v-btn>
-                    <v-tooltip activator="#sort-owner" top>
-                         <span>Sort all items by owner</span>
-                    </v-tooltip>
-               </div>
+               <v-col cols="12" xs="12" sm="12" md="9">
+                    <div class="align-center">
+                         <v-btn id="sort-schedule" small text color="grey" @click="sortBy('name')">
+                              <v-icon left small>mdi-file-document</v-icon>
+                              <span class="caption text-lowercase">by schedule name</span>
+                         </v-btn>
+                         <v-tooltip activator="#sort-schedule" top>
+                              <span>Sort all items by schedule name</span>
+                         </v-tooltip>
+                         <v-btn id="sort-owner" small text color="grey" @click="sortBy('owner')">
+                              <v-icon left small>person</v-icon>
+                              <span class="caption text-lowercase">by owner</span>
+                         </v-btn>
+                         <v-tooltip activator="#sort-owner" top>
+                              <span>Sort all items by owner</span>
+                         </v-tooltip>
+                    </div>
+               </v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="hidden-sm-and-down">
+                    <div>
+                         <v-text-field
+                              append-icon="mdi-magnify"
+                              v-model="searchText"
+                              label="Search"
+                              outlined
+                              single-line
+                              hide-details
+                              dense
+                         ></v-text-field>
+                    </div>
+               </v-col>
           </v-row>
 
           <v-card :elevation="pageElevation">
                <div
-                    v-for="(schedule,index) in schedules"
+                    v-for="(schedule,index) in filteredSchedules"
                     :key="index"
                     :class="`schedule  ${schedule.status}`"
                >
@@ -91,7 +115,7 @@
                                                   <v-list-item
                                                        v-for="(action, index) in quickActions"
                                                        :key="index"
-                                                       @click="action.action(item)"
+                                                       @click="action.action(schedule)"
                                                        active-class="secondary--text"
                                                        dense
                                                   >
@@ -124,25 +148,36 @@ export default {
      data() {
           return {
                pageElevation: 3,
+               searchText: null,
                schedules: [],
                quickActions: [
                     {
-                         title: "Open",
-                         icon: "mdi-open-in-new",
+                         title: "Design",
+                         icon: "mdi-draw",
                          color: "primary--text",
                          action: item => {
                               // navigate to the form designer route
-                              console.log("open  ", item.id);
+                              console.log("design  ", item.id);
                          }
                     },
                     {
-                         title: "Out of Scope",
-                         icon: "mdi-stop",
-                         color: "error--text",
+                         title: "View Copies",
+                         icon: "mdi-open-in-new",
+                         color: "success--text",
                          action: item => console.log("deleting ", item)
                     }
                ]
           };
+     },
+     computed: {
+          filteredSchedules() {
+               if (!this.searchText) return this.schedules;
+
+               const _search = this.searchText.toLowerCase().trim();
+               return this.schedules.filter(
+                    c => c.name.toLowerCase().indexOf(_search) > -1
+               );
+          }
      },
      methods: {
           statusClass(status) {
