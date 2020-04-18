@@ -5,7 +5,7 @@
                     <v-col cols="12" xs="12" sm="12" md="6">
                          <div class="pa-3">
                               <v-btn text outlined large color @click="openDesigner">
-                                   <v-icon left color="primary">add_box</v-icon>
+                                   <v-icon left color="primary">mdi-plus-thick</v-icon>
                                    <span>New Schedule</span>
                               </v-btn>
                          </div>

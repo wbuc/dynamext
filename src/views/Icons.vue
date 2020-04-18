@@ -49,10 +49,16 @@ export default {
      data() {
           return {
                icons: [
-                    "add_box",
+                    "mdi-plus-box",
+                    "mdi-plus-thick",
+                    "mdi-plus-box-outline",
+                    "mdi-plus",
                     "mdi-close-thick",
+                    "mdi-do-not-disturb",
                     "more_vert",
                     "settings",
+                    "mdi-check",
+                    "mdi-check-bold",
                     "linear_scale",
                     "mdi-chevron-right",
                     "mdi-chevron-left",

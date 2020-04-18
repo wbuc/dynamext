@@ -100,11 +100,21 @@
                          </v-tabs>
                          <v-spacer></v-spacer>
 
-                         <v-btn text outlined color @click="closeDesigner" width="120px">
-                              <v-icon left color="primary">add_box</v-icon>
+                         <v-btn
+                              large
+                              text
+                              outlined
+                              @click="closeDesigner"
+                              width="120px"
+                              class="mr-4"
+                         >
+                              <v-icon left color="error">mdi-close-thick</v-icon>
                               <span>Cancel</span>
                          </v-btn>
-                         <v-btn color="primary" width="120px">Save</v-btn>
+                         <v-btn large text outlined color width="120px">
+                              <v-icon left color="primary">mdi-check-bold</v-icon>
+                              <span>Save</span>
+                         </v-btn>
                     </v-toolbar>
                     <v-tabs-items
                          v-model="canvasConfig.activeTab"
@@ -296,9 +306,30 @@
                                    <!-- <v-card-text>
                                         <span class="subtitle-1 font-weight-light"></span>
                                    </v-card-text>-->
-                                   <v-card-actions class="pr-4">
+                                   <v-card-actions class="pr-4 mt-2 pb-4">
                                         <v-spacer></v-spacer>
-                                        <v-btn color="primary" width="120px">Save</v-btn>
+                                        <v-btn
+                                             text
+                                             large
+                                             outlined
+                                             @click="closeDesigner"
+                                             width="120px"
+                                             class="mr-2"
+                                        >
+                                             <v-icon left color="error">mdi-close-thick</v-icon>
+                                             <span>Cancel</span>
+                                        </v-btn>
+                                        <v-btn
+                                             text
+                                             large
+                                             outlined
+                                             color
+                                             @click="closeDesigner"
+                                             width="120px"
+                                        >
+                                             <v-icon left color="primary">mdi-check-bold</v-icon>
+                                             <span>Save</span>
+                                        </v-btn>
                                    </v-card-actions>
                               </v-card>
                          </v-tab-item>
