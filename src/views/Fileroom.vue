@@ -12,6 +12,7 @@
 <script>
 import FileroomDashboard from "@/modules/fileroom/components/Fileroom.Dashboard";
 export default {
+     name: "Fileroom",
      components: { FileroomDashboard }
 };
 </script>

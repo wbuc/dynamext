@@ -11,6 +11,7 @@ import '@/plugins/base'
 
 Vue.config.productionTip = false
 
+
 new Vue({
   router,
   store,
@@ -18,3 +19,13 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
+
+// See Components-02 for more detail.
+
+// export const eventBus = new Vue({
+//   methods: {
+//     changeAge(data) {
+//       this.$emit('ageWasEdited', data)
+//     }
+//   }
+// });

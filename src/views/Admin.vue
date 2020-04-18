@@ -11,6 +11,7 @@
 <script>
 import AdminDashboard from "@/modules/admin/components/Admin.Dashboard";
 export default {
+     name: "Admin",
      components: { AdminDashboard },
      data() {
           return {

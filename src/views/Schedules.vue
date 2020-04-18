@@ -5,17 +5,22 @@
                     <page-header>Schedules</page-header>
                </v-col>
           </v-row>
-          <schedule-dashboard></schedule-dashboard>
+          <transition-page>
+               <router-view></router-view>
+          </transition-page>
      </v-container>
 </template>
 <script>
-import ScheduleDashboard from "@/modules/schedules/components/Schedules.Dashboard";
+import TransitionPage from "@/components/shared/Transition";
+
 export default {
      name: "Schedules",
-     components: { ScheduleDashboard },
+     components: { TransitionPage },
      data() {
           return {};
      },
      methods: {}
 };
 </script>
+20, 12, 12 = 42
+48

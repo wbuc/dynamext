@@ -99,6 +99,11 @@
                               <v-tab key="Settings">Settings</v-tab>
                          </v-tabs>
                          <v-spacer></v-spacer>
+
+                         <v-btn text outlined color @click="closeDesigner" width="120px">
+                              <v-icon left color="primary">add_box</v-icon>
+                              <span>Cancel</span>
+                         </v-btn>
                          <v-btn color="primary" width="120px">Save</v-btn>
                     </v-toolbar>
                     <v-tabs-items
@@ -1115,6 +1120,9 @@ export default {
                          event.$$.input.focus();
                     });
                }
+          },
+          closeDesigner() {
+               this.$router.push({ name: "Schedule.Root" });
           }
      },
      created() {}

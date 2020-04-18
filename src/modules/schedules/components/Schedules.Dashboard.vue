@@ -4,7 +4,7 @@
                <v-row no-gutters class="mb-3">
                     <v-col cols="12" xs="12" sm="12" md="6">
                          <div class="pa-3">
-                              <v-btn text outlined large color>
+                              <v-btn text outlined large color @click="openDesigner">
                                    <v-icon left color="primary">add_box</v-icon>
                                    <span>New Schedule</span>
                               </v-btn>
@@ -189,6 +189,10 @@ export default {
           },
           sortBy(prop) {
                this.schedules.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
+          },
+          openDesigner() {
+               this.$router.replace({ name: "Schedule.Designer" });
+               //  this.$router.replace({ path: "schedules/edit" });
           }
      },
      created() {
