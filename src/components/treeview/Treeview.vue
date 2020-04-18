@@ -67,7 +67,6 @@
                                    </v-list-item-content>
                               </v-list-item>
                          </v-list>
-                         <v-list></v-list>
                     </v-menu>
                </template>
           </v-treeview>

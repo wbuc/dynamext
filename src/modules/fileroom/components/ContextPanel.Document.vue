@@ -14,7 +14,6 @@
                               <v-btn
                                    id="doc-actions"
                                    icon
-                                   small
                                    text
                                    dark
                                    color="grey"
@@ -47,7 +46,6 @@
                                              </v-list-item-content>
                                         </v-list-item>
                                    </v-list>
-                                   <v-list></v-list>
                               </v-menu>
                          </v-col>
                     </v-row>

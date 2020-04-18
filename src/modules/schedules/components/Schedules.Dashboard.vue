@@ -91,7 +91,6 @@
                                                        </v-list-item-content>
                                                   </v-list-item>
                                              </v-list>
-                                             <v-list></v-list>
                                         </v-menu>
                                    </div>
                               </v-card>
