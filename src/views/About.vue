@@ -112,10 +112,37 @@
           </v-row>
           <v-row>
                <v-col>
-                    // NOTE: handle to the next element on the DOM being updated.
-                    this.$nextTick(() => {
-                    this.$refs[field].focus();
-                    });
+                    <span class>
+                         NOTE: handle to the next element on the DOM being updated.
+                         <p class="text--secondary ml-3">
+                              this.$nextTick(() => {
+                              this.$refs[field].focus();
+                              });
+                         </p>
+                    </span>
+               </v-col>
+               <v-col>
+                    <div class="secondary pa-3 title font-weight-light">Flexbox</div>
+                    <span class>
+                         Position elements in a flexbox
+                         <p class="text--secondary ml-3">class="d-flex align-center justify-center"</p>
+                    </span>
+                    <span>
+                         <v-card class="d-flex pa-2 mt-2" outlined tile>
+                              <div>
+                                   I'm a flexbox container!
+                                   <p class="text--secondary ml-3 mb-0">d-flex</p>
+                              </div>
+                         </v-card>
+                    </span>
+                    <span>
+                         <v-card class="d-inline-flex pa-2 mt-2" outlined tile>
+                              <div>
+                                   I'm an inline flexbox container!
+                                   <p class="text--secondary ml-3 mb-0">d-inline-flex</p>
+                              </div>
+                         </v-card>
+                    </span>
                </v-col>
           </v-row>
      </v-container>

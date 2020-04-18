@@ -25,8 +25,8 @@
           </v-card>
 
           <v-row no-gutters class="mb-3">
-               <v-col cols="12" xs="12" sm="12" md="9">
-                    <div class="align-center">
+               <v-col cols="12" xs="12" sm="12" md="9" class="d-flex align-center">
+                    <div>
                          <v-btn id="sort-schedule" small text color="grey" @click="sortBy('name')">
                               <v-icon left small>mdi-file-document</v-icon>
                               <span class="caption text-lowercase">by schedule name</span>
@@ -94,8 +94,8 @@
                                    </div>
                               </v-card>
                          </v-col>
-                         <v-col cols="6" sm="1" md="1" align="center" class="pt-4">
-                              <v-card flat>
+                         <v-col cols="6" sm="1" md="1" class="d-flex align-center justify-center">
+                              <v-card flat class="d-flex justify-center align-center">
                                    <div>
                                         <v-menu offset-y transition="slide-y-transition">
                                              <template v-slot:activator="{ schedule, on }">
