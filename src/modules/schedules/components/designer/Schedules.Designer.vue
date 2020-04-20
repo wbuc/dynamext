@@ -358,7 +358,7 @@
                                                   large
                                                   outlined
                                                   color
-                                                  @click="closeDesigner"
+                                                  @click="saveForm"
                                                   width="120px"
                                              >
                                                   <v-icon left color="primary">mdi-check-bold</v-icon>
@@ -592,7 +592,7 @@ import { mapGetters } from "vuex";
 
 import draggable from "vuedraggable";
 
-let idGlobal = 9;
+let globalId = 10;
 export default {
      name: "Schedules.Designer",
      components: { draggable },
@@ -1158,7 +1158,7 @@ export default {
           },
           cloneControl(item) {
                let newControl = {
-                    id: idGlobal++,
+                    id: globalId++,
                     name: `Untitled ${item.name}`,
                     instruction: item.instruction,
                     value: item.value,
@@ -1184,7 +1184,7 @@ export default {
           },
           deleteFormControl(itemIndex) {
                this.formControls.splice(itemIndex, 1);
-               //TODO: when delte is clicked, we need to keep track of the items delete and update on the server.
+               //TODO: when delete is clicked, we need to keep track of the items delete and update on the server.
           },
           toggleControlLabelEdit(event, control) {
                //use this link for howTo on list edits.
@@ -1202,7 +1202,16 @@ export default {
                }
           },
           closeDesigner() {
-               this.$router.push({ name: "Schedule.Root" });
+               this.$router.replace({ name: "Schedule.Root" });
+          },
+
+          saveForm() {
+               this.$store
+                    .dispatch("saveFormDefinition", this.formData)
+                    .then(data => {
+                         console.log("New form saved: ", data);
+                         // this.$router.replace({ name: "Schedule.Designer" });
+                    });
           },
 
           editScheduleName() {
@@ -1216,6 +1225,7 @@ export default {
      },
      created() {
           this.formData = this.schedule;
+          this.formControls = this.formData.formControls;
      }
 };
 </script>

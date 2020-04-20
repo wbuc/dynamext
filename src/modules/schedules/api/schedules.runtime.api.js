@@ -4,7 +4,7 @@ import httpClient from './httpClient'
 const END_POINT = 'schedules'
 
 
-const getAllSchedules = () => {
+const test1 = () => {
     return new Promise((resolve, reject) => {
         httpClient.get(`${END_POINT}`)
             .then(response => { resolve(response); })
@@ -13,5 +13,14 @@ const getAllSchedules = () => {
 }
 
 
+const test2 = (id) => {
+    return new Promise((resolve, reject) => {
+        httpClient.delete(`${END_POINT}/${id}`)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
 
-export default { getAllSchedules }
+
+
+export default { test1, test2 }

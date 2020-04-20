@@ -136,7 +136,7 @@ export default {
                // do delete stuff here call api ect.
                console.log("Delete emitted ", data);
 
-               //the notification will be driven from the state after the API has been called. Only putting here for testing.
+               //check if it makes sense to trigger notification from here or from the component itself.
                this.$store.dispatch("notifySuccess", "Accounts deleted!");
           },
           saveDataItem(item) {

@@ -164,7 +164,15 @@ export default {
                          title: "View Copies",
                          icon: "mdi-open-in-new",
                          color: "success--text",
-                         action: item => console.log("deleting ", item)
+                         action: item => console.log("view copies ", item)
+                    },
+                    {
+                         title: "Delete",
+                         icon: "mdi-delete",
+                         color: "error--text",
+                         action: item => {
+                              this.deleteFormDefinition(item);
+                         }
                     }
                ]
           };
@@ -190,18 +198,31 @@ export default {
           sortBy(prop) {
                this.schedules.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
           },
+          refreshDashboard(cb) {
+               this.$store.dispatch("getAllForms").then(result => {
+                    this.schedules = result.data;
+                    if (cb) cb();
+               });
+          },
           openDesigner() {
                this.$store.dispatch("createNewSchedule").then(data => {
                     console.log("New schedule created: ", data);
                     this.$router.replace({ name: "Schedule.Designer" });
                });
+          },
+          deleteFormDefinition(form) {
+               this.$store.dispatch("deleteFormDefinition", form).then(() => {
+                    this.refreshDashboard(() => {
+                         this.$store.dispatch(
+                              "notifyInfo",
+                              `${form.name} is now deleted!`
+                         );
+                    });
+               });
           }
      },
      created() {
-          this.$store.dispatch("getAllSchedules").then(result => {
-               console.log(result.data);
-               this.schedules = result.data;
-          });
+          this.refreshDashboard();
      }
 };
 </script>
