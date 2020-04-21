@@ -46,15 +46,18 @@ const actions = {
         context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
-            designerApi.getAllForms().then(data => {
-                context.commit('API_COMPLETE');
-                resolve(data)
-            },
-                error => {
-                    console.log(error)
-                    context.commit('API_ERROR');
-                    reject(error);
-                });
+            // Pause to show loader.
+            setTimeout(() => {
+                designerApi.getAllForms().then(data => {
+                    context.commit('API_COMPLETE');
+                    resolve(data)
+                },
+                    error => {
+                        console.log(error)
+                        context.commit('API_ERROR');
+                        reject(error);
+                    });
+            }, 1500)
         })
     },
 

@@ -59,7 +59,11 @@
           </v-row>
 
           <v-card :elevation="pageConfig.elevation">
+               <div v-if="api.loading">
+                    <v-progress-linear indeterminate height="3" color="primary"></v-progress-linear>
+               </div>
                <div
+                    v-else-if="!api.loading"
                     v-for="(schedule,index) in filteredSchedules"
                     :key="index"
                     :class="`schedule  ${schedule.status}`"
@@ -143,6 +147,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
      name: "Schedules.Dashboard",
      data() {
@@ -180,6 +186,7 @@ export default {
           };
      },
      computed: {
+          ...mapGetters(["api"]),
           filteredSchedules() {
                if (!this.searchText) return this.schedules;
 
@@ -230,7 +237,7 @@ export default {
                     this.refreshDashboard(() => {
                          this.$store.dispatch(
                               "notifyInfo",
-                              `${form.name} is now deleted!`
+                              `${form.name} has been deleted`
                          );
                     });
                });
