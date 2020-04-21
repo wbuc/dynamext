@@ -56,7 +56,7 @@
                                                   class="dragArea list-group"
                                                   :list="toolboxControls"
                                                   :group="{ name: 'toolbox', pull: 'clone', put: false }"
-                                                  :clone="cloneControl"
+                                                  :clone="cloneFormControl"
                                                   @change="log"
                                              >
                                                   <v-list-item
@@ -85,19 +85,9 @@
                               </v-tab-item>
                               <v-tab-item key="Templates" style="background-color: #ff000000">
                                    <v-card style="background-color: #ff000000">
-                                        <v-card-actions>
-                                             <v-btn icon>
-                                                  <v-icon>mdi-folder-plus</v-icon>
-                                             </v-btn>
-                                             <v-btn icon>
-                                                  <v-icon>mdi-refresh</v-icon>
-                                             </v-btn>
-
-                                             <v-spacer></v-spacer>
-                                             <v-btn icon @click="toggleFullView">
-                                                  <v-icon>mdi-arrow-expand</v-icon>
-                                             </v-btn>
-                                        </v-card-actions>
+                                        <div
+                                             class="text-center grey--text py-10"
+                                        >Templates coming soon!</div>
                                    </v-card>
                                    <v-card style="background-color: #ff000000">
                                         <!-- Content here! -->
@@ -115,7 +105,6 @@
                                         @click="editScheduleName"
                                         class="title accent--text font-weight-light"
                                    >{{formData.name}}</span>
-
                                    <v-text-field
                                         v-else-if="canvasConfig.editName"
                                         v-model="formData.name"
@@ -128,12 +117,6 @@
                                         dense
                                    ></v-text-field>
                                    <br />
-
-                                   <!-- v-on:keyup.enter="cellEditDone('email', item)"
-                              v-on:keyup.esc="cellEditCancel('email', item)"
-                                   @blur="cellEditDone('email', item)"-->
-                                   <!-- <v-spacer></v-spacer> -->
-                                   <!-- <v-btn color="primary" width="120px">Save</v-btn> -->
                               </v-card-text>
                               <v-divider></v-divider>
                          </v-card>
@@ -168,157 +151,38 @@
                                                        <v-list-item
                                                             two-line
                                                             :ripple="canvasConfig.ripple"
-                                                            v-for="(element,index) in formControls"
-                                                            :key="element.id"
+                                                            v-for="(control,index) in formControls"
+                                                            :key="control.id"
                                                             class="x-control"
-                                                            @click="setCurrentControl(element)"
-                                                            @mouseover="formControlHover = element.id"
+                                                            @click="setCurrentControl(control)"
+                                                            @mouseover="formControlHover = control.id"
                                                             @mouseout="formControlHover = null"
                                                        >
                                                             <v-list-item-action
                                                                  class="x-control-handle mr-2"
                                                             >
                                                                  <v-icon
-                                                                      v-show="formControlHover === element.id"
+                                                                      v-show="formControlHover === control.id"
                                                                       class="grey--text text--darken-1"
                                                                  >mdi-drag-vertical</v-icon>
                                                             </v-list-item-action>
                                                             <v-list-item-content
                                                                  class="x-control-content"
                                                             >
-                                                                 <!-- <v-list-item-title>{{ element.name }}</v-list-item-title> -->
-                                                                 <div
-                                                                      v-if="element.type === 'text'"
-                                                                 >
-                                                                      <v-list-item-title
-                                                                           class="title font-weight-light"
-                                                                      >{{element.name}}</v-list-item-title>
-                                                                      <v-list-item-subtitle
-                                                                           class="caption text--secondary"
-                                                                      >{{element.instruction}}</v-list-item-subtitle>
-                                                                      <v-text-field
-                                                                           style="width:100%"
-                                                                           outlined
-                                                                           single-line
-                                                                           hide-details
-                                                                           dense
-                                                                           disabled
-                                                                           v-model="element.value"
-                                                                           :placeholder="element.properties.placeholder"
-                                                                           @click.stop
-                                                                      ></v-text-field>
-                                                                 </div>
-                                                                 <div
-                                                                      v-if="element.type === 'paragraph'"
-                                                                 >
-                                                                      <v-list-item-title
-                                                                           class="title font-weight-light"
-                                                                      >{{element.name}}</v-list-item-title>
-                                                                      <v-list-item-subtitle
-                                                                           class="caption text--secondary"
-                                                                      >{{element.instruction}}</v-list-item-subtitle>
-                                                                      <v-textarea
-                                                                           v-bind:auto-grow="false"
-                                                                           v-bind:clearable="true"
-                                                                           disabled
-                                                                           outlined
-                                                                           :rows="element.properties.rows?element.properties.rows: 1"
-                                                                           :counter="element.validations ? element.validations.maxLength : false"
-                                                                           v-model="element.value"
-                                                                           :placeholder="element.properties.placeholder"
-                                                                      ></v-textarea>
-                                                                 </div>
-                                                                 <div
-                                                                      v-if="element.type === 'header'"
-                                                                 >
-                                                                      <v-list-item-title
-                                                                           :class="[element.properties.size, element.properties.color]"
-                                                                           class="font-weight-light"
-                                                                      >{{element.name}}</v-list-item-title>
-                                                                      <v-list-item-subtitle
-                                                                           class="caption text--secondary"
-                                                                      >{{element.instruction}}</v-list-item-subtitle>
-                                                                      <v-divider
-                                                                           v-if="element.properties.style === 'border'"
-                                                                      ></v-divider>
-                                                                 </div>
-                                                                 <div
-                                                                      v-if="element.type === 'number'"
-                                                                 >
-                                                                      <v-list-item-title
-                                                                           class="title font-weight-light"
-                                                                      >{{element.name}}</v-list-item-title>
-                                                                      <v-list-item-subtitle
-                                                                           class="caption text--secondary"
-                                                                      >{{element.instruction}}</v-list-item-subtitle>
-                                                                      <v-text-field
-                                                                           type="number"
-                                                                           style="width:100%"
-                                                                           outlined
-                                                                           single-line
-                                                                           hide-details
-                                                                           disabled
-                                                                           dense
-                                                                           v-model="element.value"
-                                                                           :placeholder="element.properties.placeholder"
-                                                                           @click.stop
-                                                                      ></v-text-field>
-                                                                 </div>
-                                                                 <div
-                                                                      v-if="element.type === 'numeric'"
-                                                                 >
-                                                                      <v-list-item-title
-                                                                           class="title font-weight-light"
-                                                                      >{{element.name}}</v-list-item-title>
-                                                                      <v-list-item-subtitle
-                                                                           class="caption text--secondary"
-                                                                      >{{element.instruction}}</v-list-item-subtitle>
-                                                                 </div>
-                                                                 <div
-                                                                      v-if="element.type === 'information'"
-                                                                 >
-                                                                      <v-alert
-                                                                           :type="element.properties.type"
-                                                                           :class="[element.properties.size]"
-                                                                           v-bind="element.properties.style"
-                                                                           class="font-weight-light x-control-information"
-                                                                      >{{element.name}}</v-alert>
-                                                                 </div>
-                                                                 <div
-                                                                      v-if="element.type === 'yesno'"
-                                                                 >
-                                                                      <v-list-item-title
-                                                                           class="title font-weight-light"
-                                                                      >{{element.name}}</v-list-item-title>
-                                                                      <v-list-item-subtitle
-                                                                           class="caption text--secondary"
-                                                                      >{{element.instruction}}</v-list-item-subtitle>
-
-                                                                      <v-radio-group
-                                                                           v-bind="{mandatory: false}"
-                                                                           v-model="element.value"
-                                                                           readonly
-                                                                      >
-                                                                           <v-radio
-                                                                                label="Yes"
-                                                                                value="true"
-                                                                           ></v-radio>
-                                                                           <v-radio
-                                                                                label="No"
-                                                                                value="false"
-                                                                           ></v-radio>
-                                                                      </v-radio-group>
-                                                                 </div>
+                                                                 <component
+                                                                      :is="`${control.type}Control`"
+                                                                      v-bind:control="control"
+                                                                 ></component>
                                                             </v-list-item-content>
                                                             <v-list-item-action
                                                                  class="x-control-quick-actions"
                                                             >
                                                                  <div
-                                                                      v-show="formControlHover === element.id"
+                                                                      v-show="formControlHover === control.id"
                                                                  >
                                                                       <v-btn
                                                                            icon
-                                                                           @click.stop="copyFormControl(element)"
+                                                                           @click.stop="copyFormControl(control)"
                                                                       >
                                                                            <v-icon
                                                                                 class="success--text text--lighten-1"
@@ -341,9 +205,6 @@
                                    </v-card>
                                    <v-card flat style="background-color: #ff000000">
                                         <v-divider></v-divider>
-                                        <!-- <v-card-text>
-                                        <span class="subtitle-1 font-weight-light"></span>
-                                        </v-card-text>-->
                                         <v-card-actions class="pr-4 mt-2 pb-4">
                                              <v-spacer></v-spacer>
                                              <v-btn
@@ -588,17 +449,35 @@
 </template>
 
 <script>
-// let newId = ()=>{
-//      return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-// }
+import draggable from "vuedraggable";
 
 import { mapGetters } from "vuex";
 
-import draggable from "vuedraggable";
+import { controls } from "@/modules/schedules/components/designer/controlList";
+// import { controlTypes } from "@/modules/schedules/components/designer/controlTypes";
+
+// *** CONTROL TEMPLATES START
+import textControl from "@/modules/schedules/components/designer/controls/textbox";
+import paragraphControl from "@/modules/schedules/components/designer/controls/paragraph";
+import headerControl from "@/modules/schedules/components/designer/controls/header";
+import numberControl from "@/modules/schedules/components/designer/controls/number";
+import decimalControl from "@/modules/schedules/components/designer/controls/decimal";
+import informationControl from "@/modules/schedules/components/designer/controls/information";
+import yesnoControl from "@/modules/schedules/components/designer/controls/yesno";
+// *** CONTROL TEMPLATES END
 
 export default {
      name: "Schedules.Designer",
-     components: { draggable },
+     components: {
+          draggable,
+          textControl,
+          paragraphControl,
+          headerControl,
+          numberControl,
+          decimalControl,
+          informationControl,
+          yesnoControl
+     },
      computed: {
           ...mapGetters(["api", "dynamicForm"]),
           controlSelected() {
@@ -623,115 +502,7 @@ export default {
                     avctiveTab: null,
                     ripple: false
                },
-               toolboxControls: [
-                    {
-                         id: 1,
-                         name: "Text",
-                         type: "text",
-                         instruction: null,
-                         value: null,
-                         description: "Single line input field",
-                         icon: "mdi-format-text",
-                         properties: {
-                              default: null,
-                              placeholder: "Enter a value",
-                              minLength: 1,
-                              maxLength: 100
-                         },
-                         hasValidations: false,
-                         validations: {}
-                    },
-                    {
-                         id: 2,
-                         name: "Paragraph",
-                         type: "paragraph",
-                         instruction: null,
-                         value: null,
-                         description: "Multi line text inut field",
-                         icon: "mdi-format-pilcrow",
-                         properties: {
-                              default: null,
-                              placeholder: "Enter a value",
-                              rows: 5
-                         },
-                         hasValidations: false,
-                         validations: {}
-                    },
-                    {
-                         id: 3,
-                         name: "Header",
-                         type: "header",
-                         instruction: null,
-                         value: null,
-                         description: "Header used for grouping fields",
-                         icon: "mdi-format-header-1",
-                         properties: {
-                              size: "display-1",
-                              color: "",
-                              style: ""
-                         },
-                         hasValidations: false,
-                         validations: {}
-                    },
-                    {
-                         id: 4,
-                         name: "Decimal",
-                         type: "decimal",
-                         instruction: null,
-                         value: 0.0,
-                         description: "Numbers with decimal values",
-                         icon: "mdi-decimal",
-                         properties: {},
-                         hasValidations: false,
-                         validations: {}
-                    },
-                    {
-                         id: 5,
-                         name: "Number",
-                         type: "number",
-                         instruction: null,
-                         value: 0,
-                         description: "Full number values",
-                         icon: "mdi-numeric-10",
-                         properties: {
-                              default: 0,
-                              placeholder: "Enter a number"
-                         },
-                         hasValidations: false,
-                         validations: {}
-                    },
-                    {
-                         id: 6,
-                         name: "Information",
-                         type: "information",
-                         instruction:
-                              "Collaboratively administrate empowered markets via plug-and-play networks.",
-                         value: null,
-                         description: "Text block for specific information",
-                         icon: "mdi-information-variant",
-                         properties: {
-                              size: "body-1",
-                              type: "info",
-                              style: {}
-                         },
-                         hasValidations: false,
-                         validations: {}
-                    },
-                    {
-                         id: 7,
-                         name: "Yes/No",
-                         type: "yesno",
-                         instruction: "",
-                         value: null,
-                         description: "True or false value to be set.",
-                         icon: "mdi-order-bool-descending",
-                         properties: {
-                              default: null
-                         },
-                         hasValidations: false,
-                         validations: {}
-                    }
-               ],
+               toolboxControls: controls,
                controlTypeConfig: {
                     text: [
                          {
@@ -1051,7 +822,6 @@ export default {
                                              // NOTE *** these events can be used on specific properties to execute when needed to perform additional logic.
                                              // ensure that the property type in the properties panel has been updated to execute this func. this would
                                              // typically only be used when setting a default value from an option field.
-
                                              // Set the current contol value to the new default option selected.
                                              this.currentControl.value = val;
                                         }
@@ -1061,61 +831,7 @@ export default {
                     ]
                },
                formData: null,
-               formControls: [
-                    {
-                         id: 91,
-                         name: "Header",
-                         instruction: "",
-                         value: null,
-                         icon: "mdi-format-header-1",
-                         type: "header",
-                         properties: {
-                              color: "primary--text",
-                              size: "display-1",
-                              style: ""
-                         },
-                         hasValidations: false,
-                         validations: {},
-                         edit: false,
-                         config: false
-                    },
-                    {
-                         id: 92,
-                         name: "Text",
-                         instruction: "",
-                         value: null,
-                         icon: "mdi-format-text",
-                         type: "text",
-                         properties: {
-                              default: null,
-                              placeholder: "Enter a value",
-                              minLength: 1,
-                              maxLength: 100
-                         },
-                         hasValidations: false,
-                         validations: {},
-                         edit: false,
-                         config: false
-                    },
-                    {
-                         id: 93,
-                         name: "Paragraph",
-                         instruction:
-                              "This is a default paragraph for testing purposes!",
-                         value: null,
-                         icon: "mdi-format-pilcrow",
-                         type: "paragraph",
-                         properties: {
-                              default: null,
-                              placeholder: "Enter a value",
-                              rows: 5
-                         },
-                         hasValidations: false,
-                         validations: {},
-                         edit: false,
-                         config: false
-                    }
-               ],
+               formControls: [],
                currentControl: null,
                formControlHover: null
           };
@@ -1126,7 +842,6 @@ export default {
           },
           setCurrentControl(control) {
                this.currentControl = control;
-               console.log(control);
           },
           addFieldValidation() {
                if (this.currentControl.hasValidations) {
@@ -1151,16 +866,17 @@ export default {
                }
           },
           log(evt) {
+               // draggable changegd.
                window.console.log(evt);
           },
           cloneObject(object) {
                let newObj = {};
                for (let key in object) {
-                    newObj[key] = object[key]; // console.log("prop: ", key, " value: ", object[key]);
+                    newObj[key] = object[key];
                }
                return newObj;
           },
-          cloneControl(item) {
+          cloneFormControl(item) {
                let newControl = {
                     id: this.canvasConfig.globalId++,
                     name: `Untitled ${item.name}`,
@@ -1183,12 +899,11 @@ export default {
                return newControl;
           },
           copyFormControl(control) {
-               const copiedControl = this.cloneControl(control);
+               const copiedControl = this.cloneFormControl(control);
                this.formControls.push(copiedControl);
           },
           deleteFormControl(itemIndex) {
                this.formControls.splice(itemIndex, 1);
-               //TODO: when delete is clicked, we need to keep track of the items delete and update on the server.
           },
           toggleControlLabelEdit(event, control) {
                //use this link for howTo on list edits.
@@ -1208,23 +923,18 @@ export default {
           closeDesigner() {
                this.$router.replace({ name: "Schedule.Root" });
           },
-
           saveForm() {
                this.$store
                     .dispatch("saveFormDefinition", this.formData)
-                    .then(data => {
-                         console.log("New form saved: ", data);
-                         // this.$router.replace({ name: "Schedule.Designer" });
+                    .then(() => {
                          this.$store.dispatch(
                               "notifySuccess",
                               `${this.formData.name} has been updated!`
                          );
                     });
           },
-
           editScheduleName() {
                this.canvasConfig.editName = !this.canvasConfig.editName;
-
                if (this.canvasConfig.editName)
                     this.$nextTick(() => {
                          this.$refs["schedulename"].focus();
@@ -1235,6 +945,7 @@ export default {
           // By reference assignment.
           this.formData = this.dynamicForm;
           this.formControls = this.formData.formControls;
+          // set the new index to use for field controls.
           this.canvasConfig.globalId = this.formControls.length + 1;
      }
 };
