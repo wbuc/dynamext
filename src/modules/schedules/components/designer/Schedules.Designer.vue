@@ -4,9 +4,9 @@
                <v-row no-gutters class="mb-3">
                     <v-col cols="12" xs="12" sm="12" md="6">
                          <div class="pa-3">
-                              <v-btn @click="closeDesigner" width="120px" text large color>
-                                   <v-icon left color="error">mdi-arrow-left-bold</v-icon>
-                                   <span>back</span>
+                              <v-btn @click="closeDesigner" text icon large color>
+                                   <v-icon color="secondary">mdi-arrow-left-bold</v-icon>
+                                   <span></span>
                               </v-btn>
                          </div>
                     </v-col>
@@ -592,12 +592,11 @@ import { mapGetters } from "vuex";
 
 import draggable from "vuedraggable";
 
-let globalId = 10;
 export default {
      name: "Schedules.Designer",
      components: { draggable },
      computed: {
-          ...mapGetters(["api", "schedule"]),
+          ...mapGetters(["api", "dynamicForm"]),
           controlSelected() {
                return this.currentControl ? true : false;
           }
@@ -613,7 +612,8 @@ export default {
                canvasConfig: {
                     avctiveTab: null,
                     ripple: false,
-                    editName: false
+                    editName: false,
+                    globalId: 0
                },
                propertiesConfig: {
                     avctiveTab: null,
@@ -1158,7 +1158,7 @@ export default {
           },
           cloneControl(item) {
                let newControl = {
-                    id: globalId++,
+                    id: this.canvasConfig.globalId++,
                     name: `Untitled ${item.name}`,
                     instruction: item.instruction,
                     value: item.value,
@@ -1211,6 +1211,10 @@ export default {
                     .then(data => {
                          console.log("New form saved: ", data);
                          // this.$router.replace({ name: "Schedule.Designer" });
+                         this.$store.dispatch(
+                              "notifySuccess",
+                              `${this.formData.name} has been updated!`
+                         );
                     });
           },
 
@@ -1224,8 +1228,10 @@ export default {
           }
      },
      created() {
-          this.formData = this.schedule;
+          // By reference assignment.
+          this.formData = this.dynamicForm;
           this.formControls = this.formData.formControls;
+          this.canvasConfig.globalId = this.formControls.length + 1;
      }
 };
 </script>

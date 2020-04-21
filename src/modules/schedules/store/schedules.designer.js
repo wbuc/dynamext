@@ -6,35 +6,40 @@ import designerApi from '@/modules/schedules/api/schedules.designer.api'
 
 
 const state = {
-    schedule: { id: null, name: null, status: null }
+    dynamicForm: { id: null, name: null, status: null }
 }
 const getters = {
-    schedule: state => {
-        return state.schedule;
+    dynamicForm: state => {
+        return state.dynamicForm;
     },
 }
 const mutations = {
-    'NEW_FORM'(state, form) {
-        state.schedule = form;
-        state.schedule.formControls = [];
-    },
+
     'SET_FORM'(state, form) {
-        state.schedule = form;
+        state.dynamicForm = form;
     }
 
 }
 const actions = {
 
-    createNewSchedule(context) {
+    createNewFormDefinition(context) {
         if (!context.rootGetters.isAuthenticated) return;
-
-        // Can be used later for additional checks when more is required.
+        console.log(context);
         return new Promise((resolve) => {
-            //let newId = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-            context.commit('NEW_FORM', { id: null, name: "Untitled Schedule", status: "draft", owner: "Wessel Buchling", createdDate: "20/04/2020" });
-            resolve(context.getters.schedule);
+            // id is null when new form. Only set id when saving for the first time.
+            let newForm = {
+                id: null,
+                name: "New Untitled Schedule",
+                status: "draft",
+                owner: context.rootGetters.user.email,
+                createdDate: "20/04/2020",
+                formControls: []
+            };
+            context.commit('SET_FORM', newForm);
+            resolve(context.getters.dynamicForm);
         })
     },
+
     getAllForms(context) {
         if (!context.rootGetters.isAuthenticated) return;
 
@@ -52,15 +57,19 @@ const actions = {
                 });
         })
     },
-    getFormDefinition(context, id) {
+
+    getFormDefinition(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
 
         context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
-            designerApi.getFormDefinition(id).then(data => {
+            designerApi.getFormDefinition(form.id).then(result => {
+
+                context.commit('SET_FORM', result.data);
                 context.commit('API_COMPLETE');
-                resolve(data)
+
+                resolve();
             },
                 error => {
                     console.log(error)
@@ -69,25 +78,42 @@ const actions = {
                 });
         })
     },
+
     saveFormDefinition(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
 
         context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
-            let newId = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-            form.id = newId;
-            designerApi.saveFormDefinition(form).then(data => {
-                context.commit('API_COMPLETE');
-                resolve(data)
-            },
-                error => {
-                    console.log(error)
-                    context.commit('API_ERROR');
-                    reject(error);
-                });
+            //NEW FORM
+            if (!form.id) {
+                let newId = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+                form.id = newId;
+                designerApi.saveFormDefinition(form).then(data => {
+                    context.commit('API_COMPLETE');
+                    resolve(data)
+                },
+                    error => {
+                        console.log(error)
+                        context.commit('API_ERROR');
+                        reject(error);
+                    });
+            }
+            else {
+                //EXISTING FORM
+                designerApi.updateFormDefinition(form).then(data => {
+                    context.commit('API_COMPLETE');
+                    resolve(data)
+                },
+                    error => {
+                        console.log(error)
+                        context.commit('API_ERROR');
+                        reject(error);
+                    });
+            }
         })
     },
+
     deleteFormDefinition(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
 

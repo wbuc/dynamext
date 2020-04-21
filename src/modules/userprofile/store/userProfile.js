@@ -144,9 +144,8 @@ const actions = {
     },
     tryAutoLogin(context) {
         const token = localStorage.getItem('token');
-        if (!token) {
-            return
-        }
+        if (!token) return
+
         const expirationDate = new Date(localStorage.getItem('expirationDate'));
         const now = new Date();
 
@@ -160,6 +159,9 @@ const actions = {
             idToken: token,
             localId: userId
         })
+
+        context.dispatch('getUser');
+
         router.replace({ name: 'Home' });
     },
     logout({ commit }) {

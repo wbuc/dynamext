@@ -21,7 +21,6 @@ const getAllForms = () => {
     })
 }
 
-
 const deleteFormDefinition = (id) => {
     return new Promise((resolve, reject) => {
         httpClient.delete(`${END_POINT}/${id}`)
@@ -29,7 +28,6 @@ const deleteFormDefinition = (id) => {
             .catch(error => reject(error))
     })
 }
-
 
 const getFormDefinition = (id) => {
     return new Promise((resolve, reject) => {
@@ -39,10 +37,17 @@ const getFormDefinition = (id) => {
     })
 }
 
-
-const saveFormDefinition = (schedule) => {
+const saveFormDefinition = (form) => {
     return new Promise((resolve, reject) => {
-        httpClient.post(`${END_POINT}`, schedule)
+        httpClient.post(`${END_POINT}`, form)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
+
+const updateFormDefinition = (form) => {
+    return new Promise((resolve, reject) => {
+        httpClient.put(`${END_POINT}/${form.id}`, form)
             .then(response => resolve(response))
             .catch(error => reject(error))
     })
@@ -50,4 +55,5 @@ const saveFormDefinition = (schedule) => {
 
 
 
-export default { getSchedule, getAllForms, getFormDefinition, saveFormDefinition, deleteFormDefinition }
+
+export default { getSchedule, getAllForms, getFormDefinition, saveFormDefinition, updateFormDefinition, deleteFormDefinition }

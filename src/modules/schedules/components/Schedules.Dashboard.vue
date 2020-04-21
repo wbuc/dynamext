@@ -1,10 +1,10 @@
 <template>
      <div>
-          <v-card :elevation="pageElevation">
+          <v-card :elevation="pageConfig.elevation">
                <v-row no-gutters class="mb-3">
                     <v-col cols="12" xs="12" sm="12" md="6">
                          <div class="pa-3">
-                              <v-btn text outlined large color @click="openDesigner">
+                              <v-btn text outlined large color @click="openNewForm">
                                    <v-icon left color="primary">mdi-plus-thick</v-icon>
                                    <span>New Schedule</span>
                               </v-btn>
@@ -58,7 +58,7 @@
                </v-col>
           </v-row>
 
-          <v-card :elevation="pageElevation">
+          <v-card :elevation="pageConfig.elevation">
                <div
                     v-for="(schedule,index) in filteredSchedules"
                     :key="index"
@@ -147,7 +147,10 @@ export default {
      name: "Schedules.Dashboard",
      data() {
           return {
-               pageElevation: 3,
+               pageConfig: {
+                    elevation: 3,
+                    sorted: { name: true, owner: true }
+               },
                searchText: null,
                schedules: [],
                quickActions: [
@@ -156,8 +159,7 @@ export default {
                          icon: "mdi-draw",
                          color: "primary--text",
                          action: item => {
-                              // navigate to the form designer route
-                              console.log("design  ", item.id);
+                              this.editForm(item);
                          }
                     },
                     {
@@ -196,7 +198,15 @@ export default {
                return "none";
           },
           sortBy(prop) {
-               this.schedules.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
+               if (this.pageConfig.sorted[prop]) {
+                    this.schedules.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
+                    this.pageConfig.sorted[prop] = false;
+               } else {
+                    this.schedules.reverse((a, b) =>
+                         a[prop] < b[prop] ? -1 : 1
+                    );
+                    this.pageConfig.sorted[prop] = true;
+               }
           },
           refreshDashboard(cb) {
                this.$store.dispatch("getAllForms").then(result => {
@@ -204,9 +214,14 @@ export default {
                     if (cb) cb();
                });
           },
-          openDesigner() {
-               this.$store.dispatch("createNewSchedule").then(data => {
-                    console.log("New schedule created: ", data);
+          openNewForm() {
+               this.$store.dispatch("createNewFormDefinition").then(data => {
+                    console.log(data);
+                    this.$router.replace({ name: "Schedule.Designer" });
+               });
+          },
+          editForm(form) {
+               this.$store.dispatch("getFormDefinition", form).then(() => {
                     this.$router.replace({ name: "Schedule.Designer" });
                });
           },
