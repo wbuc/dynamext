@@ -154,6 +154,10 @@
                                    <v-card flat style="background-color: #ff000000">
                                         <v-list width="100%">
                                              <v-list-item-group>
+                                                  <div
+                                                       v-if="formControls.length === 0"
+                                                       class="text-center grey--text py-5"
+                                                  >Add fields from the toolbox.</div>
                                                   <draggable
                                                        class="dragArea list-group"
                                                        :list="formControls"
