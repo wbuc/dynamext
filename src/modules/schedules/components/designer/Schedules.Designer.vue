@@ -45,11 +45,11 @@
                               style="background-color: #ff000000"
                          >
                               <v-tab-item key="Fields" style="background-color: #ff000000">
-                                   <v-card style="background-color: #ff000000">
+                                   <div style="background-color: #ff000000">
                                         <v-list
                                              width="100%"
                                              dense
-                                             class="overflow-y-auto"
+                                             class="overflow-y-auto mt-1"
                                              max-height="500px"
                                         >
                                              <draggable
@@ -81,7 +81,7 @@
                                                   </v-list-item>
                                              </draggable>
                                         </v-list>
-                                   </v-card>
+                                   </div>
                               </v-tab-item>
                               <v-tab-item key="Templates" style="background-color: #ff000000">
                                    <v-card style="background-color: #ff000000">
@@ -134,7 +134,7 @@
                               style="background-color: #ff000000"
                          >
                               <v-tab-item key="Design" style="background-color: #ff000000">
-                                   <v-card flat style="background-color: #ff000000">
+                                   <div class="mt-1" style="background-color: #ff000000">
                                         <v-list width="100%">
                                              <v-list-item-group>
                                                   <div
@@ -202,7 +202,7 @@
                                                   </draggable>
                                              </v-list-item-group>
                                         </v-list>
-                                   </v-card>
+                                   </div>
                                    <v-card flat style="background-color: #ff000000">
                                         <v-divider></v-divider>
                                         <v-card-actions class="pr-4 mt-2 pb-4">
@@ -238,9 +238,41 @@
                                    >Schedule Manager coming soon!</div>
                               </v-tab-item>
                               <v-tab-item key="Settings" style="background-color: #ff000000">
-                                   <div
-                                        class="text-center grey--text py-10"
-                                   >Schedule Settings coming soon!</div>
+                                   <div class="pt-5 mb-2">
+                                        <v-row no-gutters>
+                                             <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+                                                  <div class="pa-3">
+                                                       <div class="grey--text">Schedule Name</div>
+                                                       <div>{{formData.name}}</div>
+                                                  </div>
+                                             </v-col>
+                                             <v-col cols="12" xs="12" sm="6" md="6" lg="5">
+                                                  <div class="pa-3">
+                                                       <div class="grey--text">Owner</div>
+                                                       <div>{{formData.owner}}</div>
+                                                  </div>
+                                             </v-col>
+                                             <v-col cols="12" xs="12" sm="6" md="6" lg="2">
+                                                  <div class="pa-3">
+                                                       <div class="grey--text">Created</div>
+                                                       <div>{{formData.createdDate}}</div>
+                                                  </div>
+                                             </v-col>
+                                        </v-row>
+                                        <v-divider></v-divider>
+                                        <v-row no-gutters>
+                                             <v-col cols="12" xs="12" sm="12" md="12" lg="12">
+                                                  <v-card flat>
+                                                       <v-card-text>
+                                                            <div
+                                                                 class="title font-weight-light my-3"
+                                                            >Configuration</div>
+                                                            <div class="grey--text">More to come...</div>
+                                                       </v-card-text>
+                                                  </v-card>
+                                             </v-col>
+                                        </v-row>
+                                   </div>
                               </v-tab-item>
                          </v-tabs-items>
                     </v-card>
@@ -265,7 +297,7 @@
                               style="background-color: #ff000000"
                          >
                               <v-tab-item key="General" style="background-color: #ff000000">
-                                   <v-card flat style="background-color: #ff000000">
+                                   <div class="mt-1" style="background-color: #ff000000">
                                         <div
                                              v-if="!controlSelected"
                                              class="text-center grey--text py-10"
@@ -362,7 +394,7 @@
                                                   </v-list>
                                              </div>
                                         </div>
-                                   </v-card>
+                                   </div>
                               </v-tab-item>
                               <v-tab-item key="Advanced" style="background-color: #ff000000">
                                    <v-card flat style="background-color: #ff000000">
@@ -945,7 +977,7 @@ export default {
           // By reference assignment.
           this.formData = this.dynamicForm;
           this.formControls = this.formData.formControls;
-          // set the new index to use for field controls.
+          // set the new index to use for field controls. TODO FIX ID.
           this.canvasConfig.globalId = this.formControls.length + 1;
      }
 };
