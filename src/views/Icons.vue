@@ -69,7 +69,9 @@ export default {
                     "mdi-table-large",
                     "mdi-file-find",
                     "mdi-pencil",
-                    "mdi-stop"
+                    "mdi-stop",
+                    "mdi-clock",
+                    "mdi-do-not-disturb"
                ]
           };
      },

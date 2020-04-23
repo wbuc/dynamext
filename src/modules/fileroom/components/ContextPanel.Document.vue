@@ -50,18 +50,115 @@
                          </v-col>
                     </v-row>
                </v-toolbar>
-               <v-card-text>
-                    <v-text-field
-                         id="password"
-                         label="Password"
-                         name="password"
-                         prepend-icon="lock"
-                         outlined
-                         dense
-                         flat
-                    ></v-text-field>
-               </v-card-text>
-               <v-card-actions></v-card-actions>
+
+               <div class="pt-5 mb-2 mx-4">
+                    <v-row no-gutters>
+                         <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+                              <div class="pa-3 x-document-detail">
+                                   <div class="grey--text">Review Status</div>
+                                   <div>
+                                        <v-btn
+                                             id="lookup-reviewStatus"
+                                             class="x-button-select"
+                                             text
+                                             dark
+                                        >
+                                             <span>
+                                                  <v-icon
+                                                       left
+                                                  >{{selectedLookupObjects.reviewStatus.icon}}</v-icon>
+                                                  <span>{{ selectedLookupObjects.reviewStatus.text}}</span>
+                                             </span>
+                                        </v-btn>
+                                        <v-menu
+                                             offset-y
+                                             transition="slide-y-transition"
+                                             activator="#lookup-reviewStatus"
+                                        >
+                                             <v-list>
+                                                  <v-list-item
+                                                       v-for="(rs, index) in lookupData.reviewStatus"
+                                                       :key="index"
+                                                       @click="setFieldValue('reviewStatus', rs)"
+                                                  >
+                                                       <v-list-item-action>
+                                                            <v-icon>{{rs.icon}}</v-icon>
+                                                       </v-list-item-action>
+                                                       {{rs.text}}
+                                                       <!-- <v-list-item-action>
+                                                            <v-icon>{{lookupData.reviewStatus[rs].icon}}</v-icon>
+                                                       </v-list-item-action>
+                                                       <v-list-item-content>
+                                                            <v-list-item-title>{{ lookupData.reviewStatus[rs].text }}</v-list-item-title>
+                                                       </v-list-item-content>-->
+                                                  </v-list-item>
+                                             </v-list>
+                                        </v-menu>
+                                   </div>
+                              </div>
+                         </v-col>
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="5">
+                              <div class="pa-3">
+                                   <div class="grey--text">Out of Scope</div>
+                                   <div>xxx</div>
+                              </div>
+                         </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                         <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+                              <div class="pa-3">
+                                   <div class="grey--text">Responsibility</div>
+                                   <div>Bla bla bla</div>
+                              </div>
+                         </v-col>
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="5">
+                              <div class="pa-3">
+                                   <div class="grey--text">Department</div>
+                                   <div>Wessel Buchling</div>
+                              </div>
+                         </v-col>
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="2">
+                              <div class="pa-3">
+                                   <div class="grey--text">Red Flag Status</div>
+                                   <div>1900</div>
+                              </div>
+                         </v-col>
+                         <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+                              <div class="pa-3">
+                                   <div class="grey--text">Reviewer</div>
+                                   <div>Bla bla bla</div>
+                              </div>
+                         </v-col>
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="5">
+                              <div class="pa-3">
+                                   <div class="grey--text">Reviewed Date</div>
+                                   <div>Wessel Buchling</div>
+                              </div>
+                         </v-col>
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="2">
+                              <div class="pa-3">
+                                   <div class="grey--text">Language</div>
+                                   <div>1900</div>
+                              </div>
+                         </v-col>
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="2">
+                              <div class="pa-3">
+                                   <div class="grey--text">Scope of Review</div>
+                                   <div>1900</div>
+                              </div>
+                         </v-col>
+                    </v-row>
+                    <v-divider></v-divider>
+               </div>
+
+               <v-card-actions class="pr-4 mt-2 pb-4">
+                    <v-spacer></v-spacer>
+
+                    <v-btn text large outlined color width="120px">
+                         <v-icon left color="primary">mdi-check-bold</v-icon>
+                         <span>Save</span>
+                    </v-btn>
+               </v-card-actions>
           </v-card>
           <v-expansion-panels
                :accordion="contextPanelConfig.accordion"
@@ -120,7 +217,7 @@
 
 <script>
 export default {
-     name: "ContextPanel.Document",
+     name: "Fileroom.ContextPanel.Document",
      props: {
           nodeData: {
                Type: Object,
@@ -129,6 +226,14 @@ export default {
                          id: 0,
                          name: null,
                          type: null,
+                         reviewStatus: null,
+                         department: null,
+                         responsibility: null,
+                         redFlagStatus: null,
+                         reviewer: null,
+                         reviewedDate: null,
+                         Language: null,
+                         scopeOfReview: null,
                          documents: {
                               count: 0,
                               children: []
@@ -162,7 +267,32 @@ export default {
                }
           }
      },
-     methods: {},
+     computed: {
+          reviewStatusDisplay() {
+               let val = null;
+               for (const i of this.lookupReviewStatus) {
+                    i.value === this.nodeData.reviewStatus
+                         ? (val = i.text)
+                         : null;
+               }
+               return val;
+          }
+     },
+     methods: {
+          setFieldValue(field, option) {
+               this.nodeData[field] = option.value;
+               this.selectedLookupObjects[field] = option;
+          },
+          setDefaultValues() {
+               // Review Status
+               for (const i of this.lookupData.reviewStatus) {
+                    console.log(i);
+                    i.value === this.nodeData.reviewStatus
+                         ? (this.selectedLookupObjects.reviewStatus = i)
+                         : null;
+               }
+          }
+     },
      data() {
           return {
                fileroomConfig: {
@@ -192,11 +322,132 @@ export default {
                documentAction: {
                     quick: [],
                     reviewStatus: []
-               }
+               },
+               selectedLookupObjects: {
+                    reviewStatus: null
+               },
+
+               lookupData: {
+                    reviewStatus: [
+                         {
+                              value: "none",
+                              displayText: "Not Started",
+                              icon: "mdi-do-not-disturb",
+                              color: "red"
+                         },
+                         {
+                              value: "pending",
+                              displayText: "Review In Progress",
+                              icon: "mdi-clock",
+                              color: "red"
+                         },
+                         {
+                              value: "complete",
+                              displayText: "Review Complete",
+                              icon: "mdi-check-bold",
+                              color: "success"
+                         }
+                    ],
+                    redFlagStatus: [
+                         {
+                              value: "none",
+                              displayText: "Not set",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "green",
+                              displayText: "Yellow Flag",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "orange",
+                              displayText: "Orange Flag",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "red",
+                              displayText: "Red Flag",
+                              icon: "",
+                              color: ""
+                         }
+                    ],
+                    responsibitlity: [
+                         {
+                              value: "none",
+                              displayText: "Not set",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "uk",
+                              displayText: "United Kingdom",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "fr",
+                              displayText: "France",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "de",
+                              displayText: "Germany",
+                              icon: "",
+                              color: ""
+                         }
+                    ],
+                    scopeOfReview: [
+                         {
+                              value: "none",
+                              displayText: "Not set",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "legalreview",
+                              displayText: "Legal Review",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "sanitycheck",
+                              displayText: "Sanity Check",
+                              icon: "",
+                              color: ""
+                         }
+                    ]
+               },
+               lookupReviewStatus: [
+                    {
+                         value: "none",
+                         text: "Not Started",
+                         icon: "mdi-do-not-disturb"
+                    },
+                    {
+                         value: "pending",
+                         text: "Review In Progress",
+                         icon: "mdi-clock"
+                    },
+                    {
+                         value: "complete",
+                         text: "Review Complete",
+                         icon: "mdi-check-bold"
+                    }
+               ]
           };
+     },
+     created() {
+          this.setDefaultValues();
      }
 };
 </script>
 
 <style>
+.x-document-detail .x-button-select {
+     text-transform: none;
+}
 </style>

@@ -24,7 +24,7 @@ const actions = {
 
     createNewFormDefinition(context) {
         if (!context.rootGetters.isAuthenticated) return;
-        console.log(context);
+
         return new Promise((resolve) => {
             // id is null when new form. Only set id when saving for the first time.
             let newForm = {
@@ -33,7 +33,8 @@ const actions = {
                 status: "draft",
                 owner: context.rootGetters.user.email,
                 createdDate: "20/04/2020",
-                formControls: []
+                formControls: [],
+
             };
             context.commit('SET_FORM', newForm);
             resolve(context.getters.dynamicForm);
