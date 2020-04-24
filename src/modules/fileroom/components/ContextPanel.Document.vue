@@ -1,150 +1,155 @@
 <template>
      <div>
-          <v-card outlined class="mb-5">
-               <v-toolbar class="elevation-0">
-                    <v-row>
-                         <v-col>
-                              <v-icon class="mr-2" color="warning lighten-1">mdi-file-document</v-icon>1.1.1.1 Very long document name!
-                         </v-col>
-                         <v-spacer></v-spacer>
-                         <v-col class="text-right">
-                              <v-btn class="mr-2 error--text" small outlined color="primary" dark>
-                                   <v-icon left>mdi-home-modern</v-icon>Out of scope
-                              </v-btn>
-                              <v-btn
-                                   id="doc-actions"
-                                   icon
-                                   text
-                                   dark
-                                   color="grey"
-                                   class="x-branch-activator"
+          <v-card class="mb-5 elevation-3">
+               <v-card-title flat class="pa-3">
+                    <div>
+                         <v-icon class="mr-2" color="warning lighten-1">mdi-file-document</v-icon>
+                         <span class="title font-weight-light">{{nodeData.name}}</span>
+                    </div>
+                    <v-spacer></v-spacer>
+                    <v-btn id="doc-actions" icon text dark color="grey" class="x-branch-activator">
+                         <v-icon>more_vert</v-icon>
+                         <span></span>
+                    </v-btn>
+                    <v-menu offset-y transition="slide-y-transition" activator="#doc-actions">
+                         <v-list>
+                              <v-list-item
+                                   v-for="(dataItem, index) in documentQuickActions"
+                                   :key="index"
+                                   @click="dataItem.action(index)"
+                                   active-class="secondary--text"
+                                   dense
                               >
-                                   <v-icon>more_vert</v-icon>
-                                   <span></span>
-                              </v-btn>
-                              <v-menu
-                                   offset-y
-                                   transition="slide-y-transition"
-                                   activator="#doc-actions"
-                              >
-                                   <v-list>
-                                        <v-list-item
-                                             v-for="(dataItem, index) in documentQuickActions"
-                                             :key="index"
-                                             @click="dataItem.action(index)"
-                                             active-class="secondary--text"
-                                             dense
-                                        >
-                                             <v-list-item-action>
-                                                  <v-icon
-                                                       :class="dataItem.color"
-                                                       small
-                                                  >{{dataItem.icon}}</v-icon>
-                                             </v-list-item-action>
-                                             <v-list-item-content>
-                                                  <v-list-item-title>{{dataItem.title}}</v-list-item-title>
-                                             </v-list-item-content>
-                                        </v-list-item>
-                                   </v-list>
-                              </v-menu>
-                         </v-col>
-                    </v-row>
-               </v-toolbar>
-
+                                   <v-list-item-action>
+                                        <v-icon :class="dataItem.color" small>{{dataItem.icon}}</v-icon>
+                                   </v-list-item-action>
+                                   <v-list-item-content>
+                                        <v-list-item-title>{{dataItem.title}}</v-list-item-title>
+                                   </v-list-item-content>
+                              </v-list-item>
+                         </v-list>
+                    </v-menu>
+               </v-card-title>
                <div class="pt-5 mb-2 mx-4">
                     <v-row no-gutters>
-                         <v-col cols="12" xs="12" sm="12" md="12" lg="5">
-                              <div class="pa-3 x-document-detail">
-                                   <div class="grey--text">Review Status</div>
+                         <v-col cols="12" xs="12" sm="12" md="12" lg="4">
+                              <div class="pa-3">
+                                   <span class="grey--text">Review Status</span>
                                    <div>
-                                        <v-btn
-                                             id="lookup-reviewStatus"
-                                             class="x-button-select"
-                                             text
-                                             dark
-                                        >
-                                             <span>
-                                                  <v-icon
-                                                       left
-                                                  >{{selectedLookupObjects.reviewStatus.icon}}</v-icon>
-                                                  <span>{{ selectedLookupObjects.reviewStatus.text}}</span>
-                                             </span>
-                                        </v-btn>
-                                        <v-menu
-                                             offset-y
-                                             transition="slide-y-transition"
-                                             activator="#lookup-reviewStatus"
-                                        >
-                                             <v-list>
-                                                  <v-list-item
-                                                       v-for="(rs, index) in lookupData.reviewStatus"
-                                                       :key="index"
-                                                       @click="setFieldValue('reviewStatus', rs)"
-                                                  >
-                                                       <v-list-item-action>
-                                                            <v-icon>{{rs.icon}}</v-icon>
-                                                       </v-list-item-action>
-                                                       {{rs.text}}
-                                                       <!-- <v-list-item-action>
-                                                            <v-icon>{{lookupData.reviewStatus[rs].icon}}</v-icon>
-                                                       </v-list-item-action>
-                                                       <v-list-item-content>
-                                                            <v-list-item-title>{{ lookupData.reviewStatus[rs].text }}</v-list-item-title>
-                                                       </v-list-item-content>-->
-                                                  </v-list-item>
-                                             </v-list>
-                                        </v-menu>
+                                        <v-select
+                                             :items="lookupData.reviewStatus"
+                                             v-model="nodeData.reviewStatus"
+                                             item-text="displayName"
+                                             item-value="value"
+                                             dense
+                                             outlined
+                                        ></v-select>
                                    </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="5">
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
                               <div class="pa-3">
-                                   <div class="grey--text">Out of Scope</div>
-                                   <div>xxx</div>
+                                   <span class="grey--text">Red Flag Status</span>
+                                   <div>
+                                        <v-select
+                                             :items="lookupData.redFlagStatus"
+                                             v-model="nodeData.redFlagStatus"
+                                             item-text="displayName"
+                                             item-value="value"
+                                             dense
+                                             outlined
+                                        ></v-select>
+                                   </div>
                               </div>
                          </v-col>
                     </v-row>
                     <v-row no-gutters>
-                         <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+                         <v-col cols="12" xs="12" sm="12" md="12" lg="4">
                               <div class="pa-3">
-                                   <div class="grey--text">Responsibility</div>
-                                   <div>Bla bla bla</div>
+                                   <span class="grey--text">Reviewer</span>
+                                   <div>
+                                        <v-select
+                                             :items="lookupData.reviewers"
+                                             v-model="nodeData.reviewer"
+                                             item-text="displayName"
+                                             item-value="value"
+                                             dense
+                                             outlined
+                                        ></v-select>
+                                   </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="5">
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
                               <div class="pa-3">
-                                   <div class="grey--text">Department</div>
-                                   <div>Wessel Buchling</div>
+                                   <span class="grey--text">Department</span>
+                                   <div>
+                                        <v-select
+                                             :items="lookupData.departments"
+                                             v-model="nodeData.department"
+                                             item-text="displayName"
+                                             item-value="value"
+                                             dense
+                                             outlined
+                                        ></v-select>
+                                   </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="2">
+                         <v-col cols="12" xs="12" sm="12" md="12" lg="4">
                               <div class="pa-3">
-                                   <div class="grey--text">Red Flag Status</div>
-                                   <div>1900</div>
+                                   <span class="grey--text">Responsibility</span>
+                                   <div>
+                                        <v-select
+                                             :items="lookupData.responsibility"
+                                             v-model="nodeData.responsibility"
+                                             item-text="displayName"
+                                             item-value="value"
+                                             dense
+                                             outlined
+                                        ></v-select>
+                                   </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
                               <div class="pa-3">
-                                   <div class="grey--text">Reviewer</div>
-                                   <div>Bla bla bla</div>
+                                   <span class="grey--text">Scope of Review</span>
+                                   <div>
+                                        <v-select
+                                             :items="lookupData.scopeOfReview"
+                                             v-model="nodeData.scopeOfReview"
+                                             item-text="displayName"
+                                             item-value="value"
+                                             dense
+                                             outlined
+                                        ></v-select>
+                                   </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="5">
+
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
                               <div class="pa-3">
-                                   <div class="grey--text">Reviewed Date</div>
-                                   <div>Wessel Buchling</div>
+                                   <span class="grey--text">Language</span>
+                                   <div>
+                                        <v-text-field
+                                             outlined
+                                             single-line
+                                             hide-details
+                                             dense
+                                             v-model="nodeData.langauge"
+                                        ></v-text-field>
+                                   </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="2">
+                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
                               <div class="pa-3">
-                                   <div class="grey--text">Language</div>
-                                   <div>1900</div>
-                              </div>
-                         </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="2">
-                              <div class="pa-3">
-                                   <div class="grey--text">Scope of Review</div>
-                                   <div>1900</div>
+                                   <span class="grey--text">Reviewed Date</span>
+                                   <div>
+                                        <!-- <v-date-picker
+                                             v-model="nodeData.reviewedDate"
+                                             color="green lighten-1"
+                                             header-color="primary"
+                                        ></v-date-picker>-->
+                                   </div>
                               </div>
                          </v-col>
                     </v-row>
@@ -232,7 +237,7 @@ export default {
                          redFlagStatus: null,
                          reviewer: null,
                          reviewedDate: null,
-                         Language: null,
+                         language: null,
                          scopeOfReview: null,
                          documents: {
                               count: 0,
@@ -307,16 +312,23 @@ export default {
                },
                documentQuickActions: [
                     {
-                         title: "Edit",
-                         icon: "mdi-pencil",
-                         color: "secondary--text",
-                         action: index => console.log("editing ", index)
-                    },
-                    {
                          title: "Out of Scope",
                          icon: "mdi-stop",
                          color: "error--text",
-                         action: index => console.log("deleting ", index)
+                         action: index =>
+                              console.log("set out of scope ", index)
+                    },
+                    {
+                         title: "Sample Action 2",
+                         icon: "mdi-content-duplicate",
+                         color: "accent--text",
+                         action: index => console.log("Sample 2 ", index)
+                    },
+                    {
+                         title: "Sample Action 3",
+                         icon: "mdi-plus-box-outline",
+                         color: "primary--text",
+                         action: index => console.log("Sample 3 ", index)
                     }
                ],
                documentAction: {
@@ -330,97 +342,138 @@ export default {
                lookupData: {
                     reviewStatus: [
                          {
-                              value: "none",
-                              displayText: "Not Started",
+                              value: "",
+                              displayName: "Not Started",
                               icon: "mdi-do-not-disturb",
                               color: "red"
                          },
                          {
                               value: "pending",
-                              displayText: "Review In Progress",
+                              displayName: "Review In Progress",
                               icon: "mdi-clock",
                               color: "red"
                          },
                          {
                               value: "complete",
-                              displayText: "Review Complete",
+                              displayName: "Review Complete",
                               icon: "mdi-check-bold",
                               color: "success"
                          }
                     ],
                     redFlagStatus: [
                          {
-                              value: "none",
-                              displayText: "Not set",
+                              value: "",
+                              displayName: "Not set",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "green",
-                              displayText: "Yellow Flag",
+                              displayName: "Yellow Flag",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "orange",
-                              displayText: "Orange Flag",
+                              displayName: "Orange Flag",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "red",
-                              displayText: "Red Flag",
+                              displayName: "Red Flag",
                               icon: "",
                               color: ""
                          }
                     ],
-                    responsibitlity: [
+                    responsibility: [
                          {
-                              value: "none",
-                              displayText: "Not set",
+                              value: "",
+                              displayName: "Not set",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "uk",
-                              displayText: "United Kingdom",
+                              displayName: "United Kingdom",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "fr",
-                              displayText: "France",
+                              displayName: "France",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "de",
-                              displayText: "Germany",
+                              displayName: "Germany",
                               icon: "",
                               color: ""
                          }
                     ],
                     scopeOfReview: [
                          {
-                              value: "none",
-                              displayText: "Not set",
+                              value: "",
+                              displayName: "Not set",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "legalreview",
-                              displayText: "Legal Review",
+                              displayName: "Legal Review",
                               icon: "",
                               color: ""
                          },
                          {
                               value: "sanitycheck",
-                              displayText: "Sanity Check",
+                              displayName: "Sanity Check",
+                              icon: "",
+                              color: ""
+                         }
+                    ],
+                    departments: [
+                         {
+                              value: "",
+                              displayName: "Not set",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "corporate",
+                              displayName: "Corporate",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "finance",
+                              displayName: "Finance",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "outofscope",
+                              displayName: "Out of Scope",
+                              icon: "",
+                              color: ""
+                         }
+                    ],
+                    reviewers: [
+                         {
+                              value: "",
+                              displayName: "Not set",
+                              icon: "",
+                              color: ""
+                         },
+                         {
+                              value: "wessel@wessel.com",
+                              displayName: "Wessel Buchling",
                               icon: "",
                               color: ""
                          }
                     ]
                },
+
                lookupReviewStatus: [
                     {
                          value: "none",
