@@ -279,45 +279,10 @@
                     >Select Schedule(s)</v-card-title>
 
                     <v-card-text class="pt-5">
-                         <v-list two-line>
-                              <v-list-item-group
-                                   v-model="dialogSelectedSchedules"
-                                   multiple
-                                   active-class="secondary--text"
-                              >
-                                   <template v-for="(item, index) in dialogSchedules">
-                                        <v-list-item :key="item.title">
-                                             <template v-slot:default="{ active }">
-                                                  <v-list-item-content>
-                                                       <v-list-item-title v-text="item.title"></v-list-item-title>
-                                                       <v-list-item-subtitle
-                                                            class="text--primary"
-                                                            v-text="item.headline"
-                                                       ></v-list-item-subtitle>
-                                                       <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
-                                                  </v-list-item-content>
-
-                                                  <v-list-item-action>
-                                                       <v-list-item-action-text
-                                                            v-text="item.action"
-                                                       ></v-list-item-action-text>
-                                                       <v-icon
-                                                            v-if="!active"
-                                                            color="grey lighten-1"
-                                                       >star_border</v-icon>
-
-                                                       <v-icon v-else color="yellow">star</v-icon>
-                                                  </v-list-item-action>
-                                             </template>
-                                        </v-list-item>
-
-                                        <v-divider
-                                             v-if="index + 1 < dialogSchedules.length"
-                                             :key="index"
-                                        ></v-divider>
-                                   </template>
-                              </v-list-item-group>
-                         </v-list>
+                         <x-multi-select
+                              :listData="selectScheduleList"
+                              @selectedList="updateSelectedSchedules"
+                         ></x-multi-select>
                     </v-card-text>
 
                     <v-divider></v-divider>
@@ -327,6 +292,7 @@
                          <v-btn
                               color="error"
                               text
+                              large
                               width="80px"
                               @click="dialogConfig.open = false"
                          >Cancel</v-btn>
@@ -334,6 +300,7 @@
                          <v-btn
                               color="primary"
                               text
+                              large
                               width="80px"
                               @click="dialogConfig.open = false"
                          >Ok</v-btn>
@@ -433,6 +400,9 @@ export default {
                               `${this.nodeData.name} saved!`
                          );
                     });
+          },
+          updateSelectedSchedules(data) {
+               this.selectedSchedules = data;
           }
      },
      data() {
@@ -449,42 +419,22 @@ export default {
                     maxWidth: 1200,
                     overlayOpacity: 0.7
                },
-               dialogSelectedSchedules: [2],
-               dialogSchedules: [
+               selectedSchedules: [],
+               selectScheduleList: [
                     {
-                         action: "15 min",
-                         headline: "Brunch this weekend?",
-                         title: "Ali Connors",
-                         subtitle:
-                              "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+                         id: "K91NW9EMYBAPOP",
+                         name: "Doner spare ribs andouille",
+                         description: "Wessel Buchling"
                     },
                     {
-                         action: "2 hr",
-                         headline: "Summer BBQ",
-                         title: "me, Scrott, Jennifer",
-                         subtitle:
-                              "Wish I could come, but I'm out of town this weekend."
+                         id: "K91O2TKH5LGQUH",
+                         name: "Pork tri-tip sirloin brisket prosciutto ham",
+                         description: "Wessel Buchling"
                     },
                     {
-                         action: "6 hr",
-                         headline: "Oui oui",
-                         title: "Sandra Adams",
-                         subtitle:
-                              "Do you have Paris recommendations? Have you ever been?"
-                    },
-                    {
-                         action: "12 hr",
-                         headline: "Birthday gift",
-                         title: "Trevor Hansen",
-                         subtitle:
-                              "Have any ideas about what we should get Heidi for her birthday?"
-                    },
-                    {
-                         action: "18hr",
-                         headline: "Recipe to try",
-                         title: "Britta Holt",
-                         subtitle:
-                              "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
+                         id: "K91O31GAO5WGOF",
+                         name: "Biltong boudin pancetta",
+                         description: "Wessel Buchling"
                     }
                ],
 

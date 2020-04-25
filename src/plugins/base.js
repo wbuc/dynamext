@@ -10,7 +10,7 @@ import NoSidebar from '@/views/layouts/NoSidebar.vue'
 import Anon from '@/views/layouts/Anon.vue'
 import Placeholder from '@/views/layouts/Placeholder.vue'
 
-/* Headers */
+/* HEADERS */
 import PageHeader from '@/components/shared/PageHeader.vue'
 import Breadcrumbs from '@/components/shared/Breadcrumb.vue'
 
@@ -23,6 +23,9 @@ import Modal from '@/components/dialog/Modal.vue'
 import Popup from '@/components/dialog/Popup.vue'
 import Confirm from '@/components/dialog/Confirmation.vue'
 import Notification from '@/components/dialog/Notification.vue'
+
+/* LISTS */
+import MultiSelect from '@/components/lists/Multi-Select.vue'
 
 /* BRAND */
 import Logo from '@/components/brand/Logo.vue'
@@ -42,6 +45,7 @@ Vue.component('x-modal', Modal);
 Vue.component('x-popup', Popup);
 Vue.component('x-confirmation', Confirm)
 Vue.component('x-notification', Notification)
+Vue.component('x-multi-select', MultiSelect)
 
 
 Vue.component('x-logo', Logo)
