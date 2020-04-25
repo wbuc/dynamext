@@ -21,6 +21,13 @@ const getAllForms = () => {
     })
 }
 
+const getPublishedForms = () => {
+    return new Promise((resolve, reject) => {
+        httpClient.get(`${END_POINT}?status=published`)
+            .then(response => { resolve(response); })
+            .catch(error => reject(error))
+    })
+}
 const deleteFormDefinition = (id) => {
     return new Promise((resolve, reject) => {
         httpClient.delete(`${END_POINT}/${id}`)
@@ -56,4 +63,4 @@ const updateFormDefinition = (form) => {
 
 
 
-export default { getSchedule, getAllForms, getFormDefinition, saveFormDefinition, updateFormDefinition, deleteFormDefinition }
+export default { getSchedule, getAllForms, getPublishedForms, getFormDefinition, saveFormDefinition, updateFormDefinition, deleteFormDefinition }

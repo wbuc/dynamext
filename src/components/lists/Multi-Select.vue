@@ -23,14 +23,25 @@
 export default {
      name: "Component.MultiSelect",
      props: {
+          selectedListData: {
+               Type: Array,
+               default: () => []
+          },
           listData: {
                Type: Array,
                default: () => {
-                    return {
-                         id: "1",
-                         name: "Item 1",
-                         description: "Description for list item 1"
-                    };
+                    return [
+                         {
+                              id: "1",
+                              name: "Item 1",
+                              description: "Description for list item 1"
+                         },
+                         {
+                              id: "2",
+                              name: "Item 2",
+                              description: "Description for list item 2"
+                         }
+                    ];
                }
           },
           config: {
@@ -49,7 +60,7 @@ export default {
      },
      data() {
           return {
-               selectedList: []
+               selectedList: this.selectedListData
           };
      }
 };

@@ -55,7 +55,6 @@ const actions = {
     },
     saveDocumentMetadata(context, data) {
         if (!context.rootGetters.isAuthenticated) return;
-        console.log(context, data);
 
         return new Promise((resolve, reject) => {
             fileroomApi.saveDocumentDetail(data).then(data => {

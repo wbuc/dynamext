@@ -24,6 +24,8 @@ import Popup from '@/components/dialog/Popup.vue'
 import Confirm from '@/components/dialog/Confirmation.vue'
 import Notification from '@/components/dialog/Notification.vue'
 
+import Dialog from '@/components/dialog/Dialog.vue'
+
 /* LISTS */
 import MultiSelect from '@/components/lists/Multi-Select.vue'
 
@@ -46,7 +48,7 @@ Vue.component('x-popup', Popup);
 Vue.component('x-confirmation', Confirm)
 Vue.component('x-notification', Notification)
 Vue.component('x-multi-select', MultiSelect)
-
+Vue.component('x-dialog', Dialog);
 
 Vue.component('x-logo', Logo)
 

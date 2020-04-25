@@ -62,6 +62,26 @@ const actions = {
         })
     },
 
+    getPublishedForms(context) {
+        if (!context.rootGetters.isAuthenticated) return;
+
+        context.commit('API_LOADING');
+
+        return new Promise((resolve, reject) => {
+            // Pause to show loader.
+            setTimeout(() => {
+                designerApi.getPublishedForms().then(data => {
+                    context.commit('API_COMPLETE');
+                    resolve(data.data)
+                },
+                    error => {
+                        console.log(error)
+                        context.commit('API_ERROR');
+                        reject(error);
+                    });
+            }, 1500)
+        })
+    },
     getFormDefinition(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
 

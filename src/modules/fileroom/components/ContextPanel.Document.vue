@@ -30,6 +30,12 @@
                          </v-list>
                     </v-menu>
                </v-card-title>
+               <div style="height:3px">
+                    <div v-show="api.loading">
+                         <v-progress-linear indeterminate height="3" color="primary"></v-progress-linear>
+                    </div>
+               </div>
+
                <div class="pt-5 mb-2 mx-4">
                     <v-row no-gutters>
                          <v-col
@@ -266,51 +272,23 @@
                </v-expansion-panel>
           </v-expansion-panels>
 
-          <v-dialog
-               v-model="dialogConfig.open"
-               :width="dialogConfig.width"
-               :max-width="dialogConfig.width"
-               :overlay-opacity="dialogConfig.overlayOpacity"
+          <x-dialog
+               :show="scheduleSelectDialog.open"
+               :actions="scheduleSelectDialog.dialogActions"
+               :config="scheduleSelectDialog.config"
           >
-               <v-card>
-                    <v-card-title
-                         class="headline font-weight-light py-5"
-                         primary-title
-                    >Select Schedule(s)</v-card-title>
-
-                    <v-card-text class="pt-5">
-                         <x-multi-select
-                              :listData="selectScheduleList"
-                              @selectedList="updateSelectedSchedules"
-                         ></x-multi-select>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-                    <v-card-actions>
-                         <v-spacer></v-spacer>
-
-                         <v-btn
-                              color="error"
-                              text
-                              large
-                              width="80px"
-                              @click="dialogConfig.open = false"
-                         >Cancel</v-btn>
-
-                         <v-btn
-                              color="primary"
-                              text
-                              large
-                              width="80px"
-                              @click="dialogConfig.open = false"
-                         >Ok</v-btn>
-                    </v-card-actions>
-               </v-card>
-          </v-dialog>
+               <template v-slot:title>Select schedules</template>
+               <x-multi-select
+                    :listData="selectScheduleList"
+                    :selectedListData="selectedSchedules"
+                    @selectedList="updateSelectedSchedules"
+               ></x-multi-select>
+          </x-dialog>
      </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { eventBus } from "@/plugins/eventbus.js";
 
 export default {
@@ -367,6 +345,7 @@ export default {
           }
      },
      computed: {
+          ...mapGetters(["api"]),
           reviewStatusDisplay() {
                let val = null;
                for (const i of this.lookupReviewStatus) {
@@ -403,6 +382,24 @@ export default {
           },
           updateSelectedSchedules(data) {
                this.selectedSchedules = data;
+          },
+          getPusblishedForms() {
+               this.selectScheduleList = [];
+               this.$store.dispatch("getPublishedForms").then(data => {
+                    for (const form of data) {
+                         console.log(form);
+
+                         this.selectScheduleList.push({
+                              id: form.id,
+                              name: form.name,
+                              description: form.owner
+                         });
+                    }
+                    console.log(
+                         "Published Forms done! ",
+                         this.selectScheduleList
+                    );
+               });
           }
      },
      data() {
@@ -413,41 +410,55 @@ export default {
                     large: 6,
                     xlarge: 12
                },
-               dialogConfig: {
+               scheduleSelectDialog: {
                     open: false,
-                    width: 800,
-                    maxWidth: 1200,
-                    overlayOpacity: 0.7
+                    config: {
+                         width: 600,
+                         maxWidth: 1200,
+                         overlayOpacity: 0.7,
+                         persistent: true
+                    },
+                    dialogActions: [
+                         {
+                              name: "cancel",
+                              text: "Cancel",
+                              color: "error",
+                              action: () => {
+                                   this.scheduleSelectDialog.open = false;
+                              }
+                         },
+                         {
+                              name: "ok",
+                              text: "Ok",
+                              color: "primary",
+                              action: () => {
+                                   this.scheduleSelectDialog.open = false;
+                                   console.log(
+                                        "Schedule selection dialog closed: ",
+                                        this.selectedSchedules.length
+                                   );
+                              }
+                         }
+                    ]
                },
                selectedSchedules: [],
                selectScheduleList: [
-                    {
-                         id: "K91NW9EMYBAPOP",
-                         name: "Doner spare ribs andouille",
-                         description: "Wessel Buchling"
-                    },
-                    {
-                         id: "K91O2TKH5LGQUH",
-                         name: "Pork tri-tip sirloin brisket prosciutto ham",
-                         description: "Wessel Buchling"
-                    },
-                    {
-                         id: "K91O31GAO5WGOF",
-                         name: "Biltong boudin pancetta",
-                         description: "Wessel Buchling"
-                    }
+                    // {
+                    //      id: "K91NW9EMYBAPOP",
+                    //      name: "Doner spare ribs andouille",
+                    //      description: "Wessel Buchling"
+                    // },
+                    // {
+                    //      id: "K91O2TKH5LGQUH",
+                    //      name: "Pork tri-tip sirloin brisket prosciutto ham",
+                    //      description: "Wessel Buchling"
+                    // },
+                    // {
+                    //      id: "K91O31GAO5WGOF",
+                    //      name: "Biltong boudin pancetta",
+                    //      description: "Wessel Buchling"
+                    // }
                ],
-
-               fileroomConfig: {
-                    search: null,
-                    selectable: true, // prepend node checkboxes.
-                    transition: true,
-                    openOnClick: false, // click anywhere on the node to expand.
-                    hoverable: true,
-                    toolbarHover: false,
-                    returnObject: true, // retrieve the json object, or identifier.
-                    selectionType: "all" //leaf or independent or all(throws error in console).
-               },
                documentQuickActions: [
                     {
                          title: "Out of Scope",
@@ -460,19 +471,30 @@ export default {
                          title: "Schedules",
                          icon: "mdi-table-large",
                          color: "purple--text text--lighten-2",
-                         action: actionIndex => {
-                              this.dialogConfig.open = true;
-                              console.log(
-                                   "Open document schedules:  ",
-                                   actionIndex
-                              );
+                         action: () => {
+                              // clear to list before re assigning.
+                              this.selectScheduleList.length = 0;
+                              this.$store
+                                   .dispatch("getPublishedForms")
+                                   .then(data => {
+                                        for (const form of data) {
+                                             this.selectScheduleList.push({
+                                                  id: form.id,
+                                                  name: form.name,
+                                                  description: form.owner
+                                             });
+                                        }
+                                        this.scheduleSelectDialog.open = true;
+                                   });
                          }
                     },
                     {
                          title: "Sample Action 3",
                          icon: "mdi-plus-box-outline",
                          color: "primary--text",
-                         action: index => console.log("Sample 3 ", index)
+                         action: index => {
+                              console.log("Sample 3 ", index);
+                         }
                     }
                ],
                documentAction: {
@@ -615,24 +637,7 @@ export default {
                               color: ""
                          }
                     ]
-               },
-               lookupReviewStatus: [
-                    {
-                         value: "none",
-                         text: "Not Started",
-                         icon: "mdi-do-not-disturb"
-                    },
-                    {
-                         value: "pending",
-                         text: "Review In Progress",
-                         icon: "mdi-clock"
-                    },
-                    {
-                         value: "complete",
-                         text: "Review Complete",
-                         icon: "mdi-check-bold"
-                    }
-               ]
+               }
           };
      },
      created() {
