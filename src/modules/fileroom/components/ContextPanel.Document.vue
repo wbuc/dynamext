@@ -177,7 +177,7 @@
                                              single-line
                                              hide-details
                                              dense
-                                             v-model="nodeData.langauge"
+                                             v-model="nodeData.language"
                                         ></v-text-field>
                                    </div>
                               </div>
@@ -207,7 +207,7 @@
                <v-card-actions class="pr-4 mt-2 pb-4">
                     <v-spacer></v-spacer>
 
-                    <v-btn text large outlined color width="120px">
+                    <v-btn text large outlined color width="120px" @click="saveDocumentDetail">
                          <v-icon left color="primary">mdi-check-bold</v-icon>
                          <span>Save</span>
                     </v-btn>
@@ -270,6 +270,7 @@
 
 <script>
 import { eventBus } from "@/plugins/eventbus.js";
+
 export default {
      name: "Fileroom.ContextPanel.Document",
      props: {
@@ -347,6 +348,16 @@ export default {
                          ? (this.selectedLookupObjects.reviewStatus = i)
                          : null;
                }
+          },
+          saveDocumentDetail() {
+               this.$store
+                    .dispatch("saveDocumentMetadata", this.nodeData)
+                    .then(() => {
+                         this.$store.dispatch(
+                              "notifySuccess",
+                              `${this.nodeData.name} saved!`
+                         );
+                    });
           }
      },
      data() {
@@ -530,7 +541,6 @@ export default {
                          }
                     ]
                },
-
                lookupReviewStatus: [
                     {
                          value: "none",
@@ -553,7 +563,7 @@ export default {
      created() {
           this.setDefaultValues();
 
-          eventBus.$on("fileroom.expandContextPanel", data => {
+          eventBus.$on("fileroom.click.expandContextPanel", data => {
                console.log("fileroom.expandContextPanel trigged: ", data);
                this.contextPanelConfig.expanded = data;
           });

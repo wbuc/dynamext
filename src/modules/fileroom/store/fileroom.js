@@ -1,5 +1,5 @@
 
-import treeviewApi from '@/modules/fileroom/api/fileroom.api'
+import fileroomApi from '@/modules/fileroom/api/fileroom.api'
 
 //const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -21,7 +21,7 @@ const actions = {
         context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
-            treeviewApi.getTreeviewDefinition().then(data => {
+            fileroomApi.getTreeviewDefinition().then(data => {
 
                 context.commit('API_COMPLETE');
                 resolve(data)
@@ -42,7 +42,7 @@ const actions = {
         context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
-            treeviewApi.getTreeNodeDetail(id).then(data => {
+            fileroomApi.getTreeNodeDetail(id).then(data => {
                 context.commit('API_COMPLETE');
                 resolve(data)
             },
@@ -52,6 +52,21 @@ const actions = {
                     reject(error);
                 });
         })
+    },
+    saveDocumentMetadata(context, data) {
+        if (!context.rootGetters.isAuthenticated) return;
+        console.log(context, data);
+
+        return new Promise((resolve, reject) => {
+            fileroomApi.saveDocumentDetail(data).then(data => {
+                resolve(data)
+            },
+                error => {
+                    console.log(`error saving document ${data.name}: `, error)
+                    reject(error);
+                });
+        });
+
     }
 }
 

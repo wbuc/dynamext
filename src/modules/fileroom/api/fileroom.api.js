@@ -20,5 +20,12 @@ const getTreeNodeDetail = (id) => {
     })
 }
 
+const saveDocumentDetail = (data) => {
+    return new Promise((resolve, reject) => {
+        httpClient.put(`${EP_METADATA}/${data.id}`, data)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
 
-export default { getTreeviewDefinition, getTreeNodeDetail }
+export default { getTreeviewDefinition, getTreeNodeDetail, saveDocumentDetail }
