@@ -265,6 +265,81 @@
                     <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
                </v-expansion-panel>
           </v-expansion-panels>
+
+          <v-dialog
+               v-model="dialogConfig.open"
+               :width="dialogConfig.width"
+               :max-width="dialogConfig.width"
+               :overlay-opacity="dialogConfig.overlayOpacity"
+          >
+               <v-card>
+                    <v-card-title
+                         class="headline font-weight-light py-5"
+                         primary-title
+                    >Select Schedule(s)</v-card-title>
+
+                    <v-card-text class="pt-5">
+                         <v-list two-line>
+                              <v-list-item-group
+                                   v-model="dialogSelectedSchedules"
+                                   multiple
+                                   active-class="secondary--text"
+                              >
+                                   <template v-for="(item, index) in dialogSchedules">
+                                        <v-list-item :key="item.title">
+                                             <template v-slot:default="{ active }">
+                                                  <v-list-item-content>
+                                                       <v-list-item-title v-text="item.title"></v-list-item-title>
+                                                       <v-list-item-subtitle
+                                                            class="text--primary"
+                                                            v-text="item.headline"
+                                                       ></v-list-item-subtitle>
+                                                       <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                                                  </v-list-item-content>
+
+                                                  <v-list-item-action>
+                                                       <v-list-item-action-text
+                                                            v-text="item.action"
+                                                       ></v-list-item-action-text>
+                                                       <v-icon
+                                                            v-if="!active"
+                                                            color="grey lighten-1"
+                                                       >star_border</v-icon>
+
+                                                       <v-icon v-else color="yellow">star</v-icon>
+                                                  </v-list-item-action>
+                                             </template>
+                                        </v-list-item>
+
+                                        <v-divider
+                                             v-if="index + 1 < dialogSchedules.length"
+                                             :key="index"
+                                        ></v-divider>
+                                   </template>
+                              </v-list-item-group>
+                         </v-list>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                         <v-spacer></v-spacer>
+
+                         <v-btn
+                              color="error"
+                              text
+                              width="80px"
+                              @click="dialogConfig.open = false"
+                         >Cancel</v-btn>
+
+                         <v-btn
+                              color="primary"
+                              text
+                              width="80px"
+                              @click="dialogConfig.open = false"
+                         >Ok</v-btn>
+                    </v-card-actions>
+               </v-card>
+          </v-dialog>
      </div>
 </template>
 
@@ -368,6 +443,50 @@ export default {
                     large: 6,
                     xlarge: 12
                },
+               dialogConfig: {
+                    open: false,
+                    width: 800,
+                    maxWidth: 1200,
+                    overlayOpacity: 0.7
+               },
+               dialogSelectedSchedules: [2],
+               dialogSchedules: [
+                    {
+                         action: "15 min",
+                         headline: "Brunch this weekend?",
+                         title: "Ali Connors",
+                         subtitle:
+                              "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+                    },
+                    {
+                         action: "2 hr",
+                         headline: "Summer BBQ",
+                         title: "me, Scrott, Jennifer",
+                         subtitle:
+                              "Wish I could come, but I'm out of town this weekend."
+                    },
+                    {
+                         action: "6 hr",
+                         headline: "Oui oui",
+                         title: "Sandra Adams",
+                         subtitle:
+                              "Do you have Paris recommendations? Have you ever been?"
+                    },
+                    {
+                         action: "12 hr",
+                         headline: "Birthday gift",
+                         title: "Trevor Hansen",
+                         subtitle:
+                              "Have any ideas about what we should get Heidi for her birthday?"
+                    },
+                    {
+                         action: "18hr",
+                         headline: "Recipe to try",
+                         title: "Britta Holt",
+                         subtitle:
+                              "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
+                    }
+               ],
 
                fileroomConfig: {
                     search: null,
@@ -388,10 +507,16 @@ export default {
                               console.log("set out of scope ", index)
                     },
                     {
-                         title: "Sample Action 2",
-                         icon: "mdi-content-duplicate",
-                         color: "accent--text",
-                         action: index => console.log("Sample 2 ", index)
+                         title: "Schedules",
+                         icon: "mdi-table-large",
+                         color: "purple--text text--lighten-2",
+                         action: actionIndex => {
+                              this.dialogConfig.open = true;
+                              console.log(
+                                   "Open document schedules:  ",
+                                   actionIndex
+                              );
+                         }
                     },
                     {
                          title: "Sample Action 3",
