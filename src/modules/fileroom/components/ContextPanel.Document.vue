@@ -384,21 +384,16 @@ export default {
                this.selectedSchedules = data;
           },
           getPusblishedForms() {
-               this.selectScheduleList = [];
+               this.selectScheduleList.length = 0;
+
                this.$store.dispatch("getPublishedForms").then(data => {
                     for (const form of data) {
-                         console.log(form);
-
                          this.selectScheduleList.push({
                               id: form.id,
                               name: form.name,
                               description: form.owner
                          });
                     }
-                    console.log(
-                         "Published Forms done! ",
-                         this.selectScheduleList
-                    );
                });
           }
      },
@@ -472,12 +467,12 @@ export default {
                          icon: "mdi-table-large",
                          color: "purple--text text--lighten-2",
                          action: () => {
-                              // clear to list before re assigning.
+                              // reset the list before re assigning.
                               this.selectScheduleList.length = 0;
                               this.$store
                                    .dispatch("getPublishedForms")
                                    .then(data => {
-                                        for (const form of data) {
+                                        for (let form of data) {
                                              this.selectScheduleList.push({
                                                   id: form.id,
                                                   name: form.name,

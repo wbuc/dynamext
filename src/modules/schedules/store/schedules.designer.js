@@ -85,19 +85,19 @@ const actions = {
     getFormDefinition(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
 
-        context.commit('API_LOADING');
+        //context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
             designerApi.getFormDefinition(form.id).then(result => {
 
                 context.commit('SET_FORM', result.data);
-                context.commit('API_COMPLETE');
+                //context.commit('API_COMPLETE');
 
                 resolve();
             },
                 error => {
                     console.log(error)
-                    context.commit('API_ERROR');
+                    //context.commit('API_ERROR');
                     reject(error);
                 });
         })
