@@ -224,7 +224,6 @@
                :flat="contextPanelConfig.flat"
                :hover="contextPanelConfig.hover"
                :tile="contextPanelConfig.tile"
-               :elevation="contextPanelConfig.elevation"
                :class="`mb-5 elevation-${contextPanelConfig.elevation}`"
           >
                <v-expansion-panel key="findings">
@@ -251,7 +250,6 @@
                :flat="contextPanelConfig.flat"
                :hover="contextPanelConfig.hover"
                :tile="contextPanelConfig.tile"
-               :elevation="contextPanelConfig.elevation"
                :class="`mb-5 elevation-${contextPanelConfig.elevation}`"
           >
                <v-expansion-panel key="schedules">
