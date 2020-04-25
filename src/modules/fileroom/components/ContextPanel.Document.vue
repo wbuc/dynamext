@@ -1,6 +1,6 @@
 <template>
      <div>
-          <v-card class="mb-5 elevation-3">
+          <v-card class="mb-5" :elevation="contextPanelConfig.elevation">
                <v-card-title flat class="pa-3">
                     <div>
                          <v-icon class="mr-2" color="warning lighten-1">mdi-file-document</v-icon>
@@ -32,7 +32,13 @@
                </v-card-title>
                <div class="pt-5 mb-2 mx-4">
                     <v-row no-gutters>
-                         <v-col cols="12" xs="12" sm="12" md="12" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Review Status</span>
                                    <div>
@@ -47,7 +53,13 @@
                                    </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Red Flag Status</span>
                                    <div>
@@ -64,7 +76,13 @@
                          </v-col>
                     </v-row>
                     <v-row no-gutters>
-                         <v-col cols="12" xs="12" sm="12" md="12" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Reviewer</span>
                                    <div>
@@ -79,7 +97,13 @@
                                    </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Department</span>
                                    <div>
@@ -94,7 +118,13 @@
                                    </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="12" md="12" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Responsibility</span>
                                    <div>
@@ -110,7 +140,13 @@
                               </div>
                          </v-col>
 
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Scope of Review</span>
                                    <div>
@@ -126,7 +162,13 @@
                               </div>
                          </v-col>
 
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Language</span>
                                    <div>
@@ -140,7 +182,13 @@
                                    </div>
                               </div>
                          </v-col>
-                         <v-col cols="12" xs="12" sm="6" md="6" lg="4">
+                         <v-col
+                              cols="12"
+                              :xs="fieldSize.xlarge"
+                              :sm="fieldSize.large"
+                              :md="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                              :lg="contextPanelConfig.expanded ? fieldSize.large : fieldSize.medium"
+                         >
                               <div class="pa-3">
                                    <span class="grey--text">Reviewed Date</span>
                                    <div>
@@ -176,7 +224,8 @@
                :flat="contextPanelConfig.flat"
                :hover="contextPanelConfig.hover"
                :tile="contextPanelConfig.tile"
-               class="mb-5"
+               :elevation="contextPanelConfig.elevation"
+               :class="`mb-5 elevation-${contextPanelConfig.elevation}`"
           >
                <v-expansion-panel key="findings">
                     <v-expansion-panel-header>
@@ -202,7 +251,8 @@
                :flat="contextPanelConfig.flat"
                :hover="contextPanelConfig.hover"
                :tile="contextPanelConfig.tile"
-               class="mb-5"
+               :elevation="contextPanelConfig.elevation"
+               :class="`mb-5 elevation-${contextPanelConfig.elevation}`"
           >
                <v-expansion-panel key="schedules">
                     <v-expansion-panel-header>
@@ -221,6 +271,7 @@
 </template>
 
 <script>
+import { eventBus } from "@/plugins/eventbus.js";
 export default {
      name: "Fileroom.ContextPanel.Document",
      props: {
@@ -265,9 +316,11 @@ export default {
                          disabled: false,
                          readonly: false,
                          focusable: true,
-                         flat: true,
+                         flat: false,
                          hover: false,
-                         tile: false
+                         tile: false,
+                         expanded: false,
+                         elevation: 3
                     };
                }
           }
@@ -300,6 +353,13 @@ export default {
      },
      data() {
           return {
+               fieldSize: {
+                    small: 3,
+                    medium: 4,
+                    large: 6,
+                    xlarge: 12
+               },
+
                fileroomConfig: {
                     search: null,
                     selectable: true, // prepend node checkboxes.
@@ -338,7 +398,6 @@ export default {
                selectedLookupObjects: {
                     reviewStatus: null
                },
-
                lookupData: {
                     reviewStatus: [
                          {
@@ -495,6 +554,11 @@ export default {
      },
      created() {
           this.setDefaultValues();
+
+          eventBus.$on("fileroom.expandContextPanel", data => {
+               console.log("fileroom.expandContextPanel trigged: ", data);
+               this.contextPanelConfig.expanded = data;
+          });
      }
 };
 </script>

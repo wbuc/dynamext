@@ -85,7 +85,7 @@
 //const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 import { mapGetters } from "vuex";
-
+import { eventBus } from "@/plugins/eventbus.js";
 import tree from "@/components/treeview/Treeview";
 
 import folder from "@/modules/fileroom/components/ContextPanel.Folder";
@@ -129,7 +129,8 @@ export default {
                          }
                     ],
                     currentNodeData: null,
-                    checkedNodes: []
+                    checkedNodes: [],
+                    dropdowns: null
                },
                fileroomConfig: {
                     search: null,
@@ -199,6 +200,7 @@ export default {
      methods: {
           toggleFullView() {
                this.explorerConfig.fullView = !this.explorerConfig.fullView;
+               eventBus.expandContextPanel(this.explorerConfig.fullView);
           },
           addFolder() {},
           refreshTreeview() {
@@ -243,6 +245,8 @@ export default {
      },
      created() {
           this.refreshTreeview();
+
+          // need to call API and retrieve lookup data for the dropdowns.
      }
 };
 </script>
