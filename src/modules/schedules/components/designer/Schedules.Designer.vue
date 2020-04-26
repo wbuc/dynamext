@@ -499,7 +499,7 @@ import yesnoControl from "@/modules/schedules/components/designer/controls/yesno
 // *** CONTROL TEMPLATES END
 
 export default {
-     name: "Schedules.Designer",
+     name: "Schedules.Canvas.Designer",
      components: {
           draggable,
           textControl,

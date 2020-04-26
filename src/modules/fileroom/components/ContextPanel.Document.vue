@@ -389,11 +389,11 @@ export default {
                               action: () => {
                                    this.selectScheduleContext.open = false;
 
-                                   let newList = [];
-                                   // get the detail for the selected schedules.s
+                                   let newSchedules = [];
+                                   // get the detail for the selected schedules.
                                    for (const i of this.selectScheduleContext
                                         .selectedData) {
-                                        newList.push({
+                                        newSchedules.push({
                                              id: this.selectScheduleContext
                                                   .data[i].id,
                                              name: this.selectScheduleContext
@@ -402,20 +402,15 @@ export default {
                                         });
                                    }
 
-                                   this.nodeData.schedules.count =
-                                        newList.length;
-                                   this.nodeData.schedules.children = newList;
-
-                                   console.log(this.nodeData.schedules);
                                    this.$store
-                                        .dispatch(
-                                             "assignDocumentSchedules",
-                                             this.nodeData
-                                        )
-                                        .then(() => {
+                                        .dispatch("assignDocumentSchedules", {
+                                             documentData: this.nodeData,
+                                             selectedSchedules: newSchedules
+                                        })
+                                        .then(updatedCount => {
                                              this.$store.dispatch(
                                                   "notifySuccess",
-                                                  `${this.nodeData.schedules.count} schedule(s) assigned!`
+                                                  `${updatedCount} schedule(s) assigned!`
                                              );
                                         });
                                    //assignDocumentSchedules

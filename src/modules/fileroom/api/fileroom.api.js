@@ -28,9 +28,9 @@ const saveDocumentDetail = (data) => {
     })
 }
 
-const assignDocumentSchedules = (id, schedules) => {
+const assignDocumentSchedules = (id, data) => {
     return new Promise((resolve, reject) => {
-        httpClient.patch(`${EP_METADATA}/${id}`, schedules)
+        httpClient.patch(`${EP_METADATA}/${id}`, data)
             .then(response => resolve(response))
             .catch(error => reject(error))
     })

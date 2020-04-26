@@ -1,6 +1,7 @@
 
 
 import designerApi from '@/modules/schedules/api/schedules.designer.api'
+import formHelper from '@/modules/schedules/helpers/forms.helper'
 
 //const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -58,7 +59,7 @@ const actions = {
                         context.commit('API_ERROR');
                         reject(error);
                     });
-            }, 1500)
+            }, 0)
         })
     },
 
@@ -82,6 +83,7 @@ const actions = {
             }, 1500)
         })
     },
+
     getFormDefinition(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
 
@@ -111,8 +113,9 @@ const actions = {
         return new Promise((resolve, reject) => {
             //NEW FORM
             if (!form.id) {
-                let newId = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-                form.id = newId;
+
+                form.id = formHelper.generateFormId();
+
                 designerApi.saveFormDefinition(form).then(data => {
                     context.commit('API_COMPLETE');
                     resolve(data)
