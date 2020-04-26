@@ -28,4 +28,12 @@ const saveDocumentDetail = (data) => {
     })
 }
 
-export default { getTreeviewDefinition, getTreeNodeDetail, saveDocumentDetail }
+const assignDocumentSchedules = (id, schedules) => {
+    return new Promise((resolve, reject) => {
+        httpClient.patch(`${EP_METADATA}/${id}`, schedules)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
+
+export default { getTreeviewDefinition, getTreeNodeDetail, saveDocumentDetail, assignDocumentSchedules }

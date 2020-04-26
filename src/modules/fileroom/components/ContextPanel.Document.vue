@@ -372,6 +372,7 @@ export default {
                          width: 600,
                          maxWidth: 1200,
                          overlayOpacity: 0.7,
+                         overlayColor: "#686868",
                          persistent: true
                     },
                     dialogActions: [
@@ -387,6 +388,37 @@ export default {
                               color: "primary",
                               action: () => {
                                    this.selectScheduleContext.open = false;
+
+                                   let newList = [];
+                                   // get the detail for the selected schedules.s
+                                   for (const i of this.selectScheduleContext
+                                        .selectedData) {
+                                        newList.push({
+                                             id: this.selectScheduleContext
+                                                  .data[i].id,
+                                             name: this.selectScheduleContext
+                                                  .data[i].name,
+                                             type: "schedule"
+                                        });
+                                   }
+
+                                   this.nodeData.schedules.count =
+                                        newList.length;
+                                   this.nodeData.schedules.children = newList;
+
+                                   console.log(this.nodeData.schedules);
+                                   this.$store
+                                        .dispatch(
+                                             "assignDocumentSchedules",
+                                             this.nodeData
+                                        )
+                                        .then(() => {
+                                             this.$store.dispatch(
+                                                  "notifySuccess",
+                                                  `${this.nodeData.schedules.count} schedule(s) assigned!`
+                                             );
+                                        });
+                                   //assignDocumentSchedules
                               }
                          }
                     ],
@@ -413,7 +445,6 @@ export default {
                               });
                     }
                },
-
                documentQuickActions: [
                     {
                          title: "Out of Scope",
@@ -601,26 +632,10 @@ export default {
                               `${this.nodeData.name} saved!`
                          );
                     });
-          },
-
-          openFormsSelectDialog() {
-               this.selectScheduleContext.data.length = 0; // reset list before re-populating.
-               this.selectScheduleContext.refreshIndex += 1; //force the component to re-load for fresh data.
-
-               this.$store.dispatch("getPublishedForms").then(data => {
-                    for (let form of data) {
-                         this.selectScheduleContext.data.push({
-                              id: form.id,
-                              name: form.name,
-                              description: form.owner
-                         });
-                    }
-                    this.selectScheduleContext.open = true;
-               });
           }
      },
      created() {
-          this.setDefaultValues();
+          //this.setDefaultValues();
           eventBus.$on("fileroom.click.expandContextPanel", data => {
                this.contextPanelConfig.expanded = data;
           });

@@ -66,6 +66,19 @@ const actions = {
                 });
         });
 
+    },
+    assignDocumentSchedules(context, data) {
+        if (!context.rootGetters.isAuthenticated) return;
+
+        return new Promise((resolve, reject) => {
+            fileroomApi.assignDocumentSchedules(data.id, data).then(data => {
+                resolve(data)
+            },
+                error => {
+                    console.log(`error assigning document schedules for ${data.name}: `, error)
+                    reject(error);
+                });
+        });
     }
 }
 

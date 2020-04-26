@@ -4,6 +4,7 @@
           :width="config.width"
           :max-width="config.maxWidth"
           :overlay-opacity="config.overlayOpacity"
+          :overlay-color="config.overlayColor"
           :persistent="config.persistent"
      >
           <v-card>
@@ -44,6 +45,7 @@ export default {
                          width: 600,
                          maxWidth: 1200,
                          overlayOpacity: 0.7,
+                         overlayColor: "#686868",
                          persistent: true
                     };
                }
