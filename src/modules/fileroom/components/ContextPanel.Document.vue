@@ -273,15 +273,16 @@
           </v-expansion-panels>
 
           <x-dialog
-               :show="scheduleSelectDialog.open"
-               :actions="scheduleSelectDialog.dialogActions"
-               :config="scheduleSelectDialog.config"
+               :show="selectScheduleContext.open"
+               :actions="selectScheduleContext.dialogActions"
+               :config="selectScheduleContext.config"
           >
                <template v-slot:title>Select schedules</template>
                <x-multi-select
-                    :listData="selectScheduleList"
-                    :selectedListData="selectedSchedules"
-                    @selectedList="updateSelectedSchedules"
+                    :listData="selectScheduleContext.data"
+                    :selectedListData="selectScheduleContext.selectedData"
+                    @selectedList="selectScheduleContext.updateSelectedList"
+                    :key="selectScheduleContext.refreshIndex"
                ></x-multi-select>
           </x-dialog>
      </div>
@@ -356,47 +357,6 @@ export default {
                return val;
           }
      },
-     methods: {
-          setFieldValue(field, option) {
-               this.nodeData[field] = option.value;
-               this.selectedLookupObjects[field] = option;
-          },
-          setDefaultValues() {
-               // Review Status
-               for (const i of this.lookupData.reviewStatus) {
-                    console.log(i);
-                    i.value === this.nodeData.reviewStatus
-                         ? (this.selectedLookupObjects.reviewStatus = i)
-                         : null;
-               }
-          },
-          saveDocumentDetail() {
-               this.$store
-                    .dispatch("saveDocumentMetadata", this.nodeData)
-                    .then(() => {
-                         this.$store.dispatch(
-                              "notifySuccess",
-                              `${this.nodeData.name} saved!`
-                         );
-                    });
-          },
-          updateSelectedSchedules(data) {
-               this.selectedSchedules = data;
-          },
-          getPusblishedForms() {
-               this.selectScheduleList.length = 0;
-
-               this.$store.dispatch("getPublishedForms").then(data => {
-                    for (const form of data) {
-                         this.selectScheduleList.push({
-                              id: form.id,
-                              name: form.name,
-                              description: form.owner
-                         });
-                    }
-               });
-          }
-     },
      data() {
           return {
                fieldSize: {
@@ -405,8 +365,9 @@ export default {
                     large: 6,
                     xlarge: 12
                },
-               scheduleSelectDialog: {
+               selectScheduleContext: {
                     open: false,
+                    refreshIndex: 0,
                     config: {
                          width: 600,
                          maxWidth: 1200,
@@ -415,45 +376,44 @@ export default {
                     },
                     dialogActions: [
                          {
-                              name: "cancel",
                               text: "Cancel",
                               color: "error",
                               action: () => {
-                                   this.scheduleSelectDialog.open = false;
+                                   this.selectScheduleContext.open = false;
                               }
                          },
                          {
-                              name: "ok",
                               text: "Ok",
                               color: "primary",
                               action: () => {
-                                   this.scheduleSelectDialog.open = false;
-                                   console.log(
-                                        "Schedule selection dialog closed: ",
-                                        this.selectedSchedules.length
-                                   );
+                                   this.selectScheduleContext.open = false;
                               }
                          }
-                    ]
+                    ],
+                    data: [],
+                    selectedData: [],
+                    updateSelectedList: data => {
+                         this.selectScheduleContext.selectedData = data;
+                    },
+                    openDialog: () => {
+                         this.selectScheduleContext.data.length = 0; // reset list before re-populating.
+                         this.selectScheduleContext.refreshIndex += 1; //force the component to re-load. https://michaelnthiessen.com/force-re-render
+
+                         this.$store
+                              .dispatch("getPublishedForms")
+                              .then(data => {
+                                   for (let form of data) {
+                                        this.selectScheduleContext.data.push({
+                                             id: form.id,
+                                             name: form.name,
+                                             description: form.owner
+                                        });
+                                   }
+                                   this.selectScheduleContext.open = true;
+                              });
+                    }
                },
-               selectedSchedules: [],
-               selectScheduleList: [
-                    // {
-                    //      id: "K91NW9EMYBAPOP",
-                    //      name: "Doner spare ribs andouille",
-                    //      description: "Wessel Buchling"
-                    // },
-                    // {
-                    //      id: "K91O2TKH5LGQUH",
-                    //      name: "Pork tri-tip sirloin brisket prosciutto ham",
-                    //      description: "Wessel Buchling"
-                    // },
-                    // {
-                    //      id: "K91O31GAO5WGOF",
-                    //      name: "Biltong boudin pancetta",
-                    //      description: "Wessel Buchling"
-                    // }
-               ],
+
                documentQuickActions: [
                     {
                          title: "Out of Scope",
@@ -467,20 +427,7 @@ export default {
                          icon: "mdi-table-large",
                          color: "purple--text text--lighten-2",
                          action: () => {
-                              // reset the list before re assigning.
-                              this.selectScheduleList.length = 0;
-                              this.$store
-                                   .dispatch("getPublishedForms")
-                                   .then(data => {
-                                        for (let form of data) {
-                                             this.selectScheduleList.push({
-                                                  id: form.id,
-                                                  name: form.name,
-                                                  description: form.owner
-                                             });
-                                        }
-                                        this.scheduleSelectDialog.open = true;
-                                   });
+                              this.selectScheduleContext.openDialog();
                          }
                     },
                     {
@@ -492,10 +439,6 @@ export default {
                          }
                     }
                ],
-               documentAction: {
-                    quick: [],
-                    reviewStatus: []
-               },
                selectedLookupObjects: {
                     reviewStatus: null
                },
@@ -635,11 +578,50 @@ export default {
                }
           };
      },
+     methods: {
+          setFieldValue(field, option) {
+               this.nodeData[field] = option.value;
+               this.selectedLookupObjects[field] = option;
+          },
+          setDefaultValues() {
+               // Review Status
+               for (const i of this.lookupData.reviewStatus) {
+                    console.log(i);
+                    i.value === this.nodeData.reviewStatus
+                         ? (this.selectedLookupObjects.reviewStatus = i)
+                         : null;
+               }
+          },
+          saveDocumentDetail() {
+               this.$store
+                    .dispatch("saveDocumentMetadata", this.nodeData)
+                    .then(() => {
+                         this.$store.dispatch(
+                              "notifySuccess",
+                              `${this.nodeData.name} saved!`
+                         );
+                    });
+          },
+
+          openFormsSelectDialog() {
+               this.selectScheduleContext.data.length = 0; // reset list before re-populating.
+               this.selectScheduleContext.refreshIndex += 1; //force the component to re-load for fresh data.
+
+               this.$store.dispatch("getPublishedForms").then(data => {
+                    for (let form of data) {
+                         this.selectScheduleContext.data.push({
+                              id: form.id,
+                              name: form.name,
+                              description: form.owner
+                         });
+                    }
+                    this.selectScheduleContext.open = true;
+               });
+          }
+     },
      created() {
           this.setDefaultValues();
-
           eventBus.$on("fileroom.click.expandContextPanel", data => {
-               console.log("fileroom.expandContextPanel trigged: ", data);
                this.contextPanelConfig.expanded = data;
           });
      }

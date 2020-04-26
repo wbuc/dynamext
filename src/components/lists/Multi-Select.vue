@@ -62,7 +62,8 @@ export default {
           return {
                selectedList: []
           };
-     }
+     },
+     created() {}
 };
 </script>
 
