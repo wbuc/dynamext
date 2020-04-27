@@ -9,7 +9,6 @@
                single-line
                hide-details
                dense
-               disabled
                v-model="control.value"
                :placeholder="control.properties.placeholder"
                @click.stop

@@ -242,7 +242,9 @@
                               <span class="font-weight-light headline grey--text">findings</span>
                          </span>
                     </v-expansion-panel-header>
-                    <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+                    <v-expansion-panel-content>
+                         <div class="text-center grey--text py-10">Findings coming soon!</div>
+                    </v-expansion-panel-content>
                </v-expansion-panel>
           </v-expansion-panels>
           <v-expansion-panels
@@ -268,7 +270,13 @@
                               <span class="font-weight-light headline grey--text">schedules</span>
                          </span>
                     </v-expansion-panel-header>
-                    <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+                    <v-expansion-panel-content>
+                         <div
+                              v-if="!nodeData.schedules.children.length "
+                              class="text-center grey--text py-10"
+                         >This document does not have any schedules.</div>
+                         <x-forms-runtime :form="nodeData.schedules.children[0]" :key="nodeData.id"></x-forms-runtime>
+                    </v-expansion-panel-content>
                </v-expansion-panel>
           </v-expansion-panels>
 
@@ -292,8 +300,11 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/plugins/eventbus.js";
 
+import formsRuntime from "@/modules/schedules/components/runtime/Schedules.Runtime";
+
 export default {
      name: "Fileroom.ContextPanel.Document",
+     components: { "x-forms-runtime": formsRuntime },
      props: {
           nodeData: {
                Type: Object,

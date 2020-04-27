@@ -86,9 +86,7 @@ const actions = {
 
     getFormDefinition(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
-
         //context.commit('API_LOADING');
-
         return new Promise((resolve, reject) => {
             designerApi.getFormDefinition(form.id).then(result => {
 

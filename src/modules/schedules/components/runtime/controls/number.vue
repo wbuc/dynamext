@@ -8,7 +8,6 @@
                outlined
                single-line
                hide-details
-               disabled
                dense
                v-model="control.value"
                :placeholder="control.properties.placeholder"

@@ -5,9 +5,8 @@
           <v-textarea
                v-bind:auto-grow="false"
                v-bind:clearable="true"
-               disabled
                outlined
-               :rows="control.properties.rows?control.properties.rows: 1"
+               :rows="control.properties.rows ? control.properties.rows: 1"
                :counter="control.validations ? control.validations.maxLength : false"
                v-model="control.value"
                :placeholder="control.properties.placeholder"

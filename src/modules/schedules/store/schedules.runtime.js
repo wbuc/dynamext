@@ -42,7 +42,37 @@ const actions = {
         });
 
     },
+    batchCreateForm(context, { documentId, formDefinitionId }) {
 
+        console.log('Create Form started: ', context, documentId, formDefinitionId);
+
+        return new Promise((resolve, reject) => {
+
+            // TEMP - the form definition will be retrieved on the server and create the copy of the form, not on the client side. Only for demo purposes.
+            designerApi.getFormDefinition(formDefinitionId).then(result => {
+
+                let formDefinition = result.data
+                // clone the current master form as a copy - the exact fields are not needed at runtime and can be simplified later on the server.
+                let docForm = formHelper.cloneObject(formDefinition);
+
+                docForm.definitionId = formDefinition.id
+                docForm.id = formHelper.generateFormId();
+                docForm.documentId = documentId;
+
+                // This is the only API that needs to be called from the client when creating a new form.
+                runtimeApi.saveForm(docForm).then(data => {
+                    resolve(data)
+                },
+                    error => {
+                        reject(error);
+                    });
+            }, error => {
+                reject(error);
+            })
+
+        });
+
+    },
     getForm(context, form) {
         if (!context.rootGetters.isAuthenticated) return;
 
