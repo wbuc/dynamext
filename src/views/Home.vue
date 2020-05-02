@@ -5,12 +5,41 @@
                     <page-header>Home</page-header>
                </v-col>
           </v-row>
-          <v-row>
-               <v-col>
-                    <x-timeline-card></x-timeline-card>
+          <v-row no-gutters class="pt-3">
+               <v-col
+                    cols="12"
+                    :xs="fieldSize.xlarge"
+                    :sm="fieldSize.large"
+                    :md="fieldSize.medium"
+                    :lg="fieldSize.small"
+               >
+                    <div class="pl-3">
+                         <x-tasklist></x-tasklist>
+                    </div>
                </v-col>
+               <v-col
+                    cols="12"
+                    :xs="fieldSize.xlarge"
+                    :sm="fieldSize.large"
+                    :md="fieldSize.medium"
+                    :lg="fieldSize.medium"
+               >
+                    <div class="pa-3">
+                         <x-timeline-card></x-timeline-card>
+                    </div>
+               </v-col>
+               <v-col
+                    cols="12"
+                    :xs="fieldSize.xlarge"
+                    :sm="fieldSize.large"
+                    :md="fieldSize.medium"
+                    :lg="fieldSize.medium"
+               >
+                    <div class="pa-3"></div>
+               </v-col>
+
                <v-col>
-                    <v-card class="mx-auto elevation" max-width="344" outlined>
+                    <v-card class="mx-auto elevation" max-width="344">
                          <v-list-item three-line>
                               <v-list-item-content>
                                    <div class="overline mb-4">OVERLINE 1</div>
@@ -51,9 +80,21 @@
 </template>
 
 <script>
+import tasklist from "@/components/lists/CompactList";
+
 export default {
      name: "Home",
-     components: {},
+     components: { "x-tasklist": tasklist },
+     data() {
+          return {
+               fieldSize: {
+                    small: 3,
+                    medium: 4,
+                    large: 6,
+                    xlarge: 12
+               }
+          };
+     },
      methods: {
           sayHello() {
                console.log("Hello!");
