@@ -9,7 +9,7 @@
                     :ripple="config.ripple"
                     @click="itemClicked(item)"
                >
-                    <v-list-item-icon :class="{'mt-4': config.dense}">
+                    <v-list-item-icon :class="{'mt-4 mb-4': config.dense}">
                          <v-icon :color="item.color">{{item.icon}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content :class="{'py-0':  config.dense}">
@@ -17,7 +17,9 @@
                          <div>{{item.name}}</div>
                     </v-list-item-content>
                </v-list-item>
-               <v-divider v-if="index + 1 < dataList.length" :key="'divider'+index"></v-divider>
+               <template v-if="config.divider">
+                    <v-divider v-if="index + 1 < dataList.length" :key="'divider'+index"></v-divider>
+               </template>
           </template>
      </div>
 </template>
@@ -33,9 +35,7 @@ export default {
                          link: true,
                          dense: false,
                          ripple: true,
-                         click: item => {
-                              console.log("List item selected! ", item);
-                         }
+                         divider: true
                     };
                }
           },

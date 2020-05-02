@@ -28,6 +28,7 @@ import Dialog from '@/components/dialog/Dialog.vue'
 
 /* LISTS */
 import MultiSelect from '@/components/lists/Multi-Select.vue'
+import BasicList from "@/components/lists/BasicList";
 
 /* BRAND */
 import Logo from '@/components/brand/Logo.vue'
@@ -47,7 +48,10 @@ Vue.component('x-modal', Modal);
 Vue.component('x-popup', Popup);
 Vue.component('x-confirmation', Confirm)
 Vue.component('x-notification', Notification)
+
 Vue.component('x-multi-select', MultiSelect)
+Vue.component('x-basic-list', BasicList)
+
 Vue.component('x-dialog', Dialog);
 
 Vue.component('x-logo', Logo)

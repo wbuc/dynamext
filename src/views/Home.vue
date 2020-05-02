@@ -17,12 +17,13 @@
                          <x-tasklist></x-tasklist>
                     </div>
                </v-col>
+
                <v-col
                     cols="12"
                     :xs="fieldSize.xlarge"
                     :sm="fieldSize.large"
                     :md="fieldSize.medium"
-                    :lg="fieldSize.medium"
+                    :lg="fieldSize.large"
                >
                     <div class="pa-3">
                          <x-timeline-card></x-timeline-card>
@@ -33,13 +34,18 @@
                     :xs="fieldSize.xlarge"
                     :sm="fieldSize.large"
                     :md="fieldSize.medium"
-                    :lg="fieldSize.medium"
+                    :lg="fieldSize.small"
                >
-                    <div class="pa-3"></div>
+                    <div class="pl-3">
+                         <x-basic-list
+                              :config="history.config"
+                              :dataList="history.data"
+                              @itemClicked="openHistoryDetail"
+                         ></x-basic-list>
+                    </div>
                </v-col>
-
                <v-col>
-                    <v-card class="mx-auto elevation" max-width="344">
+                    <!-- <v-card class="mx-auto elevation" max-width="344">
                          <v-list-item three-line>
                               <v-list-item-content>
                                    <div class="overline mb-4">OVERLINE 1</div>
@@ -54,10 +60,10 @@
                               <v-btn text color="primary">Button</v-btn>
                               <v-btn color="cyan" text>Button</v-btn>
                          </v-card-actions>
-                    </v-card>
+                    </v-card>-->
                </v-col>
                <v-col>
-                    <v-card class="mx-auto" max-width="344" outlined>
+                    <!-- <v-card class="mx-auto" max-width="344" outlined>
                          <v-list-item three-line>
                               <v-list-item-content>
                                    <div class="overline mb-4">OVERLINE 2</div>
@@ -72,7 +78,7 @@
                               <v-btn color="pink" text>Button</v-btn>
                               <v-btn color="success" text>Button</v-btn>
                          </v-card-actions>
-                    </v-card>
+                    </v-card>-->
                </v-col>
                <v-col></v-col>
           </v-row>
@@ -92,12 +98,60 @@ export default {
                     medium: 4,
                     large: 6,
                     xlarge: 12
+               },
+               history: {
+                    config: {
+                         link: false,
+                         dense: true,
+                         ripple: false,
+                         divider: false
+                    },
+                    data: [
+                         {
+                              id: "1",
+                              name: "10 documents imported on 14/04/2020",
+                              description: "Fileroom update",
+                              icon: "mdi-file-document",
+                              color: "warning lighten-1"
+                         },
+                         {
+                              id: "2",
+                              name: "190 documents imported on 16/04/2020",
+                              description: "Fileroom update",
+                              icon: "mdi-file-document",
+                              color: "warning lighten-1"
+                         },
+                         {
+                              id: "3",
+                              name: "5 findings added on 17/04/2020",
+                              description: "Fileroom update",
+                              icon: "mdi-information",
+                              color: "success lighten-1"
+                         },
+                         {
+                              id: "4",
+                              name: "1000 documents imported on 17/04/2020",
+                              description: "Fileroom update",
+                              icon: "mdi-file-document",
+                              color: "warning lighten-1"
+                         },
+                         {
+                              id: "5",
+                              name: "700 documents imported on 25/04/2020",
+                              description: "Fileroom update",
+                              icon: "mdi-file-document",
+                              color: "warning lighten-1"
+                         }
+                    ]
                }
           };
      },
      methods: {
           sayHello() {
                console.log("Hello!");
+          },
+          openHistoryDetail(item) {
+               console.log("History Clicked! ", item);
           }
      }
 };
