@@ -23,9 +23,11 @@
                     :xs="fieldSize.xlarge"
                     :sm="fieldSize.large"
                     :md="fieldSize.medium"
-                    :lg="fieldSize.large"
+                    :lg="fieldSize.medium"
                >
-                    <div class="pl-3"></div>
+                    <div class="pl-3">
+                         <x-pie-chart></x-pie-chart>
+                    </div>
                </v-col>
 
                <v-col
@@ -99,10 +101,15 @@
 <script>
 import tasklist from "@/modules/dashboard/components/Tasklist";
 import lineChart from "@/components/cards/Chart-Line";
+import pieChart from "@/components/cards/Chart-Pie";
 
 export default {
      name: "Home",
-     components: { "x-tasklist": tasklist, "x-line-chart": lineChart },
+     components: {
+          "x-tasklist": tasklist,
+          "x-line-chart": lineChart,
+          "x-pie-chart": pieChart
+     },
      data() {
           return {
                fieldSize: {

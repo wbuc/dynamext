@@ -1,6 +1,6 @@
 <template>
      <v-card class="mx-auto text-center elevation-3">
-          <chart-line v-if="loaded" :chartdata="chartData" :options="chartOptions"></chart-line>
+          <chart-line height="300px" v-if="loaded" :chartdata="chartData" :options="chartOptions"></chart-line>
      </v-card>
 </template>
 
@@ -46,7 +46,26 @@ export default {
                     }
                ]
           },
-          chartOptions: { responsive: true, maintainAspectRatio: false }
+          chartOptions: {
+               responsive: true,
+               maintainAspectRatio: false,
+               scales: {
+                    xAxes: [
+                         {
+                              gridLines: {
+                                   display: false
+                              }
+                         }
+                    ],
+                    yAxes: [
+                         {
+                              gridLines: {
+                                   display: false
+                              }
+                         }
+                    ]
+               }
+          }
      }),
      async mounted() {
           //this.loaded = false;
