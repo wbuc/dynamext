@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import tasklist from "@/components/lists/CompactList";
+import tasklist from "@/modules/dashboard/components/Tasklist";
 
 export default {
      name: "Home",

@@ -1,5 +1,5 @@
 <template>
-     <v-card class="mx-auto elevation-3">
+     <div>
           <template v-for="(item, index) in dataList">
                <v-list-item
                     two-line
@@ -7,6 +7,7 @@
                     :link="config.link"
                     :dense="config.dense"
                     :ripple="config.ripple"
+                    @click="itemClicked(item)"
                >
                     <v-list-item-icon :class="{'mt-4': config.dense}">
                          <v-icon :color="item.color">{{item.icon}}</v-icon>
@@ -16,19 +17,26 @@
                          <div>{{item.name}}</div>
                     </v-list-item-content>
                </v-list-item>
-               <v-divider v-if="index + 1 < dataList.length" :key="index"></v-divider>
+               <v-divider v-if="index + 1 < dataList.length" :key="'divider'+index"></v-divider>
           </template>
-     </v-card>
+     </div>
 </template>
 
 <script>
 export default {
-     name: "Component.CompactList",
+     name: "Component.BasicList",
      props: {
           config: {
                Type: Object,
                default: () => {
-                    return { link: true, dense: false, ripple: true };
+                    return {
+                         link: true,
+                         dense: false,
+                         ripple: true,
+                         click: item => {
+                              console.log("List item selected! ", item);
+                         }
+                    };
                }
           },
           dataList: {
@@ -65,6 +73,11 @@ export default {
                          }
                     ];
                }
+          }
+     },
+     methods: {
+          itemClicked(item) {
+               this.$emit("itemClicked", item);
           }
      }
 };
