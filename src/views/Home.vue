@@ -25,10 +25,9 @@
                     :md="fieldSize.medium"
                     :lg="fieldSize.large"
                >
-                    <div class="pa-3">
-                         <x-timeline-card></x-timeline-card>
-                    </div>
+                    <div class="pl-3"></div>
                </v-col>
+
                <v-col
                     cols="12"
                     :xs="fieldSize.xlarge"
@@ -42,6 +41,18 @@
                               :dataList="history.data"
                               @itemClicked="openHistoryDetail"
                          ></x-basic-list>
+                    </div>
+               </v-col>
+
+               <v-col
+                    cols="12"
+                    :xs="fieldSize.xlarge"
+                    :sm="fieldSize.xlarge"
+                    :md="fieldSize.xlarge"
+                    :lg="fieldSize.xlarge"
+               >
+                    <div class="pa-3">
+                         <x-line-chart></x-line-chart>
                     </div>
                </v-col>
                <v-col>
@@ -87,10 +98,11 @@
 
 <script>
 import tasklist from "@/modules/dashboard/components/Tasklist";
+import lineChart from "@/components/cards/Chart-Line";
 
 export default {
      name: "Home",
-     components: { "x-tasklist": tasklist },
+     components: { "x-tasklist": tasklist, "x-line-chart": lineChart },
      data() {
           return {
                fieldSize: {
