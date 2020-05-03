@@ -25,12 +25,6 @@
 
                <v-card-actions>
                     <v-spacer></v-spacer>
-                    <!-- <v-btn
-                         small
-                         @click="primaryAction()"
-                         text
-                         color="success"
-                    >Detail</v-btn>-->
                </v-card-actions>
           </v-card>
      </v-hover>

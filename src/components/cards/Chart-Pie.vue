@@ -1,6 +1,11 @@
 <template>
      <v-card class="mx-auto text-center elevation-3 py-3">
-          <chart-pie height="200px" v-if="loaded" :chartdata="chartData" :options="chartOptions"></chart-pie>
+          <chart-pie
+               :height="config.chartHeight"
+               v-if="loaded"
+               :chartdata="chartData"
+               :options="chartOptions"
+          ></chart-pie>
      </v-card>
 </template>
 
@@ -10,6 +15,16 @@ import pie from "@/components/charts/Pie";
 export default {
      name: "Component.Chart.Pie",
      components: { "chart-pie": pie },
+     props: {
+          config: {
+               Type: Object,
+               default: () => {
+                    return {
+                         chartHeight: 296
+                    };
+               }
+          }
+     },
      data: () => ({
           loaded: true,
           chartData: {
@@ -17,6 +32,8 @@ export default {
                datasets: [
                     {
                          backgroundColor: ["#4caf50", "#fb8c00"],
+                         borderColor: "#9e9e9e3b",
+                         borderWidth: 1,
                          data: [29, 53]
                     }
                ]

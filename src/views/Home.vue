@@ -1,5 +1,5 @@
 <template>
-     <v-container class="px-12 my-5">
+     <v-container fluid class="px-12 my-5">
           <v-row>
                <v-col>
                     <page-header>Home</page-header>
@@ -12,8 +12,9 @@
                     :sm="fieldSize.large"
                     :md="fieldSize.medium"
                     :lg="fieldSize.small"
+                    class="px-2"
                >
-                    <div class="pl-3">
+                    <div>
                          <x-tasklist></x-tasklist>
                     </div>
                </v-col>
@@ -24,9 +25,43 @@
                     :sm="fieldSize.large"
                     :md="fieldSize.medium"
                     :lg="fieldSize.medium"
+                    class="px-2"
                >
-                    <div class="pl-3">
+                    <div>
                          <x-pie-chart></x-pie-chart>
+                    </div>
+               </v-col>
+               <v-col
+                    cols="12"
+                    :xs="fieldSize.xlarge"
+                    :sm="fieldSize.large"
+                    :md="fieldSize.medium"
+                    lg="2"
+                    class="px-2"
+               >
+                    <div>
+                         <x-card-stat
+                              :clickCard="statOutstanding.click"
+                              :titleColor="statOutstanding.color"
+                         >
+                              <template v-slot:title>{{statOutstanding.title}}</template>
+                              <template v-slot:detail>{{statOutstanding.description}}</template>
+                         </x-card-stat>
+                         <x-card-stat
+                              class="my-4"
+                              :clickCard="statCompleted.click"
+                              :titleColor="statCompleted.color"
+                         >
+                              <template v-slot:title>{{statCompleted.title}}</template>
+                              <template v-slot:detail>{{statCompleted.description}}</template>
+                         </x-card-stat>
+                         <x-card-stat
+                              :clickCard="statPersonalDocs.click"
+                              :titleColor="statPersonalDocs.color"
+                         >
+                              <template v-slot:title>{{statPersonalDocs.title}}</template>
+                              <template v-slot:detail>{{statPersonalDocs.description}}</template>
+                         </x-card-stat>
                     </div>
                </v-col>
 
@@ -36,8 +71,9 @@
                     :sm="fieldSize.large"
                     :md="fieldSize.medium"
                     :lg="fieldSize.small"
+                    class="px-2"
                >
-                    <div class="pl-3">
+                    <div>
                          <x-basic-list
                               :config="history.config"
                               :dataList="history.data"
@@ -52,54 +88,20 @@
                     :sm="fieldSize.xlarge"
                     :md="fieldSize.xlarge"
                     :lg="fieldSize.xlarge"
+                    class="pa-2"
                >
-                    <div class="pa-3">
+                    <div class="mt-10">
                          <x-line-chart></x-line-chart>
                     </div>
                </v-col>
-               <v-col>
-                    <!-- <v-card class="mx-auto elevation" max-width="344">
-                         <v-list-item three-line>
-                              <v-list-item-content>
-                                   <div class="overline mb-4">OVERLINE 1</div>
-                                   <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-                                   <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-                              </v-list-item-content>
-
-                              <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-                         </v-list-item>
-
-                         <v-card-actions>
-                              <v-btn text color="primary">Button</v-btn>
-                              <v-btn color="cyan" text>Button</v-btn>
-                         </v-card-actions>
-                    </v-card>-->
-               </v-col>
-               <v-col>
-                    <!-- <v-card class="mx-auto" max-width="344" outlined>
-                         <v-list-item three-line>
-                              <v-list-item-content>
-                                   <div class="overline mb-4">OVERLINE 2</div>
-                                   <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-                                   <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-                              </v-list-item-content>
-
-                              <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-                         </v-list-item>
-
-                         <v-card-actions>
-                              <v-btn color="pink" text>Button</v-btn>
-                              <v-btn color="success" text>Button</v-btn>
-                         </v-card-actions>
-                    </v-card>-->
-               </v-col>
-               <v-col></v-col>
           </v-row>
      </v-container>
 </template>
 
 <script>
 import tasklist from "@/modules/dashboard/components/Tasklist";
+
+import cardStat from "@/components/cards/Card-Stat";
 import lineChart from "@/components/cards/Chart-Line";
 import pieChart from "@/components/cards/Chart-Pie";
 
@@ -108,7 +110,8 @@ export default {
      components: {
           "x-tasklist": tasklist,
           "x-line-chart": lineChart,
-          "x-pie-chart": pieChart
+          "x-pie-chart": pieChart,
+          "x-card-stat": cardStat
      },
      data() {
           return {
@@ -162,6 +165,31 @@ export default {
                               color: "warning lighten-1"
                          }
                     ]
+               },
+
+               statOutstanding: {
+                    click: () => {
+                         console.log("Stat selected!");
+                    },
+                    color: "warning--text",
+                    title: "53",
+                    description: "Review Outstanding"
+               },
+               statCompleted: {
+                    click: () => {
+                         console.log("Completed selected!");
+                    },
+                    color: "success--text",
+                    title: "29",
+                    description: "Review Complete"
+               },
+               statPersonalDocs: {
+                    click: () => {
+                         console.log("my docs selected!");
+                    },
+                    color: "",
+                    title: "82",
+                    description: "My Documents"
                }
           };
      },
