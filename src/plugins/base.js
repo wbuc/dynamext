@@ -6,6 +6,7 @@ import Vue from 'vue'
 /* HEADERS */
 import PageHeader from '@/components/shared/PageHeader.vue'
 import Breadcrumbs from '@/components/shared/Breadcrumb.vue'
+import Toolbar from '@/components/shared/Toolbar.vue'
 
 /* CRADS */
 import BasicCard1 from '@/components/cards/Card-Basic-1'
@@ -28,6 +29,7 @@ import Logo from '@/components/brand/Logo.vue'
 
 
 Vue.component('page-header', PageHeader);
+Vue.component('x-toolbar', Toolbar);
 
 Vue.component('x-breadcrumb', Breadcrumbs);
 Vue.component('x-basic-card', BasicCard1);

@@ -1,6 +1,6 @@
 <template>
      <div>
-          <v-card elevation="3" class="mt-2">
+          <!-- <v-card elevation="3" class="mt-2">
                <v-row no-gutters class="mb-3">
                     <v-col cols="12" xs="12" sm="12" md="6">
                          <div class="pa-3">
@@ -24,7 +24,16 @@
                          </div>
                     </v-col>
                </v-row>
-          </v-card>
+          </v-card>-->
+          <x-toolbar>
+               <template v-slot:default>
+                    <v-btn text icon class="mr-2" @click="goBack">
+                         <v-icon color="secondary">mdi-arrow-left-bold</v-icon>
+                    </v-btn>
+                    <span>Accounts</span>
+               </template>
+               <template v-slot:right></template>
+          </x-toolbar>
           <v-row>
                <v-col>
                     <x-data-table
