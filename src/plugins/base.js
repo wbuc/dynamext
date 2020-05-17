@@ -28,7 +28,7 @@ import Dialog from '@/components/dialog/Dialog.vue'
 
 /* LISTS */
 import MultiSelect from '@/components/lists/Multi-Select.vue'
-import BasicList from "@/components/lists/BasicList";
+import IconList from "@/components/lists/IconList";
 
 /* BRAND */
 import Logo from '@/components/brand/Logo.vue'
@@ -50,7 +50,7 @@ Vue.component('x-confirmation', Confirm)
 Vue.component('x-notification', Notification)
 
 Vue.component('x-multi-select', MultiSelect)
-Vue.component('x-basic-list', BasicList)
+Vue.component('x-icon-list', IconList)
 
 Vue.component('x-dialog', Dialog);
 

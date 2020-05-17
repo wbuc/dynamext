@@ -54,7 +54,7 @@ export default {
                     },
                     {
                          label: "Total Documents",
-                         backgroundColor: "#ff5252",
+                         backgroundColor: "#009688",
                          data: [0, 100, 100, 100, 123, 123, 144],
                          borderColor: ["#9e9e9e3b"],
                          borderWidth: 1

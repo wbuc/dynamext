@@ -158,6 +158,7 @@
                          ></v-text-field>
                     </div>
                </template>
+               <template v-slot:></template>
 
                <template v-slot:item.action="{ item }">
                     <v-menu offset-y transition="slide-y-transition">

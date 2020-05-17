@@ -33,7 +33,6 @@ const actions = {
                 });
         })
     },
-
     getTreeNodeMetadata(context, id) {
         //check if loggend in. Old if (!state.idToken) {return}
         if (!context.rootGetters.isAuthenticated) {

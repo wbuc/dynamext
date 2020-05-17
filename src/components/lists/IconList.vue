@@ -26,7 +26,7 @@
 
 <script>
 export default {
-     name: "Component.BasicList",
+     name: "Component.IconList",
      props: {
           config: {
                Type: Object,

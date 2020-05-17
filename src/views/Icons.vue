@@ -40,6 +40,66 @@
                          </v-layout>
                     </v-card>
                </v-col>
+               <v-col>
+                    <v-card>
+                         <v-list-item>
+                              <v-list-item-action>
+                                   <v-icon color="primary" class="mdi-18px" left>mdi-donkey</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-content>
+                                   <v-list-item-title>mdi-18px</v-list-item-title>
+                              </v-list-item-content>
+                         </v-list-item>
+                         <v-list-item>
+                              <v-list-item-action>
+                                   <v-icon color="primary" class="mdi-24px" left>mdi-donkey</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-content>
+                                   <v-list-item-title>mdi-24px</v-list-item-title>
+                              </v-list-item-content>
+                         </v-list-item>
+                         <v-list-item>
+                              <v-list-item-action>
+                                   <v-icon color="primary" class="mdi-36px" left>mdi-donkey</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-content>
+                                   <v-list-item-title>mdi-36px</v-list-item-title>
+                              </v-list-item-content>
+                         </v-list-item>
+                         <v-list-item>
+                              <v-list-item-action>
+                                   <v-icon color="primary" class="mdi-48px" left>mdi-donkey</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-content>
+                                   <v-list-item-title>mdi-48px</v-list-item-title>
+                              </v-list-item-content>
+                         </v-list-item>
+                    </v-card>
+                    <v-card class="my-6">
+                         <v-list-item>
+                              <v-list-item-action>
+                                   <v-icon color="accent" class left>mdi-check-bold</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-action>
+                                   <v-icon color="primary" class="mdi-flip-h" left>mdi-check-bold</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-content>
+                                   <v-list-item-title>mdi-flip-h</v-list-item-title>
+                              </v-list-item-content>
+                         </v-list-item>
+                         <v-list-item>
+                              <v-list-item-action>
+                                   <v-icon color="accent" class left>mdi-elevator-up</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-action>
+                                   <v-icon color="primary" class="mdi-flip-v" left>mdi-elevator-up</v-icon>
+                              </v-list-item-action>
+                              <v-list-item-content>
+                                   <v-list-item-title>mdi-flip-v</v-list-item-title>
+                              </v-list-item-content>
+                         </v-list-item>
+                    </v-card>
+               </v-col>
           </v-row>
      </v-container>
 </template>

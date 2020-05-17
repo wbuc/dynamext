@@ -1,6 +1,6 @@
 <template>
      <v-card class="mx-auto elevation-3">
-          <x-basic-list @itemClicked="openTask"></x-basic-list>
+          <x-icon-list @itemClicked="openTask"></x-icon-list>
           <template v-if="task">
                <x-dialog :show="dialogConfig.open" :actions="dialogConfig.actions">
                     <template v-slot:title>{{task.description}}</template>

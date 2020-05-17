@@ -74,11 +74,12 @@
                     class="px-2"
                >
                     <div>
-                         <x-basic-list
+                         <!-- <x-icon-list
                               :config="history.config"
                               :dataList="history.data"
                               @itemClicked="openHistoryDetail"
-                         ></x-basic-list>
+                         ></x-icon-list>-->
+                         <x-card-overview></x-card-overview>
                     </div>
                </v-col>
 
@@ -100,6 +101,7 @@
 
 <script>
 import tasklist from "@/modules/dashboard/components/Tasklist";
+import cardOverview from "@/components/cards/Card-Overview";
 
 import cardStat from "@/components/cards/Card-Stat";
 import lineChart from "@/components/cards/Chart-Line";
@@ -111,7 +113,8 @@ export default {
           "x-tasklist": tasklist,
           "x-line-chart": lineChart,
           "x-pie-chart": pieChart,
-          "x-card-stat": cardStat
+          "x-card-stat": cardStat,
+          "x-card-overview": cardOverview
      },
      data() {
           return {
@@ -187,7 +190,7 @@ export default {
                     click: () => {
                          console.log("my docs selected!");
                     },
-                    color: "",
+                    color: "teal--text",
                     title: "82",
                     description: "My Documents"
                }

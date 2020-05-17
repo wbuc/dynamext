@@ -1,6 +1,3 @@
-
-
-
 export const isLoading = state => {
     return state.api.loading;
 }
