@@ -1,18 +1,19 @@
 <template>
-     <v-container class="px-12 my-5">
+     <v-container fluid class="px-12 my-5">
           <v-row>
                <v-col>
                     <page-header>Administration</page-header>
                </v-col>
           </v-row>
-          <admin-dashboard></admin-dashboard>
+          <v-fade-transition mode="out-in">
+               <router-view></router-view>
+          </v-fade-transition>
      </v-container>
 </template>
 <script>
-import AdminDashboard from "@/modules/admin/components/Admin.Dashboard";
 export default {
      name: "Admin",
-     components: { AdminDashboard },
+
      data() {
           return {
                tiles: [

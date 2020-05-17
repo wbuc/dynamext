@@ -8,9 +8,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 /* Register custom components */
 import '@/plugins/base'
 
-
 Vue.config.productionTip = false
-
 
 new Vue({
   router,
@@ -20,8 +18,7 @@ new Vue({
 }).$mount('#app')
 
 
-// See Components-02 for more detail.
-
+// NOTE: See Components-02 for more detail.
 // export const eventBus = new Vue({
 //   methods: {
 //     changeAge(data) {

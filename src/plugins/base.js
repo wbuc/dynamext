@@ -3,13 +3,6 @@
 
 import Vue from 'vue'
 
-/* LAYOUTS */
-import Default from '@/views/layouts/Default.vue'
-import Wide from '@/views/layouts/Wide.vue'
-import NoSidebar from '@/views/layouts/NoSidebar.vue'
-import Anon from '@/views/layouts/Anon.vue'
-import Placeholder from '@/views/layouts/Placeholder.vue'
-
 /* HEADERS */
 import PageHeader from '@/components/shared/PageHeader.vue'
 import Breadcrumbs from '@/components/shared/Breadcrumb.vue'
@@ -34,11 +27,6 @@ import IconList from "@/components/lists/IconList";
 import Logo from '@/components/brand/Logo.vue'
 
 
-Vue.component('default-layout', Default);
-Vue.component('wide-layout', Wide);
-Vue.component('no-sidebar-layout', NoSidebar);
-Vue.component('anon-layout', Anon);
-Vue.component('placeholder-layout', Placeholder);
 Vue.component('page-header', PageHeader);
 
 Vue.component('x-breadcrumb', Breadcrumbs);

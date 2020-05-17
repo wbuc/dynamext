@@ -1,24 +1,117 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import dashboardRoutes from '@/modules/dashboard/router/dashboard.router'
-import adminRoutes from '@/modules/admin/router/admin.router'
-import userProfileRoutes from '@/modules/userprofile/router/userProfile.router'
-import fileroomRoutes from '@/modules/fileroom/router/fileroom.router'
-import scheduleRoutes from '@/modules/schedules/router/schedules.router'
-
+import routerHelper from '@/helpers/router.helper'
 
 Vue.use(VueRouter)
 
-
 const routes = [
-  ...dashboardRoutes,
-  ...adminRoutes,
-  ...userProfileRoutes,
-  ...fileroomRoutes,
-  ...scheduleRoutes
+  {
+    path: '/',
+    name: 'root',
+    component: () => import('@/layouts/base/Index.vue'),
+    beforeEnter: routerHelper.routeGaurd,
+    children: [{
+      path: '',
+      name: 'Home',
+      meta: { title: 'Dynamext | Home' },
+      component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Home.vue')
+    },
+    {
+      path: 'design',
+      name: 'Design',
+      meta: { title: 'Dynamext | Design' },
+      component: () => import(/* webpackChunkName: "design" */ '@/views/DesignElements.vue')
+    },
+    {
+      path: 'icons',
+      name: 'Icons',
+      meta: { title: 'Dynamext | Icons' },
+      component: () => import(/* webpackChunkName: "icons" */ '@/views/Icons.vue')
+    },
+    {
+      path: 'about',
+      name: 'About',
+      meta: { title: 'Dynamext | About' },
+      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+    },
+    {
+      path: 'comingsoon',
+      name: 'ComingSoon',
+      meta: { title: 'Dynamext | Coming Soon' },
+      component: () => import(/* webpackChunkName: "comingsoon" */ '@/views/ComingSoon.vue')
+    },
+    {
+      path: 'admin',
+      name: 'Admin',
+      meta: { title: 'Dynamext | Administration' },
+      component: () => import(/* webpackChunkName: "Admin" */ '@/views/Admin.vue'),
+      children: [
+        {
+          path: '',
+          name: 'Admin.Dashboard',
+          meta: { title: 'Dynamext | Administration' },
+          component: () => import(/* webpackChunkName: "Admin" */ '@/modules/admin/components/Admin.Dashboard.vue'),
+        },
+        {
+          path: 'accounts',
+          name: 'Admin.Accounts',
+          meta: { title: 'Dynamext | Accounts' },
+          component: () => import(/* webpackChunkName: "Admin" */ '@/modules/admin/components/Accounts.Dashboard.vue'),
+        }
+      ]
+    },
+    {
+      path: 'fileroom',
+      name: 'Fileroom',
+      meta: { title: 'Dynamext | Fileroom' },
+      component: () => import(/* webpackChunkName: "Fileroom" */ '@/views/Fileroom.vue')
+    },
+    {
+      path: 'schedules',
+      name: 'Schedule',
+      meta: { title: 'Dynamext | Schedules' },
+      component: () => import(/* webpackChunkName: "Schedules" */ '@/views/Schedules.vue'),
+      children: [{
+        path: '',
+        name: 'Schedule.Dashboard',
+        meta: { title: 'Dynamext | Schedules', },
+        component: () => import("@/modules/schedules/components/Schedules.Dashboard")
+      }
+        ,
+      {
+        path: 'designer',
+        name: 'Schedule.Designer',
+        meta: { title: 'Dynamext | Schedules', },
+        component: () => import("@/modules/schedules/components/designer/Schedules.Designer")
+      }]
+    }
+    ]
+  },
+  {
+    path: '/',
+    name: 'root',
+    component: () => import('@/layouts/base/Anon.vue'),
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        meta: { title: 'Dynamext | Login' },
+        component: () => import('@/views/Login.vue')
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        meta: { title: 'Dynamext | Register' },
+        component: () => import('@/views/Signup.vue')
+      },
+      {
+        path: '*',
+        beforeEnter: routerHelper.routeGaurd,
+      }
+    ]
+  }
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

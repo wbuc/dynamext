@@ -1,26 +1,14 @@
 <template>
-     <v-app>
-          <component :is="layout">
-               <router-view></router-view>
-          </component>
-     </v-app>
+     <v-fade-transition mode="out-in">
+          <router-view />
+     </v-fade-transition>
 </template>
 
 <script>
-const DEFAULT_LAYOUT = "placeholder";
 export default {
      name: "App",
-     computed: {
-          layout() {
-               return (this.$route.meta.layout || DEFAULT_LAYOUT) + "-layout";
-          }
-     },
      created() {
-          // component created, no access to DOM - fetch data here.
           this.$store.dispatch("tryAutoLogin"); // try sign user in
-     },
-     mounted() {
-          // component created, access to DOM - do DOM stuff here !
      }
 };
 </script>

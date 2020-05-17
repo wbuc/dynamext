@@ -23,7 +23,6 @@
                     </v-col>
                </v-row>
           </v-card>
-
           <v-row>
                <v-col cols="12" :md="explorerConfig.fullView ? '3':'3'">
                     <v-card class="x-toolbox">
@@ -953,7 +952,7 @@ export default {
                }
           },
           closeDesigner() {
-               this.$router.replace({ name: "Schedule.Root" });
+               this.$router.replace({ name: "Schedule.Dashboard" });
           },
           saveForm() {
                this.$store
