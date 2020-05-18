@@ -116,6 +116,8 @@ export default {
                     "mdi-close-thick",
                     "mdi-do-not-disturb",
                     "more_vert",
+                    "mdi-information-outline",
+                    "mdi-open-in-new",
                     "settings",
                     "mdi-check",
                     "mdi-check-bold",

@@ -64,7 +64,9 @@
           <v-divider></v-divider>
 
           <v-card-actions>
-               <v-btn color="primary" text>View fileroom</v-btn>
+               <v-btn color="primary" text>
+                    <v-icon left>mdi-open-in-new</v-icon>View fileroom
+               </v-btn>
           </v-card-actions>
      </v-card>
 </template>

@@ -1,11 +1,39 @@
 <template>
-     <v-container class="px-12 my-5">
-          <v-row>
-               <v-col>
-                    <page-header>Accounts</page-header>
-                    <x-breadcrumb :links="breadcrumbs"></x-breadcrumb>
-               </v-col>
-          </v-row>
+     <div>
+          <!-- <v-card elevation="3" class="mt-2">
+               <v-row no-gutters class="mb-3">
+                    <v-col cols="12" xs="12" sm="12" md="6">
+                         <div class="pa-3">
+                              <v-list-item class="subtitle-1 pl-0">
+                                   <v-btn text icon class="mr-2" @click="goBack">
+                                        <v-icon color="secondary">mdi-arrow-left-bold</v-icon>
+                                   </v-btn>
+                                   <span>Accounts</span>
+                              </v-list-item>
+                         </div>
+                    </v-col>
+                    <v-col cols="12" xs="12" sm="12" md="6" class="hidden-sm-and-down">
+                         <div class="pa-3 text-right">
+                              <v-btn depressed large icon color="grey">
+                                   <v-icon>mdi-repeat</v-icon>
+                              </v-btn>
+
+                              <v-btn depressed large icon color="grey">
+                                   <v-icon>mdi-flag-variant-outline</v-icon>
+                              </v-btn>
+                         </div>
+                    </v-col>
+               </v-row>
+          </v-card>-->
+          <x-toolbar>
+               <template v-slot:default>
+                    <v-btn text icon class="mr-2" @click="goBack">
+                         <v-icon color="secondary">mdi-arrow-left-bold</v-icon>
+                    </v-btn>
+                    <span>Accounts</span>
+               </template>
+               <template v-slot:right>A little bit of information text!</template>
+          </x-toolbar>
           <v-row>
                <v-col>
                     <x-data-table
@@ -22,7 +50,7 @@
                </v-col>
           </v-row>
           <account-detail :showDialog="showDetail" @detailClosed="showDetail =false"></account-detail>
-     </v-container>
+     </div>
 </template>
 
 <script>
@@ -144,6 +172,9 @@ export default {
           },
           closeModal() {
                this.showModal = false;
+          },
+          goBack() {
+               this.$router.replace({ name: "Admin.Dashboard" });
           }
      },
      // before access to the DOM elements.

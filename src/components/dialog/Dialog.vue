@@ -18,16 +18,18 @@
 
                <v-divider></v-divider>
                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <span v-for="(action, index) in actions" :key="index">
-                         <v-btn
-                              :color="action.color"
-                              text
-                              large
-                              min-width="100"
-                              @click="action.action"
-                         >{{action.text}}</v-btn>
-                    </span>
+                    <slot name="actions">
+                         <v-spacer></v-spacer>
+                         <span v-for="(action, index) in actions" :key="index">
+                              <v-btn
+                                   :color="action.color"
+                                   text
+                                   large
+                                   min-width="100"
+                                   @click="action.action"
+                              >{{action.text}}</v-btn>
+                         </span>
+                    </slot>
                </v-card-actions>
           </v-card>
      </v-dialog>

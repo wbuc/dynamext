@@ -1,28 +1,22 @@
 <template>
      <div>
-          <v-card :elevation="pageConfig.elevation">
-               <v-row no-gutters class="mb-3">
-                    <v-col cols="12" xs="12" sm="12" md="6">
-                         <div class="pa-3">
-                              <v-btn text outlined large color @click="openNewForm">
-                                   <v-icon left color="primary">mdi-plus-thick</v-icon>
-                                   <span>New Schedule</span>
-                              </v-btn>
-                         </div>
-                    </v-col>
-                    <v-col cols="12" xs="12" sm="12" md="6" class="hidden-sm-and-down">
-                         <div class="pa-3 text-right">
-                              <v-btn depressed large icon color="grey">
-                                   <v-icon>mdi-repeat</v-icon>
-                              </v-btn>
+          <x-toolbar>
+               <template v-slot:default>
+                    <v-btn text outlined large color @click="openNewForm">
+                         <v-icon left color="primary">mdi-plus-thick</v-icon>
+                         <span>New Schedule</span>
+                    </v-btn>
+               </template>
+               <template v-slot:right>
+                    <v-btn depressed large icon color="grey">
+                         <v-icon>mdi-repeat</v-icon>
+                    </v-btn>
 
-                              <v-btn depressed large icon color="grey">
-                                   <v-icon>mdi-flag-variant-outline</v-icon>
-                              </v-btn>
-                         </div>
-                    </v-col>
-               </v-row>
-          </v-card>
+                    <v-btn depressed large icon color="grey">
+                         <v-icon>mdi-flag-variant-outline</v-icon>
+                    </v-btn>
+               </template>
+          </x-toolbar>
 
           <v-row no-gutters class="mb-3">
                <v-col cols="12" xs="12" sm="12" md="9" class="d-flex align-center">

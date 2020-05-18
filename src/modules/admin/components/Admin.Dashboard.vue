@@ -1,12 +1,7 @@
 <template>
      <v-row wrap>
           <v-col cols="12" sm="6" md="4" lg="3" v-for="(tile, index) in tiles" :key="index">
-               <dashboard-tile
-                    :title="tile.title"
-                    :primaryAction="tile.action"
-                    router
-                    :to="{name:'Account'}"
-               >
+               <dashboard-tile :title="tile.title" :primaryAction="tile.action" router>
                     <template v-slot:description>{{tile.description}}</template>
                </dashboard-tile>
           </v-col>
@@ -25,8 +20,7 @@ export default {
                          title: "Accounts",
                          description: "Manage all user accounts",
                          action: () =>
-                              this.$router.replace({ name: "Accounts" }),
-                         route: { name: "Accounts" }
+                              this.$router.replace({ name: "Admin.Accounts" })
                     },
                     {
                          title: "Data Rooms",
