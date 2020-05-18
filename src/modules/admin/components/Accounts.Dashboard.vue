@@ -32,7 +32,7 @@
                     </v-btn>
                     <span>Accounts</span>
                </template>
-               <template v-slot:right></template>
+               <template v-slot:right>A little bit of information text!</template>
           </x-toolbar>
           <v-row>
                <v-col>

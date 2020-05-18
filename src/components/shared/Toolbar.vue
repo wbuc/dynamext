@@ -14,12 +14,15 @@
                     </div>
                </v-col>
                <v-col cols="12" xs="12" sm="12" md="6" class="hidden-sm-and-down">
-                    <div class="pa-3 text-right justify-center">
-                         <slot name="right">
-                              <v-btn depressed large icon color="grey">
-                                   <v-icon>mdi-flag-variant-outline</v-icon>
-                              </v-btn>
-                         </slot>
+                    <div class="pa-3">
+                         <v-list-item class="caption pr-0">
+                              <v-spacer></v-spacer>
+                              <slot name="right">
+                                   <v-btn depressed large icon color="grey">
+                                        <v-icon>mdi-flag-variant-outline</v-icon>
+                                   </v-btn>
+                              </slot>
+                         </v-list-item>
                     </div>
                </v-col>
           </v-row>

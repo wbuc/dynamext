@@ -1,28 +1,18 @@
 <template>
      <div>
-          <v-card elevation="3" class="mt-2">
-               <v-row no-gutters class="mb-3">
-                    <v-col cols="12" xs="12" sm="12" md="6">
-                         <div class="pa-3">
-                              <v-btn @click="closeDesigner" text icon large color>
-                                   <v-icon color="secondary">mdi-arrow-left-bold</v-icon>
-                                   <span></span>
-                              </v-btn>
-                         </div>
-                    </v-col>
-                    <v-col cols="12" xs="12" sm="12" md="6" class="hidden-sm-and-down">
-                         <div class="pa-3 text-right">
-                              <v-btn depressed large icon color="grey">
-                                   <v-icon>mdi-repeat</v-icon>
-                              </v-btn>
-
-                              <v-btn depressed large icon color="grey">
-                                   <v-icon>mdi-flag-variant-outline</v-icon>
-                              </v-btn>
-                         </div>
-                    </v-col>
-               </v-row>
-          </v-card>
+          <x-toolbar>
+               <template v-slot:default>
+                    <v-btn @click="closeDesigner" text icon large color>
+                         <v-icon color="secondary">mdi-arrow-left-bold</v-icon>
+                         <span></span>
+                    </v-btn>
+               </template>
+               <template v-slot:right>
+                    <v-btn depressed large icon color="grey">
+                         <v-icon>mdi-flag-variant-outline</v-icon>
+                    </v-btn>
+               </template>
+          </x-toolbar>
           <v-row>
                <v-col cols="12" :md="explorerConfig.fullView ? '3':'3'">
                     <v-card class="x-toolbox">
