@@ -15,7 +15,7 @@ const routes = [
       path: '',
       name: 'Home',
       meta: { title: 'Dynamext | Home' },
-      component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Home.vue')
+      component: () => import('@/views/Home.vue')
     },
     {
       path: 'design',
@@ -76,14 +76,14 @@ const routes = [
         path: '',
         name: 'Schedule.Dashboard',
         meta: { title: 'Dynamext | Schedules', },
-        component: () => import("@/modules/schedules/components/Schedules.Dashboard")
+        component: () => import(/* webpackChunkName: "Schedules" */ "@/modules/schedules/components/Schedules.Dashboard")
       }
         ,
       {
         path: 'designer',
         name: 'Schedule.Designer',
         meta: { title: 'Dynamext | Schedules', },
-        component: () => import("@/modules/schedules/components/designer/Schedules.Designer")
+        component: () => import(/* webpackChunkName: "Schedules" */ "@/modules/schedules/components/designer/Schedules.Designer")
       }]
     }
     ]
@@ -112,6 +112,7 @@ const routes = [
     ]
   }
 ]
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
