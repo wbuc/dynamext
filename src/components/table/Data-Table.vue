@@ -189,7 +189,7 @@
                </template>
           </v-data-table>
           <x-confirmation
-               :showDialog="showDeleteConfirm"
+               :show="showDeleteConfirm"
                @confirmAction="handleDeleteConfirm"
                @cancelAction="handleDeleteCancel"
           >
@@ -335,9 +335,8 @@ export default {
                this.$emit("editClicked", this.selected);
           },
           deleteClick() {
-               this.confirmation.title = "Delete confirmation";
-               this.confirmation.text =
-                    "Are you sure you want to complete this action?";
+               this.confirmation.title = "Delete records";
+               this.confirmation.text = "Are you sure you?";
                this.showDeleteConfirm = true;
           },
           handleDeleteConfirm() {
