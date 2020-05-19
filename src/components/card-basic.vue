@@ -1,49 +1,41 @@
 <template>
-     <v-hover v-slot:default="{hover}">
-          <v-card
-               @click="primaryAction()"
-               :elevation="hover ? 10 : 3"
-               class="mx-auto"
-               max-width="344"
-               outlined
-          >
-               <v-list-item three-line>
-                    <v-list-item-content>
-                         <!-- <div class="overline mb-4">OVERLINE 1</div> -->
-                         <v-list-item-title
-                              class="title font-weight-light mb-2 headline"
-                              :class="`${hover? 'accent--text':''}`"
-                         >{{ title }}</v-list-item-title>
-                         <v-list-item-subtitle
-                              small
-                              class="subheading font-weight-light grey--text"
-                         >
-                              <slot name="description"></slot>
-                         </v-list-item-subtitle>
-                    </v-list-item-content>
-               </v-list-item>
+     <v-card class="elevation-3">
+          <v-card-title class="font-weight-light headline">
+               <div class="responsive-text no-cursor">
+                    <slot name="title">Sample card title</slot>
+               </div>
+          </v-card-title>
 
-               <v-card-actions>
-                    <v-spacer></v-spacer>
-               </v-card-actions>
-          </v-card>
-     </v-hover>
+          <v-card-subtitle>
+               <div class="responsive-text no-cursor font-weight-light">
+                    <slot name="detail"></slot>
+               </div>
+          </v-card-subtitle>
+
+          <v-card-actions>
+               <slot name="actions">
+                    <v-btn color="primary" text>Show detail</v-btn>
+               </slot>
+          </v-card-actions>
+     </v-card>
 </template>
 
 <script>
 export default {
-     name: "Card.Basic1",
-     props: {
-          title: String,
-          primaryAction: Function
-     },
-     data() {
-          return {
-               hover: 3
-          };
-     }
+     name: "Card.Basic",
+     data: () => ({
+          hover: 3
+     })
 };
 </script>
 
-<style>
+<style scoped>
+.responsive-text {
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+.no-cursor {
+     cursor: default;
+}
 </style>

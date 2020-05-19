@@ -9,8 +9,9 @@ import Breadcrumbs from '@/components/shared-breadcrumb.vue'
 import Toolbar from '@/components/shared-toolbar.vue'
 
 /* CRADS */
-import BasicCard1 from '@/components/card-basic'
+import CardTile from '@/components/card-tile'
 import TimelineCard from '@/components/card-timeline'
+import CardBasic from '@/components/card-basic'
 
 /* MODALS */
 import Confirm from '@/components/dialog-confirmation.vue'
@@ -29,7 +30,8 @@ Vue.component('page-header', PageHeader);
 Vue.component('x-toolbar', Toolbar);
 
 Vue.component('x-breadcrumb', Breadcrumbs);
-Vue.component('x-basic-card', BasicCard1);
+Vue.component('x-card-tile', CardTile);
+Vue.component('x-card-basic', CardBasic);
 Vue.component('x-timeline-card', TimelineCard);
 Vue.component('x-confirmation', Confirm)
 Vue.component('x-notification', Notification)

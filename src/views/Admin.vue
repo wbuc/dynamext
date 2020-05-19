@@ -15,41 +15,8 @@ export default {
      name: "Admin",
 
      data() {
-          return {
-               tiles: [
-                    {
-                         title: "Accounts",
-                         description: "Manage all user accounts",
-                         action: () => console.log("show accounts"),
-                         route: ""
-                    },
-                    {
-                         title: "Data Rooms",
-                         description: "Manage all data import and exports",
-                         action: () => console.log("show dataroom")
-                    },
-                    {
-                         title: "Schedules",
-                         description:
-                              "Configure and maintain document schedules",
-                         action: () => console.log("show schedules")
-                    },
-                    {
-                         title: "Document Data",
-                         description:
-                              "View and manage documents and related data.",
-                         action: () => console.log("show dataroom")
-                    }
-               ]
-          };
+          return {};
      },
-     methods: {
-          showAccounts() {
-               console.log("show accounts");
-          },
-          showDataImport() {
-               console.log("show import");
-          }
-     }
+     methods: {}
 };
 </script>
