@@ -116,6 +116,7 @@ export default {
                     "mdi-close-thick",
                     "mdi-do-not-disturb",
                     "more_vert",
+                    "mdi-cloud-upload",
                     "mdi-information-outline",
                     "mdi-open-in-new",
                     "settings",

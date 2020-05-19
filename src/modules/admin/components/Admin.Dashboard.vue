@@ -19,12 +19,17 @@
                                    <v-icon color="primary" left>mdi-open-in-new</v-icon>Open
                               </v-btn>
                               <v-spacer></v-spacer>
-                              <v-btn icon small color="secondary" @click="tile.addAction">
+                              <v-btn icon color="secondary" @click="tile.addAction">
                                    <v-icon small>mdi-plus-thick</v-icon>
                               </v-btn>
-                              <!-- <v-btn small icon color="error">
-                                        <v-icon small>mdi-delete</v-icon>
-                              </v-btn>-->
+                              <v-btn
+                                   v-if="tile.secondaryAction"
+                                   icon
+                                   color="accent lighten-1"
+                                   @click="tile.secondaryAction.action"
+                              >
+                                   <v-icon>{{tile.secondaryAction.icon}}</v-icon>
+                              </v-btn>
                          </template>
                     </x-card-basic>
                </div>
@@ -62,11 +67,18 @@ export default {
                          }
                     },
                     {
-                         title: "Data Rooms",
-                         description: "Manage all data import and exports",
+                         title: "Filerooms",
+                         description:
+                              "Configure filerooms and import documents",
                          primaryAction: () => console.log("show dataroom"),
                          addAction: () => {
                               // things to do here when clicked
+                         },
+                         secondaryAction: {
+                              icon: "mdi-cloud-upload",
+                              action: () => {
+                                   console.log("secondary action clicked!");
+                              }
                          }
                     },
                     {
