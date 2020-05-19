@@ -1,6 +1,6 @@
 <template>
      <div>
-          <h1 class="display-1 grey--text font-weight-light">
+          <h1 class="display-1 grey--text font-weight-light no-cursor">
                <slot></slot>
                <slot name="description"></slot>
           </h1>
@@ -12,5 +12,8 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+.no-cursor {
+     cursor: default;
+}
 </style>

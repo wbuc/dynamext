@@ -1,6 +1,6 @@
 <template>
      <v-card elevation="3" class="mt-2">
-          <v-row no-gutters class="mb-3">
+          <v-row no-gutters class="mb-3 no-cursor">
                <v-col cols="12" xs="12" sm="12" md="6">
                     <div class="pa-3">
                          <v-list-item class="subtitle-1 pl-0">
@@ -35,5 +35,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.no-cursor {
+     cursor: default;
+}
 </style>

@@ -16,7 +16,7 @@
           <v-row>
                <v-col cols="12" :md="explorerConfig.fullView ? '3':'3'">
                     <v-card class="x-toolbox">
-                         <v-card style="background-color: #ff000000">
+                         <v-card style="background-color: #ff000000" class="no-cursor">
                               <v-card-text>
                                    <span class="title font-weight-light">Toolbox</span>
                               </v-card-text>
@@ -92,7 +92,7 @@
                                    <span
                                         v-if="!canvasConfig.editName"
                                         @click="editScheduleName"
-                                        class="title accent--text font-weight-light"
+                                        class="title accent--text font-weight-light cursor-editable"
                                    >{{formData.name}}</span>
                                    <v-text-field
                                         v-else-if="canvasConfig.editName"
@@ -227,7 +227,7 @@
                                    >Schedule Manager coming soon!</div>
                               </v-tab-item>
                               <v-tab-item key="Settings" style="background-color: #ff000000">
-                                   <div class="pt-5 mb-2">
+                                   <div class="pt-5 mb-2 no-cursor">
                                         <v-row no-gutters>
                                              <v-col cols="12" xs="12" sm="12" md="12" lg="5">
                                                   <div class="pa-3">
@@ -268,7 +268,7 @@
                </v-col>
                <v-col cols="12" :md="explorerConfig.fullView ? '2':'3'">
                     <v-card class="x-form">
-                         <v-card flat style="background-color: #ff000000">
+                         <v-card flat style="background-color: #ff000000" class="no-cursor">
                               <v-card-text>
                                    <span class="title font-weight-light">Properties</span>
                               </v-card-text>
@@ -289,7 +289,7 @@
                                    <div class="mt-1" style="background-color: #ff000000">
                                         <div
                                              v-if="!controlSelected"
-                                             class="text-center grey--text py-10"
+                                             class="text-center grey--text py-10 no-cursor"
                                         >No control selected</div>
                                         <div
                                              v-else-if="controlSelected"
@@ -389,7 +389,7 @@
                                    <v-card flat style="background-color: #ff000000">
                                         <div
                                              v-if="!controlSelected"
-                                             class="text-center grey--text py-10"
+                                             class="text-center grey--text py-10 no-cursor"
                                         >No control selected</div>
                                         <div
                                              v-else-if="controlSelected"
@@ -973,6 +973,12 @@ export default {
 </script>
 
 <style>
+.no-cursor {
+     cursor: default;
+}
+.cursor-editable {
+     cursor: pointer;
+}
 .v-treeview-node {
      cursor: pointer;
 }
