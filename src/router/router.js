@@ -9,37 +9,37 @@ const routes = [
   {
     path: '/',
     name: 'root',
-    component: () => import('@/layouts/base/Index.vue'),
+    component: () => import(/* webpackChunkName: "Home" */ '@/layouts/base/Index.vue'),
     beforeEnter: routerHelper.routeGaurd,
     children: [{
       path: '',
       name: 'Home',
       meta: { title: 'Dynamext | Home' },
-      component: () => import('@/views/Home.vue')
+      component: () => import(/* webpackChunkName: "Home" */'@/views/Home.vue')
     },
     {
       path: 'design',
       name: 'Design',
       meta: { title: 'Dynamext | Design' },
-      component: () => import(/* webpackChunkName: "design" */ '@/views/DesignElements.vue')
+      component: () => import(/* webpackChunkName: "Design" */ '@/views/DesignElements.vue')
     },
     {
       path: 'icons',
       name: 'Icons',
       meta: { title: 'Dynamext | Icons' },
-      component: () => import(/* webpackChunkName: "icons" */ '@/views/Icons.vue')
+      component: () => import(/* webpackChunkName: "Icons" */ '@/views/Icons.vue')
     },
     {
       path: 'about',
       name: 'About',
       meta: { title: 'Dynamext | About' },
-      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+      component: () => import(/* webpackChunkName: "About" */ '@/views/About.vue')
     },
     {
       path: 'comingsoon',
       name: 'ComingSoon',
       meta: { title: 'Dynamext | Coming Soon' },
-      component: () => import(/* webpackChunkName: "comingsoon" */ '@/views/ComingSoon.vue')
+      component: () => import(/* webpackChunkName: "Comingsoon" */ '@/views/ComingSoon.vue')
     },
     {
       path: 'admin',
@@ -57,7 +57,7 @@ const routes = [
           path: 'accounts',
           name: 'Admin.Accounts',
           meta: { title: 'Dynamext | Accounts' },
-          component: () => import(/* webpackChunkName: "Admin" */ '@/modules/admin/components/Accounts.Dashboard.vue'),
+          component: () => import(/* webpackChunkName: "AdminAccounts" */ '@/modules/admin/components/Accounts.Dashboard.vue'),
         }
       ]
     },
@@ -83,7 +83,7 @@ const routes = [
         path: 'designer',
         name: 'Schedule.Designer',
         meta: { title: 'Dynamext | Schedules', },
-        component: () => import(/* webpackChunkName: "Schedules" */ "@/modules/schedules/components/designer/Schedules.Designer")
+        component: () => import(/* webpackChunkName: "ScheduleDesigner" */ "@/modules/schedules/components/designer/Schedules.Designer")
       }]
     }
     ]
@@ -91,19 +91,19 @@ const routes = [
   {
     path: '/',
     name: 'root',
-    component: () => import('@/layouts/base/Anon.vue'),
+    component: () => import(/* webpackChunkName: "Home" */'@/layouts/base/Anon.vue'),
     children: [
       {
         path: 'login',
         name: 'Login',
         meta: { title: 'Dynamext | Login' },
-        component: () => import('@/views/Login.vue')
+        component: () => import(/* webpackChunkName: "Home" */'@/views/Login.vue')
       },
       {
         path: 'register',
         name: 'Register',
         meta: { title: 'Dynamext | Register' },
-        component: () => import('@/views/Signup.vue')
+        component: () => import(/* webpackChunkName: "Home" */'@/views/Signup.vue')
       },
       {
         path: '*',

@@ -101,11 +101,11 @@
 
 <script>
 import tasklist from "@/modules/dashboard/components/Tasklist";
-import cardOverview from "@/components/cards/Card-Overview";
+import cardOverview from "@/components/card-overview";
 
-import cardStat from "@/components/cards/Card-Stat";
-import lineChart from "@/components/cards/Chart-Line";
-import pieChart from "@/components/cards/Chart-Pie";
+import cardStat from "@/components/card-stats";
+import lineChart from "@/components/card-chart-line";
+import pieChart from "@/components/card-chart-pie";
 
 export default {
      name: "Home",

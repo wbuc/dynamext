@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import DataTable from "@/components/table/Data-Table";
+import DataTable from "@/components/table-editable";
 import AccountDetail from "./Accounts.Detail";
 
 export default {

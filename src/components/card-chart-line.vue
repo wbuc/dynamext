@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import line from "@/components/charts/Line";
+import line from "@/components/chart-base-line";
 
 export default {
      name: "Component.Chart.Line",

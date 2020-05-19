@@ -4,26 +4,26 @@
 import Vue from 'vue'
 
 /* HEADERS */
-import PageHeader from '@/components/shared/PageHeader.vue'
-import Breadcrumbs from '@/components/shared/Breadcrumb.vue'
-import Toolbar from '@/components/shared/Toolbar.vue'
+import PageHeader from '@/components/shared-page-header.vue'
+import Breadcrumbs from '@/components/shared-breadcrumb.vue'
+import Toolbar from '@/components/shared-toolbar.vue'
 
 /* CRADS */
-import BasicCard1 from '@/components/cards/Card-Basic-1'
-import TimelineCard from '@/components/cards/Card-Timeline'
+import BasicCard1 from '@/components/card-basic'
+import TimelineCard from '@/components/card-timeline'
 
 /* MODALS */
-import Confirm from '@/components/dialog/Confirmation.vue'
-import Dialog from '@/components/dialog/Dialog.vue'
+import Confirm from '@/components/dialog-confirmation.vue'
+import Dialog from '@/components/dialog-base.vue'
 
-import Notification from '@/components/snackbars/Notification.vue'
+import Notification from '@/components/snackbar-notification.vue'
 
 /* LISTS */
-import MultiSelect from '@/components/lists/Multi-Select.vue'
-import IconList from "@/components/lists/IconList";
+import MultiSelect from '@/components/list-multi-select.vue'
+import IconList from "@/components/list-icon";
 
 /* BRAND */
-import Logo from '@/components/brand/Logo.vue'
+import Logo from '@/components/brand-logo.vue'
 
 Vue.component('page-header', PageHeader);
 Vue.component('x-toolbar', Toolbar);

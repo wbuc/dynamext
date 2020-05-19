@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import DataTable from "@/components/table/Data-Table";
+import DataTable from "@/components/table-editable";
 
 export default {
      components: { "x-data-table": DataTable },

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import pie from "@/components/charts/Pie";
+import pie from "@/components/chart-base-pie";
 
 export default {
      name: "Component.Chart.Pie",

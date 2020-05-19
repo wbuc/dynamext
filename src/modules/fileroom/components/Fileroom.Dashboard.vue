@@ -87,7 +87,7 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/plugins/eventbus.js";
 
-import tree from "@/components/treeview/Treeview";
+import tree from "@/components/treeview-base";
 
 import folder from "@/modules/fileroom/components/ContextPanel.Folder";
 import doc from "@/modules/fileroom/components/ContextPanel.Document";

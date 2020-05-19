@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import dashboardTile from "@/components/cards/Card-Basic-1";
+import dashboardTile from "@/components/card-basic";
 
 export default {
      components: { dashboardTile },
