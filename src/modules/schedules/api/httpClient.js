@@ -1,8 +1,8 @@
 import axios from 'axios'
-
+import presets from '@/config/presets.js'
 
 const httpClient = axios.create({
-    baseURL: 'http://localhost:3000/',//todo: use .ENV variables.
+    baseURL: presets.baseURL,//todo: use .ENV variables.
     timeout: 1000,
     headers: {
         "Content-Type": "application/json",

@@ -57,7 +57,13 @@ const routes = [
           path: 'accounts',
           name: 'Admin.Accounts',
           meta: { title: 'Dynamext | Accounts' },
-          component: () => import(/* webpackChunkName: "AdminAccounts" */ '@/modules/admin/components/Accounts.Dashboard.vue'),
+          component: () => import(/* webpackChunkName: "AdminAccounts" */ '@/modules/admin/components/admin-accounts-dashboard.vue'),
+        },
+        {
+          path: 'appconfig',
+          name: 'Admin.AppConfig',
+          meta: { title: 'Dynamext | App Data' },
+          component: () => import(/* webpackChunkName: "AdminAppConfig" */ '@/modules/admin/components/admin-app-dashboard.vue'),
         }
       ]
     },

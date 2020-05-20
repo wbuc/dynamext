@@ -55,7 +55,7 @@
 
 <script>
 import DataTable from "@/components/table-editable";
-import AccountDetail from "./Accounts.Detail";
+import AccountDetail from "./admin-accounts-detail";
 
 export default {
      name: "Accounts.Dashboard",

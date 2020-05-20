@@ -98,6 +98,17 @@ export default {
                          addAction: () => {
                               // things to do here when clicked
                          }
+                    },
+                    {
+                         title: "Application Data",
+                         description:
+                              "Add or edit data used by the application.",
+                         primaryAction: () => {
+                              this.$router.replace({ name: "Admin.AppConfig" });
+                         },
+                         addAction: () => {
+                              // things to do here when clicked
+                         }
                     }
                ],
                dialogConfig: {
