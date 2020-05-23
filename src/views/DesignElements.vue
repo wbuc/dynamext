@@ -339,8 +339,24 @@
                                    <v-expansion-panel class="hidden-xs-only">
                                         <v-expansion-panel-header
                                              class="title font-weight-thin"
-                                        >Modals</v-expansion-panel-header>
-                                        <v-expansion-panel-content class="pt-2"></v-expansion-panel-content>
+                                        >Ripple</v-expansion-panel-header>
+                                        <v-expansion-panel-content class="pt-2">
+                                             <v-row class="py-12" justify="space-around">
+                                                  <v-btn color="primary">With ripple (default)</v-btn>
+                                                  <v-btn
+                                                       :ripple="false"
+                                                       color="primary"
+                                                  >Without ripple</v-btn>
+                                                  <v-btn
+                                                       :ripple="{ center: true }"
+                                                       color="primary"
+                                                  >With centered ripple</v-btn>
+                                                  <v-btn
+                                                       :ripple="{ class: 'red--text' }"
+                                                       text
+                                                  >With red ripple</v-btn>
+                                             </v-row>
+                                        </v-expansion-panel-content>
                                    </v-expansion-panel>
                                    <v-expansion-panel class="hidden-xs-only">
                                         <v-expansion-panel-header

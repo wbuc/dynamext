@@ -26,9 +26,13 @@ import IconList from "@/components/list-icon";
 /* BRAND */
 import Logo from '@/components/brand-logo.vue'
 
+/* LAYOUT */
+import LayoutFormControl from '@/components/layout-form-control'
+import LayoutFormSection from '@/components/layout-form-section'
+import LayoutFormFooter from '@/components/layout-form-footer'
+
 Vue.component('page-header', PageHeader);
 Vue.component('x-toolbar', Toolbar);
-
 Vue.component('x-breadcrumb', Breadcrumbs);
 Vue.component('x-card-tile', CardTile);
 Vue.component('x-card-basic', CardBasic);
@@ -38,6 +42,8 @@ Vue.component('x-notification', Notification)
 Vue.component('x-dialog', Dialog);
 Vue.component('x-multi-select', MultiSelect)
 Vue.component('x-icon-list', IconList)
-
+Vue.component('x-form-control', LayoutFormControl)
+Vue.component('x-form-section', LayoutFormSection)
+Vue.component('x-form-footer', LayoutFormFooter)
 Vue.component('x-logo', Logo)
 
