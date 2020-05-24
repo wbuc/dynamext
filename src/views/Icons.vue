@@ -113,6 +113,7 @@ export default {
                     "mdi-plus-thick",
                     "mdi-plus-box-outline",
                     "mdi-plus",
+                    "mdi-refresh",
                     "mdi-close-thick",
                     "mdi-do-not-disturb",
                     "more_vert",

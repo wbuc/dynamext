@@ -1,6 +1,10 @@
 <template>
-     <div class="mb-3">
-          <v-list-item-title class="title font-weight-light no-cursor">{{title}}</v-list-item-title>
+     <div :class="{'mb-3': !dense,
+     'mb-1':dense}">
+          <v-list-item-title
+               class="font-weight-light no-cursor"
+               :class="{'title':!dense, 'subtitle-1': dense}"
+          >{{title}}</v-list-item-title>
           <slot></slot>
      </div>
 </template>
@@ -9,7 +13,8 @@
 export default {
      name: "component.layout.form.control",
      props: {
-          title: { type: String, required: false }
+          title: { type: String, required: false },
+          dense: { type: Boolean, default: false }
      }
 };
 </script>
