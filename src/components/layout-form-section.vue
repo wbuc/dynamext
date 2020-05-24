@@ -17,7 +17,7 @@
 export default {
      name: "component.layout.form.section",
      props: {
-          title: { type: String, required: true }
+          title: { type: String, required: false }
      }
 };
 </script>

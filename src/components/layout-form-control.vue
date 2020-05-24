@@ -9,7 +9,7 @@
 export default {
      name: "component.layout.form.control",
      props: {
-          title: { type: String, required: true }
+          title: { type: String, required: false }
      }
 };
 </script>

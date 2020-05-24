@@ -11,7 +11,7 @@ const mutations = {
 }
 const actions = {
 
-    getProjectInfo(context) {
+    getAdminProjectDetail(context) {
         //check if loggend in. Old if (!state.idToken) {return}
         if (!context.rootGetters.isAuthenticated) {
             return;
@@ -19,9 +19,10 @@ const actions = {
         context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
-            adminApi.getProjectInfo().then(data => {
+            adminApi.getProjectInfo().then(response => {
                 context.commit('API_COMPLETE');
-                resolve(data)
+                // need to clean this up, the api should always only return the project data object, not everything.
+                resolve(response.data)
             },
                 error => {
                     console.log(error)
@@ -30,20 +31,20 @@ const actions = {
                 });
         })
     },
-    // saveDocumentMetadata(context, data) {
-    //     if (!context.rootGetters.isAuthenticated) return;
+    saveAdminProjectDetail(context, data) {
+        if (!context.rootGetters.isAuthenticated) return;
 
-    //     return new Promise((resolve, reject) => {
-    //         fileroomApi.saveDocumentDetail(data).then(data => {
-    //             resolve(data)
-    //         },
-    //             error => {
-    //                 console.log(`error saving document ${data.name}: `, error)
-    //                 reject(error);
-    //             });
-    //     });
+        return new Promise((resolve, reject) => {
+            adminApi.saveProjectInfo(data).then(data => {
+                resolve(data)
+            },
+                error => {
+                    console.log(`error saving project data ${data.title}: `, error)
+                    reject(error);
+                });
+        });
 
-    // },
+    },
 
 }
 

@@ -3,6 +3,7 @@
           <x-form-section title="Project Information">
                <x-form-control title="Project Title">
                     <v-text-field
+                         v-model="projectData.title"
                          style="width:100%"
                          outlined
                          single-line
@@ -13,6 +14,7 @@
                </x-form-control>
                <x-form-control title="Description">
                     <v-textarea
+                         v-model="projectData.description"
                          v-bind:auto-grow="false"
                          outlined
                          hide-details
@@ -22,6 +24,7 @@
                </x-form-control>
                <x-form-control title="Client Name">
                     <v-text-field
+                         v-model="projectData.clientName"
                          style="width:100%"
                          outlined
                          single-line
@@ -32,13 +35,23 @@
                     ></v-text-field>
                </x-form-control>
                <x-form-control title="Client">
-                    <v-btn-toggle v-model="clientSide" color="primary" borderless class="ml-0">
+                    <v-btn-toggle
+                         v-model="projectData.client"
+                         color="primary"
+                         borderless
+                         class="ml-0"
+                    >
                          <v-btn value="buyside">Buyside</v-btn>
                          <v-btn value="sellside">Sellside</v-btn>
                     </v-btn-toggle>
                </x-form-control>
                <x-form-control title="Type">
-                    <v-btn-toggle v-model="reportType" color="primary" borderless class="ml-0">
+                    <v-btn-toggle
+                         v-model="projectData.reportType"
+                         color="primary"
+                         borderless
+                         class="ml-0"
+                    >
                          <v-btn value="duediligence">Due Diligence</v-btn>
                          <v-btn value="redflag">Red Flag</v-btn>
                     </v-btn-toggle>
@@ -49,6 +62,7 @@
                     <v-col cols="6">
                          <x-form-control title="CMN">
                               <v-text-field
+                                   v-model="projectData.cmn"
                                    style="width:100%"
                                    outlined
                                    single-line
@@ -61,6 +75,7 @@
                     <v-col cols="6">
                          <x-form-control title="Partner">
                               <v-text-field
+                                   v-model="projectData.partner"
                                    style="width:100%"
                                    outlined
                                    single-line
@@ -73,6 +88,7 @@
                     <v-col cols="6">
                          <x-form-control title="Partner (Optional)">
                               <v-text-field
+                                   v-model="projectData.partnerOptional"
                                    style="width:100%"
                                    outlined
                                    single-line
@@ -85,6 +101,7 @@
                     <v-col cols="6">
                          <x-form-control title="Target">
                               <v-text-field
+                                   v-model="projectData.target"
                                    style="width:100%"
                                    outlined
                                    single-line
@@ -97,7 +114,7 @@
                     <v-col cols="6">
                          <x-form-control title="Deal Type">
                               <v-btn-toggle
-                                   v-model="dealType"
+                                   v-model="projectData.dealType"
                                    color="primary"
                                    borderless
                                    class="ml-0"
@@ -122,20 +139,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-     name: "admin-app-project-detail",
+     name: "admin.app.project.detail",
      data() {
           return {
-               clientSide: "buyside",
-               reportType: "duediligence",
-               dealType: "sharedeal"
+               projectData: {} // needs to be an empty object as it's loaded from an api and can take longer to load so vuetify needs to know ther's an object. see schedules.designer how to use null objects and states.
           };
      },
-     created() {
-          console.log("created : admin-app-project-detail");
-     },
-     mounted() {
-          console.log("mounted : admin-app-project-detail");
+     computed: {
+          ...mapGetters(["api"])
      },
      methods: {
           cancelProject() {
@@ -146,11 +160,27 @@ export default {
                );
           },
           saveProject() {
-               this.$store.dispatch(
-                    "notifySuccess",
-                    `Project information has been saved!`
-               );
+               this.$store
+                    .dispatch("saveAdminProjectDetail", this.projectData)
+                    .then(() => {
+                         this.$store.dispatch(
+                              "notifySuccess",
+                              `Project information has been saved!`
+                         );
+                    });
+          },
+          getProjectDetail(cb) {
+               this.$store.dispatch("getAdminProjectDetail").then(data => {
+                    this.projectData = data;
+                    if (cb) cb();
+               });
           }
+     },
+     created() {
+          this.getProjectDetail();
+     },
+     mounted() {
+          console.log("mounted : admin-app-project-detail");
      }
 };
 </script>

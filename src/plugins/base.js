@@ -20,8 +20,12 @@ import Dialog from '@/components/dialog-base.vue'
 import Notification from '@/components/snackbar-notification.vue'
 
 /* LISTS */
-import MultiSelect from '@/components/list-multi-select.vue'
-import IconList from "@/components/list-icon";
+import DynamicList from '@/components/list-dynamic'
+import MultiSelect from '@/components/list-multi-select'
+import IconList from '@/components/list-icon';
+
+/* RENDERLESS */
+import DataList from '@/components/renderless-data-list'
 
 /* BRAND */
 import Logo from '@/components/brand-logo.vue'
@@ -42,8 +46,11 @@ Vue.component('x-notification', Notification)
 Vue.component('x-dialog', Dialog);
 Vue.component('x-multi-select', MultiSelect)
 Vue.component('x-icon-list', IconList)
+Vue.component('x-dynamic-list', DynamicList)
 Vue.component('x-form-control', LayoutFormControl)
 Vue.component('x-form-section', LayoutFormSection)
 Vue.component('x-form-footer', LayoutFormFooter)
 Vue.component('x-logo', Logo)
+Vue.component('x-data-list', DataList)
+
 

@@ -1,21 +1,26 @@
- <script>
+<script>
 import axios from "axios";
-import api from "@/config/api.js";
-
-axios.defaults.baseURL = api.baseURL;
+import api from "@/config/presets";
 
 export default {
-     props: ["url"],
+     props: {
+          endPoint: { type: String },
+          baseURL: {
+               type: String,
+               default: api.baseURL
+          }
+     },
      data() {
           return {
+               api: axios.create({ baseURL: this.baseURL }),
                data: null,
                loading: true
           };
      },
      created() {
-          axios.get(this.url).then(({ data }) => {
+          this.api.get(this.endPoint).then(({ data }) => {
                this.data = data;
-               this.loaded = false;
+               this.loading = false;
           });
      },
      render() {
@@ -26,4 +31,3 @@ export default {
      }
 };
 </script>
-
