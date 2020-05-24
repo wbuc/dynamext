@@ -6,7 +6,7 @@ import formsAuth from '@/modules/userprofile/store/forms.auth'
 import fileroom from '@/modules/fileroom/store/fileroom'
 import scheduleRuntime from '@/modules/schedules/store/schedules.runtime'
 import scheduleDesigner from '@/modules/schedules/store/schedules.designer'
-
+import admin from '@/modules/admin/store/admin.store.js'
 
 import * as getters from './common/getters'
 import * as mutations from './common/mutations'
@@ -23,6 +23,7 @@ export default new Vuex.Store({
   mutations: mutations,
   actions: actions,
   modules: {
+    admin,
     userProfile,
     formsAuth,
     fileroom,

@@ -51,7 +51,7 @@ const routes = [
           path: '',
           name: 'Admin.Dashboard',
           meta: { title: 'Dynamext | Administration' },
-          component: () => import(/* webpackChunkName: "Admin" */ '@/modules/admin/components/Admin.Dashboard.vue'),
+          component: () => import(/* webpackChunkName: "Admin" */ '@/modules/admin/components/admin-dashboard.vue'),
         },
         {
           path: 'accounts',
@@ -82,14 +82,14 @@ const routes = [
         path: '',
         name: 'Schedule.Dashboard',
         meta: { title: 'Dynamext | Schedules', },
-        component: () => import(/* webpackChunkName: "Schedules" */ "@/modules/schedules/components/Schedules.Dashboard")
+        component: () => import(/* webpackChunkName: "Schedules" */ "@/modules/schedules/components/schedules-dashboard")
       }
         ,
       {
         path: 'designer',
         name: 'Schedule.Designer',
         meta: { title: 'Dynamext | Schedules', },
-        component: () => import(/* webpackChunkName: "ScheduleDesigner" */ "@/modules/schedules/components/designer/Schedules.Designer")
+        component: () => import(/* webpackChunkName: "ScheduleDesigner" */ "@/modules/schedules/components/designer/schedules-designer")
       }]
     }
     ]

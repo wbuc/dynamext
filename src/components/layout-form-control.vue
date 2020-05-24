@@ -1,7 +1,6 @@
 <template>
      <div class="mb-3">
           <v-list-item-title class="title font-weight-light no-cursor">{{title}}</v-list-item-title>
-
           <slot></slot>
      </div>
 </template>

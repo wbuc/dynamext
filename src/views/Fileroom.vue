@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import FileroomDashboard from "@/modules/fileroom/components/Fileroom.Dashboard";
+import FileroomDashboard from "@/modules/fileroom/components/fileroom-dashboard";
 export default {
      name: "Fileroom",
      components: { FileroomDashboard }

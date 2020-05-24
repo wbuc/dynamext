@@ -89,10 +89,10 @@ import { eventBus } from "@/plugins/eventbus.js";
 
 import tree from "@/components/treeview-base";
 
-import folder from "@/modules/fileroom/components/ContextPanel.Folder";
-import doc from "@/modules/fileroom/components/ContextPanel.Document";
-import finding from "@/modules/fileroom/components/ContextPanel.Finding";
-import schedule from "@/modules/fileroom/components/ContextPanel.Schedule";
+import folder from "@/modules/fileroom/components/context-panel-folder";
+import doc from "@/modules/fileroom/components/context-panel-document";
+import finding from "@/modules/fileroom/components/context-panel-finding";
+import schedule from "@/modules/fileroom/components/context-panel-schedule";
 
 export default {
      name: "Fileroom.Dashboard",
