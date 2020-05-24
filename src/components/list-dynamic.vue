@@ -16,7 +16,7 @@
                               <slot name="detail" v-bind:item="item"></slot>
                          </v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-list-item-action>
+                    <v-list-item-action class="content-row">
                          <slot name="actions" v-bind:item="item"></slot>
                     </v-list-item-action>
                </v-list-item>
@@ -50,3 +50,14 @@ export default {
      }
 };
 </script>
+<style scoped>
+.no-cursor {
+     cursor: default;
+}
+.content-row {
+     flex-direction: row !important;
+}
+.-column {
+     flex-direction: column !important;
+}
+</style>

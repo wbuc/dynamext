@@ -8,11 +8,12 @@
                               <x-dynamic-list :listData="departments">
                                    <template v-slot:title="{item}">{{item.name}}</template>
                                    <template v-slot:actions="{ item }">
-                                        <v-list-item-action @click="openItem(item)">
-                                             <v-btn icon>
-                                                  <v-icon color="grey lighten-1">mdi-information</v-icon>
-                                             </v-btn>
-                                        </v-list-item-action>
+                                        <v-btn small icon @click="openItem(item)">
+                                             <v-icon small color="secondary">mdi-pencil</v-icon>
+                                        </v-btn>
+                                        <v-btn small icon @click="deleteItem(item)">
+                                             <v-icon small color="error">mdi-delete</v-icon>
+                                        </v-btn>
                                    </template>
                               </x-dynamic-list>
                          </div>
@@ -37,6 +38,9 @@ export default {
           },
           openItem(item) {
                console.log("opening item ", item);
+          },
+          deleteItem(item) {
+               console.log("deleting item ", item);
           }
      },
      created() {
@@ -47,6 +51,5 @@ export default {
      }
 };
 </script>
-
 <style>
 </style>
