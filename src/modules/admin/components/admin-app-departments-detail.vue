@@ -110,7 +110,7 @@ export default {
                               action: () => {
                                    this.$store
                                         .dispatch(
-                                             "updateAdmincurrentDepartment",
+                                             "updateAdminDepartmentDetail",
                                              this.currentDepartment
                                         )
                                         .then(() => {
@@ -158,12 +158,16 @@ export default {
                this.listTicker++;
           },
           newItem() {
+               // Dialog presets
                this.dialogConfig.title = "New department";
                this.dialogConfig.actions = this.dialogConfig.newActions;
+               // Empty object
                this.currentDepartment = { name: "" };
+               // show dialog when ready
                this.dialogConfig.open = true;
           },
           editItem(item) {
+               // Dialog presets
                this.dialogConfig.title = "Edit department";
                this.dialogConfig.actions = this.dialogConfig.editActions;
                // fetch item data from the server.
@@ -175,10 +179,12 @@ export default {
                     });
           },
           deleteItem(item) {
+               // Always set the current item being used in any dialog.
                this.currentDepartment = item;
-
+               // Dialog presets
                this.deleteConfirmConfig.title = "Delete department";
                this.deleteConfirmConfig.text = `Are you sure you want to delete ${this.currentDepartment.name}?`;
+               // Show dialog when ready
                this.deleteConfirmConfig.open = true;
           }
      },
