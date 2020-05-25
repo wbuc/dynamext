@@ -22,8 +22,14 @@ const saveProjectInfo = (project) => {
             .catch(error => reject(error))
     })
 }
-
-const saveNewDepartment = (department) => {
+const getDepartmentDetail = (id) => {
+    return new Promise((resolve, reject) => {
+        httpClient.get(`${END_POINT}/departments/${id}`)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
+const saveDepartment = (department) => {
     return new Promise((resolve, reject) => {
         httpClient.post(`${END_POINT}/departments`, department)
             .then(response => resolve(response))
@@ -37,6 +43,12 @@ const updateDepartment = (department) => {
             .catch(error => reject(error))
     })
 }
+const deleteDepartment = (department) => {
+    return new Promise((resolve, reject) => {
+        httpClient.delete(`${END_POINT}/departments/${department.id}`)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
 
-
-export default { getProjectInfo, saveProjectInfo, updateDepartment, saveNewDepartment }
+export default { getProjectInfo, saveProjectInfo, getDepartmentDetail, updateDepartment, saveDepartment, deleteDepartment }

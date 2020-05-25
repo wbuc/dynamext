@@ -17,7 +17,7 @@
                               <x-dynamic-list :listData="departments">
                                    <template v-slot:title="{item}">{{item.name}}</template>
                                    <template v-slot:actions="{ item }">
-                                        <v-btn small icon @click="openItem(item)">
+                                        <v-btn small icon @click="editItem(item)">
                                              <v-icon small color="secondary">mdi-pencil</v-icon>
                                         </v-btn>
                                         <v-btn small icon @click="deleteItem(item)">
@@ -30,12 +30,12 @@
                </template>
           </x-data-list>
           <x-dialog :show="dialogConfig.open" :actions="dialogConfig.actions">
-               <template v-slot:title>New department</template>
+               <template v-slot:title>{{dialogConfig.title}}</template>
                <template>
                     <x-form-section flat dense>
                          <x-form-control title="Name" dense>
                               <v-text-field
-                                   v-model="departmentDetail.name"
+                                   v-model="currentDepartment.name"
                                    style="width:100%"
                                    outlined
                                    single-line
@@ -47,6 +47,14 @@
                     </x-form-section>
                </template>
           </x-dialog>
+          <x-confirmation
+               :show="deleteConfirmConfig.open"
+               @confirmAction="deleteConfirmConfig.confirmAction"
+               @cancelAction="deleteConfirmConfig.cancelAction"
+          >
+               <template v-slot:title>{{deleteConfirmConfig.title}}</template>
+               <template v-slot:text>{{deleteConfirmConfig.text}}</template>
+          </x-confirmation>
      </div>
 </template>
 
@@ -59,7 +67,8 @@ export default {
                listTicker: 1, // used to force the list refresh
                dialogConfig: {
                     open: false,
-                    actions: [
+                    title: null,
+                    newActions: [
                          {
                               text: "Close",
                               color: "error",
@@ -69,26 +78,79 @@ export default {
                          },
                          {
                               text: "Save",
-                              color: "success",
+                              color: "primary",
                               action: () => {
                                    this.$store
                                         .dispatch(
                                              "saveNewAdminDepartment",
-                                             this.departmentDetail
+                                             this.currentDepartment
                                         )
                                         .then(() => {
                                              this.$store.dispatch(
                                                   "notifySuccess",
-                                                  `${this.departmentDetail.name} created!`
+                                                  `${this.currentDepartment.name} created!`
                                              );
                                              this.refresh();
                                         });
                                    this.dialogConfig.open = false;
                               }
                          }
-                    ]
+                    ],
+                    editActions: [
+                         {
+                              text: "Close",
+                              color: "error",
+                              action: () => {
+                                   this.dialogConfig.open = false;
+                              }
+                         },
+                         {
+                              text: "Update",
+                              color: "primary",
+                              action: () => {
+                                   this.$store
+                                        .dispatch(
+                                             "updateAdmincurrentDepartment",
+                                             this.currentDepartment
+                                        )
+                                        .then(() => {
+                                             this.$store.dispatch(
+                                                  "notifySuccess",
+                                                  `${this.currentDepartment.name} has been updated!`
+                                             );
+                                             this.refresh();
+                                        });
+                                   this.dialogConfig.open = false;
+                              }
+                         }
+                    ],
+                    actions: []
                },
-               departmentDetail: { name: "" }
+               deleteConfirmConfig: {
+                    open: false,
+                    title: null,
+                    text: null,
+                    confirmAction: () => {
+                         this.$store
+                              .dispatch(
+                                   "deleteAdminDepartment",
+                                   this.currentDepartment
+                              )
+                              .then(() => {
+                                   this.$store.dispatch(
+                                        "notifySuccess",
+                                        `${this.currentDepartment.name} has been deleted!`
+                                   );
+                                   this.refresh();
+                              });
+                         this.deleteConfirmConfig.open = false;
+                    },
+                    cancelAction: () => {
+                         this.deleteConfirmConfig.open = false;
+                         this.currentDepartment = {};
+                    }
+               },
+               currentDepartment: {}
           };
      },
      methods: {
@@ -96,23 +158,32 @@ export default {
                this.listTicker++;
           },
           newItem() {
-               this.departmentDetail = { name: "" };
+               this.dialogConfig.title = "New department";
+               this.dialogConfig.actions = this.dialogConfig.newActions;
+               this.currentDepartment = { name: "" };
                this.dialogConfig.open = true;
           },
-          openItem(item) {
-               // this should fetch the data from the server using the id, then map it.
-               console.log("opening item ", item);
+          editItem(item) {
+               this.dialogConfig.title = "Edit department";
+               this.dialogConfig.actions = this.dialogConfig.editActions;
+               // fetch item data from the server.
+               this.$store
+                    .dispatch("getAdminDepartmentDetail", item)
+                    .then(data => {
+                         this.currentDepartment = data;
+                         this.dialogConfig.open = true;
+                    });
           },
           deleteItem(item) {
-               console.log("deleting item ", item);
+               this.currentDepartment = item;
+
+               this.deleteConfirmConfig.title = "Delete department";
+               this.deleteConfirmConfig.text = `Are you sure you want to delete ${this.currentDepartment.name}?`;
+               this.deleteConfirmConfig.open = true;
           }
      },
-     created() {
-          console.log("created : admin-app-department-detail");
-     },
-     mounted() {
-          console.log("mounted : admin-app-department-detail");
-     }
+     created() {},
+     mounted() {}
 };
 </script>
 <style>

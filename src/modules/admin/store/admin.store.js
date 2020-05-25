@@ -45,8 +45,23 @@ const actions = {
         });
 
     },
+    getAdminDepartmentDetail(context, data) {
+        if (!context.rootGetters.isAuthenticated) return;
 
+        context.commit('API_LOADING');
 
+        return new Promise((resolve, reject) => {
+            adminApi.getDepartmentDetail(data.id).then(response => {
+                context.commit('API_COMPLETE');
+                resolve(response.data)
+            },
+                error => {
+                    console.log(error)
+                    context.commit('API_ERROR');
+                    reject(error);
+                });
+        })
+    },
     saveNewAdminDepartment(context, data) {
         if (!context.rootGetters.isAuthenticated) return;
 
@@ -55,11 +70,12 @@ const actions = {
         data.id = newId;
 
         return new Promise((resolve, reject) => {
-            adminApi.saveNewDepartment(data).then(data => {
+            adminApi.saveDepartment(data).then(data => {
                 resolve(data)
             },
                 error => {
-                    console.log(`error saving department data ${data.title}: `, error)
+                    console.log(`error saving department data ${data.name}: `, error)
+                    context.commit('API_ERROR');
                     reject(error);
                 });
         });
@@ -79,7 +95,20 @@ const actions = {
         });
 
     },
+    deleteAdminDepartment(context, data) {
+        if (!context.rootGetters.isAuthenticated) return;
 
+        return new Promise((resolve, reject) => {
+            adminApi.deleteDepartment(data).then(data => {
+                resolve(data)
+            },
+                error => {
+                    console.log(`error saving department data ${data.title}: `, error)
+                    reject(error);
+                });
+        });
+
+    },
 }
 
 export default { state, getters, mutations, actions }

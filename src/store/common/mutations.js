@@ -15,31 +15,37 @@ export const API_ERROR = (state, error) => {
 }
 
 export const NOTIFY_SUCCESS = (state, data) => {
-    state.notification.show = true;
     state.notification.type = 'success'
     state.notification.message = data ? data : 'Success notification';
     setTimeout(() => {
+        state.notification.show = true;
+    }, 500)
+    setTimeout(() => {
         state.notification = { show: false, type: null, message: null };
-    }, 3000)
+    }, 3500)
 
 }
 
 export const NOTIFY_INFO = (state, data) => {
-    state.notification.show = true;
     state.notification.type = 'primary'
     state.notification.message = data ? data : 'Important notification';
     setTimeout(() => {
+        state.notification.show = true;
+    }, 500)
+    setTimeout(() => {
         state.notification = { show: false, type: null, message: null };
-    }, 8000)
+    }, 4500)
 }
 
 export const NOTIFY_ERROR = (state, data) => {
-    state.notification.show = true;
     state.notification.type = 'error'
     state.notification.message = data ? data : 'Error notification';
     setTimeout(() => {
+        state.notification.show = true;
+    }, 500)
+    setTimeout(() => {
         state.notification = { show: false, type: null, message: null };
-    }, 8000)
+    }, 4500)
 }
 
 export const NOTIFY_CLOSE = (state) => {
