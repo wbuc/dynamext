@@ -46,6 +46,40 @@ const actions = {
 
     },
 
+
+    saveNewAdminDepartment(context, data) {
+        if (!context.rootGetters.isAuthenticated) return;
+
+        //will be replaced on server when api is available.
+        const newId = Math.floor((Math.random() * 100) + 1);
+        data.id = newId;
+
+        return new Promise((resolve, reject) => {
+            adminApi.saveNewDepartment(data).then(data => {
+                resolve(data)
+            },
+                error => {
+                    console.log(`error saving department data ${data.title}: `, error)
+                    reject(error);
+                });
+        });
+
+    },
+    updateAdminDepartmentDetail(context, data) {
+        if (!context.rootGetters.isAuthenticated) return;
+
+        return new Promise((resolve, reject) => {
+            adminApi.updateDepartment(data).then(data => {
+                resolve(data)
+            },
+                error => {
+                    console.log(`error saving department data ${data.title}: `, error)
+                    reject(error);
+                });
+        });
+
+    },
+
 }
 
 export default { state, getters, mutations, actions }

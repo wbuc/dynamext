@@ -23,5 +23,20 @@ const saveProjectInfo = (project) => {
     })
 }
 
+const saveNewDepartment = (department) => {
+    return new Promise((resolve, reject) => {
+        httpClient.post(`${END_POINT}/departments`, department)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
+const updateDepartment = (department) => {
+    return new Promise((resolve, reject) => {
+        httpClient.put(`${END_POINT}/departments/${department.id}`, department)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
 
-export default { getProjectInfo, saveProjectInfo }
+
+export default { getProjectInfo, saveProjectInfo, updateDepartment, saveNewDepartment }

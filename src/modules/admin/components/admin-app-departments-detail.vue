@@ -66,6 +66,25 @@ export default {
                               action: () => {
                                    this.dialogConfig.open = false;
                               }
+                         },
+                         {
+                              text: "Save",
+                              color: "success",
+                              action: () => {
+                                   this.$store
+                                        .dispatch(
+                                             "saveNewAdminDepartment",
+                                             this.departmentDetail
+                                        )
+                                        .then(() => {
+                                             this.$store.dispatch(
+                                                  "notifySuccess",
+                                                  `${this.departmentDetail.name} created!`
+                                             );
+                                             this.refresh();
+                                        });
+                                   this.dialogConfig.open = false;
+                              }
                          }
                     ]
                },
@@ -81,6 +100,7 @@ export default {
                this.dialogConfig.open = true;
           },
           openItem(item) {
+               // this should fetch the data from the server using the id, then map it.
                console.log("opening item ", item);
           },
           deleteItem(item) {
