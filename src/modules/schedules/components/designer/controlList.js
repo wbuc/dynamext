@@ -68,7 +68,7 @@ export const controls = [
         instruction: null,
         value: 0,
         description: "Full number values",
-        icon: "mdi-numeric-10",
+        icon: "mdi-numeric-3-box-outline",
         properties: {
             default: 0,
             placeholder: "Enter a number"
@@ -99,12 +99,28 @@ export const controls = [
         type: "yesno",
         instruction: "",
         value: null,
-        description: "True or false value to be set.",
+        description: "True or false value to be set",
         icon: "mdi-order-bool-descending",
         properties: {
             default: null
         },
         hasValidations: false,
         validations: {}
+    },
+    {
+        id: 8,
+        name: "Dropdown",
+        type: "dropdown",
+        instruction: "",
+        value: null,
+        description: "Select an option from a dropdown list",
+        icon: "mdi-view-list",
+        properties: {
+            default: null,
+            selectableOptions: []
+        },
+        hasValidations: false,
+        validations: {}
     }
+
 ];

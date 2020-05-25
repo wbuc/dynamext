@@ -129,13 +129,14 @@
                                                   <div
                                                        v-if="formControls.length === 0"
                                                        class="text-center grey--text py-5"
-                                                  >Add fields from the toolbox.</div>
+                                                  >Add fields from the toolbox</div>
                                                   <draggable
                                                        class="dragArea list-group"
                                                        :list="formControls"
                                                        group="toolbox"
                                                        @change="log"
                                                        handle=".x-control-handle"
+                                                       :class="{'empty-form-placeholder': isEmptyForm}"
                                                   >
                                                        <v-list-item
                                                             two-line
@@ -300,7 +301,6 @@
                                                   :key="index"
                                              >
                                                   <div class="px-4 pt-4 d-none">{{cat.group}}</div>
-
                                                   <v-list flat>
                                                        <v-list-item
                                                             :ripple="propertiesConfig.ripple"
@@ -369,15 +369,40 @@
                                                                  v-if="prop.type === 'select'"
                                                             >
                                                                  <v-list-item-title>{{prop.displayName}}</v-list-item-title>
-                                                                 <v-select
-                                                                      :items="prop.options"
+                                                                 <template
+                                                                      v-if="currentControl.type !== 'dropdown'"
+                                                                 >
+                                                                      <v-select
+                                                                           :items="prop.options"
+                                                                           v-model="currentControl.properties[prop.name]"
+                                                                           item-text="displayName"
+                                                                           item-value="name"
+                                                                           dense
+                                                                           outlined
+                                                                           hide-details
+                                                                           v-on="typeof prop.onChange !== 'undefined' ? {change: prop.onChange} : {}"
+                                                                      ></v-select>
+                                                                 </template>
+                                                                 <template
+                                                                      v-else-if="currentControl.type === 'dropdown'"
+                                                                 >
+                                                                      <v-select
+                                                                           :items="currentControl.properties.selectableOptions"
+                                                                           v-model="currentControl.properties[prop.name]"
+                                                                           dense
+                                                                           outlined
+                                                                           hide-details
+                                                                           v-on="typeof prop.onChange !== 'undefined' ? {change: prop.onChange} : {}"
+                                                                      ></v-select>
+                                                                 </template>
+                                                            </v-list-item-content>
+                                                            <v-list-item-content
+                                                                 v-if="prop.type === 'tag'"
+                                                            >
+                                                                 <v-list-item-title>{{prop.displayName}}</v-list-item-title>
+                                                                 <tags
                                                                       v-model="currentControl.properties[prop.name]"
-                                                                      item-text="displayName"
-                                                                      item-value="name"
-                                                                      dense
-                                                                      outlined
-                                                                      v-on="typeof prop.onChange !== 'undefined' ? {change: prop.onChange} : {}"
-                                                                 ></v-select>
+                                                                 ></tags>
                                                             </v-list-item-content>
                                                        </v-list-item>
                                                   </v-list>
@@ -471,10 +496,13 @@
 
 <script>
 import draggable from "vuedraggable";
+import tags from "@/components/control-tag-inline";
 
 import { mapGetters } from "vuex";
 
+// All controls that will be used in the toolbox
 import { controls } from "@/modules/schedules/components/designer/controlList";
+
 // import { controlTypes } from "@/modules/schedules/components/designer/controlTypes";
 
 // *** CONTROL TEMPLATES START
@@ -485,24 +513,30 @@ import numberControl from "@/modules/schedules/components/designer/controls/numb
 import decimalControl from "@/modules/schedules/components/designer/controls/decimal";
 import informationControl from "@/modules/schedules/components/designer/controls/information";
 import yesnoControl from "@/modules/schedules/components/designer/controls/yesno";
+import dropdownControl from "@/modules/schedules/components/designer/controls/dropdown";
 // *** CONTROL TEMPLATES END
 
 export default {
      name: "Schedules.Canvas.Designer",
      components: {
           draggable,
+          tags,
           textControl,
           paragraphControl,
           headerControl,
           numberControl,
           decimalControl,
           informationControl,
-          yesnoControl
+          yesnoControl,
+          dropdownControl
      },
      computed: {
           ...mapGetters(["api", "dynamicForm"]),
           controlSelected() {
                return this.currentControl ? true : false;
+          },
+          isEmptyForm() {
+               return this.formControls.length === 0;
           }
      },
      data() {
@@ -702,14 +736,14 @@ export default {
                               properties: [
                                    {
                                         name: "default",
-                                        displayName: "Default Value",
+                                        displayName: "Default value",
                                         value: "",
                                         type: "number",
                                         placeholder: 0
                                    },
                                    {
                                         name: "placeholder",
-                                        displayName: "Placeholder Value",
+                                        displayName: "Placeholder",
                                         value: "",
                                         type: "text"
                                    }
@@ -717,19 +751,19 @@ export default {
                               validations: [
                                    {
                                         name: "minValue",
-                                        displayName: "Minimum Value",
+                                        displayName: "Minimum value",
                                         value: 0,
                                         type: "number"
                                    },
                                    {
                                         name: "maxValue",
-                                        displayName: "Maximum Value",
+                                        displayName: "Maximum value",
                                         value: 1000,
                                         type: "number"
                                    },
                                    {
                                         name: "customExpression",
-                                        displayName: "Custom Expression",
+                                        displayName: "Custom expression",
                                         value: null,
                                         type: "text"
                                    }
@@ -822,7 +856,7 @@ export default {
                               properties: [
                                    {
                                         name: "default",
-                                        displayName: "Default",
+                                        displayName: "Default value",
                                         value: null,
                                         type: "select",
                                         options: [
@@ -846,6 +880,38 @@ export default {
                                              // Set the current contol value to the new default option selected.
                                              this.currentControl.value = val;
                                         }
+                                   }
+                              ]
+                         }
+                    ],
+                    dropdown: [
+                         {
+                              group: "Group 1",
+                              properties: [
+                                   {
+                                        name: "default",
+                                        displayName: "Default value",
+                                        value: null,
+                                        type: "select",
+                                        options: [],
+                                        onChange: val => {
+                                             this.currentControl.value = val;
+                                        }
+                                   },
+                                   {
+                                        name: "selectableOptions",
+                                        displayName: "Dropdown options",
+                                        value: "",
+                                        type: "tag",
+                                        placeholder: ""
+                                   }
+                              ],
+                              validations: [
+                                   {
+                                        name: "customExpression",
+                                        displayName: "Custom Expression",
+                                        value: null,
+                                        type: "text"
                                    }
                               ]
                          }
@@ -1015,6 +1081,13 @@ export default {
      width: 30px;
      margin-top: 0px !important;
      margin-bottom: 0px !important;
+}
+
+.x-form-design .empty-form-placeholder {
+     border: 2px dashed #9e9e9e;
+     min-height: 80px;
+     margin-left: 8px;
+     margin-right: 8px;
 }
 .x-form-design {
 }
