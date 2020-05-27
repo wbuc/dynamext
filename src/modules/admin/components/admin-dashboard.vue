@@ -19,13 +19,18 @@
                                    <v-icon color="primary" left>mdi-open-in-new</v-icon>Open
                               </v-btn>
                               <v-spacer></v-spacer>
-                              <v-btn icon color="secondary" @click="tile.addAction">
+                              <v-btn
+                                   v-if="tile.addAction"
+                                   icon
+                                   color="grey"
+                                   @click="tile.addAction"
+                              >
                                    <v-icon small>mdi-plus-thick</v-icon>
                               </v-btn>
                               <v-btn
                                    v-if="tile.secondaryAction"
                                    icon
-                                   color="accent lighten-1"
+                                   color="grey"
                                    @click="tile.secondaryAction.action"
                               >
                                    <v-icon>{{tile.secondaryAction.icon}}</v-icon>
@@ -105,9 +110,6 @@ export default {
                               "Add or edit data used by the application.",
                          primaryAction: () => {
                               this.$router.replace({ name: "Admin.AppConfig" });
-                         },
-                         addAction: () => {
-                              // things to do here when clicked
                          }
                     }
                ],

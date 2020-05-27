@@ -138,57 +138,19 @@
                                                        handle=".x-control-handle"
                                                        :class="{'empty-form-placeholder': isEmptyForm}"
                                                   >
-                                                       <v-list-item
-                                                            two-line
-                                                            :ripple="canvasConfig.ripple"
+                                                       <template
                                                             v-for="(control,index) in formControls"
-                                                            :key="control.id"
-                                                            class="x-control"
-                                                            @click="setCurrentControl(control)"
-                                                            @mouseover="formControlHover = control.id"
-                                                            @mouseout="formControlHover = null"
                                                        >
-                                                            <v-list-item-action
-                                                                 class="x-control-handle mr-2"
-                                                            >
-                                                                 <v-icon
-                                                                      v-show="formControlHover === control.id"
-                                                                      class="grey--text text--darken-1"
-                                                                 >mdi-drag-vertical</v-icon>
-                                                            </v-list-item-action>
-                                                            <v-list-item-content
-                                                                 class="x-control-content"
-                                                            >
-                                                                 <component
-                                                                      :is="`${control.type}Control`"
-                                                                      v-bind:control="control"
-                                                                 ></component>
-                                                            </v-list-item-content>
-                                                            <v-list-item-action
-                                                                 class="x-control-quick-actions"
-                                                            >
-                                                                 <div
-                                                                      v-show="formControlHover === control.id"
-                                                                 >
-                                                                      <v-btn
-                                                                           icon
-                                                                           @click.stop="copyFormControl(control)"
-                                                                      >
-                                                                           <v-icon
-                                                                                class="success--text text--lighten-1"
-                                                                           >mdi-content-duplicate</v-icon>
-                                                                      </v-btn>
-                                                                      <v-btn
-                                                                           icon
-                                                                           @click.stop="deleteFormControl(index)"
-                                                                      >
-                                                                           <v-icon
-                                                                                class="error--text"
-                                                                           >mdi-delete</v-icon>
-                                                                      </v-btn>
-                                                                 </div>
-                                                            </v-list-item-action>
-                                                       </v-list-item>
+                                                            <control-template
+                                                                 v-bind:index="index"
+                                                                 v-bind:control="control"
+                                                                 v-bind:config="controlConfig"
+                                                                 @selected="setCurrentControl"
+                                                                 @deleteControl="deleteFormControl"
+                                                                 @copyControl="copyFormControl"
+                                                                 :key="index"
+                                                            ></control-template>
+                                                       </template>
                                                   </draggable>
                                              </v-list-item-group>
                                         </v-list>
@@ -506,29 +468,24 @@ import { controls } from "@/modules/schedules/components/designer/controlList";
 // import { controlTypes } from "@/modules/schedules/components/designer/controlTypes";
 
 // *** CONTROL TEMPLATES START
-import textControl from "@/modules/schedules/components/designer/controls/textbox";
-import paragraphControl from "@/modules/schedules/components/designer/controls/paragraph";
-import headerControl from "@/modules/schedules/components/designer/controls/header";
-import numberControl from "@/modules/schedules/components/designer/controls/number";
-import decimalControl from "@/modules/schedules/components/designer/controls/decimal";
-import informationControl from "@/modules/schedules/components/designer/controls/information";
-import yesnoControl from "@/modules/schedules/components/designer/controls/yesno";
-import dropdownControl from "@/modules/schedules/components/designer/controls/dropdown";
+// import textControl from "@/modules/schedules/components/designer/controls/textbox";
+// import paragraphControl from "@/modules/schedules/components/designer/controls/paragraph";
+// import headerControl from "@/modules/schedules/components/designer/controls/header";
+// import numberControl from "@/modules/schedules/components/designer/controls/number";
+// import decimalControl from "@/modules/schedules/components/designer/controls/decimal";
+// import informationControl from "@/modules/schedules/components/designer/controls/information";
+// import yesnoControl from "@/modules/schedules/components/designer/controls/yesno";
+// import dropdownControl from "@/modules/schedules/components/designer/controls/dropdown";
 // *** CONTROL TEMPLATES END
+
+import ControlTemplate from "@/modules/schedules/components/designer/schedules-control-placeholder";
 
 export default {
      name: "Schedules.Canvas.Designer",
      components: {
           draggable,
           tags,
-          textControl,
-          paragraphControl,
-          headerControl,
-          numberControl,
-          decimalControl,
-          informationControl,
-          yesnoControl,
-          dropdownControl
+          ControlTemplate
      },
      computed: {
           ...mapGetters(["api", "dynamicForm"]),
@@ -552,6 +509,9 @@ export default {
                     ripple: false,
                     editName: false,
                     globalId: 0
+               },
+               controlConfig: {
+                    ripple: false
                },
                propertiesConfig: {
                     avctiveTab: null,
@@ -964,6 +924,7 @@ export default {
                return newObj;
           },
           cloneFormControl(item) {
+               console.log("clone triggered: ", item);
                let newControl = {
                     id: this.canvasConfig.globalId++,
                     name: `Untitled ${item.name}`,

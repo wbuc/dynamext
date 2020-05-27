@@ -72,6 +72,4 @@ export default {
      margin-top: 0px !important;
      margin-bottom: 0px !important;
 }
-.x-form-runtime {
-}
 </style>
