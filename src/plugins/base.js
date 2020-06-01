@@ -35,6 +35,9 @@ import LayoutFormControl from '@/components/layout-form-control'
 import LayoutFormSection from '@/components/layout-form-section'
 import LayoutFormFooter from '@/components/layout-form-footer'
 
+/* CONTROLS*/
+import Dropdown from '@/components/control-dropdown'
+
 Vue.component('page-header', PageHeader);
 Vue.component('x-toolbar', Toolbar);
 Vue.component('x-breadcrumb', Breadcrumbs);
@@ -52,5 +55,6 @@ Vue.component('x-form-section', LayoutFormSection)
 Vue.component('x-form-footer', LayoutFormFooter)
 Vue.component('x-logo', Logo)
 Vue.component('x-data-list', DataList)
+Vue.component('x-dropdown', Dropdown)
 
 

@@ -185,9 +185,40 @@
                                    </v-card>
                               </v-tab-item>
                               <v-tab-item key="Manager" style="background-color: #ff000000">
-                                   <div
-                                        class="text-center grey--text py-10"
-                                   >Schedule Manager coming soon!</div>
+                                   <div class="mt-1" style="background-color: #ff000000">
+                                        <manager
+                                             :formControls="formControls"
+                                             @controlChanged="updateControlType"
+                                        ></manager>
+                                   </div>
+                                   <v-card flat style="background-color: #ff000000">
+                                        <v-divider></v-divider>
+                                        <v-card-actions class="pr-4 mt-2 pb-4">
+                                             <v-spacer></v-spacer>
+                                             <v-btn
+                                                  text
+                                                  large
+                                                  outlined
+                                                  @click="closeDesigner"
+                                                  width="120px"
+                                                  class="mr-2"
+                                             >
+                                                  <v-icon left color="error">mdi-close-thick</v-icon>
+                                                  <span>Cancel</span>
+                                             </v-btn>
+                                             <v-btn
+                                                  text
+                                                  large
+                                                  outlined
+                                                  color
+                                                  @click="saveForm"
+                                                  width="120px"
+                                             >
+                                                  <v-icon left color="primary">mdi-check-bold</v-icon>
+                                                  <span>Save</span>
+                                             </v-btn>
+                                        </v-card-actions>
+                                   </v-card>
                               </v-tab-item>
                               <v-tab-item key="Settings" style="background-color: #ff000000">
                                    <div class="pt-5 mb-2 no-cursor">
@@ -458,34 +489,23 @@
 
 <script>
 import draggable from "vuedraggable";
-import tags from "@/components/control-tag-inline";
-
 import { mapGetters } from "vuex";
 
 // All controls that will be used in the toolbox
 import { controls } from "@/modules/schedules/components/designer/controlList";
-
+import formHelper from "@/modules/schedules/helpers/forms.helper";
 // import { controlTypes } from "@/modules/schedules/components/designer/controlTypes";
-
-// *** CONTROL TEMPLATES START
-// import textControl from "@/modules/schedules/components/designer/controls/textbox";
-// import paragraphControl from "@/modules/schedules/components/designer/controls/paragraph";
-// import headerControl from "@/modules/schedules/components/designer/controls/header";
-// import numberControl from "@/modules/schedules/components/designer/controls/number";
-// import decimalControl from "@/modules/schedules/components/designer/controls/decimal";
-// import informationControl from "@/modules/schedules/components/designer/controls/information";
-// import yesnoControl from "@/modules/schedules/components/designer/controls/yesno";
-// import dropdownControl from "@/modules/schedules/components/designer/controls/dropdown";
-// *** CONTROL TEMPLATES END
-
-import ControlTemplate from "@/modules/schedules/components/designer/schedules-control-placeholder";
 
 export default {
      name: "Schedules.Canvas.Designer",
      components: {
           draggable,
-          tags,
-          ControlTemplate
+          tags: () => import("@/components/control-tag-inline"),
+          ControlTemplate: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/_control-placeholder"
+               ),
+          manager: () => import("./schedules-designer-manager")
      },
      computed: {
           ...mapGetters(["api", "dynamicForm"]),
@@ -916,7 +936,7 @@ export default {
                // draggable changegd.
                window.console.log(evt);
           },
-          cloneObject(object) {
+          deepClone(object) {
                let newObj = {};
                for (let key in object) {
                     newObj[key] = object[key];
@@ -924,9 +944,9 @@ export default {
                return newObj;
           },
           cloneFormControl(item) {
-               console.log("clone triggered: ", item);
                let newControl = {
-                    id: this.canvasConfig.globalId++,
+                    //id: this.canvasConfig.globalId++,
+                    id: formHelper.newFormId(),
                     name: `Untitled ${item.name}`,
                     instruction: item.instruction,
                     value: item.value,
@@ -935,11 +955,12 @@ export default {
                     validations: {},
                     icon: item.icon,
                     type: item.type,
+                    //displayType: item.name,
                     edit: false,
                     config: false
                };
-               let newProps = this.cloneObject(item.properties);
-               let newValids = this.cloneObject(item.validations);
+               let newProps = this.deepClone(item.properties);
+               let newValids = this.deepClone(item.validations);
 
                this.$set(newControl, "properties", newProps);
                this.$set(newControl, "validations", newValids);
@@ -952,6 +973,25 @@ export default {
           },
           deleteFormControl(itemIndex) {
                this.formControls.splice(itemIndex, 1);
+          },
+          updateControlType(control) {
+               // control: The existing control that was changed. Get type from toolbox controls.
+
+               let newProps = null;
+               let newValids = null;
+               for (const c of this.toolboxControls) {
+                    if (c.type === control.type) {
+                         control.value = c.value;
+                         control.icon = c.icon;
+                         control.hasValidations = c.hasValidations;
+                         newProps = this.deepClone(c.properties);
+                         newValids = this.deepClone(c.validations);
+                         break;
+                    }
+               }
+
+               this.$set(control, "properties", newProps);
+               this.$set(control, "validations", newValids);
           },
           toggleControlLabelEdit(event, control) {
                //use this link for howTo on list edits.
@@ -1038,6 +1078,21 @@ export default {
 .x-form-design .x-control-content {
      min-height: 74px !important;
 }
+
+.x-form-design .x-form-manager .x-control {
+     /* min-height: 0px !important; */
+     cursor: pointer;
+}
+.x-form-design .x-form-manager .x-control-content {
+     min-height: 0px !important;
+     padding: 0px;
+}
+
+.x-form-design .x-form-manager .x-control-handle {
+     cursor: move;
+     margin: 0px;
+}
+
 .x-form-design .x-control-quick-actions {
      width: 30px;
      margin-top: 0px !important;

@@ -1,6 +1,6 @@
 <template>
      <v-hover v-slot:default="{ hover }">
-          <v-list-item two-line class="x-control" @click="controlClicked">
+          <v-list-item two-line class="x-control px-5" @click="controlClicked">
                <v-list-item-action class="x-control-handle mr-2">
                     <v-icon v-show="hover" class="grey--text text--darken-1">mdi-drag-vertical</v-icon>
                </v-list-item-action>
@@ -22,15 +22,6 @@
 </template>
 
 <script>
-import textControl from "@/modules/schedules/components/designer/controls/textbox";
-import paragraphControl from "@/modules/schedules/components/designer/controls/paragraph";
-import headerControl from "@/modules/schedules/components/designer/controls/header";
-import numberControl from "@/modules/schedules/components/designer/controls/number";
-import decimalControl from "@/modules/schedules/components/designer/controls/decimal";
-import informationControl from "@/modules/schedules/components/designer/controls/information";
-import yesnoControl from "@/modules/schedules/components/designer/controls/yesno";
-import dropdownControl from "@/modules/schedules/components/designer/controls/dropdown";
-
 export default {
      name: "schedules.control.placeholder",
      props: {
@@ -48,14 +39,36 @@ export default {
           }
      },
      components: {
-          textControl,
-          paragraphControl,
-          headerControl,
-          numberControl,
-          decimalControl,
-          informationControl,
-          yesnoControl,
-          dropdownControl
+          textControl: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/textbox"
+               ),
+          paragraphControl: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/paragraph"
+               ),
+          headerControl: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/header"
+               ),
+          numberControl: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/number"
+               ),
+          decimalControl: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/decimal"
+               ),
+          informationControl: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/information"
+               ),
+          yesnoControl: () =>
+               import("@/modules/schedules/components/designer/controls/yesno"),
+          dropdownControl: () =>
+               import(
+                    "@/modules/schedules/components/designer/controls/dropdown"
+               )
      },
      data() {
           return {
