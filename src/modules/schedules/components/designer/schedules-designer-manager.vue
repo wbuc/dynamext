@@ -1,58 +1,91 @@
 <template>
-     <v-list width="100%" class="x-form-manager">
-          <v-list-item-group>
-               <div
-                    v-if="formControls.length === 0"
-                    class="text-center grey--text py-5"
-               >Add fields from the toolbox</div>
-               <draggable
-                    class="dragArea list-group"
-                    :list="formControls"
-                    group="toolbox"
-                    @change="log"
-                    handle=".x-control-handle"
-                    :class="{'empty-form-placeholder': isEmptyForm}"
-               >
-                    <template v-for="(control,index) in formControls">
-                         <v-list-item :key="index" class="x-control">
-                              <!-- <v-row>
-               <v-col cols="8"></v-col>
-               <v-col cols="4"></v-col>
-                              </v-row>-->
-                              <v-list-item-action class="x-control-handle mr-2">
-                                   <v-icon class="grey--text text--darken-1">mdi-drag-vertical</v-icon>
-                              </v-list-item-action>
-                              <v-list-item-content class="x-control-content">
-                                   <v-list-item-title
-                                        class="body-1 font-weight-light"
-                                   >{{control.name}}</v-list-item-title>
-                                   <x-dropdown
-                                        v-model="control.type"
-                                        :controlName="control.id"
-                                        @valueChanged="changeControl(control)"
-                                   ></x-dropdown>
-                                   <!-- <v-list-item-subtitle
-                                        class="grey--text text--darken-1"
-                                   >{{control.displayType}}</v-list-item-subtitle>-->
-                              </v-list-item-content>
+     <!-- <v-list width="100%" class="x-form-manager" :link="link"> -->
+     <!-- <v-list-item-group class="x-form-manager"> -->
+     <div width="100%" class="x-form-manager">
+          <div
+               v-if="formControls.length === 0"
+               class="text-center grey--text py-5"
+          >Add fields from the toolbox</div>
+          <draggable
+               class="dragArea list-group"
+               :list="formControls"
+               group="toolbox"
+               @change="formControlsUpdate"
+               handle=".x-control-handle"
+               :class="{'empty-form-placeholder': isEmptyForm}"
+          >
+               <template v-for="(control,index) in formControls">
+                    <v-list-item
+                         :key="index"
+                         :link="link"
+                         class="x-control"
+                         @click="controlClicked(control)"
+                    >
+                         <v-list-item-action class="x-control-handle mr-2">
+                              <v-icon class="grey--text text--darken-1">mdi-drag-vertical</v-icon>
+                         </v-list-item-action>
+                         <v-list-item-content class="x-control-content">
+                              <v-row align="center">
+                                   <v-col cols="8">
+                                        <v-list-item-title
+                                             class="body-1 font-weight-light"
+                                        >{{control.name}}</v-list-item-title>
+                                   </v-col>
+                                   <v-col cols="4">
+                                        <v-list-item-title>
+                                             <x-dropdown
+                                                  v-model="control.type"
+                                                  :controlName="control.id"
+                                                  @valueChanged="changeControl(control)"
+                                             ></x-dropdown>
+                                        </v-list-item-title>
+                                   </v-col>
+                              </v-row>
+                         </v-list-item-content>
+                         <v-list-item-action class="x-control-quick-actions">
+                              <div>
+                                   <v-btn
+                                        :id="`quick-actions-${control.id}`"
+                                        icon
+                                        text
+                                        dark
+                                        color="grey"
+                                        class="x-branch-activator"
+                                   >
+                                        <v-icon>more_vert</v-icon>
+                                        <span></span>
+                                   </v-btn>
+                                   <v-menu
+                                        offset-y
+                                        transition="slide-y-transition"
+                                        :activator="`#quick-actions-${control.id}`"
+                                   >
+                                        <v-list>
+                                             <template v-for="(item, i) in quickActions">
+                                                  <v-list-item
+                                                       :key="i"
+                                                       dense
+                                                       @click="item.action(control)"
+                                                  >
+                                                       <v-list-item-action>
+                                                            <v-icon
+                                                                 :class="item.color"
+                                                                 small
+                                                            >{{item.icon}}</v-icon>
+                                                       </v-list-item-action>
+                                                       <v-list-item-content>
+                                                            <v-list-item-title>{{item.text}}</v-list-item-title>
+                                                       </v-list-item-content>
+                                                  </v-list-item>
+                                             </template>
+                                        </v-list>
+                                   </v-menu>
+                              </div>
+                         </v-list-item-action>
+                    </v-list-item>
+                    <!-- New template goes here -->
 
-                              <v-list-item-action class="x-control-quick-actions">
-                                   <!-- <div>
-                                        <v-btn icon small @click.stop="copyControl">
-                                             <v-icon
-                                                  small
-                                                  class="success--text text--lighten-1"
-                                             >mdi-content-duplicate</v-icon>
-                                        </v-btn>
-                                        <v-btn icon small @click.stop="deleteControl">
-                                             <v-icon small class="error--text">mdi-delete</v-icon>
-                                        </v-btn>
-                                   </div>-->
-                              </v-list-item-action>
-                         </v-list-item>
-                         <!-- New template goes here -->
-
-                         <!-- <control-template
+                    <!-- <control-template
                               v-bind:index="index"
                               v-bind:control="control"
                               v-bind:config="controlConfig"
@@ -60,11 +93,10 @@
                               @deleteControl="deleteFormControl"
                               @copyControl="copyFormControl"
                               :key="index"
-                         ></control-template>-->
-                    </template>
-               </draggable>
-          </v-list-item-group>
-     </v-list>
+                    ></control-template>-->
+               </template>
+          </draggable>
+     </div>
 </template>
 
 <script>
@@ -85,28 +117,66 @@ export default {
           }
      },
      methods: {
-          controlClicked() {
-               this.$emit("selected", this.control);
+          controlClicked(control) {
+               this.$emit("controlSelected", control);
           },
-          deleteControl() {
-               this.$emit("deleteControl", this.index);
+          deleteControl(control) {
+               const index = this.formControls.findIndex(
+                    x => x.id === control.id
+               );
+
+               this.$emit("deleteControl", index);
           },
-          copyControl() {
-               this.$emit("copyControl", this.control);
+          copyControl(control) {
+               this.$emit("copyControl", control);
           },
           changeControl(control) {
                this.$emit("controlChanged", control);
           },
-          log(evt) {
-               // draggable changegd.
-               window.console.log(evt);
+          formControlsUpdate(evt) {
+               // controls changed.
+               console.log("Manager controls updated: ", evt);
+               this.$emit("controlsUpdated");
           }
      },
      data() {
-          return {};
+          return {
+               link: false,
+               quickActions: [
+                    {
+                         text: "Copy",
+                         icon: "mdi-content-duplicate",
+                         color: "success--text text--lighten-1",
+                         action: control => {
+                              this.copyControl(control);
+                         }
+                    },
+                    {
+                         text: "Delete",
+                         icon: "mdi-delete",
+                         color: "error--text",
+                         action: control => {
+                              this.deleteControl(control);
+                         }
+                    }
+               ]
+          };
      }
 };
 </script>
 
 <style>
+.x-form-design .x-form-manager .x-control {
+     /* min-height: 0px !important; */
+     cursor: pointer;
+}
+.x-form-design .x-form-manager .x-control-content {
+     min-height: 0px !important;
+     padding: 0px;
+}
+
+.x-form-design .x-form-manager .x-control-handle {
+     cursor: move;
+     margin: 0px;
+}
 </style>

@@ -120,6 +120,13 @@
                               });
                          </p>
                     </span>
+                    <span class="mt-4">
+                         NOTE: position element vertical in grid layout.
+                         <p class="text--secondary ml-3">
+                              set the align prop on the v-row to center
+                              https://vuetifyjs.com/en/components/grids/
+                         </p>
+                    </span>
                </v-col>
                <v-col>
                     <div class="secondary pa-3 title font-weight-light">Flexbox</div>

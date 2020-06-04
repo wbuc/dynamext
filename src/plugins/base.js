@@ -8,7 +8,7 @@ import PageHeader from '@/components/shared-page-header.vue'
 import Breadcrumbs from '@/components/shared-breadcrumb.vue'
 import Toolbar from '@/components/shared-toolbar.vue'
 
-/* CRADS */
+/* CARDS */
 import CardTile from '@/components/card-tile'
 import TimelineCard from '@/components/card-timeline'
 import CardBasic from '@/components/card-basic'
@@ -37,6 +37,7 @@ import LayoutFormFooter from '@/components/layout-form-footer'
 
 /* CONTROLS*/
 import Dropdown from '@/components/control-dropdown'
+import QuickActions from '@/components/control-quick-actions'
 
 Vue.component('page-header', PageHeader);
 Vue.component('x-toolbar', Toolbar);
@@ -56,5 +57,6 @@ Vue.component('x-form-footer', LayoutFormFooter)
 Vue.component('x-logo', Logo)
 Vue.component('x-data-list', DataList)
 Vue.component('x-dropdown', Dropdown)
+Vue.component('x-quick-actions', QuickActions)
 
 

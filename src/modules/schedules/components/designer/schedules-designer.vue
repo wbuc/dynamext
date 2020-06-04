@@ -46,7 +46,7 @@
                                                   :list="toolboxControls"
                                                   :group="{ name: 'toolbox', pull: 'clone', put: false }"
                                                   :clone="cloneFormControl"
-                                                  @change="log"
+                                                  @change="formControlsUpdated"
                                              >
                                                   <v-list-item
                                                        two-line
@@ -134,7 +134,7 @@
                                                        class="dragArea list-group"
                                                        :list="formControls"
                                                        group="toolbox"
-                                                       @change="log"
+                                                       @change="formControlsUpdated"
                                                        handle=".x-control-handle"
                                                        :class="{'empty-form-placeholder': isEmptyForm}"
                                                   >
@@ -188,7 +188,12 @@
                                    <div class="mt-1" style="background-color: #ff000000">
                                         <manager
                                              :formControls="formControls"
+                                             @controlSelected="setCurrentControl"
                                              @controlChanged="updateControlType"
+                                             @deleteControl="deleteFormControl"
+                                             @copyControl="copyFormControl"
+                                             @controlsUpdated="managerControlsUpdated"
+                                             :key="managerKey"
                                         ></manager>
                                    </div>
                                    <v-card flat style="background-color: #ff000000">
@@ -900,7 +905,8 @@ export default {
                formData: null,
                formControls: [],
                currentControl: null,
-               formControlHover: null
+               formControlHover: null,
+               managerKey: 1
           };
      },
      methods: {
@@ -932,9 +938,12 @@ export default {
                     this.$set(this.currentControl, "validations", {});
                }
           },
-          log(evt) {
+          formControlsUpdated(evt) {
                // draggable changegd.
-               window.console.log(evt);
+               console.log("canvas controls changed: ", evt);
+          },
+          managerControlsUpdated() {
+               this.managerKey++;
           },
           deepClone(object) {
                let newObj = {};
@@ -975,7 +984,9 @@ export default {
                this.formControls.splice(itemIndex, 1);
           },
           updateControlType(control) {
-               // control: The existing control that was changed. Get type from toolbox controls.
+               // (control)
+               // The current control that was changed.
+               // Get default values from toolbox and overwrite control properties.
 
                let newProps = null;
                let newValids = null;
@@ -1077,20 +1088,6 @@ export default {
 }
 .x-form-design .x-control-content {
      min-height: 74px !important;
-}
-
-.x-form-design .x-form-manager .x-control {
-     /* min-height: 0px !important; */
-     cursor: pointer;
-}
-.x-form-design .x-form-manager .x-control-content {
-     min-height: 0px !important;
-     padding: 0px;
-}
-
-.x-form-design .x-form-manager .x-control-handle {
-     cursor: move;
-     margin: 0px;
 }
 
 .x-form-design .x-control-quick-actions {
