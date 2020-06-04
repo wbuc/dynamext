@@ -1102,6 +1102,4 @@ export default {
      margin-left: 8px;
      margin-right: 8px;
 }
-.x-form-design {
-}
 </style>

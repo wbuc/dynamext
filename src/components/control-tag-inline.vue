@@ -10,7 +10,7 @@
                          label
                          close
                          @click:close="removeButtonEvents(tag)"
-                         class="mr-1 mb-1"
+                         class="mr-1 mb-1 white--text"
                     >{{tag}}</v-chip>
                </span>
                <input

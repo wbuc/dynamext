@@ -869,6 +869,23 @@
       "createdDate": "20/04/2020",
       "formControls": [
         {
+          "id": "KB14A4JMLR9PN",
+          "name": "Untitled Header Untitled Header Untitled Header Untitled Header Untitled Header Untitled Header ",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "size": "title",
+            "color": "primary--text",
+            "style": "border"
+          },
+          "validations": {},
+          "icon": "mdi-format-header-1",
+          "type": "header",
+          "edit": false,
+          "config": false
+        },
+        {
           "id": "KAZOGR9M1KE5W",
           "name": "Personal Detail",
           "instruction": null,
@@ -880,6 +897,191 @@
           "validations": {},
           "icon": "mdi-order-bool-descending",
           "type": "yesno",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14A1GJGAIFR",
+          "name": "Untitled Information",
+          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "size": "display-1",
+            "color": "",
+            "style": ""
+          },
+          "validations": {},
+          "icon": "mdi-format-header-1",
+          "type": "header",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB149Z8RCRPUU",
+          "name": "Untitled Text",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "placeholder": "Enter a value",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "validations": {},
+          "icon": "mdi-format-text",
+          "type": "text",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14A0FR23SQS",
+          "name": "Untitled Dropdown",
+          "instruction": "",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "selectableOptions": []
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14A2OMH60OD",
+          "name": "Collab Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks.oratively administrate empowered markets via plug-and-play networks.",
+          "instruction": "Collab Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks.oratively administrate empowered markets via plug-and-play networks.",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "size": "body-1",
+            "type": "info",
+            "style": {}
+          },
+          "validations": {},
+          "icon": "mdi-information-variant",
+          "type": "information",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14ABTJQGY53",
+          "name": "Untitled Untitled Number",
+          "instruction": null,
+          "value": 0,
+          "hasValidations": false,
+          "properties": {
+            "default": 0,
+            "placeholder": "Enter a number"
+          },
+          "validations": {},
+          "icon": "mdi-numeric-3-box-outline",
+          "type": "number",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KAZOGYJL24RE8",
+          "name": "Best Hobby",
+          "instruction": "",
+          "value": "Nothing",
+          "hasValidations": false,
+          "properties": {
+            "default": "Nothing",
+            "selectableOptions": [
+              "Bla bla bla",
+              "Gaming",
+              "Sport",
+              "Nothing"
+            ]
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB149YB5NWVGD",
+          "name": "Untitled Personal Detail",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null
+          },
+          "validations": {},
+          "icon": "mdi-order-bool-descending",
+          "type": "yesno",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14A9SCLNWBA",
+          "name": "Untitled Number",
+          "instruction": null,
+          "value": 0,
+          "hasValidations": false,
+          "properties": {
+            "default": 0,
+            "placeholder": "Enter a number"
+          },
+          "validations": {},
+          "icon": "mdi-numeric-3-box-outline",
+          "type": "number",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14ADA36J1FY",
+          "name": "Untitled Untitled Dropdown",
+          "instruction": "",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "selectableOptions": []
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14ADDX2TNQA",
+          "name": "Untitled Untitled Dropdown",
+          "instruction": "",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "selectableOptions": []
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB14AE6FGH0GV",
+          "name": "Untitled Untitled Information",
+          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "size": "body-1",
+            "type": "info",
+            "style": {}
+          },
+          "validations": {},
+          "icon": "mdi-information-variant",
+          "type": "information",
           "edit": false,
           "config": false
         },
@@ -901,8 +1103,8 @@
           "config": false
         },
         {
-          "id": "KAZOGYJL24RE8",
-          "name": "Best Hobby",
+          "id": "KB14AEYJAPZ28",
+          "name": "Untitled Best Hobby",
           "instruction": "",
           "value": "Nothing",
           "hasValidations": false,

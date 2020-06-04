@@ -25,23 +25,26 @@
                               <v-icon class="grey--text text--darken-1">mdi-drag-vertical</v-icon>
                          </v-list-item-action>
                          <v-list-item-content class="x-control-content">
-                              <v-row align="center">
-                                   <v-col cols="8">
-                                        <v-list-item-title
-                                             class="body-1 font-weight-light"
-                                        >{{control.name}}</v-list-item-title>
-                                   </v-col>
-                                   <v-col cols="4">
-                                        <v-list-item-title>
-                                             <x-dropdown
-                                                  v-model="control.type"
-                                                  :controlName="control.id"
-                                                  @valueChanged="changeControl(control)"
-                                             ></x-dropdown>
+                              <v-row align="center" class="responsive-text">
+                                   <v-col>
+                                        <v-list-item-title class="body-1 font-weight-light">
+                                             <v-icon class="mr-1">{{control.icon}}</v-icon>
+                                             {{control.name}}
                                         </v-list-item-title>
                                    </v-col>
                               </v-row>
                          </v-list-item-content>
+                         <v-list-item-action class>
+                              <div>
+                                   <v-list-item-title class="responsive-text">
+                                        <x-dropdown
+                                             v-model="control.type"
+                                             :controlName="control.id"
+                                             @valueChanged="changeControl(control)"
+                                        ></x-dropdown>
+                                   </v-list-item-title>
+                              </div>
+                         </v-list-item-action>
                          <v-list-item-action class="x-control-quick-actions">
                               <div>
                                    <v-btn
@@ -178,5 +181,11 @@ export default {
 .x-form-design .x-form-manager .x-control-handle {
      cursor: move;
      margin: 0px;
+}
+
+.x-form-design .x-form-manager .responsive-text {
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
 }
 </style>
