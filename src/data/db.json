@@ -1111,6 +1111,41 @@
       "createdDate": "20/04/2020",
       "formControls": [
         {
+          "id": "KB3LBJBG6S2UQ",
+          "name": "Untitled Text",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "placeholder": "Enter a value",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "validations": {},
+          "icon": "mdi-format-text",
+          "type": "text",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB3LBKU6X2G1S",
+          "name": "Untitled Header",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "size": "title",
+            "color": "error--text",
+            "style": "border"
+          },
+          "validations": {},
+          "icon": "mdi-format-header-1",
+          "type": "header",
+          "edit": false,
+          "config": false
+        },
+        {
           "id": "KB3F1Z6AOW0EP",
           "name": "Name",
           "instruction": null,

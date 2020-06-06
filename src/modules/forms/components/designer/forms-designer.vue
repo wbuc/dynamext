@@ -331,7 +331,7 @@ export default {
                this.currentControl = control;
           },
           formControlsUpdated(evt) {
-               // draggable changegd.
+               // draggable changed.
                console.log("canvas controls changed: ", evt);
           },
           managerControlsUpdated() {
