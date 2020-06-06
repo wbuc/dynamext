@@ -1,23 +1,4 @@
 {
-<<<<<<< HEAD
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
-=======
   "documentSchedules": [
     {
       "id": "K9SVMD0K2MB5R",
@@ -15429,5 +15410,4 @@
       "id": 20
     }
   ]
->>>>>>> DynamicFormsRefactor
 }

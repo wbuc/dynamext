@@ -1,7 +1,7 @@
 <template functional>
      <div>
-          <v-list-item-title class="title font-weight-light">{{props.control.name}}</v-list-item-title>
-          <v-list-item-subtitle class="caption text--secondary">{{props.control.instruction}}</v-list-item-subtitle>
+          <v-list-item-title class="title font-weight-light">{{ props.control.name }}</v-list-item-title>
+          <v-list-item-subtitle class="caption text--secondary">{{ props.control.instruction }}</v-list-item-subtitle>
           <v-text-field
                style="width:100%"
                outlined
