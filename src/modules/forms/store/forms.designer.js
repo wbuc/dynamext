@@ -1,7 +1,7 @@
 
 
 import designerApi from '@/modules/forms/api/forms.designer.api'
-import formHelper from '@/modules/forms/helpers/forms.helper'
+import formHelper from '@/modules/forms/helpers/forms-helper'
 
 //const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 

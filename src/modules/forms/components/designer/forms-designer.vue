@@ -497,8 +497,8 @@ import draggable from "vuedraggable";
 import { mapGetters } from "vuex";
 
 // All controls that will be used in the toolbox
-import { controls } from "@/modules/forms/components/designer/controlList";
-import formHelper from "@/modules/forms/helpers/forms.helper";
+import { controls } from "@/modules/forms/helpers/forms-control-list";
+import formHelper from "@/modules/forms/helpers/forms-helper";
 // import { controlTypes } from "@/modules/forms/components/designer/controlTypes";
 
 export default {
