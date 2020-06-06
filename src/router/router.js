@@ -82,14 +82,14 @@ const routes = [
         path: '',
         name: 'Schedule.Dashboard',
         meta: { title: 'Dynamext | Schedules', },
-        component: () => import(/* webpackChunkName: "Schedules" */ "@/modules/schedules/components/schedules-dashboard")
+        component: () => import(/* webpackChunkName: "Schedules" */ "@/modules/forms/components/forms-dashboard")
       }
         ,
       {
         path: 'designer',
         name: 'Schedule.Designer',
         meta: { title: 'Dynamext | Schedules', },
-        component: () => import(/* webpackChunkName: "ScheduleDesigner" */ "@/modules/schedules/components/designer/schedules-designer")
+        component: () => import(/* webpackChunkName: "ScheduleDesigner" */ "@/modules/forms/components/designer/forms-designer")
       }]
     }
     ]

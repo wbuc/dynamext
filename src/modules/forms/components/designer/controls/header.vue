@@ -11,7 +11,7 @@
 
 <script>
 export default {
-     name: "Control.Header.Designer",
+     name: "control.header.designer",
      props: {
           control: {
                Type: Object,

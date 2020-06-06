@@ -1,0 +1,6 @@
+{
+    "/*": "/$1",
+    "/appdata/project": "/project",
+    "/appdata/departments": "/departments",
+    "/appdata/departments/:id": "/departments/:id"
+}

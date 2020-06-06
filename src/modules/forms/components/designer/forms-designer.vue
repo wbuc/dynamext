@@ -46,7 +46,7 @@
                                                   :list="toolboxControls"
                                                   :group="{ name: 'toolbox', pull: 'clone', put: false }"
                                                   :clone="cloneFormControl"
-                                                  @change="log"
+                                                  @change="formControlsUpdated"
                                              >
                                                   <v-list-item
                                                        two-line
@@ -134,61 +134,23 @@
                                                        class="dragArea list-group"
                                                        :list="formControls"
                                                        group="toolbox"
-                                                       @change="log"
+                                                       @change="formControlsUpdated"
                                                        handle=".x-control-handle"
                                                        :class="{'empty-form-placeholder': isEmptyForm}"
                                                   >
-                                                       <v-list-item
-                                                            two-line
-                                                            :ripple="canvasConfig.ripple"
+                                                       <template
                                                             v-for="(control,index) in formControls"
-                                                            :key="control.id"
-                                                            class="x-control"
-                                                            @click="setCurrentControl(control)"
-                                                            @mouseover="formControlHover = control.id"
-                                                            @mouseout="formControlHover = null"
                                                        >
-                                                            <v-list-item-action
-                                                                 class="x-control-handle mr-2"
-                                                            >
-                                                                 <v-icon
-                                                                      v-show="formControlHover === control.id"
-                                                                      class="grey--text text--darken-1"
-                                                                 >mdi-drag-vertical</v-icon>
-                                                            </v-list-item-action>
-                                                            <v-list-item-content
-                                                                 class="x-control-content"
-                                                            >
-                                                                 <component
-                                                                      :is="`${control.type}Control`"
-                                                                      v-bind:control="control"
-                                                                 ></component>
-                                                            </v-list-item-content>
-                                                            <v-list-item-action
-                                                                 class="x-control-quick-actions"
-                                                            >
-                                                                 <div
-                                                                      v-show="formControlHover === control.id"
-                                                                 >
-                                                                      <v-btn
-                                                                           icon
-                                                                           @click.stop="copyFormControl(control)"
-                                                                      >
-                                                                           <v-icon
-                                                                                class="success--text text--lighten-1"
-                                                                           >mdi-content-duplicate</v-icon>
-                                                                      </v-btn>
-                                                                      <v-btn
-                                                                           icon
-                                                                           @click.stop="deleteFormControl(index)"
-                                                                      >
-                                                                           <v-icon
-                                                                                class="error--text"
-                                                                           >mdi-delete</v-icon>
-                                                                      </v-btn>
-                                                                 </div>
-                                                            </v-list-item-action>
-                                                       </v-list-item>
+                                                            <control-template
+                                                                 v-bind:index="index"
+                                                                 v-bind:control="control"
+                                                                 v-bind:config="controlConfig"
+                                                                 @selected="setCurrentControl"
+                                                                 @deleteControl="deleteFormControl"
+                                                                 @copyControl="copyFormControl"
+                                                                 :key="index"
+                                                            ></control-template>
+                                                       </template>
                                                   </draggable>
                                              </v-list-item-group>
                                         </v-list>
@@ -223,9 +185,45 @@
                                    </v-card>
                               </v-tab-item>
                               <v-tab-item key="Manager" style="background-color: #ff000000">
-                                   <div
-                                        class="text-center grey--text py-10"
-                                   >Schedule Manager coming soon!</div>
+                                   <div class="mt-1" style="background-color: #ff000000">
+                                        <manager
+                                             :formControls="formControls"
+                                             @controlSelected="setCurrentControl"
+                                             @controlChanged="updateControlType"
+                                             @deleteControl="deleteFormControl"
+                                             @copyControl="copyFormControl"
+                                             @controlsUpdated="managerControlsUpdated"
+                                             :key="managerKey"
+                                        ></manager>
+                                   </div>
+                                   <v-card flat style="background-color: #ff000000">
+                                        <v-divider></v-divider>
+                                        <v-card-actions class="pr-4 mt-2 pb-4">
+                                             <v-spacer></v-spacer>
+                                             <v-btn
+                                                  text
+                                                  large
+                                                  outlined
+                                                  @click="closeDesigner"
+                                                  width="120px"
+                                                  class="mr-2"
+                                             >
+                                                  <v-icon left color="error">mdi-close-thick</v-icon>
+                                                  <span>Cancel</span>
+                                             </v-btn>
+                                             <v-btn
+                                                  text
+                                                  large
+                                                  outlined
+                                                  color
+                                                  @click="saveForm"
+                                                  width="120px"
+                                             >
+                                                  <v-icon left color="primary">mdi-check-bold</v-icon>
+                                                  <span>Save</span>
+                                             </v-btn>
+                                        </v-card-actions>
+                                   </v-card>
                               </v-tab-item>
                               <v-tab-item key="Settings" style="background-color: #ff000000">
                                    <div class="pt-5 mb-2 no-cursor">
@@ -496,39 +494,23 @@
 
 <script>
 import draggable from "vuedraggable";
-import tags from "@/components/control-tag-inline";
-
 import { mapGetters } from "vuex";
 
 // All controls that will be used in the toolbox
-import { controls } from "@/modules/schedules/components/designer/controlList";
-
-// import { controlTypes } from "@/modules/schedules/components/designer/controlTypes";
-
-// *** CONTROL TEMPLATES START
-import textControl from "@/modules/schedules/components/designer/controls/textbox";
-import paragraphControl from "@/modules/schedules/components/designer/controls/paragraph";
-import headerControl from "@/modules/schedules/components/designer/controls/header";
-import numberControl from "@/modules/schedules/components/designer/controls/number";
-import decimalControl from "@/modules/schedules/components/designer/controls/decimal";
-import informationControl from "@/modules/schedules/components/designer/controls/information";
-import yesnoControl from "@/modules/schedules/components/designer/controls/yesno";
-import dropdownControl from "@/modules/schedules/components/designer/controls/dropdown";
-// *** CONTROL TEMPLATES END
+import { controls } from "@/modules/forms/helpers/forms-control-list";
+import formHelper from "@/modules/forms/helpers/forms-helper";
+// import { controlTypes } from "@/modules/forms/components/designer/controlTypes";
 
 export default {
-     name: "Schedules.Canvas.Designer",
+     name: "forms.Canvas.Designer",
      components: {
           draggable,
-          tags,
-          textControl,
-          paragraphControl,
-          headerControl,
-          numberControl,
-          decimalControl,
-          informationControl,
-          yesnoControl,
-          dropdownControl
+          tags: () => import("@/components/control-tag-inline"),
+          ControlTemplate: () =>
+               import(
+                    "@/modules/forms/components/designer/controls/_control-placeholder"
+               ),
+          manager: () => import("./forms-designer-manager")
      },
      computed: {
           ...mapGetters(["api", "dynamicForm"]),
@@ -552,6 +534,9 @@ export default {
                     ripple: false,
                     editName: false,
                     globalId: 0
+               },
+               controlConfig: {
+                    ripple: false
                },
                propertiesConfig: {
                     avctiveTab: null,
@@ -920,7 +905,8 @@ export default {
                formData: null,
                formControls: [],
                currentControl: null,
-               formControlHover: null
+               formControlHover: null,
+               managerKey: 1
           };
      },
      methods: {
@@ -952,11 +938,14 @@ export default {
                     this.$set(this.currentControl, "validations", {});
                }
           },
-          log(evt) {
+          formControlsUpdated(evt) {
                // draggable changegd.
-               window.console.log(evt);
+               console.log("canvas controls changed: ", evt);
           },
-          cloneObject(object) {
+          managerControlsUpdated() {
+               this.managerKey++;
+          },
+          deepClone(object) {
                let newObj = {};
                for (let key in object) {
                     newObj[key] = object[key];
@@ -965,7 +954,8 @@ export default {
           },
           cloneFormControl(item) {
                let newControl = {
-                    id: this.canvasConfig.globalId++,
+                    //id: this.canvasConfig.globalId++,
+                    id: formHelper.newFormId(),
                     name: `Untitled ${item.name}`,
                     instruction: item.instruction,
                     value: item.value,
@@ -974,11 +964,12 @@ export default {
                     validations: {},
                     icon: item.icon,
                     type: item.type,
+                    //displayType: item.name,
                     edit: false,
                     config: false
                };
-               let newProps = this.cloneObject(item.properties);
-               let newValids = this.cloneObject(item.validations);
+               let newProps = this.deepClone(item.properties);
+               let newValids = this.deepClone(item.validations);
 
                this.$set(newControl, "properties", newProps);
                this.$set(newControl, "validations", newValids);
@@ -991,6 +982,27 @@ export default {
           },
           deleteFormControl(itemIndex) {
                this.formControls.splice(itemIndex, 1);
+          },
+          updateControlType(control) {
+               // (control)
+               // The current control that was changed.
+               // Get default values from toolbox and overwrite control properties.
+
+               let newProps = null;
+               let newValids = null;
+               for (const c of this.toolboxControls) {
+                    if (c.type === control.type) {
+                         control.value = c.value;
+                         control.icon = c.icon;
+                         control.hasValidations = c.hasValidations;
+                         newProps = this.deepClone(c.properties);
+                         newValids = this.deepClone(c.validations);
+                         break;
+                    }
+               }
+
+               this.$set(control, "properties", newProps);
+               this.$set(control, "validations", newValids);
           },
           toggleControlLabelEdit(event, control) {
                //use this link for howTo on list edits.
@@ -1077,6 +1089,7 @@ export default {
 .x-form-design .x-control-content {
      min-height: 74px !important;
 }
+
 .x-form-design .x-control-quick-actions {
      width: 30px;
      margin-top: 0px !important;
@@ -1088,7 +1101,5 @@ export default {
      min-height: 80px;
      margin-left: 8px;
      margin-right: 8px;
-}
-.x-form-design {
 }
 </style>

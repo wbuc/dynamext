@@ -300,7 +300,7 @@
 import { mapGetters } from "vuex";
 import { eventBus } from "@/plugins/eventbus.js";
 
-import formsRuntime from "@/modules/schedules/components/runtime/schedules-runtime";
+import formsRuntime from "@/modules/forms/components/runtime/forms-runtime";
 
 export default {
      name: "Fileroom.ContextPanel.Document",

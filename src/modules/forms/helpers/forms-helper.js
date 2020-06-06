@@ -3,6 +3,9 @@
 function generateFormId() {
     return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
 }
+function newFormId() {
+    return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
 function cloneObject(object) {
     let newObj = {};
     for (let key in object) {
@@ -11,5 +14,4 @@ function cloneObject(object) {
     return newObj;
 }
 
-
-export default { generateFormId, cloneObject }
+export default { generateFormId, newFormId, cloneObject }

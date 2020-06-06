@@ -1,7 +1,7 @@
 
 
-import designerApi from '@/modules/schedules/api/schedules.designer.api'
-import formHelper from '@/modules/schedules/helpers/forms.helper'
+import designerApi from '@/modules/forms/api/forms.designer.api'
+import formHelper from '@/modules/forms/helpers/forms-helper'
 
 //const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -34,6 +34,7 @@ const actions = {
                 status: "draft",
                 owner: context.rootGetters.user.email,
                 createdDate: "20/04/2020",
+                isTemplate: false,
                 formControls: [],
 
             };

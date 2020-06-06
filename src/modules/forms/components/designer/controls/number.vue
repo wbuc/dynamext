@@ -2,21 +2,24 @@
      <div>
           <v-list-item-title class="title font-weight-light">{{control.name}}</v-list-item-title>
           <v-list-item-subtitle class="caption text--secondary">{{control.instruction}}</v-list-item-subtitle>
-
-          <v-select
-               :items="control.properties.selectableOptions"
-               v-model="control.value"
-               dense
-               disabled
+          <v-text-field
+               type="number"
+               style="width:100%"
                outlined
+               single-line
                hide-details
-          ></v-select>
+               disabled
+               dense
+               v-model="control.value"
+               :placeholder="control.properties.placeholder"
+               @click.stop
+          ></v-text-field>
      </div>
 </template>
 
 <script>
 export default {
-     name: "Control.Dropdown.Designer",
+     name: "control.number.designer",
      props: {
           control: {
                Type: Object,
