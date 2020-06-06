@@ -23,7 +23,7 @@
 
 <script>
 export default {
-     name: "schedules.control.placeholder",
+     name: "forms.control.placeholder",
      props: {
           index: {
                type: Number,
@@ -40,35 +40,23 @@ export default {
      },
      components: {
           textControl: () =>
-               import(
-                    "@/modules/schedules/components/designer/controls/textbox"
-               ),
+               import("@/modules/forms/components/designer/controls/textbox"),
           paragraphControl: () =>
-               import(
-                    "@/modules/schedules/components/designer/controls/paragraph"
-               ),
+               import("@/modules/forms/components/designer/controls/paragraph"),
           headerControl: () =>
-               import(
-                    "@/modules/schedules/components/designer/controls/header"
-               ),
+               import("@/modules/forms/components/designer/controls/header"),
           numberControl: () =>
-               import(
-                    "@/modules/schedules/components/designer/controls/number"
-               ),
+               import("@/modules/forms/components/designer/controls/number"),
           decimalControl: () =>
-               import(
-                    "@/modules/schedules/components/designer/controls/decimal"
-               ),
+               import("@/modules/forms/components/designer/controls/decimal"),
           informationControl: () =>
                import(
-                    "@/modules/schedules/components/designer/controls/information"
+                    "@/modules/forms/components/designer/controls/information"
                ),
           yesnoControl: () =>
-               import("@/modules/schedules/components/designer/controls/yesno"),
+               import("@/modules/forms/components/designer/controls/yesno"),
           dropdownControl: () =>
-               import(
-                    "@/modules/schedules/components/designer/controls/dropdown"
-               )
+               import("@/modules/forms/components/designer/controls/dropdown")
      },
      data() {
           return {

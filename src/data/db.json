@@ -870,13 +870,13 @@
       "formControls": [
         {
           "id": "KB14A4JMLR9PN",
-          "name": "Untitled Header Untitled Header Untitled Header Untitled Header Untitled Header Untitled Header ",
+          "name": "Personal detail",
           "instruction": null,
           "value": null,
           "hasValidations": false,
           "properties": {
             "size": "title",
-            "color": "primary--text",
+            "color": "error--text",
             "style": "border"
           },
           "validations": {},
@@ -886,40 +886,8 @@
           "config": false
         },
         {
-          "id": "KAZOGR9M1KE5W",
-          "name": "Personal Detail",
-          "instruction": null,
-          "value": null,
-          "hasValidations": false,
-          "properties": {
-            "default": null
-          },
-          "validations": {},
-          "icon": "mdi-order-bool-descending",
-          "type": "yesno",
-          "edit": false,
-          "config": false
-        },
-        {
-          "id": "KB14A1GJGAIFR",
-          "name": "Untitled Information",
-          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
-          "value": null,
-          "hasValidations": false,
-          "properties": {
-            "size": "display-1",
-            "color": "",
-            "style": ""
-          },
-          "validations": {},
-          "icon": "mdi-format-header-1",
-          "type": "header",
-          "edit": false,
-          "config": false
-        },
-        {
           "id": "KB149Z8RCRPUU",
-          "name": "Untitled Text",
+          "name": "Name",
           "instruction": null,
           "value": null,
           "hasValidations": false,
@@ -937,40 +905,25 @@
         },
         {
           "id": "KB14A0FR23SQS",
-          "name": "Untitled Dropdown",
+          "name": "Surname",
           "instruction": "",
           "value": null,
           "hasValidations": false,
           "properties": {
             "default": null,
-            "selectableOptions": []
+            "placeholder": "Enter a value",
+            "minLength": 1,
+            "maxLength": 100
           },
           "validations": {},
-          "icon": "mdi-view-list",
-          "type": "dropdown",
-          "edit": false,
-          "config": false
-        },
-        {
-          "id": "KB14A2OMH60OD",
-          "name": "Collab Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks.oratively administrate empowered markets via plug-and-play networks.",
-          "instruction": "Collab Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks.oratively administrate empowered markets via plug-and-play networks.",
-          "value": null,
-          "hasValidations": false,
-          "properties": {
-            "size": "body-1",
-            "type": "info",
-            "style": {}
-          },
-          "validations": {},
-          "icon": "mdi-information-variant",
-          "type": "information",
+          "icon": "mdi-format-text",
+          "type": "text",
           "edit": false,
           "config": false
         },
         {
           "id": "KB14ABTJQGY53",
-          "name": "Untitled Untitled Number",
+          "name": "Age",
           "instruction": null,
           "value": 0,
           "hasValidations": false,
@@ -1006,8 +959,25 @@
           "config": false
         },
         {
+          "id": "KB14A2OMH60OD",
+          "name": "Collab Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks.oratively administrate empowered markets via plug-and-play networks.",
+          "instruction": "Collab Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks. Collaboratively administrate empowered markets via plug-and-play networks.oratively administrate empowered markets via plug-and-play networks.",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "size": "body-1",
+            "type": "info",
+            "style": {}
+          },
+          "validations": {},
+          "icon": "mdi-information-variant",
+          "type": "information",
+          "edit": false,
+          "config": false
+        },
+        {
           "id": "KB149YB5NWVGD",
-          "name": "Untitled Personal Detail",
+          "name": "Is it night?",
           "instruction": null,
           "value": null,
           "hasValidations": false,
@@ -1054,13 +1024,21 @@
         },
         {
           "id": "KB14ADDX2TNQA",
-          "name": "Untitled Untitled Dropdown",
+          "name": "The ABC",
           "instruction": "",
-          "value": null,
+          "value": "A",
           "hasValidations": false,
           "properties": {
-            "default": null,
-            "selectableOptions": []
+            "default": "A",
+            "selectableOptions": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G"
+            ]
           },
           "validations": {},
           "icon": "mdi-view-list",
@@ -1120,6 +1098,70 @@
           "validations": {},
           "icon": "mdi-view-list",
           "type": "dropdown",
+          "edit": false,
+          "config": false
+        }
+      ]
+    },
+    {
+      "id": "KB3F2OCFFJ9OP",
+      "name": "New Schedule 123",
+      "status": "draft",
+      "owner": "wessel@wessel.com",
+      "createdDate": "20/04/2020",
+      "formControls": [
+        {
+          "id": "KB3F1Z6AOW0EP",
+          "name": "Name",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "placeholder": "Enter a value",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "validations": {},
+          "icon": "mdi-format-text",
+          "type": "text",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB3F223UXH2EG",
+          "name": "Hobby",
+          "instruction": "",
+          "value": "two",
+          "hasValidations": false,
+          "properties": {
+            "default": "two",
+            "selectableOptions": [
+              "one",
+              "two",
+              "three"
+            ]
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB3F20PBJ9PKX",
+          "name": "Untitled Information",
+          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "size": "body-1",
+            "type": "info",
+            "style": {}
+          },
+          "validations": {},
+          "icon": "mdi-information-variant",
+          "type": "information",
           "edit": false,
           "config": false
         }
@@ -15065,7 +15107,7 @@
       "type": "doc",
       "reviewStatus": "complete",
       "department": "corporate",
-      "responsibility": "de",
+      "responsibility": "fr",
       "redFlagStatus": "red",
       "reviewer": "",
       "reviewedDate": "",
@@ -15244,7 +15286,7 @@
                 "id": 3,
                 "name": "Do you own a car?",
                 "instruction": "",
-                "value": null,
+                "value": "false",
                 "hasValidations": false,
                 "properties": {
                   "default": null

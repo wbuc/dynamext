@@ -144,7 +144,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-     name: "Schedules.Dashboard",
+     name: "Forms.Dashboard",
      data() {
           return {
                pageConfig: {

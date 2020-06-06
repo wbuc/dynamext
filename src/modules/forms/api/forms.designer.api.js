@@ -4,8 +4,8 @@ import httpClient from './httpClient'
 const END_POINT = 'schedules'
 
 
-const getSchedule = (id) => {
-    console.log("Get Schedule: ", id);
+const getForm = (id) => {
+    console.log("Get Form: ", id);
     return new Promise((resolve, reject) => {
         httpClient.get(`${END_POINT}/${id}`)
             .then(response => { resolve(response); })
@@ -60,7 +60,12 @@ const updateFormDefinition = (form) => {
     })
 }
 
-
-
-
-export default { getSchedule, getAllForms, getPublishedForms, getFormDefinition, saveFormDefinition, updateFormDefinition, deleteFormDefinition }
+export default {
+    getForm,
+    getAllForms,
+    getPublishedForms,
+    getFormDefinition,
+    saveFormDefinition,
+    updateFormDefinition,
+    deleteFormDefinition
+}

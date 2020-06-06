@@ -20,7 +20,7 @@
 
 <script>
 export default {
-     name: "Control.Textbox.Designer",
+     name: "control.textbox.designer",
      props: {
           control: {
                Type: Object,

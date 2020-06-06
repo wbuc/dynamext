@@ -14,5 +14,4 @@ function cloneObject(object) {
     return newObj;
 }
 
-
 export default { generateFormId, newFormId, cloneObject }

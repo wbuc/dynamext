@@ -104,7 +104,7 @@
 
 <script>
 export default {
-     name: "schedules.designer.manager",
+     name: "forms.designer.manager",
      components: {
           draggable: () => import("vuedraggable")
      },

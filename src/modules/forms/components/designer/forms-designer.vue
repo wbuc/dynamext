@@ -497,20 +497,20 @@ import draggable from "vuedraggable";
 import { mapGetters } from "vuex";
 
 // All controls that will be used in the toolbox
-import { controls } from "@/modules/schedules/components/designer/controlList";
-import formHelper from "@/modules/schedules/helpers/forms.helper";
-// import { controlTypes } from "@/modules/schedules/components/designer/controlTypes";
+import { controls } from "@/modules/forms/components/designer/controlList";
+import formHelper from "@/modules/forms/helpers/forms.helper";
+// import { controlTypes } from "@/modules/forms/components/designer/controlTypes";
 
 export default {
-     name: "Schedules.Canvas.Designer",
+     name: "forms.Canvas.Designer",
      components: {
           draggable,
           tags: () => import("@/components/control-tag-inline"),
           ControlTemplate: () =>
                import(
-                    "@/modules/schedules/components/designer/controls/_control-placeholder"
+                    "@/modules/forms/components/designer/controls/_control-placeholder"
                ),
-          manager: () => import("./schedules-designer-manager")
+          manager: () => import("./forms-designer-manager")
      },
      computed: {
           ...mapGetters(["api", "dynamicForm"]),

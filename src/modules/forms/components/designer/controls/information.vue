@@ -11,7 +11,7 @@
 
 <script>
 export default {
-     name: "Control.Information.Designer",
+     name: "control.information.designer",
      props: {
           control: {
                Type: Object,
