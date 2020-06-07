@@ -10,6 +10,9 @@ const getters = {
     user: state => {
         return state.user;
     },
+    userId: state => {
+        return state.userId;
+    },
     isAuthenticated: state => {
         return state.idToken !== null ? true : false;
     },
@@ -17,7 +20,7 @@ const getters = {
 const mutations = {
     'AUTH_USER'(state, data) {
         state.idToken = data.idToken;
-        state.userId = data.userId;
+        state.userId = data.localId;
     },
     'SAVE_USER'(state, data) {
         state.user = data;
@@ -41,26 +44,19 @@ const actions = {
                     console.log(error)
                 })
     },
-    getUser({ commit, state }) {
-        if (!state.idToken) {
+    getUser(context) {
+        if (!context.state.idToken) {
             return;
         }
 
-        userProfileApi.getUser(state).then(data => {
-            const res = data.data;
-            const users = [];
-            console.log(data)
-            for (let key in res) {
-                const user = res[key];
-                user.id = key;
-                users.push(user);
-            }
-            console.log('get user done ', res);
-            commit('SAVE_USER', users[0]);
+        userProfileApi.getLoggedInUser(context.rootGetters.userId).then(data => {
+            const _user = data.data[0];
+            context.commit('SAVE_USER', _user);
         },
             error => {
                 console.log(error)
             });
+
     },
     getUsers({ commit, state }) {
 
@@ -73,7 +69,6 @@ const actions = {
             userProfileApi.getUsers(state).then(data => {
                 const res = data.data;
                 const users = [];
-                console.log(data)
                 for (let key in res) {
                     const user = res[key];
                     user.id = key;
@@ -83,14 +78,12 @@ const actions = {
 
                 //mimic some loading in the background.
                 setTimeout(() => {
-                    console.log('get users done ', users);
                     commit('API_COMPLETE');
                     resolve(users)
                 }, 1000);
 
             },
                 error => {
-                    console.log(error)
                     commit('API_ERROR');
                     reject(error);
                 });
@@ -98,8 +91,6 @@ const actions = {
 
     },
     signUpSuccess(context, { response, userData }) {
-        console.log(userData)
-
         //set user as signed in when create succesfull.
         context.commit('AUTH_USER', response.data);
         // save user data in the users profile table.
@@ -149,8 +140,6 @@ const actions = {
         const expirationDate = new Date(localStorage.getItem('expirationDate'));
         const now = new Date();
 
-        console.log(now);
-        console.log(expirationDate);
         if (now >= expirationDate) {
             return;
         }
@@ -159,9 +148,7 @@ const actions = {
             idToken: token,
             localId: userId
         })
-
         context.dispatch('getUser');
-
         router.replace({ name: 'Home' });
     },
     logout({ commit }) {
@@ -181,6 +168,51 @@ const actions = {
             context.dispatch('logout');
         }, expirationTime * 1000);
     },
+    getUserDetail(context, email) {
+
+        if (!context.rootGetters.isAuthenticated) return;
+
+        return new Promise((resolve, reject) => {
+            userProfileApi.getUserDetail(email).then(response => {
+                resolve(response.data[0])
+            },
+                error => {
+                    context.commit('API_ERROR');
+                    reject(error);
+                });
+        })
+
+    },
+    saveUserDetail(context, user) {
+
+        if (!context.rootGetters.isAuthenticated) return;
+
+        return new Promise((resolve, reject) => {
+            userProfileApi.saveUserDetail(user).then(response => {
+                resolve(response.data[0])
+            },
+                error => {
+                    context.commit('API_ERROR');
+                    reject(error);
+                });
+        })
+
+    },
+    updateUserDetail(context, user) {
+
+        if (!context.rootGetters.isAuthenticated) return;
+
+        return new Promise((resolve, reject) => {
+            userProfileApi.updateUserDetail(user).then(response => {
+                resolve(response)
+            },
+                error => {
+                    context.commit('API_ERROR');
+                    reject(error);
+                });
+        })
+
+    }
 }
 
 export default { state, getters, mutations, actions }

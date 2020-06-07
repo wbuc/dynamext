@@ -1,8 +1,9 @@
 // import store from './store/index'
 import httpClient from './httpClient'
-
+import adminHttpClient from '@/modules/admin/api/httpClient'
 const END_POINT = '/users.json'
 
+const admin_END_POINT = '/users'
 
 
 
@@ -31,20 +32,42 @@ const getUsers = (state) => {
     })
 }
 
-// TESTING ONLY ***
-const testUserAPI = (context) => {
 
+const getLoggedInUser = (uId) => {
     return new Promise((resolve, reject) => {
-        console.log('User api param: ', context);
-
-        setTimeout(() => {
-            let t = true;
-            if (t) resolve('Api test complete!')
-            if (!t) reject(Error('It broke!'))
-        }, 2000)
+        adminHttpClient.get(`${admin_END_POINT}?uId=${uId}`)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
+const getUserDetail = (email) => {
+    return new Promise((resolve, reject) => {
+        adminHttpClient.get(`${admin_END_POINT}?email=${email}`)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
+const saveUserDetail = (userDetail) => {
+    return new Promise((resolve, reject) => {
+        adminHttpClient.post(`${admin_END_POINT}`, userDetail)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+    })
+}
+const updateUserDetail = (userDetail) => {
+    return new Promise((resolve, reject) => {
+        adminHttpClient.put(`${admin_END_POINT}/${userDetail.id}`, userDetail)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
     })
 }
 
-
-
-export default { saveUser, getUser, getUsers, testUserAPI }
+export default {
+    saveUser,
+    getUser,
+    getUsers,
+    saveUserDetail,
+    getLoggedInUser,
+    getUserDetail,
+    updateUserDetail,
+}

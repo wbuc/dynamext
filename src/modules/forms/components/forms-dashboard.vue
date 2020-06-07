@@ -82,12 +82,13 @@
                               </v-card>
                          </v-col>
                          <v-col cols="6" sm="3" md="2" class="d-flex align-center">
-                              <v-card flat>
+                              <v-card flat class="align-center">
                                    <div>
                                         <v-chip
                                              :class="`chip ${schedule.status} 
-                                                  ${statusClass(schedule.status)} caption white--text my-2`"
+                                                  ${statusClass(schedule.status)} caption white--text my-2 text-uppercase`"
                                              small
+                                             label
                                         >{{schedule.status}}</v-chip>
                                    </div>
                               </v-card>
