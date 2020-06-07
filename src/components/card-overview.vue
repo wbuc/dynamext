@@ -14,8 +14,10 @@
                               style="border-radius:0px"
                               @click="openPending"
                          >
-                              <v-card-title class="justify-center">Pending</v-card-title>
-                              <v-card-subtitle class="headline">54</v-card-subtitle>
+                              <v-card-title
+                                   class="justify-center grey--text text--lighten-2 subtitle-2 px-0"
+                              >Pending</v-card-title>
+                              <v-card-subtitle class="headline white--text">54</v-card-subtitle>
                          </v-card>
                     </v-col>
                     <v-col cols="4">
@@ -24,14 +26,18 @@
                               style="border-radius:0px"
                               @click="openComplete"
                          >
-                              <v-card-title class="justify-center">Complete</v-card-title>
-                              <v-card-subtitle class="headline">27</v-card-subtitle>
+                              <v-card-title
+                                   class="justify-center grey--text text--lighten-2 subtitle-2 px-0"
+                              >Complete</v-card-title>
+                              <v-card-subtitle class="headline white--text">27</v-card-subtitle>
                          </v-card>
                     </v-col>
                     <v-col cols="4">
                          <v-card class="teal py-2" style="border-radius:0px" @click="openTotal">
-                              <v-card-title class="justify-center">Total</v-card-title>
-                              <v-card-subtitle class="headline">122</v-card-subtitle>
+                              <v-card-title
+                                   class="justify-center grey--text text--lighten-2 subtitle-2 px-0"
+                              >Total</v-card-title>
+                              <v-card-subtitle class="headline white--text">122</v-card-subtitle>
                          </v-card>
                     </v-col>
                </v-row>
