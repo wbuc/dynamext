@@ -27,10 +27,8 @@ const actions = {
                 // web connection
                 authApi.loginUser(userData.email, userData.password)
                     .then(response => {
-                        console.log('new login done ', response)
                         context.dispatch('loginSuccess', response);
                     }, error => {
-                        console.log(error);
                         context.commit('API_ERROR', error);
                     });
             }

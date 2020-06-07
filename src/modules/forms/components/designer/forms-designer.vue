@@ -88,7 +88,7 @@
                <v-col cols="12" :md="explorerConfig.fullView ? '7':'6'">
                     <v-card class="x-form-design">
                          <v-card flat style="background-color: #ff000000">
-                              <v-card-text>
+                              <v-card-actions class="pa-4">
                                    <span
                                         v-if="!canvasConfig.editName"
                                         @click="editScheduleName"
@@ -106,7 +106,16 @@
                                         dense
                                    ></v-text-field>
                                    <br />
-                              </v-card-text>
+                                   <v-spacer></v-spacer>
+                                   <v-chip
+                                        color="green"
+                                        :class="[formData.status==='published'? 'success':'warning']"
+                                        class="text-uppercase caption"
+                                        text-color="white"
+                                        label
+                                        @click="toggleFormStatus"
+                                   >{{formData.status}}</v-chip>
+                              </v-card-actions>
                               <v-divider></v-divider>
                          </v-card>
                          <v-toolbar class="elevation-2">
@@ -430,6 +439,10 @@ export default {
                     this.$nextTick(() => {
                          this.$refs["schedulename"].focus();
                     });
+          },
+          toggleFormStatus() {
+               this.formData.status =
+                    this.formData.status === "draft" ? "published" : "draft";
           }
      },
      created() {

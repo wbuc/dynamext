@@ -37,6 +37,7 @@
                <x-form-control title="Client">
                     <v-btn-toggle
                          v-model="projectData.client"
+                         mandatory
                          color="primary"
                          borderless
                          class="ml-0"
@@ -48,6 +49,7 @@
                <x-form-control title="Type">
                     <v-btn-toggle
                          v-model="projectData.reportType"
+                         mandatory
                          color="primary"
                          borderless
                          class="ml-0"
@@ -115,6 +117,7 @@
                          <x-form-control title="Deal Type">
                               <v-btn-toggle
                                    v-model="projectData.dealType"
+                                   mandatory
                                    color="primary"
                                    borderless
                                    class="ml-0"

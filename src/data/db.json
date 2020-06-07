@@ -864,7 +864,7 @@
     {
       "id": "KAY6QYMVODAML",
       "name": "New Untitled Schedule 3",
-      "status": "draft",
+      "status": "published",
       "owner": "wessel@wessel.com",
       "createdDate": "20/04/2020",
       "formControls": [
@@ -1106,13 +1106,13 @@
     {
       "id": "KB3F2OCFFJ9OP",
       "name": "New Schedule 123",
-      "status": "draft",
+      "status": "published",
       "owner": "wessel@wessel.com",
       "createdDate": "20/04/2020",
       "formControls": [
         {
-          "id": "KB3LBJBG6S2UQ",
-          "name": "Untitled Text",
+          "id": "KB505WHBP1QDQ",
+          "name": "Untitled Untitled Text",
           "instruction": null,
           "value": null,
           "hasValidations": false,
@@ -1142,6 +1142,24 @@
           "validations": {},
           "icon": "mdi-format-header-1",
           "type": "header",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KB3LBJBG6S2UQ",
+          "name": "Untitled Text",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "placeholder": "Enter a value",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "validations": {},
+          "icon": "mdi-format-text",
+          "type": "text",
           "edit": false,
           "config": false
         },
@@ -1184,19 +1202,22 @@
           "config": false
         },
         {
-          "id": "KB3F20PBJ9PKX",
-          "name": "Untitled Information",
-          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
-          "value": null,
+          "id": "KB505VNAR6Z1P",
+          "name": "Untitled Hobby",
+          "instruction": "",
+          "value": "two",
           "hasValidations": false,
           "properties": {
-            "size": "body-1",
-            "type": "info",
-            "style": {}
+            "default": "two",
+            "selectableOptions": [
+              "one",
+              "two",
+              "three"
+            ]
           },
           "validations": {},
-          "icon": "mdi-information-variant",
-          "type": "information",
+          "icon": "mdi-view-list",
+          "type": "dropdown",
           "edit": false,
           "config": false
         }
@@ -15415,7 +15436,7 @@
     "title": "",
     "description": "",
     "clientName": "",
-    "client": "sellside",
+    "client": "buyside",
     "reportType": "redflag",
     "cmn": "",
     "partner": "",
@@ -15443,6 +15464,18 @@
     {
       "name": "Information Technology - Infrastructure",
       "id": 20
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "uId": "dCJzQbkF0pbgXOgECjkGYAXSeoX2",
+      "email": "wessel@wessel.com",
+      "name": "Wessel",
+      "surname": "Buchling",
+      "role": "Lead Associate",
+      "department": "Finance",
+      "theme": "ligt"
     }
   ]
 }
