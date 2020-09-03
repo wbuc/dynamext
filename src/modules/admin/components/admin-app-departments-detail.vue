@@ -63,7 +63,7 @@ export default {
      name: "admin.app.department.detail",
      data() {
           return {
-               url: "/appdata/departments",
+               url: "/departments",
                listTicker: 1, // used to force the list refresh
                dialogConfig: {
                     open: false,
