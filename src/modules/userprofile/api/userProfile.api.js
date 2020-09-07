@@ -31,8 +31,6 @@ const getUsers = (state) => {
             .catch(error => reject(error));
     })
 }
-
-
 const getLoggedInUser = (uId) => {
     return new Promise((resolve, reject) => {
         adminHttpClient.get(`${admin_END_POINT}?uId=${uId}`)

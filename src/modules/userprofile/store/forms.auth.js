@@ -1,14 +1,15 @@
-import authApi from '@/modules/userprofile/api/forms.auth.api'
+//import authApi from '@/modules/userprofile/api/forms.auth.api'
+import authApiSQL from '@/modules/userprofile/api/forms.auth.sql.api'
 
 const actions = {
     signUp(context, userData) {
 
         context.commit('API_LOADING');
 
-        authApi.registerUser(userData.email, userData.password)
+        authApiSQL.registerUser(userData.email, userData.password)
             .then(response => {
-                console.log('new register done ', response)
-                context.dispatch('signUpSuccess', { response, userData });
+                console.log('new register done ', response.data)
+                context.dispatch('signUpSuccess', { data: response.data, userData });
             }, error => {
                 console.log(error);
                 context.commit('API_ERROR', error);
@@ -25,9 +26,10 @@ const actions = {
 
             if (!localDev) {
                 // web connection
-                authApi.loginUser(userData.email, userData.password)
-                    .then(response => {
-                        context.dispatch('loginSuccess', response);
+                authApiSQL.loginUser(userData.email, userData.password)
+                    .then(data => {
+                        console.log(data);
+                        context.dispatch('loginSuccess', data);
                     }, error => {
                         context.commit('API_ERROR', error);
                     });
@@ -36,7 +38,8 @@ const actions = {
                 // offline mode - force successfull login.
                 const response = {
                     data: {
-                        idToken: "eyJhbGciOiJSU",
+                        //idToken: "eyJhbGciOiJSU",
+                        userId: '12345',
                         localId: "JzQbkF0pbgXOgECjkGYAXSeoX2",
                         expiresIn: 3600
 
@@ -44,7 +47,7 @@ const actions = {
                 }
                 context.dispatch('loginSuccess', response)
             }
-        }, 1500);
+        }, 1);
     },
 }
 

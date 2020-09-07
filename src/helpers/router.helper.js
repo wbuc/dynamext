@@ -3,9 +3,9 @@ import store from '@/store/index'
 
 function routeGaurd(to, from, next) {
 
-    if (store.state.userProfile.idToken) {
-        // console.log('from: ', from, ' to: ', to);
-        // console.log('idToken: ', store.state.userProfile.idToken)
+    //if (store.state.userProfile.idToken) {
+    if (store.state.userProfile.userId) {
+        console.log('invalid client permissions')
         next();
     }
     else {

@@ -312,19 +312,19 @@
   "schedules": [
     {
       "id": "K91O2TKH5LGQUH",
-      "name": "Pork tri-tip sirloin brisket prosciutto ham",
+      "name": "Will demo form!",
       "owner": "Wessel Buchling",
       "createdDate": "13/10/2014",
       "status": "draft",
       "formControls": [
         {
-          "id": 4,
-          "name": "Personal Detail",
+          "id": "KEPM7YSSJZUKB",
+          "name": "Untitled Header",
           "instruction": null,
           "value": null,
           "hasValidations": false,
           "properties": {
-            "size": "display-1",
+            "size": "title",
             "color": "accent--text",
             "style": "border"
           },
@@ -335,118 +335,81 @@
           "config": false
         },
         {
-          "id": 8,
-          "name": "Andouille ground round jerky short loin. Pork belly leberkas sirloin pastrami cupim t-bone. Salami bacon sirloin meatloaf jerky chislic, frankfurter turkey bresaola sausage ham hock kielbasa t-bone. ",
-          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
-          "value": null,
-          "hasValidations": false,
-          "properties": {
-            "size": "body-1",
-            "type": "info",
-            "style": {}
-          },
-          "validations": {},
-          "icon": "mdi-information-variant",
-          "type": "information",
-          "edit": false,
-          "config": false
-        },
-        {
-          "id": 1,
-          "name": "First Name",
-          "instruction": null,
-          "value": null,
-          "hasValidations": false,
-          "properties": {
-            "default": null,
-            "placeholder": "Enter  your name",
-            "minLength": 1,
-            "maxLength": 100
-          },
-          "validations": {},
-          "icon": "mdi-format-text",
-          "type": "text",
-          "edit": false,
-          "config": false
-        },
-        {
-          "id": 2,
-          "name": "Last Name",
-          "instruction": null,
-          "value": null,
-          "hasValidations": false,
-          "properties": {
-            "default": null,
-            "placeholder": "Enter your surname",
-            "minLength": 1,
-            "maxLength": 100
-          },
-          "validations": {},
-          "icon": "mdi-format-text",
-          "type": "text",
-          "edit": false,
-          "config": false
-        },
-        {
-          "id": 5,
-          "name": "Age",
+          "id": "KEPM8QYAK9W90",
+          "name": "Untitled Dropdown",
           "instruction": "",
-          "value": 0,
+          "value": "value 2",
           "hasValidations": false,
           "properties": {
-            "default": 0,
-            "placeholder": "Enter a number"
+            "default": "value 2",
+            "selectableOptions": [
+              "value 1",
+              "value 2"
+            ]
           },
           "validations": {},
-          "icon": "mdi-numeric-10",
-          "type": "number",
+          "icon": "mdi-view-list",
+          "type": "dropdown",
           "edit": false,
           "config": false
         },
         {
-          "id": 9,
-          "name": "Andouille ground round jerky short loin. Pork belly leberkas sirloin pastrami cupim t-bone. Salami bacon sirloin meatloaf jerky chislic, frankfurter turkey bresaola sausage ham hock kielbasa t-bone. ",
-          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
+          "id": "KEPM7W5PKEPOL",
+          "name": "Untitled Text",
+          "instruction": "lklskdjdvlkjdslkvslkdjvclksdjc dlkc\\sdlkvj\\svdj",
           "value": null,
           "hasValidations": false,
-          "properties": {
-            "size": "body-1",
-            "type": null,
-            "style": {
-              "outlined": true
-            }
-          },
-          "validations": {},
-          "icon": "mdi-information-variant",
-          "type": "information",
-          "edit": false,
-          "config": false
-        },
-        {
-          "id": 7,
-          "name": "Your story",
-          "instruction": "Tell us about yourself",
-          "value": null,
-          "hasValidations": true,
           "properties": {
             "default": null,
             "placeholder": "Enter a value",
-            "rows": "3"
+            "minLength": 1,
+            "maxLength": 100
           },
-          "validations": {
-            "minLength": 0,
-            "maxLength": "10000",
-            "customExpression": null
+          "validations": {},
+          "icon": "mdi-format-text",
+          "type": "text",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KEPMAOC6VPDKZ",
+          "name": "Untitled Untitled Text",
+          "instruction": null,
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": null,
+            "placeholder": "Enter a value",
+            "minLength": 1,
+            "maxLength": 100
           },
+          "validations": {},
+          "icon": "mdi-format-text",
+          "type": "text",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KEPMMCYVEDDKY",
+          "name": "Untitled Paragraph",
+          "instruction": "Please fill in all the required data",
+          "value": null,
+          "hasValidations": false,
+          "properties": {
+            "default": "This is a default value!!!",
+            "placeholder": "This is a default value!!!",
+            "rows": "2"
+          },
+          "validations": {},
           "icon": "mdi-format-pilcrow",
           "type": "paragraph",
           "edit": false,
           "config": false
         },
         {
-          "id": 6,
-          "name": "Pin",
-          "instruction": "We will not store this detail in any form, trust us.",
+          "id": "KEPMAOG2IOLWD",
+          "name": "Untitled Untitled Text",
+          "instruction": null,
           "value": null,
           "hasValidations": false,
           "properties": {
@@ -462,36 +425,115 @@
           "config": false
         },
         {
-          "id": 3,
-          "name": "Do you own a car?",
-          "instruction": "",
+          "id": "KEPMAOJXIAMGW",
+          "name": "Untitled Untitled Text",
+          "instruction": null,
           "value": null,
           "hasValidations": false,
           "properties": {
-            "default": null
+            "default": null,
+            "placeholder": "Enter a value",
+            "minLength": 1,
+            "maxLength": 100
           },
           "validations": {},
-          "icon": "mdi-order-bool-descending",
-          "type": "yesno",
+          "icon": "mdi-format-text",
+          "type": "text",
           "edit": false,
           "config": false
         },
         {
-          "id": 10,
-          "name": "Please ensure you have answered all questions.",
-          "instruction": "Collaboratively administrate empowered markets via plug-and-play networks.",
-          "value": null,
+          "id": "KEPMAP3ZZ2IMG",
+          "name": "Untitled Untitled Dropdown",
+          "instruction": "",
+          "value": "value 2",
           "hasValidations": false,
           "properties": {
-            "size": "body-1",
-            "type": "error",
-            "style": {
-              "prominent": true
-            }
+            "default": "value 2",
+            "selectableOptions": [
+              "value 1",
+              "value 2"
+            ]
           },
           "validations": {},
-          "icon": "mdi-information-variant",
-          "type": "information",
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KEPMAP8CKYY2B",
+          "name": "Untitled Untitled Dropdown",
+          "instruction": "",
+          "value": "value 2",
+          "hasValidations": false,
+          "properties": {
+            "default": "value 2",
+            "selectableOptions": [
+              "value 1",
+              "value 2"
+            ]
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KEPMAPCF95ZOZ",
+          "name": "Untitled Untitled Dropdown",
+          "instruction": "",
+          "value": "value 2",
+          "hasValidations": false,
+          "properties": {
+            "default": "value 2",
+            "selectableOptions": [
+              "value 1",
+              "value 2"
+            ]
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KEPMAPGCM3SFO",
+          "name": "Untitled Untitled Dropdown",
+          "instruction": "",
+          "value": "value 2",
+          "hasValidations": false,
+          "properties": {
+            "default": "value 2",
+            "selectableOptions": [
+              "value 1",
+              "value 2"
+            ]
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
+          "edit": false,
+          "config": false
+        },
+        {
+          "id": "KEPMAPK7UHI69",
+          "name": "Untitled Untitled Dropdown",
+          "instruction": "",
+          "value": "value 2",
+          "hasValidations": false,
+          "properties": {
+            "default": "value 2",
+            "selectableOptions": [
+              "value 1",
+              "value 2"
+            ]
+          },
+          "validations": {},
+          "icon": "mdi-view-list",
+          "type": "dropdown",
           "edit": false,
           "config": false
         }

@@ -1,18 +1,19 @@
-import config from '@/config/app'
+// import config from '@/config/app'
 import httpClient from 'axios'
 
-httpClient.defaults.baseURL = "https://identitytoolkit.googleapis.com/v1/"
+//httpClient.defaults.baseURL = "https://identitytoolkit.googleapis.com/v1/"
 
-const END_POINT = 'accounts'
+httpClient.defaults.baseURL = 'http://localhost:3001/'
+
+// const END_POINT = 'accounts'
 
 const loginUser = (email, password) => {
     return new Promise((resolve, reject) => {
-        httpClient.post(`${END_POINT}:signInWithPassword?key=${config.appKey}`, {
+        httpClient.post(`login`, {
             email: email,
-            password: password,
-            returnSecureToken: true
+            password: password
         }).then(response => {
-            resolve(response)
+            resolve(response.data)
         }).catch(error => reject(error));
 
     })
@@ -20,10 +21,9 @@ const loginUser = (email, password) => {
 
 const registerUser = (email, password) => {
     return new Promise((resolve, reject) => {
-        httpClient.post(`${END_POINT}:signUp?key=${config.appKey}`, {
+        httpClient.post(`signup`, {
             email: email,
-            password: password,
-            returnSecureToken: true
+            password: password
         }).then(response => {
             console.log('register complete:', response)
             resolve(response)
