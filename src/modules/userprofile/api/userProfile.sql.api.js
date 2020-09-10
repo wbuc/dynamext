@@ -42,8 +42,8 @@ const getLoggedInUser = (uId) => {
 const getUserDetail = (email) => {
   return new Promise((resolve, reject) => {
     adminHttpClient
-      .get(`${admin_END_POINT}?email=${email}`)
-      .then((response) => resolve(response))
+      .get(`users/email/${email}`)
+      .then((response) => resolve(response.data))
       .catch((error) => reject(error));
   });
 };
@@ -58,7 +58,7 @@ const saveUserDetail = (userDetail) => {
 const updateUserDetail = (userDetail) => {
   return new Promise((resolve, reject) => {
     adminHttpClient
-      .put(`${admin_END_POINT}/${userDetail.id}`, userDetail)
+      .put(`users/${userDetail.id}`, userDetail)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

@@ -58,7 +58,6 @@ const actions = {
 
     userProfileApi.getLoggedInUser(context.rootGetters.userId).then(
       (data) => {
-          console.log('retrieved user:', data)
         const _user = data;
         context.commit("SAVE_USER", _user);
       },
@@ -100,11 +99,10 @@ const actions = {
     });
   },
   signUpSuccess(context, response) {
-      console.log(response);
     //set user as signed in when create succesfull.
     context.commit("AUTH_USER", response.data);
     // save user data in the users profile table.
-   // console.log(userData);
+    // console.log(userData);
     // context.dispatch('storeUser', userData); // not needed anymore as the user detail already saved.
     // setup auto logout when session expires.
     context.dispatch("setAutoLogout", response.data.expiresIn);
@@ -119,7 +117,8 @@ const actions = {
     localStorage.setItem("userId", response.data.id);
     localStorage.setItem("expirationDate", expirationDate);
 
-    context.commit("API_COMPLETE");
+    // Not doing it here anymore, flagging complete when API is done loading.
+    //context.commit("API_COMPLETE");
 
     router.replace({ name: "Home" });
   },
@@ -139,8 +138,8 @@ const actions = {
     context.dispatch("getUser");
     // setup auto logout when session expires.
     context.dispatch("setAutoLogout", response.data.expiresIn);
-    //disable loading
-    context.commit("API_COMPLETE");
+    // //disable loading
+    // context.commit("API_COMPLETE");
     // navigate when login success.
     router.replace({ name: "Home" });
   },
@@ -161,15 +160,18 @@ const actions = {
     context.dispatch("getUser");
     router.replace({ name: "Home" });
   },
-  logout({ commit }) {
-    commit("LOGOUT_USER");
+  logoutUser(context) {
 
+    context.commit("LOGOUT_USER");
     // clear browser storage.
-    //localStorage.removeItem("token"); // not needed anymore
     localStorage.removeItem("expirationDate");
     localStorage.removeItem("userId");
 
-    // setup navigation.
+    // logout on server side
+    context.dispatch('logout').then(()=>{
+
+    });
+    
     router.replace({ name: "Login" });
   },
   setAutoLogout(context, expirationTime) {
@@ -183,8 +185,8 @@ const actions = {
 
     return new Promise((resolve, reject) => {
       userProfileApi.getUserDetail(email).then(
-        (response) => {
-          resolve(response.data[0]);
+        (data) => {
+          resolve(data);
         },
         (error) => {
           context.commit("API_ERROR");

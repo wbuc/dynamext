@@ -28,7 +28,7 @@ export default {
                this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
           },
           logout() {
-               this.$store.dispatch("logout");
+               this.$store.dispatch("logoutUser");
           }
      },
      data() {

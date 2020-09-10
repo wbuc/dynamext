@@ -1,7 +1,8 @@
 
 
 const config = {
-    appKey: 'AIzaSyA8VAuqF1jWtkQaS1rkzx8nPddRrAnMMuA'
+    appKey: 'AIzaSyA8VAuqF1jWtkQaS1rkzx8nPddRrAnMMuA',
+    baseURL: 'http://localhost:3001/'
 }
 
 

@@ -3,12 +3,12 @@ import store from '@/store/index'
 
 function routeGaurd(to, from, next) {
 
-    //if (store.state.userProfile.idToken) {
     if (store.state.userProfile.userId) {
-        console.log('invalid client permissions')
         next();
     }
     else {
+        console.log('invalid client permissions')
+
         next('/login');
     }
 }
