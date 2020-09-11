@@ -1,5 +1,5 @@
 import config from "@/config/app";
-import httpClient from "axios";
+import httpClient from "./httpClient";
 
 httpClient.defaults.baseURL = config.baseURL;
 
@@ -13,11 +13,14 @@ const loginUser = (email, password) => {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((error) => reject(error));
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
 const logoutUser = () => {
+ //s httpClient.defaults.credentials = "include";
   return new Promise((resolve, reject) => {
     httpClient
       .get(`logout`)

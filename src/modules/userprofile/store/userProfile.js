@@ -123,21 +123,27 @@ const actions = {
     router.replace({ name: "Home" });
   },
   loginSuccess(context, response) {
+    
+    const user = response.data;
     // determine the date when token should expire.
     const now = new Date();
     const expirationDate = new Date(
-      now.getTime() + response.data.expiresIn * 1000
+      now.getTime() + user.expiresIn * 1000
     );
     // save token for auto login.
     //localStorage.setItem("token", response.data.idToken); //not needed anymore
-    localStorage.setItem("userId", response.data.id);
+    localStorage.setItem("userId", user.id); // has the user object.
     localStorage.setItem("expirationDate", expirationDate);
     // set session detail for logged in user.
-    context.commit("AUTH_USER", response.data);
+    context.commit("AUTH_USER", user);
+   
     // get user profile.
-    context.dispatch("getUser");
+    //context.dispatch("getUser"); // TODO: Take out. No need for this requestas the user detail is returned on the signin!
+    
+    context.commit("SAVE_USER", user); // TODO: NEW mutation to call instead of getUser action.
+
     // setup auto logout when session expires.
-    context.dispatch("setAutoLogout", response.data.expiresIn);
+    context.dispatch("setAutoLogout", user.expiresIn);
     // //disable loading
     // context.commit("API_COMPLETE");
     // navigate when login success.

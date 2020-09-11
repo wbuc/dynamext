@@ -5,6 +5,7 @@ import store from './store/index'
 import vuetify from './plugins/vuetify'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
+
 /* Register custom components */
 import '@/plugins/base'
 

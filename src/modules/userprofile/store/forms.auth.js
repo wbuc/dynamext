@@ -32,7 +32,9 @@ const actions = {
             context.dispatch("loginSuccess", data);
           },
           (error) => {
-            context.commit("API_ERROR", error);
+            console.log('login failed: ', error);
+            //The email and password you entered don't match.
+            context.commit("API_ERROR", 'login failed');
           }
         );
       } else {
