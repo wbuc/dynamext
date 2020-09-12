@@ -11,6 +11,16 @@
           <v-form @submit.prevent="signUp">
                <v-card-text>
                     <v-text-field
+                         label="Name"
+                         name="Name"
+                         prepend-icon="mdi-face"
+                         type="text"
+                         solo-inverted
+                         v-model="formData.name"
+                         flat
+                    ></v-text-field>
+
+                    <v-text-field
                          label="Email"
                          name="email"
                          prepend-icon="mail"
@@ -71,6 +81,7 @@ export default {
      data() {
           return {
                formData: {
+                    name:"",
                     email: "",
                     password: "",
                     colour: null

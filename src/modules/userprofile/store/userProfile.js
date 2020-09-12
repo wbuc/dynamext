@@ -4,7 +4,7 @@ import userProfileApi from "@/modules/userprofile/api/userProfile.sql.api";
 const state = {
   userId: null,
   user: null,
-  // idToken: null,
+  token: null,
 };
 const getters = {
   user: (state) => {
@@ -14,28 +14,29 @@ const getters = {
     return state.userId;
   },
   isAuthenticated: (state) => {
-    return state.userId !== null ? true : false;
-    //return state.idToken !== null ? true : false;
+    //return state.userId !== null ? true : false;
+    return state.token !== null ? true : false;
+  },
+  token: (state) => {
+    return state.token;
   },
 };
 const mutations = {
   AUTH_USER(state, data) {
-    //state.idToken = data.idToken;
+    state.token = data.token;
     state.userId = data.id;
   },
   SAVE_USER(state, data) {
     state.user = data;
   },
   LOGOUT_USER(state) {
-    //state.idToken = null;
+    state.token = null;
     state.userId = null;
   },
 };
 const actions = {
   storeUser({ state }, userData) {
-    //check if valid token.
-    //if (!state.idToken) {
-    if (!state.userId) {
+    if (!state.token) {
       return;
     }
     /# Not needed as we already saved the user data #/;
@@ -51,8 +52,7 @@ const actions = {
     );
   },
   getUser(context) {
-    // if (!context.state.idToken) {
-    if (!context.state.userId) {
+    if (!context.state.token) {
       return;
     }
 
@@ -69,7 +69,7 @@ const actions = {
   getUsers({ commit, state }) {
     commit("API_LOADING");
     //if (!state.idToken) {
-    if (!state.userId) {
+    if (!state.token) {
       return;
     }
 
@@ -99,6 +99,7 @@ const actions = {
     });
   },
   signUpSuccess(context, response) {
+    console.log("signup success: ", response.data);
     //set user as signed in when create succesfull.
     context.commit("AUTH_USER", response.data);
     // save user data in the users profile table.
@@ -113,7 +114,7 @@ const actions = {
       now.getTime() + response.data.expiresIn * 1000
     );
     // save token for auto login.
-    // localStorage.setItem("token", response.data.idToken); // Not needed anymore
+    localStorage.setItem("token", response.data.token); // Not needed anymore
     localStorage.setItem("userId", response.data.id);
     localStorage.setItem("expirationDate", expirationDate);
 
@@ -123,23 +124,20 @@ const actions = {
     router.replace({ name: "Home" });
   },
   loginSuccess(context, response) {
-    
     const user = response.data;
+    
     // determine the date when token should expire.
     const now = new Date();
-    const expirationDate = new Date(
-      now.getTime() + user.expiresIn * 1000
-    );
+    const expirationDate = new Date(now.getTime() + user.expiresIn * 1000);
     // save token for auto login.
-    //localStorage.setItem("token", response.data.idToken); //not needed anymore
+    localStorage.setItem("token", response.token);
     localStorage.setItem("userId", user.id); // has the user object.
     localStorage.setItem("expirationDate", expirationDate);
     // set session detail for logged in user.
     context.commit("AUTH_USER", user);
-   
+
     // get user profile.
     //context.dispatch("getUser"); // TODO: Take out. No need for this requestas the user detail is returned on the signin!
-    
     context.commit("SAVE_USER", user); // TODO: NEW mutation to call instead of getUser action.
 
     // setup auto logout when session expires.
@@ -150,9 +148,9 @@ const actions = {
     router.replace({ name: "Home" });
   },
   tryAutoLogin(context) {
-    //const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-    if (!userId) return;
+    if (!token) return;
 
     const expirationDate = new Date(localStorage.getItem("expirationDate"));
     const now = new Date();
@@ -160,24 +158,25 @@ const actions = {
     if (now >= expirationDate) {
       return;
     }
+    
     context.commit("AUTH_USER", {
       id: userId,
+      token,
     });
     context.dispatch("getUser");
+
     router.replace({ name: "Home" });
   },
   logoutUser(context) {
-
     context.commit("LOGOUT_USER");
     // clear browser storage.
     localStorage.removeItem("expirationDate");
     localStorage.removeItem("userId");
+    localStorage.removeItem("token");
 
     // logout on server side
-    context.dispatch('logout').then(()=>{
+    context.dispatch("logout").then(() => {});
 
-    });
-    
     router.replace({ name: "Login" });
   },
   setAutoLogout(context, expirationTime) {

@@ -5,9 +5,12 @@ const actions = {
   signUp(context, userData) {
     context.commit("API_LOADING");
 
-    authApiSQL.registerUser(userData.email, userData.password).then(
+    authApiSQL.registerUser(userData).then(
       (response) => {
        
+        console.log(userData);
+        console.log('...')
+        console.log(response);
         context.commit("API_COMPLETE");
         context.dispatch("signUpSuccess", { data: response.data, userData });
       },

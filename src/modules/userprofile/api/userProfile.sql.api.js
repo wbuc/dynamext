@@ -1,14 +1,23 @@
 // import store from './store/index'
-import httpClient from "./httpClient";
-import adminHttpClient from "@/modules/admin/api/httpClient";
+
+import apiClient from "@/modules/shared/api/apiClient";
+
 const END_POINT = "/users.json";
 
 const admin_END_POINT = "/users";
 
+const validateAuthHeader = () => {
+  const token = localStorage.getItem("token");
+  const apiToken = apiClient.defaults.headers.common["Authorization"];
+  if (!apiToken) {
+    apiClient.defaults.headers.common["Authorization"] = ` Bearer ${token}`;
+  }
+};
+
 const saveUser = (state, user) => {
   return new Promise((resolve, reject) => {
     console.log(state);
-    httpClient
+    apiClient
       .post(`${END_POINT}?auth=${state.idToken}`, user)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
@@ -17,7 +26,7 @@ const saveUser = (state, user) => {
 const getUser = (state, user) => {
   console.log(user);
   return new Promise((resolve, reject) => {
-    httpClient
+    apiClient
       .get(`users/${state.userId}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error));
@@ -25,7 +34,7 @@ const getUser = (state, user) => {
 };
 const getUsers = (state) => {
   return new Promise((resolve, reject) => {
-    httpClient
+    apiClient
       .get(`${END_POINT}?auth=${state.idToken}`)
       .then((data) => resolve(data))
       .catch((error) => reject(error));
@@ -33,7 +42,9 @@ const getUsers = (state) => {
 };
 const getLoggedInUser = (uId) => {
   return new Promise((resolve, reject) => {
-    adminHttpClient
+    validateAuthHeader();
+
+    apiClient
       .get(`users/${uId}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error));
@@ -41,7 +52,7 @@ const getLoggedInUser = (uId) => {
 };
 const getUserDetail = (email) => {
   return new Promise((resolve, reject) => {
-    adminHttpClient
+    apiClient
       .get(`users/email/${email}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error));
@@ -49,7 +60,7 @@ const getUserDetail = (email) => {
 };
 const saveUserDetail = (userDetail) => {
   return new Promise((resolve, reject) => {
-    adminHttpClient
+    apiClient
       .post(`${admin_END_POINT}`, userDetail)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
@@ -57,7 +68,7 @@ const saveUserDetail = (userDetail) => {
 };
 const updateUserDetail = (userDetail) => {
   return new Promise((resolve, reject) => {
-    adminHttpClient
+    apiClient
       .put(`users/${userDetail.id}`, userDetail)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
