@@ -1,12 +1,12 @@
-import apiClient from "@/modules/shared/api/apiClient";
+import httpClient from './httpClient'
 
 //update endpoints with correct value when APIs are available
-
+const PROJECT_END_POINT = 'project'
 const DEPARTMENT_END_POINT = 'departments'
 
 const getProjectInfo = () => {
     return new Promise((resolve, reject) => {
-        apiClient.get(`project`)
+        httpClient.get(`${PROJECT_END_POINT}`)
             .then(response => {
                 console.log('admin.app.api: ', response);
 
@@ -17,35 +17,35 @@ const getProjectInfo = () => {
 }
 const saveProjectInfo = (project) => {
     return new Promise((resolve, reject) => {
-        apiClient.put(`project`, project)
+        httpClient.put(`${PROJECT_END_POINT}`, project)
             .then(response => resolve(response))
             .catch(error => reject(error))
     })
 }
 const getDepartmentDetail = (id) => {
     return new Promise((resolve, reject) => {
-        apiClient.get(`${DEPARTMENT_END_POINT}/${id}`)
+        httpClient.get(`${DEPARTMENT_END_POINT}/${id}`)
             .then(response => resolve(response))
             .catch(error => reject(error))
     })
 }
 const saveDepartment = (department) => {
     return new Promise((resolve, reject) => {
-        apiClient.post(`${DEPARTMENT_END_POINT}`, department)
+        httpClient.post(`${DEPARTMENT_END_POINT}`, department)
             .then(response => resolve(response))
             .catch(error => reject(error))
     })
 }
 const updateDepartment = (department) => {
     return new Promise((resolve, reject) => {
-        apiClient.put(`${DEPARTMENT_END_POINT}/${department.id}`, department)
+        httpClient.put(`${DEPARTMENT_END_POINT}/${department.id}`, department)
             .then(response => resolve(response))
             .catch(error => reject(error))
     })
 }
 const deleteDepartment = (department) => {
     return new Promise((resolve, reject) => {
-        apiClient.delete(`${DEPARTMENT_END_POINT}/${department.id}`)
+        httpClient.delete(`${DEPARTMENT_END_POINT}/${department.id}`)
             .then(response => resolve(response))
             .catch(error => reject(error))
     })

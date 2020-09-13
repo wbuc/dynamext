@@ -174,6 +174,7 @@ export default {
           },
           getProjectDetail(cb) {
                this.$store.dispatch("getAdminProjectDetail").then(data => {
+                    console.log(data);
                     this.projectData = data;
                     if (cb) cb();
                });

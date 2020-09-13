@@ -111,7 +111,6 @@ export default {
   methods: {
     editUserDetail() {
       this.$store.dispatch("getUserDetail", this.user.email).then((data) => {
-        console.log(data);
         this.userDetail = data;
         this.dialogConfig.open = true;
       });
@@ -154,7 +153,7 @@ export default {
     };
   },
   mounted: function () {
-   // this.$vuetify.theme.dark = this.user.theme === "dark" ? true : false;
+    // this.$vuetify.theme.dark = this.user.theme === "dark" ? true : false;
   },
 };
 </script>
