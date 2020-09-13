@@ -6,6 +6,7 @@ const END_POINT = "/users.json";
 
 const admin_END_POINT = "/users";
 
+/# HELPERS#/;
 const validateAuthHeader = () => {
   const token = localStorage.getItem("token");
   const apiToken = apiClient.defaults.headers.common["Authorization"];

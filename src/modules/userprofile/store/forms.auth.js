@@ -8,7 +8,6 @@ const actions = {
     authApiSQL.registerUser(userData).then(
       (response) => {
        
-        console.log(userData);
         console.log('...')
         console.log(response);
         context.commit("API_COMPLETE");
