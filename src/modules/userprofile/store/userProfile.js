@@ -32,6 +32,7 @@ const mutations = {
   LOGOUT_USER(state) {
     state.token = null;
     state.userId = null;
+    state.user = null;
   },
 };
 const actions = {
@@ -102,9 +103,8 @@ const actions = {
     console.log("signup success: ", response.data);
     //set user as signed in when create succesfull.
     context.commit("AUTH_USER", response.data);
-    // save user data in the users profile table.
-    // console.log(userData);
-    // context.dispatch('storeUser', userData); // not needed anymore as the user detail already saved.
+    // Get new registered user detail.
+    context.dispatch('getUser');
     // setup auto logout when session expires.
     context.dispatch("setAutoLogout", response.data.expiresIn);
 
@@ -117,9 +117,6 @@ const actions = {
     localStorage.setItem("token", response.data.token); // Not needed anymore
     localStorage.setItem("userId", response.data.id);
     localStorage.setItem("expirationDate", expirationDate);
-
-    // Not doing it here anymore, flagging complete when API is done loading.
-    //context.commit("API_COMPLETE");
 
     router.replace({ name: "Home" });
   },
