@@ -1,8 +1,10 @@
 import apiClient from "@/modules/shared/api/apiClient";
 
 //update endpoints with correct value when APIs are available
-
-const DEPARTMENT_END_POINT = "departments";
+/#### ENDPOINTS START ####/;
+const DEPARTMENT_END_POINT = "department";
+//const PROJECT_END_POINT = "project";
+/#### ENDPOINTS END ####/;
 
 const getProjectInfoAsync = async () => {
   try {
@@ -49,7 +51,7 @@ const getDepartmentDetail = (id) => {
       .catch((error) => reject(error));
   });
 };
-const saveDepartment = (department) => {
+const saveNewDepartment = (department) => {
   return new Promise((resolve, reject) => {
     apiClient
       .post(`${DEPARTMENT_END_POINT}`, department)
@@ -81,6 +83,6 @@ export default {
   saveProjectInfoAsync,
   getDepartmentDetail,
   updateDepartment,
-  saveDepartment,
+  saveNewDepartment,
   deleteDepartment,
 };

@@ -84,15 +84,13 @@ const actions = {
       );
     });
   },
-  saveNewAdminDepartment(context, data) {
+  saveDepartment(context, data) {
     if (!context.rootGetters.isAuthenticated) return;
 
-    //will be replaced on server when api is available.
-    const newId = Math.floor(Math.random() * 100 + 1);
-    data.id = newId;
-
+    //const newId = Math.floor(Math.random() * 100 + 1);
+    
     return new Promise((resolve, reject) => {
-      adminApi.saveDepartment(data).then(
+      adminApi.saveNewDepartment(data).then(
         (data) => {
           resolve(data);
         },

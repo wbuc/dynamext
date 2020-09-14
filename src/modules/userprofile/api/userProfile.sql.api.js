@@ -28,7 +28,7 @@ const getUser = (state, user) => {
   console.log(user);
   return new Promise((resolve, reject) => {
     apiClient
-      .get(`users/${state.userId}`)
+      .get(`user/${state.userId}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error));
   });
@@ -46,7 +46,7 @@ const getLoggedInUser = (uId) => {
     validateAuthHeader();
 
     apiClient
-      .get(`users/${uId}`)
+      .get(`user/${uId}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error));
   });
@@ -54,7 +54,7 @@ const getLoggedInUser = (uId) => {
 const getUserDetail = (email) => {
   return new Promise((resolve, reject) => {
     apiClient
-      .get(`users/email/${email}`)
+      .get(`user/email/${email}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error));
   });
@@ -70,7 +70,7 @@ const saveUserDetail = (userDetail) => {
 const updateUserDetail = (userDetail) => {
   return new Promise((resolve, reject) => {
     apiClient
-      .put(`users/${userDetail.id}`, userDetail)
+      .put(`user/${userDetail.id}`, userDetail)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

@@ -165,14 +165,15 @@ export default {
       );
     },
     async saveProject() {
-      await this.$store.dispatch("saveAdminProjectDetailAsync", this.projectData);
+      await this.$store.dispatch(
+        "saveAdminProjectDetailAsync",
+        this.projectData
+      );
       this.$store.dispatch(
         "notifySuccess",
         `Project information has been saved!`
       );
-
     },
-
     async getProjectDetail(cb) {
       this.projectData = await this.$store.dispatch(
         "getAdminProjectDetailAsync"

@@ -15,7 +15,7 @@
                          <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
                          <div v-else>
                               <x-dynamic-list :listData="departments">
-                                   <template v-slot:title="{item}">{{item.name}}</template>
+                                   <template v-slot:title="{item}">{{item.displayName}}</template>
                                    <template v-slot:actions="{ item }">
                                         <v-btn small icon @click="editItem(item)">
                                              <v-icon small color="secondary">mdi-pencil</v-icon>
@@ -63,7 +63,7 @@ export default {
      name: "admin.app.department.detail",
      data() {
           return {
-               url: "/departments",
+               url: "/department",
                listTicker: 1, // used to force the list refresh
                dialogConfig: {
                     open: false,
@@ -82,7 +82,7 @@ export default {
                               action: () => {
                                    this.$store
                                         .dispatch(
-                                             "saveNewAdminDepartment",
+                                             "saveDepartment",
                                              this.currentDepartment
                                         )
                                         .then(() => {
