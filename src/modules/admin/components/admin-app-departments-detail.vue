@@ -35,7 +35,7 @@
                     <x-form-section flat dense>
                          <x-form-control title="Name" dense>
                               <v-text-field
-                                   v-model="currentDepartment.name"
+                                   v-model="currentDepartment.displayName"
                                    style="width:100%"
                                    outlined
                                    single-line
@@ -110,7 +110,7 @@ export default {
                               action: () => {
                                    this.$store
                                         .dispatch(
-                                             "updateAdminDepartmentDetail",
+                                             "updateDepartmentDetail",
                                              this.currentDepartment
                                         )
                                         .then(() => {
@@ -162,7 +162,7 @@ export default {
                this.dialogConfig.title = "New department";
                this.dialogConfig.actions = this.dialogConfig.newActions;
                // Empty object
-               this.currentDepartment = { name: "" };
+               this.currentDepartment = { displayName: "" };
                // show dialog when ready
                this.dialogConfig.open = true;
           },
@@ -172,7 +172,7 @@ export default {
                this.dialogConfig.actions = this.dialogConfig.editActions;
                // fetch item data from the server.
                this.$store
-                    .dispatch("getAdminDepartmentDetail", item)
+                    .dispatch("getDepartmentDetail", item)
                     .then(data => {
                          this.currentDepartment = data;
                          this.dialogConfig.open = true;

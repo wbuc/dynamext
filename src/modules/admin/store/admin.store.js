@@ -65,7 +65,7 @@ const actions = {
       );
     });
   },
-  getAdminDepartmentDetail(context, data) {
+  getDepartmentDetail(context, data) {
     if (!context.rootGetters.isAuthenticated) return;
 
     context.commit("API_LOADING");
@@ -102,7 +102,7 @@ const actions = {
       );
     });
   },
-  updateAdminDepartmentDetail(context, data) {
+  updateDepartmentDetail(context, data) {
     if (!context.rootGetters.isAuthenticated) return;
 
     return new Promise((resolve, reject) => {

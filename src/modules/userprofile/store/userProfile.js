@@ -104,7 +104,7 @@ const actions = {
     //set user as signed in when create succesfull.
     context.commit("AUTH_USER", response.data);
     // Get new registered user detail.
-    context.dispatch('getUser');
+    context.dispatch("getUser");
     // setup auto logout when session expires.
     context.dispatch("setAutoLogout", response.data.expiresIn);
 
@@ -122,7 +122,7 @@ const actions = {
   },
   loginSuccess(context, response) {
     const user = response.data;
-    
+
     // determine the date when token should expire.
     const now = new Date();
     const expirationDate = new Date(now.getTime() + user.expiresIn * 1000);
@@ -155,7 +155,7 @@ const actions = {
     if (now >= expirationDate) {
       return;
     }
-    
+
     context.commit("AUTH_USER", {
       id: userId,
       token,
@@ -180,6 +180,8 @@ const actions = {
     setTimeout(() => {
       console.log("Attempting signout...");
       context.dispatch("logout");
+      context.dispatch("logoutUser");
+      
     }, expirationTime * 1000);
   },
   getUserDetail(context, email) {
