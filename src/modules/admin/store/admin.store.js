@@ -132,6 +132,74 @@ const actions = {
       );
     });
   },
+
+  getRedflagDetail(context, data) {
+    if (!context.rootGetters.isAuthenticated) return;
+
+    context.commit("API_LOADING");
+
+    return new Promise((resolve, reject) => {
+      adminApi.getRedflagDetail(data.id).then(
+        (response) => {
+          context.commit("API_COMPLETE");
+          resolve(response.data);
+        },
+        (error) => {
+          console.log(error);
+          context.commit("API_ERROR");
+          reject(error);
+        }
+      );
+    });
+  },
+  saveRedflag(context, data) {
+    if (!context.rootGetters.isAuthenticated) return;
+
+    //const newId = Math.floor(Math.random() * 100 + 1);
+    
+    return new Promise((resolve, reject) => {
+      adminApi.saveNewRedflag(data).then(
+        (data) => {
+          resolve(data);
+        },
+        (error) => {
+          console.log(`error saving data ${data.name}: `, error);
+          context.commit("API_ERROR");
+          reject(error);
+        }
+      );
+    });
+  },
+  updateRedflagDetail(context, data) {
+    if (!context.rootGetters.isAuthenticated) return;
+
+    return new Promise((resolve, reject) => {
+      adminApi.updateRedflag(data).then(
+        (data) => {
+          resolve(data);
+        },
+        (error) => {
+          console.log(`error saving data ${data.title}: `, error);
+          reject(error);
+        }
+      );
+    });
+  },
+  deleteRedflag(context, data) {
+    if (!context.rootGetters.isAuthenticated) return;
+
+    return new Promise((resolve, reject) => {
+      adminApi.deleteRedflag(data).then(
+        (data) => {
+          resolve(data);
+        },
+        (error) => {
+          console.log(`error saving data ${data.title}: `, error);
+          reject(error);
+        }
+      );
+    });
+  },
 };
 
 export default { state, getters, mutations, actions };

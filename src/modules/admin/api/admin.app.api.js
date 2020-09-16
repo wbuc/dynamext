@@ -3,9 +3,12 @@ import apiClient from "@/modules/shared/api/apiClient";
 //update endpoints with correct value when APIs are available
 /#### ENDPOINTS START ####/;
 const DEPARTMENT_END_POINT = "department";
+const REDFLAG_END_POINT = "redflag";
 //const PROJECT_END_POINT = "project";
 /#### ENDPOINTS END ####/;
 
+
+/# PROJECT #/;
 const getProjectInfoAsync = async () => {
   try {
     const response = await apiClient.get(`project`);
@@ -43,6 +46,7 @@ const saveProjectInfo = (project) => {
       .catch((error) => reject(error));
   });
 };
+/# DEPARTMENT#/;
 const getDepartmentDetail = (id) => {
   return new Promise((resolve, reject) => {
     apiClient
@@ -75,6 +79,39 @@ const deleteDepartment = (department) => {
       .catch((error) => reject(error));
   });
 };
+/# REDFLAG #/;
+const getRedflagDetail = (id) => {
+  return new Promise((resolve, reject) => {
+    apiClient
+      .get(`${REDFLAG_END_POINT}/${id}`)
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+const saveNewRedflag = (data) => {
+  return new Promise((resolve, reject) => {
+    apiClient
+      .post(`${REDFLAG_END_POINT}`, data)
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+const updateRedflag = (data) => {
+  return new Promise((resolve, reject) => {
+    apiClient
+      .put(`${REDFLAG_END_POINT}/${data.id}`, data)
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+const deleteRedflag = (data) => {
+  return new Promise((resolve, reject) => {
+    apiClient
+      .delete(`${REDFLAG_END_POINT}/${data.id}`)
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
 
 export default {
   getProjectInfo,
@@ -85,4 +122,9 @@ export default {
   updateDepartment,
   saveNewDepartment,
   deleteDepartment,
+  getRedflagDetail,
+  saveNewRedflag,
+  updateRedflag,
+  deleteRedflag
+
 };

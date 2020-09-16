@@ -73,6 +73,7 @@ export default {
                               text: "Close",
                               color: "error",
                               action: () => {
+                                   this.currentDepartment = {};
                                    this.dialogConfig.open = false;
                               }
                          },
@@ -183,7 +184,7 @@ export default {
                this.currentDepartment = item;
                // Dialog presets
                this.deleteConfirmConfig.title = "Delete department";
-               this.deleteConfirmConfig.text = `Are you sure you want to delete ${this.currentDepartment.name}?`;
+               this.deleteConfirmConfig.text = `Are you sure you want to delete ${this.currentDepartment.displayName}?`;
                // Show dialog when ready
                this.deleteConfirmConfig.open = true;
           }
