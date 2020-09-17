@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: "Control.Icon.Picker",
+  name: "Control.Picker.Icon",
   props: {
     controlName: { type: String, default: "shortcut" },
     value: { type: String },

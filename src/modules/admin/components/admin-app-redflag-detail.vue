@@ -45,10 +45,12 @@
             ></v-text-field>
           </x-form-control>
           <x-form-control title="Icon" dense>
-            <x-icon-picker v-model="currentRedflag.icon" name="redflag"></x-icon-picker> 
+            <x-picker-icon v-model="currentRedflag.icon" name="redflag"></x-picker-icon> 
           </x-form-control>
           <x-form-control title="Icon colour" dense>
-            <v-text-field
+            <x-picker-colour v-model="currentRedflag.colour" name="redflag"></x-picker-colour> 
+
+            <!-- <v-text-field
               v-model="currentRedflag.colour"
               style="width:100%"
               outlined
@@ -56,7 +58,7 @@
               hide-details
               dense
               placeholder="error"
-            ></v-text-field>
+            ></v-text-field> -->
             <!-- <v-select
             :items="iconColours"
             v-model="currentRedflag.colour"
@@ -84,7 +86,8 @@
 export default {
   name: "admin.app.redflag.detail",
   components: {
-    xIconPicker: () => import("@/components/control-picker-icon"),
+    xPickerIcon: () => import("@/components/control-picker-icon"),
+    xPickerColour: () => import("@/components/control-picker-colour"),
   },
   data() {
     return {
