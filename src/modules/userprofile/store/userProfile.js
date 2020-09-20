@@ -131,7 +131,7 @@ const actions = {
     localStorage.setItem("userId", user.id); // has the user object.
     localStorage.setItem("expirationDate", expirationDate);
     // set session detail for logged in user.
-    context.commit("AUTH_USER", user);
+    context.commit("AUTH_USER", { id: user.id, token: response.token });
 
     // get user profile.
     //context.dispatch("getUser"); // TODO: Take out. No need for this requestas the user detail is returned on the signin!
@@ -181,7 +181,6 @@ const actions = {
       console.log("Attempting signout...");
       context.dispatch("logout");
       context.dispatch("logoutUser");
-      
     }, expirationTime * 1000);
   },
   getUserDetail(context, email) {

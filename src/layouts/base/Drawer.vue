@@ -110,6 +110,7 @@ export default {
   },
   methods: {
     editUserDetail() {
+      console.log('getting user...')
       this.$store.dispatch("getUserDetail", this.user.email).then((data) => {
         this.userDetail = data;
         this.dialogConfig.open = true;

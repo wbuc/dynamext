@@ -4,6 +4,7 @@ import router from './router/router'
 import store from './store/index'
 import vuetify from './plugins/vuetify'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import './helpers/string-filters'
 
 
 /* Register custom components */
