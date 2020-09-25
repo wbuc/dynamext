@@ -200,7 +200,6 @@ export default {
     },
     refreshDashboard(cb) {
       // NOTE: taking out the 'schedule' on the activator for quick actions.
-
       this.$store.dispatch("getAllForms").then(result => {
            this.schedules = result.data;
            if (cb) cb();

@@ -11,6 +11,7 @@ export const controls = [
         properties: {
             default: null,
             placeholder: "Enter a value",
+            isImportant: false,
             minLength: 1,
             maxLength: 100
         },
@@ -28,6 +29,7 @@ export const controls = [
         properties: {
             default: null,
             placeholder: "Enter a value",
+            isImportant: false,
             rows: 5
         },
         hasValidations: false,
@@ -57,7 +59,9 @@ export const controls = [
         value: 0.0,
         description: "Numbers with decimal values",
         icon: "mdi-decimal",
-        properties: {},
+        properties: {
+            isImportant: false,
+        },
         hasValidations: false,
         validations: {}
     },
@@ -71,7 +75,8 @@ export const controls = [
         icon: "mdi-numeric-3-box-outline",
         properties: {
             default: 0,
-            placeholder: "Enter a number"
+            placeholder: "Enter a number",
+            isImportant: false,
         },
         hasValidations: false,
         validations: {}
@@ -102,7 +107,8 @@ export const controls = [
         description: "True or false value to be set",
         icon: "mdi-order-bool-descending",
         properties: {
-            default: null
+            default: null,
+            isImportant: false,
         },
         hasValidations: false,
         validations: {}
@@ -117,6 +123,7 @@ export const controls = [
         icon: "mdi-view-list",
         properties: {
             default: null,
+            isImportant: false,
             selectableOptions: []
         },
         hasValidations: false,

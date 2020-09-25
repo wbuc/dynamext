@@ -32,11 +32,9 @@ const actions = {
                 id: null,
                 name: "New Untitled Schedule",
                 status: "draft",
-                owner: context.rootGetters.user.email,
-                createdDate: "20/04/2020",
+                owner: context.rootGetters.user.id,
                 isTemplate: false,
                 formControls: [],
-
             };
             context.commit('SET_FORM', newForm);
             resolve(context.getters.dynamicForm);

@@ -356,7 +356,7 @@ export default {
           cloneFormControl(item) {
                let newControl = {
                     //id: this.canvasConfig.globalId++,
-                    id: formHelper.newFormId(),
+                    id: formHelper.generateFormControlId(),
                     name: `Untitled ${item.name}`,
                     instruction: item.instruction,
                     value: item.value,
