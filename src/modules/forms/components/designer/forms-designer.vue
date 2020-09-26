@@ -46,6 +46,7 @@
                                                   :list="toolboxControls"
                                                   :group="{ name: 'toolbox', pull: 'clone', put: false }"
                                                   :clone="cloneFormControl"
+                                                  :sort="false"
                                                   @change="formControlsUpdated"
                                              >
                                                   <v-list-item
