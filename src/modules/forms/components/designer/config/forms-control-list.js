@@ -85,8 +85,7 @@ export const controls = [
         id: 6,
         name: "Information",
         type: "information",
-        instruction:
-            "Collaboratively administrate empowered markets via plug-and-play networks.",
+        instruction:null,
         value: null,
         description: "Text block for specific information",
         icon: "mdi-information-variant",

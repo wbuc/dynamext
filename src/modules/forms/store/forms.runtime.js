@@ -1,7 +1,6 @@
 
 import runtimeApi from '@/modules/forms/api/forms.runtime.api'
 import designerApi from '@/modules/forms/api/forms.designer.api' // TEMP - this will be taken care of in the server API
-
 import formHelper from '@/modules/forms/helpers/forms-helper'
 
 const state = {

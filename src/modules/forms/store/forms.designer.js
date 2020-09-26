@@ -3,6 +3,7 @@
 import designerApi from '@/modules/forms/api/forms.designer.api'
 import formHelper from '@/modules/forms/helpers/forms-helper'
 
+
 //const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
@@ -31,7 +32,7 @@ const actions = {
             let newForm = {
                 id: null,
                 name: "New Untitled Schedule",
-                status: "draft",
+                status: formHelper.enum_FormStatus.Draft,
                 owner: context.rootGetters.user.id,
                 isTemplate: false,
                 formControls: [],

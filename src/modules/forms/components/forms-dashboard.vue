@@ -174,12 +174,12 @@ export default {
     ...mapGetters(["api"]),
     filteredSchedules() {
       if (!this.searchText) return this.schedules;
-
       const _search = this.searchText.toLowerCase().trim();
       return this.schedules.filter(
         (c) => c.name.toLowerCase().indexOf(_search) > -1
       );
     },
+    
   },
   methods: {
     statusClass(status) {
