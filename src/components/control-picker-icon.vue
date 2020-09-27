@@ -112,8 +112,8 @@ export default {
     },
   },
   mounted() {
-    console.log("created");
-    if (this.value != "") this.selectedItem = this.value;
+    console.log(this.dataItems);
+    if (this.value !== "" && this.value !== null) this.selectedItem = this.value;
   },
 };
 </script>

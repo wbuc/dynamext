@@ -267,15 +267,23 @@
                 <v-divider></v-divider>
                 <v-row no-gutters>
                   <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-                    <v-card flat>
-                      <v-card-text>
-                        <div class="title font-weight-light my-3">
+                    <v-card flat >
+                      <v-card-text class="pl-3 pb-1">
+                        <div class="title font-weight-light ml-0 pl-0">
                           Configuration
                         </div>
-                        <div class="grey--text">More to come...</div>
                       </v-card-text>
                     </v-card>
                   </v-col>
+                </v-row>
+                <v-row no-gutters>
+                 <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+                    <div class="pa-3">
+                    <div class="grey--text">Icon</div>
+                    <x-picker-icon v-model="formData.icon" :dataItems="formConfig.icons" name="formdata"></x-picker-icon> 
+                    <x-picker-colour v-model="formData.colour" name="formdata"></x-picker-colour> 
+                    </div>
+                 </v-col>
                 </v-row>
               </div>
             </v-tab-item>
@@ -305,6 +313,8 @@ export default {
       import(
         "@/modules/forms/components/designer/controls/_control-placeholder"
       ),
+     xPickerIcon: () => import("@/components/control-picker-icon"),
+     xPickerColour: () => import("@/components/control-picker-colour"),
   },
   computed: {
     ...mapGetters(["api", "dynamicForm"]),
@@ -338,6 +348,7 @@ export default {
       toolboxControls: controls,
       formConfig: {
         status: { ...formHelper.enum_FormStatus },
+        icons: formHelper.formIcons
       },
       formData: null,
       formControls: [],
@@ -454,7 +465,7 @@ export default {
     },
     toggleFormStatus() {
       this.formData.status =
-        this.formData.status === this.formConfig.status.Published ? 1 : 3;
+        this.formData.status === this.formConfig.status.Published ? this.formConfig.status.Draft : this.formConfig.status.Published;
     },
   },
   created() {
@@ -463,6 +474,8 @@ export default {
     this.formControls = this.formData.formControls;
     // set the new index to use for field controls. TODO FIX ID.
     this.canvasConfig.globalId = this.formControls.length + 1;
+
+    console.log(this.formConfig)
   },
 };
 </script>

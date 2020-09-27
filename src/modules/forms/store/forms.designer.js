@@ -32,10 +32,14 @@ const actions = {
             let newForm = {
                 id: null,
                 name: "New Untitled Schedule",
+                description: null,
                 status: formHelper.enum_FormStatus.Draft,
-                owner: context.rootGetters.user.id,
-                isTemplate: false,
+                owner: context.rootGetters.user.email,
+                category: null,
+                template: false,
                 formControls: [],
+                icon: 'mdi-file-document',
+                colour: null
             };
             context.commit('SET_FORM', newForm);
             resolve(context.getters.dynamicForm);

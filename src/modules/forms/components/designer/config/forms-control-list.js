@@ -128,5 +128,4 @@ export const controls = [
         hasValidations: false,
         validations: {}
     }
-
 ];
