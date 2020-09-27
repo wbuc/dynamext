@@ -21,14 +21,26 @@
     <v-row no-gutters class="mb-3">
       <v-col cols="12" xs="12" sm="12" md="9" class="d-flex align-center">
         <div>
-          <v-btn id="sort-schedule" small text color="grey" @click="sortBy('name')">
+          <v-btn
+            id="sort-schedule"
+            small
+            text
+            color="grey"
+            @click="sortBy('name')"
+          >
             <v-icon left small>mdi-file-document</v-icon>
             <span class="caption text-lowercase">by schedule name</span>
           </v-btn>
           <v-tooltip activator="#sort-schedule" top>
             <span>Sort all items by schedule name</span>
           </v-tooltip>
-          <v-btn id="sort-owner" small text color="grey" @click="sortBy('owner')">
+          <v-btn
+            id="sort-owner"
+            small
+            text
+            color="grey"
+            @click="sortBy('owner')"
+          >
             <v-icon left small>person</v-icon>
             <span class="caption text-lowercase">by owner</span>
           </v-btn>
@@ -54,11 +66,15 @@
 
     <v-card :elevation="pageConfig.elevation">
       <div v-if="api.loading">
-        <v-progress-linear indeterminate height="3" color="primary"></v-progress-linear>
+        <v-progress-linear
+          indeterminate
+          height="3"
+          color="primary"
+        ></v-progress-linear>
       </div>
       <div
         v-else-if="!api.loading"
-        v-for="(schedule,index) in filteredSchedules"
+        v-for="(schedule, index) in filteredSchedules"
         :key="index"
         :class="`schedule  ${schedule.status}`"
       >
@@ -66,19 +82,26 @@
           <v-col cols="12" xs="12" sm="12" md="5">
             <v-card flat class="pa-3">
               <div class="caption grey--text">Name</div>
-              <div>{{schedule.name}}</div>
+              <div>
+                <v-icon
+                  
+                  :class="schedule.colour ? `${schedule.colour}--text` : ``"
+                  >{{ schedule.icon }}</v-icon
+                >
+                {{ schedule.name }}
+              </div>
             </v-card>
           </v-col>
           <v-col cols="6" xs="12" sm="4" md="2">
             <v-card flat class="pa-3">
               <div class="caption grey--text">Owner</div>
-              <div>{{schedule.owner}}</div>
+              <div>{{ schedule.owner }}</div>
             </v-card>
           </v-col>
           <v-col cols="6" xs="12" sm="4" md="2">
             <v-card flat class="pa-3">
               <div class="caption grey--text">Created on</div>
-              <div>{{schedule.createdDate | formatDate }}</div>
+              <div>{{ schedule.createdDate | formatDate }}</div>
             </v-card>
           </v-col>
           <v-col cols="6" sm="3" md="2" class="d-flex align-center">
@@ -86,19 +109,34 @@
               <div>
                 <v-chip
                   :class="`chip ${schedule.status} 
-                                                  ${statusClass(schedule.status)} caption white--text my-2 text-uppercase`"
+                                                  ${statusClass(
+                                                    schedule.status
+                                                  )} caption white--text my-2 text-uppercase`"
                   small
                   label
-                >{{schedule.status}}</v-chip>
+                  >{{ schedule.status }}</v-chip
+                >
               </div>
             </v-card>
           </v-col>
-          <v-col cols="6" sm="1" md="1" class="d-flex align-center justify-center">
+          <v-col
+            cols="6"
+            sm="1"
+            md="1"
+            class="d-flex align-center justify-center"
+          >
             <v-card flat>
               <div>
                 <v-menu offset-y transition="slide-y-transition">
                   <template v-slot:activator="{ on }">
-                    <v-btn icon text dark color="grey" v-on="on" class="mx-auto">
+                    <v-btn
+                      icon
+                      text
+                      dark
+                      color="grey"
+                      v-on="on"
+                      class="mx-auto"
+                    >
                       <v-icon>more_vert</v-icon>
                       <span></span>
                     </v-btn>
@@ -112,10 +150,14 @@
                       dense
                     >
                       <v-list-item-action>
-                        <v-icon :class="action.color" small>{{action.icon}}</v-icon>
+                        <v-icon :class="action.color" small>{{
+                          action.icon
+                        }}</v-icon>
                       </v-list-item-action>
                       <v-list-item-content>
-                        <v-list-item-title>{{action.title}}</v-list-item-title>
+                        <v-list-item-title>{{
+                          action.title
+                        }}</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -179,7 +221,6 @@ export default {
         (c) => c.name.toLowerCase().indexOf(_search) > -1
       );
     },
-    
   },
   methods: {
     statusClass(status) {
@@ -200,9 +241,9 @@ export default {
     },
     refreshDashboard(cb) {
       // NOTE: taking out the 'schedule' on the activator for quick actions.
-      this.$store.dispatch("getAllForms").then(result => {
-           this.schedules = result.data;
-           if (cb) cb();
+      this.$store.dispatch("getAllForms").then((result) => {
+        this.schedules = result.data;
+        if (cb) cb();
       });
     },
     openNewForm() {

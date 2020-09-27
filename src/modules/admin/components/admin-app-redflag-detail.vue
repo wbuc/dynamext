@@ -45,7 +45,7 @@
             ></v-text-field>
           </x-form-control>
           <x-form-control title="Icon" dense>
-            <x-picker-icon v-model="currentRedflag.icon" name="redflag"></x-picker-icon> 
+            <x-picker-icon v-model="currentRedflag.icon" :colour="currentRedflag.colour" name="redflag"></x-picker-icon> 
           </x-form-control>
           <x-form-control title="Icon colour" dense>
             <x-picker-colour v-model="currentRedflag.colour" name="redflag"></x-picker-colour> 

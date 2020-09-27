@@ -30,7 +30,7 @@ const formIcons = [
                 'mdi-roman-numeral-3',
                 'mdi-roman-numeral-4',
                 'mdi-roman-numeral-5',
-                'mdi-information-outline',
+                "mdi-flag-variant",
                 'mdi-check',
                 'mdi-radiobox-marked',
                 'mdi-star',

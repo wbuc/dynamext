@@ -280,7 +280,7 @@
                  <v-col cols="12" xs="12" sm="12" md="12" lg="5">
                     <div class="pa-3">
                     <div class="grey--text">Icon</div>
-                    <x-picker-icon v-model="formData.icon" :dataItems="formConfig.icons" name="formdata"></x-picker-icon> 
+                    <x-picker-icon v-model="formData.icon" :dataItems="formConfig.icons" :colour="formData.colour" name="formdata"></x-picker-icon> 
                     <x-picker-colour v-model="formData.colour" name="formdata"></x-picker-colour> 
                     </div>
                  </v-col>

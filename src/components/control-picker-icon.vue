@@ -2,7 +2,7 @@
   <span>
     <v-btn :id="formattedControlName" icon text>
       <span>
-        <v-icon>{{selectedItem}}</v-icon>
+        <v-icon :class="value ? `${colour}--text` : ``">{{selectedItem}}</v-icon>
       </span>
     </v-btn>
     <v-menu offset-y transition="slide-y-transition" :activator="`#${formattedControlName}`">
@@ -41,6 +41,7 @@ export default {
   props: {
     controlName: { type: String, default: "shortcut" },
     value: { type: String },
+    colour:{ type: String },
     dataItems: {
       type: Array,
       default: () => {
