@@ -19,7 +19,11 @@ const mutations = {
 
     'SET_FORM'(state, form) {
         state.dynamicForm = form;
+    },
+    'SET_FORM_ID'(state, id){    
+        state.dynamicForm.id = id;
     }
+
 
 }
 const actions = {
@@ -116,11 +120,14 @@ const actions = {
             //NEW FORM
             if (!form.id) {
 
-                form.id = formHelper.generateFormId();
+                //form.id = formHelper.generateFormId();
 
-                designerApi.saveFormDefinition(form).then(data => {
+                designerApi.saveFormDefinition(form).then(res => {
                     context.commit('API_COMPLETE');
-                    resolve(data)
+                    
+                    // Set the form id returned from the server.
+                    context.commit('SET_FORM_ID', res.data.data.id);
+                    resolve(res.data)
                 },
                     error => {
                         console.log(error)

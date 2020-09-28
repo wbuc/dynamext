@@ -1,17 +1,20 @@
 
 import formEnums from './forms-enum'
 
-function generateFormId() {
-    return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-}
+
 function newFormId() {
     return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
 }
 function generateFormControlId(){
-    return (Date.now().toString(36) + Math.random().toString(36).substr(2)).toUpperCase();
+  //  return 'control-' + (Date.now().toString(36) + Math.random().toString(36).substr(2)).toUpperCase();
+   return 'control-' + Date.now().toString(36) + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
-
+function generateFormId(){
+     return 'definition-' + Date.now().toString(36) + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
 function cloneObject(object) {
+
+    // could also use let newObjec = Object.create(object);
     let newObj = {};
     for (let key in object) {
         newObj[key] = object[key];

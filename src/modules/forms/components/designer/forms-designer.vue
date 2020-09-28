@@ -381,7 +381,7 @@ export default {
     cloneFormControl(item) {
       let newControl = {
         //id: this.canvasConfig.globalId++,
-        id: formHelper.generateFormControlId(),
+        clientId: formHelper.generateFormControlId(),
         name: `Untitled ${item.name}`,
         instruction: item.instruction,
         value: item.value,
@@ -390,6 +390,7 @@ export default {
         validations: {},
         icon: item.icon,
         type: item.type,
+        isNew: true,
         //displayType: item.name,
         edit: false,
         config: false,
