@@ -25,18 +25,18 @@ function cloneObject(object) {
 const formIcons = [
                 'mdi-file-document',
                 'mdi-file-document-outline',
-                'mdi-file',
-                'mdi-file-check',
-                'mdi-file-hidden',
+                "mdi-flag-variant",
+                'mdi-menu',
+                'mdi-alert-circle-outline',
                 'mdi-roman-numeral-1',
                 'mdi-roman-numeral-2',
                 'mdi-roman-numeral-3',
                 'mdi-roman-numeral-4',
                 'mdi-roman-numeral-5',
-                "mdi-flag-variant",
                 'mdi-check',
-                'mdi-radiobox-marked',
+                'mdi-checkbox-blank-circle',
                 'mdi-star',
+                'mdi-duck'
 ]
 
 export default { 

@@ -267,7 +267,7 @@
                 <v-divider></v-divider>
                 <v-row no-gutters>
                   <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-                    <v-card flat >
+                    <v-card flat>
                       <v-card-text class="pl-3 pb-1">
                         <div class="title font-weight-light ml-0 pl-0">
                           Configuration
@@ -277,13 +277,21 @@
                   </v-col>
                 </v-row>
                 <v-row no-gutters>
-                 <v-col cols="12" xs="12" sm="12" md="12" lg="5">
+                  <v-col cols="12" xs="12" sm="12" md="12" lg="5">
                     <div class="pa-3">
-                    <div class="grey--text">Icon</div>
-                    <x-picker-icon v-model="formData.icon" :dataItems="formConfig.icons" :colour="formData.colour" name="formdata"></x-picker-icon> 
-                    <x-picker-colour v-model="formData.colour" name="formdata"></x-picker-colour> 
+                      <div class="grey--text">Icon</div>
+                      <x-picker-icon
+                        v-model="formData.icon"
+                        :dataItems="formConfig.icons"
+                        :colour="formData.colour"
+                        name="formdata"
+                      ></x-picker-icon>
+                      <x-picker-colour
+                        v-model="formData.colour"
+                        name="formdata"
+                      ></x-picker-colour>
                     </div>
-                 </v-col>
+                  </v-col>
                 </v-row>
               </div>
             </v-tab-item>
@@ -313,8 +321,8 @@ export default {
       import(
         "@/modules/forms/components/designer/controls/_control-placeholder"
       ),
-     xPickerIcon: () => import("@/components/control-picker-icon"),
-     xPickerColour: () => import("@/components/control-picker-colour"),
+    xPickerIcon: () => import("@/components/control-picker-icon"),
+    xPickerColour: () => import("@/components/control-picker-colour"),
   },
   computed: {
     ...mapGetters(["api", "dynamicForm"]),
@@ -324,9 +332,12 @@ export default {
     isEmptyForm() {
       return this.formControls.length === 0;
     },
-    formFriendlyStatus(){
-         return formHelper.getEnumKey(this.formConfig.status, this.formData.status)     
-    }
+    formFriendlyStatus() {
+      return formHelper.getEnumKey(
+        this.formConfig.status,
+        this.formData.status
+      );
+    },
   },
   data() {
     return {
@@ -348,8 +359,13 @@ export default {
       toolboxControls: controls,
       formConfig: {
         status: { ...formHelper.enum_FormStatus },
-        icons: formHelper.formIcons
+        icons: formHelper.formIcons,
       },
+      formState: {
+        controlsDeleted: [],
+        controlsAdded: [],
+      },
+
       formData: null,
       formControls: [],
       currentControl: null,
@@ -400,6 +416,8 @@ export default {
 
       this.$set(newControl, "properties", newProps);
       this.$set(newControl, "validations", newValids);
+      // track the client id's of the added controls.
+      this.formState.controlsAdded.push(newControl.clientId);
 
       return newControl;
     },
@@ -408,6 +426,9 @@ export default {
       this.formControls.push(copiedControl);
     },
     deleteFormControl(itemIndex) {
+      // ensure that the controls state is in sync.
+      this.checkFormState(itemIndex);
+      // remove from the form definition control list.
       this.formControls.splice(itemIndex, 1);
     },
     updateControlType(control) {
@@ -450,7 +471,11 @@ export default {
       this.$router.replace({ name: "Schedule.Dashboard" });
     },
     saveForm() {
-      this.$store.dispatch("saveFormDefinition", this.formData).then(() => {
+      this.formState.formData = this.formData;
+
+      this.$store.dispatch("saveFormDefinition", this.formState).then(() => {
+        this.resetFormstate();
+
         this.$store.dispatch(
           "notifySuccess",
           `${this.formData.name} has been updated!`
@@ -466,7 +491,29 @@ export default {
     },
     toggleFormStatus() {
       this.formData.status =
-        this.formData.status === this.formConfig.status.Published ? this.formConfig.status.Draft : this.formConfig.status.Published;
+        this.formData.status === this.formConfig.status.Published
+          ? this.formConfig.status.Draft
+          : this.formConfig.status.Published;
+    },
+    checkFormState(index) {
+      const deletedClientId = this.formControls[index].clientId;
+
+      // check if the control has recently been added - not yet sent to the server.
+      const addedIndex = this.formState.controlsAdded.indexOf(
+        deletedClientId.toString()
+      );
+
+      if (addedIndex >= 0) {
+        // control found, now remove from the added form state to prevent sending it to server.
+        this.formState.controlsAdded.splice(addedIndex, 1);
+      } else {
+        // the control is already part of the form from the server, add to the list so it can be deleted on the server.
+        this.formState.controlsDeleted.push(deletedClientId);
+      }
+    },
+    resetFormstate() {
+      this.formState.controlsAdded = [];
+      this.formState.controlsDeleted = [];
     },
   },
   created() {
@@ -475,8 +522,6 @@ export default {
     this.formControls = this.formData.formControls;
     // set the new index to use for field controls. TODO FIX ID.
     this.canvasConfig.globalId = this.formControls.length + 1;
-
-    console.log(this.formConfig)
   },
 };
 </script>

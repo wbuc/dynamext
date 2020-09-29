@@ -111,12 +111,13 @@ const actions = {
         })
     },
 
-    saveFormDefinition(context, form) {
+    saveFormDefinition(context, formState) {
         if (!context.rootGetters.isAuthenticated) return;
 
         context.commit('API_LOADING');
 
         return new Promise((resolve, reject) => {
+            const form = formState.formData 
             //NEW FORM
             if (!form.id) {
 
