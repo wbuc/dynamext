@@ -71,19 +71,20 @@ const saveFormDefinitionAsync = async (form) => {
   }
 };
 
-const updateFormDefinition = (form) => {
+const updateFormDefinition = (formState) => {
   return new Promise((resolve, reject) => {
+    console.log(formState);
     apiClient
-      .put(`${DESIGNER_END_POINT}/${form.id}`, form)
+      .put(`${DESIGNER_END_POINT}/${formState.formData.id}`, formState)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
 };
-const updateFormDefinitionAsync = async (form) => {
+const updateFormDefinitionAsync = async (formState) => {
   try {
     const response = await apiClient.put(
-      `${DESIGNER_END_POINT}/${form.id}`,
-      form
+      `${DESIGNER_END_POINT}/${formState.formData.id}`,
+      formState
     );
     return response;
   } catch (err) {

@@ -137,8 +137,9 @@ const actions = {
                     });
             }
             else {
+                console.log('update existing form: ');
                 //EXISTING FORM
-                designerApi.updateFormDefinition(form).then(data => {
+                designerApi.updateFormDefinition(formState).then(data => {
                     context.commit('API_COMPLETE');
                     resolve(data)
                 },

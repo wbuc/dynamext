@@ -177,6 +177,7 @@ const actions = {
     router.replace({ name: "Login" });
   },
   setAutoLogout(context, expirationTime) {
+    console.log('setting auto logout...')
     setTimeout(() => {
       console.log("Attempting signout...");
       context.dispatch("logout");

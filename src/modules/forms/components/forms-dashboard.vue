@@ -260,7 +260,7 @@ export default {
     deleteFormDefinition(form) {
       this.$store.dispatch("deleteFormDefinition", form).then(() => {
         this.refreshDashboard(() => {
-          this.$store.dispatch("notifyInfo", `${form.name} has been deleted`);
+          this.$store.dispatch("notifySuccess", `${form.name} has been deleted`);
         });
       });
     },

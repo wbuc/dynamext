@@ -471,10 +471,12 @@ export default {
       this.$router.replace({ name: "Schedule.Dashboard" });
     },
     saveForm() {
+      // attach the form definition to the form state before sending to server.
       this.formState.formData = this.formData;
-
+      console.log(this.formState);
       this.$store.dispatch("saveFormDefinition", this.formState).then(() => {
-        this.resetFormstate();
+        // save success, reset the form state.
+        this.resetFormstate(); // NOTE:  Need to include the reset functions again when done and working!
 
         this.$store.dispatch(
           "notifySuccess",
@@ -497,7 +499,7 @@ export default {
     },
     checkFormState(index) {
       const deletedClientId = this.formControls[index].clientId;
-
+      console.log(this.formControls[index])
       // check if the control has recently been added - not yet sent to the server.
       const addedIndex = this.formState.controlsAdded.indexOf(
         deletedClientId.toString()
@@ -512,8 +514,8 @@ export default {
       }
     },
     resetFormstate() {
-      this.formState.controlsAdded = [];
-      this.formState.controlsDeleted = [];
+      //this.formState.controlsAdded = [];
+      //this.formState.controlsDeleted = [];
     },
   },
   created() {
