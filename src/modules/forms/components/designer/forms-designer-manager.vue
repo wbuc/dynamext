@@ -39,7 +39,7 @@
                                    <v-list-item-title class="responsive-text">
                                         <x-dropdown
                                              v-model="control.type"
-                                             :controlName="control.id"
+                                             :controlName="control.clientId"
                                              @valueChanged="changeControl(control)"
                                         ></x-dropdown>
                                    </v-list-item-title>
@@ -48,7 +48,7 @@
                          <v-list-item-action class="x-control-quick-actions">
                               <div>
                                    <v-btn
-                                        :id="`quick-actions-${control.id}`"
+                                        :id="`quick-actions-${control.clientId}`"
                                         icon
                                         text
                                         dark
@@ -61,7 +61,7 @@
                                    <v-menu
                                         offset-y
                                         transition="slide-y-transition"
-                                        :activator="`#quick-actions-${control.id}`"
+                                        :activator="`#quick-actions-${control.clientId}`"
                                    >
                                         <v-list>
                                              <template v-for="(item, i) in quickActions">
@@ -125,7 +125,7 @@ export default {
           },
           deleteControl(control) {
                const index = this.formControls.findIndex(
-                    x => x.id === control.id
+                    x => x.clientId === control.clientId
                );
 
                this.$emit("deleteControl", index);

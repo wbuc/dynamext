@@ -179,7 +179,7 @@ const actions = {
   setAutoLogout(context, expirationTime) {
     console.log('setting auto logout...')
     setTimeout(() => {
-      console.log("Attempting signout...");
+      console.log(`Attempting signout...${expirationTime}`);
       context.dispatch("logout");
       context.dispatch("logoutUser");
     }, expirationTime * 1000);
