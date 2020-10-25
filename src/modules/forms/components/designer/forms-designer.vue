@@ -383,6 +383,16 @@ export default {
     formControlsUpdated(evt) {
       // draggable changed.
       console.log("canvas controls changed: ", evt);
+      if (evt.moved) {
+        console.log(`New Index: ${evt.moved.newIndex}`);
+        console.log(`Old Index: ${evt.moved.oldIndex}`);
+        evt.moved.element.sort = evt.moved.newIndex;
+      }
+      
+      if (evt.added) {
+        console.log(`New Index: ${evt.added.newIndex}`);
+        evt.added.element.sort = evt.added.newIndex;
+      }
     },
     managerControlsUpdated() {
       this.managerKey++;
@@ -499,7 +509,7 @@ export default {
     },
     checkFormState(index) {
       const deletedClientId = this.formControls[index].clientId;
-      console.log(this.formControls[index])
+      console.log(this.formControls[index]);
       // check if the control has recently been added - not yet sent to the server.
       const addedIndex = this.formState.controlsAdded.indexOf(
         deletedClientId.toString()

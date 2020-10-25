@@ -89,7 +89,7 @@ export default {
                                         .then(() => {
                                              this.$store.dispatch(
                                                   "notifySuccess",
-                                                  `${this.currentDepartment.name} created!`
+                                                  `${this.currentDepartment.displayName} created!`
                                              );
                                              this.refresh();
                                         });
@@ -117,7 +117,7 @@ export default {
                                         .then(() => {
                                              this.$store.dispatch(
                                                   "notifySuccess",
-                                                  `${this.currentDepartment.name} has been updated!`
+                                                  `${this.currentDepartment.displayName} has been updated!`
                                              );
                                              this.refresh();
                                         });
@@ -140,7 +140,7 @@ export default {
                               .then(() => {
                                    this.$store.dispatch(
                                         "notifySuccess",
-                                        `${this.currentDepartment.name} has been deleted!`
+                                        `${this.currentDepartment.displayName} has been deleted!`
                                    );
                                    this.refresh();
                               });
