@@ -365,7 +365,6 @@ export default {
         controlsDeleted: [],
         controlsAdded: [],
       },
-
       formData: null,
       formControls: [],
       currentControl: null,
@@ -383,10 +382,29 @@ export default {
     formControlsUpdated(evt) {
       // draggable changed.
       console.log("canvas controls changed: ", evt);
+
       if (evt.moved) {
-        console.log(`New Index: ${evt.moved.newIndex}`);
-        console.log(`Old Index: ${evt.moved.oldIndex}`);
-        evt.moved.element.sort = evt.moved.newIndex;
+        let startIndex = evt.moved.oldIndex;
+        let endIndex = evt.moved.newIndex;
+
+        // Step 1 - We need to update the current dragged element with the new position.
+        evt.moved.element.sort = endIndex;
+
+        // Step 2 - Determine other elements that needs an index update.
+        if(startIndex < endIndex){
+          // update the items before the re-ordered item
+          for(let i = endIndex-1; i >= 0;  i--){
+            this.formControls[i].sort = i;
+          }
+        }
+        else{
+          // update the items after the re-orderd item
+          for(let i = endIndex+2; i <= this.formControls.length; i++){
+               this.formControls[i-1].sort = i-1;
+          }
+
+        }
+       // console.log(this.formControls);
       }
       
       if (evt.added) {
