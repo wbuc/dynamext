@@ -138,8 +138,8 @@ export default {
           },
           formControlsUpdate(evt) {
                // controls changed.
-               console.log("Manager controls updated: ", evt);
-               this.$emit("controlsUpdated");
+               //console.log("Manager controls updated: ", evt);
+               this.$emit("controlsUpdated", evt);
           }
      },
      data() {

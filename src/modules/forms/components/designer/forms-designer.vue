@@ -380,48 +380,12 @@ export default {
       this.currentControl = control;
     },
     formControlsUpdated(evt) {
-      // Control Updated
-      if (evt.moved) {
-        let startIndex = evt.moved.oldIndex;
-        let endIndex = evt.moved.newIndex;
-
-        // Step 1 - We need to update the current dragged element with the new position.
-        evt.moved.element.sort = endIndex;
-
-        // Step 2 - Determine other elements that needs an index update.
-        if (startIndex < endIndex) {
-          // update the items before the re-ordered item
-          for (let i = endIndex - 1; i >= 0; i--) {
-            this.formControls[i].sort = i;
-          }
-        } else {
-          // update the items after the re-orderd item
-          for (let i = endIndex + 2; i <= this.formControls.length; i++) {
-            this.formControls[i - 1].sort = i - 1;
-          }
-        }
-        // console.log(this.formControls);
-      }
-
-      // Control Added
-      if (evt.added) {
-        console.log(`New Index: ${evt.added.newIndex}`);
-        console.log(evt.added.element);
-
-        // Step 1 - Update new control added sort order.
-        let newIndex = evt.added.newIndex;
-        evt.added.element.sort = newIndex;
-
-        // Step 2 - Update all preceding controls sort index.
-        for (let i = newIndex + 1; i < this.formControls.length; i++) {
-          let originalSort = this.formControls[i].sort;
-          this.formControls[i].sort = originalSort + 1;
-
-          console.log(this.formControls[i].sort);
-        }
-      }
+      // Update sorting of all the controls when a control is moved/added.
+      formHelper.updateFormControlsSort(evt, this.formControls);
     },
-    managerControlsUpdated() {
+    managerControlsUpdated(evt) {
+      // Update sorting of all the controls when a control is moved/added.
+      formHelper.updateFormControlsSort(evt, this.formControls);
       this.managerKey++;
     },
     deepClone(object) {
@@ -440,6 +404,7 @@ export default {
         value: item.value,
         hasValidations: item.hasValidations,
         properties: {},
+        sort:0,
         validations: {},
         icon: item.icon,
         type: item.type,
@@ -461,6 +426,8 @@ export default {
     copyFormControl(control) {
       const copiedControl = this.cloneFormControl(control);
       this.formControls.push(copiedControl);
+      // Ensure that the sorting is maintained for copied controls.
+      formHelper.syncControlPositions(this.formControls);
     },
     deleteFormControl(itemIndex) {
       // ensure that the controls state is in sync.
