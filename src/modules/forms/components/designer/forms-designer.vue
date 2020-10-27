@@ -380,9 +380,7 @@ export default {
       this.currentControl = control;
     },
     formControlsUpdated(evt) {
-      // draggable changed.
-      console.log("canvas controls changed: ", evt);
-
+      // Control Updated
       if (evt.moved) {
         let startIndex = evt.moved.oldIndex;
         let endIndex = evt.moved.newIndex;
@@ -391,25 +389,36 @@ export default {
         evt.moved.element.sort = endIndex;
 
         // Step 2 - Determine other elements that needs an index update.
-        if(startIndex < endIndex){
+        if (startIndex < endIndex) {
           // update the items before the re-ordered item
-          for(let i = endIndex-1; i >= 0;  i--){
+          for (let i = endIndex - 1; i >= 0; i--) {
             this.formControls[i].sort = i;
           }
-        }
-        else{
+        } else {
           // update the items after the re-orderd item
-          for(let i = endIndex+2; i <= this.formControls.length; i++){
-               this.formControls[i-1].sort = i-1;
+          for (let i = endIndex + 2; i <= this.formControls.length; i++) {
+            this.formControls[i - 1].sort = i - 1;
           }
-
         }
-       // console.log(this.formControls);
+        // console.log(this.formControls);
       }
-      
+
+      // Control Added
       if (evt.added) {
         console.log(`New Index: ${evt.added.newIndex}`);
-        evt.added.element.sort = evt.added.newIndex;
+        console.log(evt.added.element);
+
+        // Step 1 - Update new control added sort order.
+        let newIndex = evt.added.newIndex;
+        evt.added.element.sort = newIndex;
+
+        // Step 2 - Update all preceding controls sort index.
+        for (let i = newIndex + 1; i < this.formControls.length; i++) {
+          let originalSort = this.formControls[i].sort;
+          this.formControls[i].sort = originalSort + 1;
+
+          console.log(this.formControls[i].sort);
+        }
       }
     },
     managerControlsUpdated() {
