@@ -166,12 +166,10 @@
             </v-card>
           </v-col>
         </v-row>
-
-        <v-divider></v-divider>
-      </div>
+        <v-divider v-if="index + 1 < filteredSchedules.length" :key="`divider${index}`"></v-divider>
+      </div> 
     </v-card>
-  </div>
-</template>
+  </div></template>
 
 <script>
 import { mapGetters } from "vuex";

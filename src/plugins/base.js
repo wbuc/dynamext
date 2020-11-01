@@ -7,6 +7,7 @@ import Vue from 'vue'
 import PageHeader from '@/components/shared-page-header.vue'
 import Breadcrumbs from '@/components/shared-breadcrumb.vue'
 import Toolbar from '@/components/shared-toolbar.vue'
+import SearchBar from '@/components/shared-searchbar.vue'
 
 /* CARDS */
 import CardTile from '@/components/card-tile'
@@ -42,6 +43,7 @@ import QuickActions from '@/components/control-quick-actions'
 Vue.component('page-header', PageHeader);
 Vue.component('x-toolbar', Toolbar);
 Vue.component('x-breadcrumb', Breadcrumbs);
+Vue.component('x-searchbar', SearchBar);
 Vue.component('x-card-tile', CardTile);
 Vue.component('x-card-basic', CardBasic);
 Vue.component('x-timeline-card', TimelineCard);

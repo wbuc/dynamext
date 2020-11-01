@@ -7,34 +7,18 @@
         </v-btn>
         <span>Users</span>
       </template>
-      <template v-slot:right> </template>
+      <template v-slot:right></template>
     </x-toolbar>
-    <v-row no-gutters class="mb-3">
-      <v-col cols="12" xs="12" sm="12" md="9" class="hidden-sm-and-down">
-        <div>
-         
-        </div>
-      </v-col>
-      <v-col cols="12" xs="12" sm="12" md="3" class="hidden-sm-and-down">
-        <div>
-          <v-text-field
-            append-icon="mdi-magnify"
-            v-model="searchText"
-            label="Search"
-            outlined
-            single-line
-            hide-details
-            dense
-          ></v-text-field>
-        </div>
-      </v-col>
-    </v-row>
+    <x-searchbar @searchUpdated="searchUsers">
+      <template v-slot:default> </template>
+    </x-searchbar>
     <v-row wrap>
       <v-col
+        class="pb-6 pt-0"
         cols="12"
         sm="6"
         md="3"
-        v-for="(user, index) in users"
+        v-for="(user, index) in filteredUsers"
         :key="index"
       >
         <v-card elevation="3" tile flat class="text-sm-center">
@@ -65,7 +49,7 @@ export default {
   components: {},
   data() {
     return {
-      searchText: "",
+      searchText:"",
       users: [
         {
           name: "Wessel Buchling",
@@ -95,7 +79,20 @@ export default {
       ],
     };
   },
+  computed: {
+      filteredUsers() {
+      if (!this.searchText) return this.users;
+      const _search = this.searchText.toLowerCase().trim();
+      return this.users.filter(
+        (c) => c.name.toLowerCase().indexOf(_search) > -1
+      );
+    },
+  },
   methods: {
+    searchUsers(searchValue) {
+      // searchText is used in the computed prop to filter the list of users/
+      this.searchText = searchValue;
+    },
     goBack() {
       this.$router.replace({ name: "Admin.Dashboard" });
     },
