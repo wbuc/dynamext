@@ -426,7 +426,7 @@ export default {
     copyFormControl(control) {
       const copiedControl = this.cloneFormControl(control);
       this.formControls.push(copiedControl);
-      // Ensure that the sorting is maintained for copied controls.
+      // Ensure sorting is maintained for copied controls.
       formHelper.syncControlPositions(this.formControls);
     },
     deleteFormControl(itemIndex) {

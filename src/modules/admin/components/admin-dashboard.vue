@@ -71,6 +71,19 @@ export default {
                               this.dialogConfig.open = true;
                          }
                     },
+                     {
+                         title: "Users",
+                         description: "Manage all user data",
+                         primaryAction: () => {
+                              this.$router.replace({ name: "Admin.Users" });
+                         },
+                         addAction: () => {
+                              this.dialogConfig.title = "Create New Account";
+                              this.dialogConfig.description =
+                                   "Now you can quickly add a new account!";
+                              this.dialogConfig.open = true;
+                         }
+                    },
                     {
                          title: "Filerooms",
                          description:

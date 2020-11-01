@@ -60,6 +60,12 @@ const routes = [
           component: () => import(/* webpackChunkName: "AdminAccounts" */ '@/modules/admin/components/admin-accounts-dashboard.vue'),
         },
         {
+          path: 'users',
+          name: 'Admin.Users',
+          meta: { title: 'Dynamext | Users' },
+          component: () => import(/* webpackChunkName: "AdminAccounts" */ '@/modules/admin/components/admin-users-dashboard.vue'),
+        },
+        {
           path: 'appconfig',
           name: 'Admin.AppConfig',
           meta: { title: 'Dynamext | App Data' },
