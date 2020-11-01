@@ -84,7 +84,6 @@
               <div class="caption grey--text">Name</div>
               <div>
                 <v-icon
-                  
                   :class="schedule.colour ? `${schedule.colour}--text` : ``"
                   >{{ schedule.icon }}</v-icon
                 >
@@ -166,10 +165,14 @@
             </v-card>
           </v-col>
         </v-row>
-        <v-divider v-if="index + 1 < filteredSchedules.length" :key="`divider${index}`"></v-divider>
-      </div> 
+        <v-divider
+          v-if="index + 1 < filteredSchedules.length"
+          :key="`divider${index}`"
+        ></v-divider>
+      </div>
     </v-card>
-  </div></template>
+  </div>
+</template>
 
 <script>
 import { mapGetters } from "vuex";
@@ -258,7 +261,10 @@ export default {
     deleteFormDefinition(form) {
       this.$store.dispatch("deleteFormDefinition", form).then(() => {
         this.refreshDashboard(() => {
-          this.$store.dispatch("notifySuccess", `${form.name} has been deleted`);
+          this.$store.dispatch(
+            "notifySuccess",
+            `${form.name} has been deleted`
+          );
         });
       });
     },
