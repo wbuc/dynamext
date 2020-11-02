@@ -34,10 +34,11 @@ const getUser = (state, user) => {
   });
 };
 const getUsers = (state) => {
+  console.log(state);
   return new Promise((resolve, reject) => {
     apiClient
-      .get(`${END_POINT}?auth=${state.idToken}`)
-      .then((data) => resolve(data))
+      .get(`user/`)
+      .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
 };

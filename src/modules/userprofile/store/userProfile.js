@@ -90,7 +90,7 @@ const actions = {
           setTimeout(() => {
             commit("API_COMPLETE");
             resolve(users);
-          }, 1000);
+          }, 500);
         },
         (error) => {
           commit("API_ERROR");
