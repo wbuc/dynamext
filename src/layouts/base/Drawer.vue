@@ -8,7 +8,12 @@
           </v-avatar>
           <p class="grey--text text-center subheading mt-1">
             Wessel Büchling
-            <v-icon small class="mdi-16px mb-1 grey--text" @click="editUserDetail">mdi-pencil</v-icon>
+            <v-icon
+              small
+              class="mdi-16px mb-1 grey--text"
+              @click="editUserDetail"
+              >mdi-pencil</v-icon
+            >
           </p>
         </v-flex>
         <v-flex class="mb-4 mt-2"></v-flex>
@@ -24,17 +29,17 @@
             active-class="secondary--text"
           >
             <v-list-item-action>
-              <v-icon>{{link.icon}}</v-icon>
+              <v-icon>{{ link.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{link.text}}</v-list-item-title>
+              <v-list-item-title>{{ link.text }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
       </v-list>
     </v-navigation-drawer>
     <x-dialog :show="dialogConfig.open" :actions="dialogConfig.actions">
-      <template v-slot:title>{{dialogConfig.title}}</template>
+      <template v-slot:title>{{ dialogConfig.title }}</template>
       <template>
         <x-form-section flat dense>
           <v-row>
@@ -52,29 +57,49 @@
             </v-col>
             <v-col cols="6">
               <x-form-control title="Name" dense>
-                <v-text-field v-model="userDetail.name" outlined single-line hide-details dense></v-text-field>
-              </x-form-control>
-            </v-col>
-            <v-col cols="6">
-              <x-form-control title="Role" dense>
-                <v-text-field v-model="userDetail.role" outlined single-line hide-details dense></v-text-field>
-              </x-form-control>
-            </v-col>
-            <v-col cols="6">
-              <x-form-control title="Surname" dense>
-                <v-text-field v-model="userDetail.surname" outlined single-line hide-details dense></v-text-field>
-              </x-form-control>
-            </v-col>
-
-            <v-col cols="6">
-              <x-form-control title="Department" dense>
                 <v-text-field
-                  v-model="userDetail.department"
+                  v-model="userDetail.name"
                   outlined
                   single-line
                   hide-details
                   dense
                 ></v-text-field>
+              </x-form-control>
+            </v-col>
+            <v-col cols="6">
+              <x-form-control title="Role" dense>
+                <v-text-field
+                  v-model="userDetail.role"
+                  outlined
+                  single-line
+                  hide-details
+                  dense
+                ></v-text-field>
+              </x-form-control>
+            </v-col>
+            <v-col cols="6">
+              <x-form-control title="Surname" dense>
+                <v-text-field
+                  v-model="userDetail.surname"
+                  outlined
+                  single-line
+                  hide-details
+                  dense
+                ></v-text-field>
+              </x-form-control>
+            </v-col>
+
+            <v-col cols="6">
+              <x-form-control title="Department" dense>
+                <v-select
+                  :items="lookupDepartments"
+                  v-model="userDetail.fk_department_id"
+                  item-text="displayName"
+                  item-value="id"
+                  dense
+                  outlined
+                  hide-details
+                ></v-select>
               </x-form-control>
             </v-col>
             <v-col cols="6">
@@ -110,9 +135,10 @@ export default {
   },
   methods: {
     editUserDetail() {
-      console.log('getting user...')
+      console.log("getting user...");
       this.$store.dispatch("getUserDetail", this.user.email).then((data) => {
-        this.userDetail = data;
+        this.userDetail = data.data;
+        this.lookupDepartments = data.config.departments;
         this.dialogConfig.open = true;
       });
     },
@@ -120,7 +146,8 @@ export default {
   data() {
     return {
       links: linkConfig.drawer,
-      userDetail: { name: "Wessel" },
+      userDetail: { name: "UserX" },
+      lookupDepartments: [],
       dialogConfig: {
         open: false,
         title: "User Profile",

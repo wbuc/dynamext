@@ -81,7 +81,7 @@ const actions = {
           const users = [];
           for (let key in res) {
             const user = res[key];
-            user.id = key;
+            //user.id = key;
             if (res[key].colour) user.colour = res[key].colour.value;
             users.push(user);
           }
