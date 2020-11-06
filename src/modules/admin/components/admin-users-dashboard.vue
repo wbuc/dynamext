@@ -26,8 +26,10 @@
       >
         <v-card elevation="3" tile flat class="text-sm-center">
           <v-responsive class="pt-4 caption">
-            <v-avatar size="100" color="grey lighten-2">
-              <!-- <img :src="user.avatar" /> -->
+            <v-avatar size="100" :color="`${user.avatar_colour}`">
+              <v-icon dark size="48">
+                {{ user.avatar }}
+              </v-icon>
             </v-avatar>
           </v-responsive>
           <v-card-text>
@@ -69,22 +71,20 @@
               </x-form-control>
             </v-col>
             <v-col cols="6">
-              <x-form-control
-                title="Profile Image"
-                id="user-profile-image"
-                dense
-              >
-                <!-- <v-file-input
-                  class="pt0 mt-1"
-                  hide-input
-                  prepend-icon="mdi-camera"
-                  accept="image/png, image/jpeg"
-                  @change="previewProfileImage"
-                  v-model="userDetail.profileImage"
-                >
-                </v-file-input> -->
-                <v-btn @click="addProfileImage" icon><v-icon>mdi-cloud-upload </v-icon></v-btn>
-                 <input class="d-none" type="file" id="profileImageUpload" ref="profileImageUpload" @change="handleprofileImageUpload"/>
+              <x-form-control title="Avatar" id="user-profile-image" dense>
+                <x-picker-icon
+                  v-model="userDetail.avatar"
+                  :dataItems="avatarOptions"
+                  :colour="userDetail.avatar_colour"
+                  name="userProfileAvatar"
+                ></x-picker-icon>
+                <x-picker-colour
+                  v-model="userDetail.avatar_colour"
+                  name="userProfileAvatarColour"
+                ></x-picker-colour>
+
+                <!-- <v-btn @click="addProfileImage" icon><v-icon>mdi-cloud-upload </v-icon></v-btn>
+                <input class="d-none" type="file" id="profileImageUpload" ref="profileImageUpload" @change="handleprofileImageUpload"/> -->
                 <!-- <v-img :src="profileImageUrl"></v-img> -->
               </x-form-control>
             </v-col>
@@ -160,7 +160,10 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "admin.users.dashboard",
-  components: {},
+  components: {
+    xPickerIcon: () => import("@/components/control-picker-icon"),
+    xPickerColour: () => import("@/components/control-picker-colour"),
+  },
   data() {
     return {
       searchText: "",
@@ -168,6 +171,27 @@ export default {
       userDetail: { name: "Sample Name" },
       profileImageUrl: "",
       lookupDepartments: [],
+      avatarOptions: [
+        "mdi-flag-variant",
+        "mdi-account-circle",
+        "mdi-head-check-outline",
+        "mdi-ski",
+        "mdi-ski-water",
+        "mdi-checkbox-blank-circle",
+        "mdi-egg",
+        "mdi-hexagon",
+        "mdi-cloud",
+        "mdi-triangle",
+        "mdi-star-circle",
+        "mdi-ninja",
+        "mdi-ghost",
+        "mdi-death-star-variant",
+        "mdi-rocket",
+        "mdi-meditation",
+        "mdi-fish",
+        "mdi-emoticon-cool-outline",
+        "mdi-emoticon-happy-outline",
+      ],
       dialogConfig: {
         open: false,
         title: "Edit User Detail",
@@ -192,6 +216,8 @@ export default {
                     "notifySuccess",
                     `${this.userDetail.email} has been updated!`
                   );
+                  // refresh the dashboard with any updated data.
+                  this.refreshUsersDashboard();
                 });
               this.dialogConfig.open = false;
             },
@@ -218,13 +244,12 @@ export default {
     goBack() {
       this.$router.replace({ name: "Admin.Dashboard" });
     },
-    addProfileImage(){
+    addProfileImage() {
       this.$refs.profileImageUpload.click();
     },
-    handleprofileImageUpload(){
+    handleprofileImageUpload() {
       let uploadedFile = this.$refs.profileImageUpload.files;
       console.log(uploadedFile[0]);
-
     },
     previewProfileImage() {
       // This is not bewing used now, will make use of it later but this will preview your image
@@ -235,24 +260,24 @@ export default {
         this.userDetail = data.data;
         this.lookupDepartments = data.config.departments;
 
-        this.userDetail.profileImage = [];
         this.dialogConfig.open = true;
+      });
+    },
+    refreshUsersDashboard() {
+      this.$store.dispatch("getUsers").then((data) => {
+        //  data.forEach(item => {
+        //       item.quickEdit = {
+        //            email: false,
+        //            color: false
+        //       };
+        //  });
+        this.users = data;
       });
     },
   },
   // before access to the DOM elements.
   created() {
-    this.$store.dispatch("getUsers").then((data) => {
-      console.log("users retrieved...", data);
-      //  data.forEach(item => {
-      //       item.quickEdit = {
-      //            email: false,
-      //            color: false
-      //       };
-      //  });
-      console.log(data);
-      this.users = data;
-    });
+    this.refreshUsersDashboard();
   },
   // when access to the DOM elements
   mounted() {},
