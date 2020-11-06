@@ -56,7 +56,7 @@
       <template>
         <x-form-section flat dense>
           <v-row>
-            <v-col cols="12">
+            <v-col cols="6">
               <x-form-control title="Email" dense>
                 <v-text-field
                   v-model="userDetail.email"
@@ -66,6 +66,26 @@
                   hide-details
                   dense
                 ></v-text-field>
+              </x-form-control>
+            </v-col>
+            <v-col cols="6">
+              <x-form-control
+                title="Profile Image"
+                id="user-profile-image"
+                dense
+              >
+                <!-- <v-file-input
+                  class="pt0 mt-1"
+                  hide-input
+                  prepend-icon="mdi-camera"
+                  accept="image/png, image/jpeg"
+                  @change="previewProfileImage"
+                  v-model="userDetail.profileImage"
+                >
+                </v-file-input> -->
+                <v-btn @click="addProfileImage" icon><v-icon>mdi-cloud-upload </v-icon></v-btn>
+                 <input class="d-none" type="file" id="profileImageUpload" ref="profileImageUpload" @change="handleprofileImageUpload"/>
+                <!-- <v-img :src="profileImageUrl"></v-img> -->
               </x-form-control>
             </v-col>
             <v-col cols="6">
@@ -101,18 +121,17 @@
                 ></v-text-field>
               </x-form-control>
             </v-col>
-
             <v-col cols="6">
               <x-form-control title="Department" dense>
                 <v-select
-                          :items="lookupDepartments"
-                          v-model="userDetail.fk_department_id"
-                          item-text="displayName"
-                          item-value="id"
-                          dense
-                          outlined
-                          hide-details                       
-                        ></v-select>            
+                  :items="lookupDepartments"
+                  v-model="userDetail.fk_department_id"
+                  item-text="displayName"
+                  item-value="id"
+                  dense
+                  outlined
+                  hide-details
+                ></v-select>
               </x-form-control>
             </v-col>
             <v-col cols="6">
@@ -147,7 +166,8 @@ export default {
       searchText: "",
       users: [],
       userDetail: { name: "Sample Name" },
-      lookupDepartments:[],
+      profileImageUrl: "",
+      lookupDepartments: [],
       dialogConfig: {
         open: false,
         title: "Edit User Detail",
@@ -198,12 +218,24 @@ export default {
     goBack() {
       this.$router.replace({ name: "Admin.Dashboard" });
     },
-    editUserDetail(userData) {
+    addProfileImage(){
+      this.$refs.profileImageUpload.click();
+    },
+    handleprofileImageUpload(){
+      let uploadedFile = this.$refs.profileImageUpload.files;
+      console.log(uploadedFile[0]);
 
+    },
+    previewProfileImage() {
+      // This is not bewing used now, will make use of it later but this will preview your image
+      this.profileImageUrl = URL.createObjectURL(this.userDetail.profileImage);
+    },
+    editUserDetail(userData) {
       this.$store.dispatch("getUserDetail", userData.email).then((data) => {
         this.userDetail = data.data;
         this.lookupDepartments = data.config.departments;
 
+        this.userDetail.profileImage = [];
         this.dialogConfig.open = true;
       });
     },
@@ -227,5 +259,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#user-profile-image /deep/ .v-input__control {
+  display: none;
+}
 </style>
