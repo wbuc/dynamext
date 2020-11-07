@@ -43,7 +43,7 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn v-if="user.isDisabled === true" icon color="grey" @click="disableUser(user.id)">
-              <v-icon small color="green">mdi-lock-outline</v-icon>
+              <v-icon small color="green">mdi-lock-open-variant-outline</v-icon>
             </v-btn>
              <v-btn v-if="user.isDisabled === false" icon color="grey" @click="enableUser(user.id)">
               <v-icon small color="red">mdi-lock-outline</v-icon>
@@ -287,7 +287,6 @@ export default {
       await this.$store.dispatch("enableUserAsync", id);
       this.refreshUsersDashboard();
     },
-
     refreshUsersDashboard() {
       this.$store.dispatch("getUsers").then((data) => {
         //  data.forEach(item => {
