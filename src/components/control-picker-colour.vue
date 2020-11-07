@@ -52,7 +52,7 @@ export default {
           "green",
           "deep-orange",
           "orange",
-          "yellow",
+          "indigo",
           "light-blue",
         ];
       },
@@ -80,7 +80,7 @@ export default {
   },
   mounted() {
   
-    if (this.value != "" || !this.value) this.selectedItem = this.value;
+    if (this.value != "" || !this.value ) this.selectedItem = this.value;
   },
 };
 </script>

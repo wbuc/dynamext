@@ -53,7 +53,7 @@
       </v-col>
     </v-row>
 
-    <x-dialog :show="dialogConfig.open" :actions="dialogConfig.actions">
+    <x-dialog :show="dialogConfig.open" :actions="dialogConfig.actions" :key="dialogTicker">
       <template v-slot:title>{{ dialogConfig.title }}</template>
       <template>
         <x-form-section flat dense>
@@ -101,13 +101,16 @@
             </v-col>
             <v-col cols="6">
               <x-form-control title="Role" dense>
-                <v-text-field
-                  v-model="userDetail.role"
-                  outlined
-                  single-line
-                  hide-details
+                <v-select
+                  :items="lookupData.roles"
+                  v-model="userDetail.fk_role_id"
+                  item-text="displayName"
+                  item-value="id"
                   dense
-                ></v-text-field>
+                  outlined
+                  hide-details
+                 
+                ></v-select>
               </x-form-control>
             </v-col>
             <v-col cols="6">
@@ -124,7 +127,7 @@
             <v-col cols="6">
               <x-form-control title="Department" dense>
                 <v-select
-                  :items="lookupDepartments"
+                  :items="lookupData.departments"
                   v-model="userDetail.fk_department_id"
                   item-text="displayName"
                   item-value="id"
@@ -170,6 +173,11 @@ export default {
       users: [],
       userDetail: { name: "Sample Name" },
       profileImageUrl: "",
+      dialogTicker: 100,
+      lookupData: {
+        departments: [],
+        roles: [],
+      },
       lookupDepartments: [],
       avatarOptions: [
         "mdi-flag-variant",
@@ -201,6 +209,7 @@ export default {
             color: "error",
             action: () => {
               this.dialogConfig.open = false;
+              this.dialogTicker++;
             },
           },
           {
@@ -210,8 +219,6 @@ export default {
               this.$store
                 .dispatch("updateUserDetail", this.userDetail)
                 .then(() => {
-                  this.$vuetify.theme.dark =
-                    this.userDetail.theme === "dark" ? true : false;
                   this.$store.dispatch(
                     "notifySuccess",
                     `${this.userDetail.email} has been updated!`
@@ -220,6 +227,7 @@ export default {
                   this.refreshUsersDashboard();
                 });
               this.dialogConfig.open = false;
+              this.dialogTicker++;
             },
           },
         ],
@@ -258,7 +266,8 @@ export default {
     editUserDetail(userData) {
       this.$store.dispatch("getUserDetail", userData.email).then((data) => {
         this.userDetail = data.data;
-        this.lookupDepartments = data.config.departments;
+        this.lookupData.departments = data.config.departments;
+        this.lookupData.roles = data.config.roles;
 
         this.dialogConfig.open = true;
       });

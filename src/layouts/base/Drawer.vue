@@ -3,11 +3,11 @@
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-layout column align-center>
         <v-flex class="mt-5 text-center">
-          <v-avatar size="100">
-            <img src="/logo-user1.jpg" alt />
+          <v-avatar size="100" :color="user.avatar_colour">
+            <v-icon dark size="48">{{ user.avatar }}</v-icon>
           </v-avatar>
           <p class="grey--text text-center subheading mt-1">
-            Wessel Büchling
+            {{ user.name }} {{ user.surname }}
             <v-icon
               small
               class="mdi-16px mb-1 grey--text"
