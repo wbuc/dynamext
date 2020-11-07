@@ -42,8 +42,11 @@
               <span>Edit</span>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn icon color="grey">
-              <v-icon small>mdi-lock-outline</v-icon>
+            <v-btn v-if="user.isDisabled === true" icon color="grey" @click="disableUser(user.id)">
+              <v-icon small color="green">mdi-lock-outline</v-icon>
+            </v-btn>
+             <v-btn v-if="user.isDisabled === false" icon color="grey" @click="enableUser(user.id)">
+              <v-icon small color="red">mdi-lock-outline</v-icon>
             </v-btn>
             <v-btn icon color="grey">
               <v-icon small>mdi-information-outline</v-icon>
@@ -53,7 +56,11 @@
       </v-col>
     </v-row>
 
-    <x-dialog :show="dialogConfig.open" :actions="dialogConfig.actions" :key="dialogTicker">
+    <x-dialog
+      :show="dialogConfig.open"
+      :actions="dialogConfig.actions"
+      :key="dialogTicker"
+    >
       <template v-slot:title>{{ dialogConfig.title }}</template>
       <template>
         <x-form-section flat dense>
@@ -109,7 +116,6 @@
                   dense
                   outlined
                   hide-details
-                 
                 ></v-select>
               </x-form-control>
             </v-col>
@@ -209,7 +215,7 @@ export default {
             color: "error",
             action: () => {
               this.dialogConfig.open = false;
-              this.dialogTicker++;
+              //this.dialogTicker++;
             },
           },
           {
@@ -227,7 +233,7 @@ export default {
                   this.refreshUsersDashboard();
                 });
               this.dialogConfig.open = false;
-              this.dialogTicker++;
+              //this.dialogTicker++;
             },
           },
         ],
@@ -264,6 +270,7 @@ export default {
       this.profileImageUrl = URL.createObjectURL(this.userDetail.profileImage);
     },
     editUserDetail(userData) {
+      this.dialogTicker++; // forces the dialog components to ????
       this.$store.dispatch("getUserDetail", userData.email).then((data) => {
         this.userDetail = data.data;
         this.lookupData.departments = data.config.departments;
@@ -272,6 +279,15 @@ export default {
         this.dialogConfig.open = true;
       });
     },
+    async disableUser(id) {
+      await this.$store.dispatch("disableUserAsync", id);
+      this.refreshUsersDashboard();
+    },
+    async enableUser(id) {
+      await this.$store.dispatch("enableUserAsync", id);
+      this.refreshUsersDashboard();
+    },
+
     refreshUsersDashboard() {
       this.$store.dispatch("getUsers").then((data) => {
         //  data.forEach(item => {

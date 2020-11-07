@@ -14,7 +14,6 @@ const validateAuthHeader = () => {
     apiClient.defaults.headers.common["Authorization"] = ` Bearer ${token}`;
   }
 };
-
 const saveUser = (state, user) => {
   return new Promise((resolve, reject) => {
     console.log(state);
@@ -76,6 +75,22 @@ const updateUserDetail = (userDetail) => {
       .catch((error) => reject(error));
   });
 };
+const disableUserAsync = async (id) => {
+  try {
+    const response = await apiClient.put(`user/disable/${id}`);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+}
+const enableUserAsync = async (id) => {
+  try {
+    const response = await apiClient.put(`user/enable/${id}`);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default {
   saveUser,
@@ -85,4 +100,6 @@ export default {
   getLoggedInUser,
   getUserDetail,
   updateUserDetail,
+  disableUserAsync,
+  enableUserAsync
 };

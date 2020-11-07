@@ -172,7 +172,7 @@ const actions = {
     localStorage.removeItem("token");
 
     // logout on server side
-    context.dispatch("logout").then(() => {});
+    context.dispatch("logout").then(() => { });
 
     router.replace({ name: "Login" });
   },
@@ -229,6 +229,28 @@ const actions = {
       );
     });
   },
+  async disableUserAsync(context, id) {
+    if (!context.rootGetters.isAuthenticated) return;
+    try {
+      const response = await userProfileApi.disableUserAsync(id);
+      return response
+    }
+    catch (err) {
+      console.log(`Could not disable user ${id} : ${err}`);
+    }
+  },
+  async enableUserAsync(context, id) {
+    if (!context.rootGetters.isAuthenticated) return;
+    try {
+      const response = await userProfileApi.enableUserAsync(id);
+      return response
+    }
+    catch (err) {
+      console.log(`Could not enable user ${id} : ${err}`);
+    }
+  },
+  
+
 };
 
 export default { state, getters, mutations, actions };
