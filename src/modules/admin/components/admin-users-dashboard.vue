@@ -270,7 +270,7 @@ export default {
       this.profileImageUrl = URL.createObjectURL(this.userDetail.profileImage);
     },
     editUserDetail(userData) {
-      this.dialogTicker++; // forces the dialog components to ????
+      this.dialogTicker++; // forces the dialog components to recreate itself each time this methods is triggered.
       this.$store.dispatch("getUserDetail", userData.email).then((data) => {
         this.userDetail = data.data;
         this.lookupData.departments = data.config.departments;
