@@ -1,5 +1,8 @@
 # Dynamext
 
+A dynamic no-code forms builder built with Vue.js that anyone can use to generate a form and collect information from users in a structured format. 
+
+
 ## Project setup
 ```
 npm install
